@@ -4,27 +4,27 @@
       <nav class="pull-left">
         <ul>
           <li>
-            <a href="http://www.creative-tim.com">
-              Creative Tim
+            <a href="https://prosperidadeinvest.com.br/">
+              Prosperidade
             </a>
           </li>
           <li>
-            <a href="http://blog.creative-tim.com">
-              Blog
+            <a href="https://www.xpi.com.br/">
+              Xp Investimentos
             </a>
           </li>
           <li>
-            <a href="http://www.creative-tim.com/license">
-              Licenses
+            <a href="https://blog.xpi.com.br/">
+              Blog Xp
             </a>
           </li>
         </ul>
       </nav>
       <div class="copyright pull-right">
-        &copy; Coded with
+        <!--  &copy; Coded with
         <i class="fa fa-heart heart"></i> by
-        <a href="https://binarcode.com" target="_blank" rel="noopener">BinarCode</a>.
-        <span>Designed by <a href="https://www.creative-tim.com/?ref=pdf-vuejs" rel="noopener" target="_blank">Creative Tim</a>.</span>
+        <a href="https://binarcode.com" target="_blank" rel="noopener">BinarCode</a>. -->
+        <span>Designed by <a href="https://prosperidadeinvest.com.br/" rel="noopener" target="_blank">Prosperidade Investimentos</a>.</span>
       </div>
     </div>
   </footer>

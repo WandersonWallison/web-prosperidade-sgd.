@@ -4,6 +4,7 @@ export default [
     icon: 'nc-icon nc-bank',
     path: '/admin/overview'
   },
+  /*
   {
     name: 'Pages',
     icon: 'nc-icon nc-book-bookmark',
@@ -62,6 +63,28 @@ export default [
       path: '/components/typography'
     }]
   },
+  */
+ {
+  name: 'Cadastros',
+  icon: 'nc-icon nc-ruler-pencil',
+  children: [{
+    name: 'Regular Forms',
+    path: '/forms/regular'
+  },
+  {
+    name: 'Extended Forms',
+    path: '/forms/extended'
+  },
+  {
+    name: 'Validation Forms',
+    path: '/forms/validation'
+  },
+  {
+    name: 'Wizard',
+    path: '/forms/wizard'
+  }
+  ]
+},
   {
     name: 'Forms',
     icon: 'nc-icon nc-ruler-pencil',
@@ -83,6 +106,7 @@ export default [
     }
     ]
   },
+  /*
   {
     name: 'Table List',
     icon: 'nc-icon nc-single-copy-04',
@@ -126,11 +150,12 @@ export default [
   {
     name: 'Charts',
     icon: 'nc-icon nc-chart-bar-32',
-    path: '/charts'
+    path: '/admin/charts'
   },
   {
     name: 'Calendar',
     icon: 'nc-icon nc-calendar-60',
     path: '/calendar'
   },
+  */
 ]

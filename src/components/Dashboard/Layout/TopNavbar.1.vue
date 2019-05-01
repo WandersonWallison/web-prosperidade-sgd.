@@ -12,7 +12,7 @@
 
         </navbar-toggle-button>
       </div>
-      <a class="navbar-brand" href="#pablo"><img slot="header"  width="36" height="36" src="static\img\favicon.png" alt="...">Prosperidade</a>
+      <a class="navbar-brand" href="#pablo">Vue Paper Dashboard 2 PRO</a>
     </div>
 
     <template slot="navbar-menu">

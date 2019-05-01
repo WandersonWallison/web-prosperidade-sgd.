@@ -4,34 +4,28 @@
        :data-active-color="activeColor">
     <div class="logo">
       <a class="simple-text logo-mini"
-         aria-label="sidebar mini logo"
-         href="https://www.creative-tim.com/product/vue-paper-dashboard-2-pro">
+         aria-label="sidebar mini logo">
           <div class="logo-img">
               <img :src="logo" alt="">
           </div>
       </a>
-      <a class="simple-text logo-normal"
-         href="https://www.creative-tim.com/vue-paper-dashboard-2-pro">
+      <a class="simple-text logo-normal">
           {{ title }}
       </a>
     </div>
     <div class="sidebar-wrapper" ref="sidebarScrollArea">
-      <slot>
-
-      </slot>
       <ul class="nav">
         <slot name="links">
           <sidebar-item v-for="(link, index) in sidebarLinks"
-                        :key="link.name + index"
-                        :link="link">
+                      :key="link.name + index"
+                      :link="link">
 
-            <sidebar-item v-for="(subLink, index) in link.children"
-                          :key="subLink.name + index"
-                          :link="subLink">
-            </sidebar-item>
+          <sidebar-item v-for="(subLink, index) in link.children"
+                        :key="subLink.name + index"
+                        :link="subLink">
           </sidebar-item>
+        </sidebar-item>
         </slot>
-
       </ul>
     </div>
   </div>
@@ -42,7 +36,7 @@
     props: {
       title: {
         type: String,
-        default: 'Vue PDP Pro',
+        default: 'Prosperidade',
         description: 'Sidebar title'
       },
       backgroundColor: {
@@ -65,7 +59,7 @@
       },
       logo: {
         type: String,
-        default: 'static/img/vue-logo.png',
+        default: 'static/img/favicon.png',
         description: 'Sidebar Logo'
       },
       sidebarLinks: {

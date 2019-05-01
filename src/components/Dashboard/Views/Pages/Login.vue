@@ -11,7 +11,7 @@
 
                             <card type="login">
                                 <div style="text-align: -webkit-center">
-                                    <img slot="header"  src="static\img\Prosperidade.png" alt="...">
+                                    <img slot="header" width="96" height="96" src="static\img\favicon.png" alt="...">
                                 </div>
                                     <br>
                                     <!-- <h3 slot="header" class="header text-center">Login</h3> -->
