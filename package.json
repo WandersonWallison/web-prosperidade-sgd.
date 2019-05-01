@@ -9,6 +9,7 @@
     "dev": "vue-cli-service serve --open"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "chart.js": "^2.7.2",
     "d3": "^5.7.0",
     "datamaps": "^0.5.9",
