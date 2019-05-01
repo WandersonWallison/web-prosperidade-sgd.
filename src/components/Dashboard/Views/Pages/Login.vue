@@ -42,6 +42,7 @@ import {
 } from 'src/components/UIComponents'
 import AppNavbar from './Layout/AppNavbar'
 import AppFooter from './Layout/AppFooter'
+import axios from 'axios'
 
 export default {
     components: {

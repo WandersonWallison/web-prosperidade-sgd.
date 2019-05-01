@@ -7,6 +7,8 @@ import VeeValidate from 'vee-validate'
 import lang from 'element-ui/lib/locale/lang/en'
 import locale from 'element-ui/lib/locale'
 import App from './App.vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 // Plugins
 import GlobalComponents from './globalComponents'
@@ -25,7 +27,7 @@ import './assets/sass/demo.scss'
 import sidebarLinks from './sidebarLinks'
 import './registerServiceWorker'
 
-import Axios from 'vue-axios'
+// import Axios from 'vue-axios'
 
 // plugin setup
 Vue.use(VueRouter)
@@ -35,7 +37,7 @@ Vue.use(GlobalComponents)
 Vue.use(VueNotify)
 Vue.use(SideBar, {sidebarLinks: sidebarLinks})
 Vue.use(VeeValidate)
-Vue.use(Axios)
+Vue.use(axios , VueAxios)
 locale.use(lang)
 
 // configure router
