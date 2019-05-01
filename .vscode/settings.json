@@ -1,0 +1,6 @@
+{
+    "diffEditor.renderIndicators": false,
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "editor.suggest.localityBonus": true,
+    "files.autoGuessEncoding": true
+}

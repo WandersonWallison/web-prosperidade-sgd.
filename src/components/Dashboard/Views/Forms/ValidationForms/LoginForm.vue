@@ -61,6 +61,7 @@
         return this.errors.first(fieldName)
       },
       validate () {
+        console.log('teste')
         this.$validator.validateAll().then(isValid => {
           this.$emit('on-submit', this.registerForm, isValid)
         })

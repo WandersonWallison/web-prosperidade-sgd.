@@ -12,7 +12,7 @@ import App from './App.vue'
 import GlobalComponents from './globalComponents'
 import GlobalDirectives from './globalDirectives'
 import SideBar from './components/UIComponents/SidebarPlugin'
-import initProgress from './progressbar';
+import initProgress from './progressbar'
 
 // router setup
 import routes from './routes/routes'
@@ -24,6 +24,9 @@ import './assets/sass/demo.scss'
 
 import sidebarLinks from './sidebarLinks'
 import './registerServiceWorker'
+
+import Axios from 'vue-axios'
+
 // plugin setup
 Vue.use(VueRouter)
 Vue.use(VueRouterPrefetch)
@@ -32,6 +35,7 @@ Vue.use(GlobalComponents)
 Vue.use(VueNotify)
 Vue.use(SideBar, {sidebarLinks: sidebarLinks})
 Vue.use(VeeValidate)
+Vue.use(Axios)
 locale.use(lang)
 
 // configure router

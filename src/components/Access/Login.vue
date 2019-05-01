@@ -6,22 +6,35 @@
             <!--   you can change the color of the filter page using: data-color="blue | azure | green | orange | red | purple" -->
             <div class="content" data-color="blue">
                 <div class="container">
-                    <div class="col-lg-6 col-md-9 ml-auto mr-auto">
+                    <div class="col-lg-6 col-md-10 ml-auto mr-auto">
                         <form @submit.prevent="login">
 
                             <card type="login">
                                 <div style="text-align: -webkit-center">
-                                    <img slot="header"  src="static\img\Prosperidade.png" alt="...">
+                                  <img slot="header"  src="static\img\Prosperidade.png" alt="...">
                                 </div>
-                                    <br>
-                                    <!-- <h3 slot="header" class="header text-center">Login</h3> -->
-                                    <fg-input v-model="form.email" required v-validate="modelValidations.email" :error="getError('email')" addon-left-icon="nc-icon nc-single-02" placeholder="E-mail">
-                                    </fg-input>
+                                <br>
+                                <!-- <h3 slot="header" class="header text-center">Login</h3> -->
+                                <fg-input
+                                  v-model="form.email"
+                                  required
+                                  v-validate="modelValidations.email"
+                                  :error="getError('email')"
+                                  addon-left-icon="nc-icon nc-single-02"
+                                  placeholder="E-mail">
+                                </fg-input>
 
-                                    <fg-input v-model="form.password" required v-validate="modelValidations.password" :error="getError('password')" addon-left-icon="nc-icon nc-key-25" placeholder="Password" type="password">
-                                    </fg-input>
-                                    <br>
-                                    <p-button native-type="submit" slot="footer" type="warning" round block class="mb-3">Entrar</p-button>
+                                <fg-input
+                                  v-model="form.password"
+                                  required
+                                  v-validate="modelValidations.password"
+                                  :error="getError('password')"
+                                  addon-left-icon="nc-icon nc-key-25"
+                                  placeholder="Password"
+                                  type="password">
+                                </fg-input>
+                                <br>
+                                <p-button native-type="submit" slot="footer" type="warning" round block class="mb-3">Entrar</p-button>
                             </card>
                         </form>
                     </div>
@@ -39,7 +52,7 @@ import {
     Card,
     Checkbox,
     Button
-} from 'src/components/UIComponents'
+} from 'src/components/UIComponents';
 import AppNavbar from './Layout/AppNavbar'
 import AppFooter from './Layout/AppFooter'
 
@@ -52,28 +65,19 @@ export default {
         [Button.name]: Button
     },
     methods: {
-        getError(fieldName) {
-            return this.errors.first(fieldName)
+        getError (fieldName) {
+          return this.errors.first(fieldName)
         },
         toggleNavbar() {
-            document.body.classList.toggle('nav-open')
+          document.body.classList.toggle('nav-open')
         },
         closeMenu() {
-            document.body.classList.remove('nav-open')
-            document.body.classList.remove('off-canvas-sidebar')
+          document.body.classList.remove('nav-open')
+          document.body.classList.remove('off-canvas-sidebar')
         },
         login() {
-            alert('chegou: email: ' + this.form.email + 'Senha' + this.form.password)
-
-            this.$router.push('/admin')
-            axios.post('http://165.227.108.199:5050/login', this.form)
-            .then((result) => {
-              console.log('Resultado:' + result)
-            }).catch((err) => {
-
-            })
-
-            // handle login here
+          alert('chegou: email: '+ this.form.email + 'Senha' + this.form.password )
+          // handle login here
         }
     },
     data() {
