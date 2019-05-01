@@ -68,6 +68,27 @@ export default [
   name: 'Cadastros',
   icon: 'nc-icon nc-ruler-pencil',
   children: [{
+    name: 'Empresa',
+    path: '/forms/company'
+  },
+  {
+    name: 'Escritorio',
+    path: '/forms/office'
+  },
+  {
+    name: 'Movimentação',
+    path: '/forms/validation'
+  },
+  {
+    name: 'Usuário',
+    path: '/forms/user'
+  }
+  ]
+},
+{
+  name: 'Movimentações',
+  icon: 'nc-icon nc-paper',
+  children: [{
     name: 'Regular Forms',
     path: '/forms/regular'
   },
@@ -85,6 +106,25 @@ export default [
   }
   ]
 },
+{
+  name: 'Listas',
+  icon: 'nc-icon nc-single-copy-04',
+  collapsed: true,
+  children: [{
+    name: 'Regular Tables',
+    path: '/table-list/regular'
+  },
+  {
+    name: 'Extended Tables',
+    path: '/table-list/extended'
+  },
+  {
+    name: 'Paginated Tables',
+    path: '/table-list/paginated'
+  }
+  ]
+},
+/*
   {
     name: 'Forms',
     icon: 'nc-icon nc-ruler-pencil',
@@ -106,7 +146,7 @@ export default [
     }
     ]
   },
-  /*
+
   {
     name: 'Table List',
     icon: 'nc-icon nc-single-copy-04',

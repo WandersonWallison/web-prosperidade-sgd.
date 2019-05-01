@@ -4,17 +4,17 @@
       <nav class="pull-left">
         <ul>
           <li>
-            <a href="https://prosperidadeinvest.com.br/">
+            <a href="https://prosperidadeinvest.com.br/" target="_blank">
               Prosperidade
             </a>
           </li>
           <li>
-            <a href="https://www.xpi.com.br/">
+            <a href="https://www.xpi.com.br/" target="_blank">
               Xp Investimentos
             </a>
           </li>
           <li>
-            <a href="https://blog.xpi.com.br/">
+            <a href="https://blog.xpi.com.br/" target="_blank">
               Blog Xp
             </a>
           </li>

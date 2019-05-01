@@ -25,7 +25,11 @@ import Typography from 'src/components/Dashboard/Views/Components/Typography.vue
 const RegularForms  = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/RegularForms.vue')
 const ExtendedForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ExtendedForms.vue');
 const ValidationForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms.vue')
-const Wizard = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Wizard.vue');
+const CompanyForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms/FormCompany.vue')
+const OfficeForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms/FormOffice.vue')
+const UserForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/FormUser.vue')
+const Wizard = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Wizard.vue')
+
 
 // TableList pages
 const RegularTables = () => import(/* webpackChunkName: "tables" */ 'src/components/Dashboard/Views/Tables/RegularTables.vue');
@@ -103,6 +107,21 @@ let formsMenu = {
       path: 'validation',
       name: 'Validation Forms',
       component: ValidationForms
+    },
+    {
+      path: 'company',
+      name: 'Form Company',
+      component: CompanyForms
+    },
+    {
+      path: 'office',
+      name: 'Form Office',
+      component: OfficeForms
+    },
+    {
+      path: 'user',
+      name: 'Form User',
+      component: UserForms
     },
     {
       path: 'wizard',
