@@ -65,64 +65,69 @@ export default [
   },
   */
  {
-  name: 'Cadastros',
+  name: 'Empreendimento',
   icon: 'nc-icon nc-ruler-pencil',
   children: [{
     name: 'Empresa',
     path: '/forms/company'
   },
   {
+    name: 'Operador',
+    path: '/forms/validation'
+  },
+  {
+    name: 'Central',
+    path: '/forms/validation'
+  },
+  {
     name: 'Escritorio',
     path: '/forms/office'
   },
   {
-    name: 'Movimentação',
+    name: 'Assessor',
     path: '/forms/validation'
-  },
+  }
+  /* ,
   {
     name: 'Usuário',
     path: '/forms/user'
   }
+  */
   ]
 },
 {
-  name: 'Movimentações',
+  name: 'Cadastro',
   icon: 'nc-icon nc-paper',
   children: [{
-    name: 'Regular Forms',
+    name: 'Cliente',
     path: '/forms/regular'
-  },
-  {
-    name: 'Extended Forms',
-    path: '/forms/extended'
-  },
-  {
-    name: 'Validation Forms',
-    path: '/forms/validation'
-  },
-  {
-    name: 'Wizard',
-    path: '/forms/wizard'
-  }
-  ]
+  }]
 },
 {
-  name: 'Listas',
-  icon: 'nc-icon nc-single-copy-04',
+  name: 'Movimentação',
+  icon: 'nc-icon nc-money-coins',
+  children: [{
+    name: 'Movimentações',
+    path: '/forms/regular'
+  }]
+},
+{
+  name: 'Administração',
+  icon: 'nc-icon nc-badge',
   collapsed: true,
   children: [{
-    name: 'Regular Tables',
+    name: 'Controle de Usuários',
     path: '/table-list/regular'
   },
   {
-    name: 'Extended Tables',
+    name: 'Mensagens',
     path: '/table-list/extended'
-  },
-  {
-    name: 'Paginated Tables',
-    path: '/table-list/paginated'
-  }
-  ]
+  }]
+},
+{
+  name: 'Sair',
+  icon: 'nc-icon nc-simple-remove',
+  path: '/'
 },
 /*
   {

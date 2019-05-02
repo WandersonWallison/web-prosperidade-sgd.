@@ -11,7 +11,8 @@
 
                             <card type="login">
                                 <div style="text-align: -webkit-center">
-                                    <img slot="header" width="96" height="96" src="static\img\favicon.png" alt="...">
+                                    <img slot="header" width="300" height="90" src="static\img\prosperidade.png" alt="...">
+                                    <img slot="header" width="130" height="40" src="static\img\xp.png" alt="...">
                                 </div>
                                     <br>
                                     <!-- <h3 slot="header" class="header text-center">Login</h3> -->
@@ -64,7 +65,7 @@ export default {
             document.body.classList.remove('off-canvas-sidebar')
         },
         login() {
-            alert('chegou: email: ' + this.form.email + 'Senha' + this.form.password)
+            // alert('chegou: email: ' + this.form.email + 'Senha' + this.form.password)
 
             this.$router.push('/admin')
             axios.post('http://165.227.108.199:5050/login', this.form)
@@ -73,7 +74,6 @@ export default {
             }).catch((err) => {
 
             })
-
             // handle login here
         }
     },
