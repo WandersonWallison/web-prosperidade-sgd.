@@ -6,6 +6,7 @@ import VueNotify from 'vue-notifyjs'
 import VeeValidate from 'vee-validate'
 import lang from 'element-ui/lib/locale/lang/en'
 import locale from 'element-ui/lib/locale'
+import Element from 'element-ui/lib'
 import App from './App.vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -38,7 +39,9 @@ Vue.use(VueNotify)
 Vue.use(SideBar, {sidebarLinks: sidebarLinks})
 Vue.use(VeeValidate)
 Vue.use(axios , VueAxios)
+Vue.use(Element)
 locale.use(lang)
+
 
 // configure router
 const router = new VueRouter({

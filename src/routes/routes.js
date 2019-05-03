@@ -23,9 +23,15 @@ import Typography from 'src/components/Dashboard/Views/Components/Typography.vue
 
 // Forms pages
 const RegularForms  = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/RegularForms.vue')
-const ExtendedForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ExtendedForms.vue');
+const ExtendedForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ExtendedForms.vue')
 const ValidationForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms.vue')
 const CompanyForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms/FormCompany.vue')
+const CompanyList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListCompany.vue')
+const OfficeList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListOfficer.vue')
+const CentralList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListCentral.vue')
+const OperatorlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListOperator.vue')
+const AdvisorsList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisors.vue')
+const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListClient.vue')
 const OfficeForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms/FormOffice.vue')
 const UserForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/FormUser.vue')
 const Wizard = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Wizard.vue')
@@ -114,9 +120,39 @@ let formsMenu = {
       component: CompanyForms
     },
     {
+      path: 'companyList',
+      name: 'List Company',
+      component: CompanyList
+    },
+    {
       path: 'office',
-      name: 'Form Office',
+      name: 'List Office',
       component: OfficeForms
+    },
+    {
+      path: 'OfficeList',
+      name: 'Form Office',
+      component: OfficeList
+    },
+    {
+      path: 'CentralList',
+      name: 'List Central',
+      component: CentralList
+    },
+    {
+      path: 'OperatorlList',
+      name: 'List Operator',
+      component: OperatorlList
+    },
+    {
+      path: 'AdvisorsList',
+      name: 'List Advisors',
+      component: AdvisorsList
+    },
+    {
+      path: 'ClientList',
+      name: 'List Advisors',
+      component: ClientList
     },
     {
       path: 'user',

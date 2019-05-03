@@ -4,7 +4,71 @@ export default [
     icon: 'nc-icon nc-bank',
     path: '/admin/overview'
   },
-  /*
+ {
+  name: 'Empreendimento',
+  icon: 'nc-icon nc-ruler-pencil',
+  children: [{
+    name: 'Empresa',
+    path: '/forms/companyList'
+  },
+  {
+    name: 'Operador',
+    path: '/forms/OperatorlList'
+  },
+  {
+    name: 'Central',
+    path: '/forms/CentralList'
+  },
+  {
+    name: 'Escritorio',
+    path: '/forms/OfficeList'
+  },
+  {
+    name: 'Assessor',
+    path: '/forms/AdvisorsList'
+  }
+  ]
+},
+{
+  name: 'Cadastro',
+  icon: 'nc-icon nc-paper',
+  children: [{
+    name: 'Cliente',
+    path: '/forms/ClientList'
+  }]
+},
+{
+  name: 'Movimentação',
+  icon: 'nc-icon nc-money-coins',
+  children: [{
+    name: 'Movimentações',
+    path: '/forms/regular'
+  }]
+},
+{
+  name: 'Administração',
+  icon: 'nc-icon nc-badge',
+  collapsed: true,
+  children: [{
+      name: 'Usuário',
+      path: '/forms/user'
+  },
+  {
+    name: 'Controle de Usuários',
+    path: '/table-list/regular'
+  },
+  {
+    name: 'Mensagens',
+    path: '/table-list/extended'
+  }]
+},
+{
+  name: 'Sair',
+  icon: 'nc-simple-remove',
+  path: '/'
+},
+/*
+/*
   {
     name: 'Pages',
     icon: 'nc-icon nc-book-bookmark',
@@ -63,73 +127,7 @@ export default [
       path: '/components/typography'
     }]
   },
-  */
- {
-  name: 'Empreendimento',
-  icon: 'nc-icon nc-ruler-pencil',
-  children: [{
-    name: 'Empresa',
-    path: '/forms/company'
-  },
-  {
-    name: 'Operador',
-    path: '/forms/validation'
-  },
-  {
-    name: 'Central',
-    path: '/forms/validation'
-  },
-  {
-    name: 'Escritorio',
-    path: '/forms/office'
-  },
-  {
-    name: 'Assessor',
-    path: '/forms/validation'
-  }
-  /* ,
-  {
-    name: 'Usuário',
-    path: '/forms/user'
-  }
-  */
-  ]
-},
-{
-  name: 'Cadastro',
-  icon: 'nc-icon nc-paper',
-  children: [{
-    name: 'Cliente',
-    path: '/forms/regular'
-  }]
-},
-{
-  name: 'Movimentação',
-  icon: 'nc-icon nc-money-coins',
-  children: [{
-    name: 'Movimentações',
-    path: '/forms/regular'
-  }]
-},
-{
-  name: 'Administração',
-  icon: 'nc-icon nc-badge',
-  collapsed: true,
-  children: [{
-    name: 'Controle de Usuários',
-    path: '/table-list/regular'
-  },
-  {
-    name: 'Mensagens',
-    path: '/table-list/extended'
-  }]
-},
-{
-  name: 'Sair',
-  icon: 'nc-icon nc-simple-remove',
-  path: '/'
-},
-/*
+
   {
     name: 'Forms',
     icon: 'nc-icon nc-ruler-pencil',

@@ -55,7 +55,6 @@
             :error="getError('email')"
             addon-left-icon="nc-icon nc-send">
         </fg-input>
-
         <el-select class="select-default"
           v-model="model.tipo"
           name="tipo_user"
