@@ -25,7 +25,7 @@
             <el-table-column
               class-name="action-buttons td-actions"
               align="right"
-              label="Actions">
+              label="Ações">
               <template slot-scope="props">
                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                   <i class="fa fa-edit"></i>

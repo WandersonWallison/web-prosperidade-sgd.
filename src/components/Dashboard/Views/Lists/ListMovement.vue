@@ -2,9 +2,9 @@
   <div>
     <div class="card">
       <div class="card-header">
-        <h5 class="card-title">Centrais</h5>
+        <h5 class="card-title">Movimentações</h5>
         <p-button type="info" size="sm" icon @click="handleLike(props.$index, props.row)">
-          <i class="fa fa-th-large" title="Cadastro de Central"></i>
+          <i class="fa fa-user-circle" title="Cadastro de Assessor"></i>
         </p-button>
       </div>
       <div class="card-body row">
@@ -17,13 +17,17 @@
                              label="Nome">
             </el-table-column>
             <el-table-column prop="job"
-                             label="Tipo Movimentação">
+                             label="Escritório">
+            </el-table-column>
+            <el-table-column prop="salary"
+                             label="CPF">
             </el-table-column>
             <el-table-column
               class-name="action-buttons td-actions"
               align="right"
               label="Ações">
               <template slot-scope="props">
+
                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                   <i class="fa fa-edit"></i>
                 </p-button>

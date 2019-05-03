@@ -1,7 +1,7 @@
 export default [
   {
     name: 'Dashboard',
-    icon: 'nc-icon nc-bank',
+    icon: 'nc-icon nc-globe',
     path: '/admin/overview'
   },
  {
@@ -42,7 +42,7 @@ export default [
   icon: 'nc-icon nc-money-coins',
   children: [{
     name: 'Movimentações',
-    path: '/forms/regular'
+    path: '/forms/MovementList'
   }]
 },
 {
@@ -64,10 +64,9 @@ export default [
 },
 {
   name: 'Sair',
-  icon: 'nc-simple-remove',
-  path: '/'
+  icon: 'nc-icon nc-simple-remove',
+  path: '/login'
 },
-/*
 /*
   {
     name: 'Pages',
