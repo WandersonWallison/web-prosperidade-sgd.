@@ -2,11 +2,22 @@
   <div>
     <div class="card">
       <div class="card-header">
-        <div><h5 class="card-title">Empresas</h5></div>
-        <di><p-button type="info" size="sm" icon title="Cadastro de Empresa" @click="handleLike(props.$index, props.row)">
-          <i class="fa fa-university"></i>
-        </p-button></di>
-
+        <div class="row">
+          <!-- ------------------------ -->
+          <div class="col-sm-10">
+            <div class="card-body text-left">
+                <div><h5 class="card-title">Empresas</h5></div>
+            </div>
+          </div>
+          <!-- ------------------------- -->
+          <div>
+            <div class="col-sm-1">
+              <div class="iten-center">
+                <p-button type="primary">Cadastro</p-button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="card-body row">
         <div class="col-sm-12">

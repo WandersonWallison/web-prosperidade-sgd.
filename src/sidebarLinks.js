@@ -126,7 +126,7 @@ export default [
       path: '/components/typography'
     }]
   },
-
+  /*
   {
     name: 'Forms',
     icon: 'nc-icon nc-ruler-pencil',
