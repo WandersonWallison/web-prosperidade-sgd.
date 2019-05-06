@@ -8,7 +8,6 @@
                 <div class="container">
                     <div class="col-lg-6 col-md-9 ml-auto mr-auto">
                         <form @submit.prevent="login">
-
                             <card type="login">
                                 <div style="text-align: -webkit-center">
                                     <img slot="header" width="300" height="90" src="static\img\prosperidade.png" alt="...">
