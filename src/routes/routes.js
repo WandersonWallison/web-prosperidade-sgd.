@@ -33,8 +33,11 @@ const OperatorlList = () => import(/* webpackChunkName: "forms" */ 'src/componen
 const AdvisorsList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisors.vue')
 const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListClient.vue')
 const MovementList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListMovement.vue')
+const UserControlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListUserControl.vue')
 const OfficeForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms/FormOffice.vue')
 const UserForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/FormUser.vue')
+const UserList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListUser.vue')
+// const TaskList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListTask.vue')
 const Wizard = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Wizard.vue')
 
 
@@ -164,6 +167,16 @@ let formsMenu = {
       path: 'user',
       name: 'Form User',
       component: UserForms
+    },
+    {
+      path: 'UserList',
+      name: 'Form User',
+      component: UserList
+    },
+    {
+      path: 'UserControlList',
+      name: 'List User Control',
+      component: UserControlList
     },
     {
       path: 'wizard',

@@ -13,7 +13,7 @@
           <div>
             <div class="col-sm-1">
               <div class="iten-center">
-                <p-button type="primary">Cadastro</p-button>
+                <p-button type="primary" title="Cadastro de Assessores">Cadastro</p-button>
               </div>
             </div>
           </div>

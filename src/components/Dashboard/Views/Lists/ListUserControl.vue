@@ -6,14 +6,14 @@
           <!-- ------------------------ -->
           <div class="col-sm-10">
             <div class="card-body text-left">
-                <div><h5 class="card-title">Centrais</h5></div>
+                <div><h5 class="card-title">Controle de Acesso</h5></div>
             </div>
           </div>
           <!-- ------------------------- -->
           <div>
             <div class="col-sm-1">
               <div class="iten-center">
-                <p-button type="primary"  @click="handleLike()">Cadastro</p-button>
+                <p-button type="primary">Cadastro</p-button>
               </div>
             </div>
           </div>
@@ -23,21 +23,45 @@
         <div class="col-sm-12">
           <el-table :data="tableData" header-row-class-name="text-primary">
             <el-table-column type="index">
-
             </el-table-column>
             <el-table-column prop="name"
                              label="Nome">
             </el-table-column>
             <el-table-column prop="job"
-                             label="Tipo Movimentação">
+                             label="E-mail">
+            </el-table-column>
+            <el-table-column prop="salary"
+                             label="Escriorio">
+            </el-table-column>
+            <el-table-column prop="salary"
+                             label="Central">
+            </el-table-column>
+            <el-table-column prop="salary"
+                             label="Grupo">
+            </el-table-column>
+            <el-table-column prop="salary"
+                             label="Grupo">
             </el-table-column>
             <el-table-column
               class-name="action-buttons td-actions"
               align="right"
               label="Ações">
               <template slot-scope="props">
+
                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                   <i class="fa fa-edit"></i>
+                </p-button>
+                <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                  <i class="fa fa-times"></i>
+                </p-button>
+                <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                  <i class="fa fa-times"></i>
+                </p-button>
+                <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                  <i class="fa fa-times"></i>
+                </p-button>
+                <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                  <i class="fa fa-times"></i>
                 </p-button>
                 <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
                   <i class="fa fa-times"></i>
@@ -63,13 +87,15 @@
     data () {
       return {
         tableData: [
-        /*
+
         {
           name: 'Andrew Mike',
           job: 'Develop',
           salary: '€ 99,225',
           active: false
-        }, {
+        },
+        /*
+        {
           name: 'John Doe',
           job: 'Design',
           salary: '€ 89,241',
@@ -118,7 +144,7 @@
       }
     },
     methods: {
-      handleLike () {
+      handleLike (index, row) {
         alert(`Your clicked on Like button`)
       },
       handleEdit (index, row) {

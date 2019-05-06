@@ -49,18 +49,26 @@ export default [
   name: 'Administração',
   icon: 'nc-icon nc-badge',
   collapsed: true,
-  children: [{
+  children: [
+  {
       name: 'Usuário',
-      path: '/forms/user'
+      path: '/forms/UserList'
+  },
+  {
+    name: 'Usuário',
+    path: '/forms/user'
   },
   {
     name: 'Controle de Usuários',
-    path: '/table-list/regular'
+    path: '/forms/UserControlList'
   },
+  /*
   {
     name: 'Mensagens',
-    path: '/table-list/extended'
-  }]
+    path: '/forms/TaskList'
+  }
+  */
+]
 },
 {
   name: 'Sair',

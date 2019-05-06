@@ -13,7 +13,7 @@
           <div>
             <div class="col-sm-1">
               <div class="iten-center">
-                <p-button type="primary">Cadastro</p-button>
+                <p-button type="primary"  @click="handleEdit()">Cadastro</p-button>
               </div>
             </div>
           </div>
@@ -130,7 +130,8 @@
       }
     },
     methods: {
-      handleLike (index, row) {
+      handleLike () {
+
         alert(`Your clicked on Like button`)
       },
       handleEdit (index, row) {
