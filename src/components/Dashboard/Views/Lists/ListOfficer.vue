@@ -13,7 +13,7 @@
           <div>
             <div class="col-sm-1">
               <div class="iten-center">
-                <p-button type="primary">Cadastro</p-button>
+                <p-button type="primary" @click="handleLike()">Cadastro</p-button>
               </div>
             </div>
           </div>
@@ -121,8 +121,8 @@
       }
     },
     methods: {
-      handleLike (index, row) {
-        alert(`Your clicked on Like button`)
+      handleLike () {
+       this.$router.push('/forms/office')
       },
       handleEdit (index, row) {
         alert(`Your want to edit ${row.name}`)
