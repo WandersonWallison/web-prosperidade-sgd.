@@ -69,11 +69,12 @@ export default {
                 cidade: '',
                 estado: ''
             },
+            results: [],
             modelValidations: {
                 nome: {
                     required: true
-                },
-                razao_social: {
+                }
+                /*razao_social: {
                     required: true
                 },
                 cnpj: {
@@ -100,7 +101,7 @@ export default {
                 },
                 estado: {
                     required: true
-                },
+                },*/
 
             }
         }
@@ -111,10 +112,29 @@ export default {
         },
         validate() {
             this.$validator.validateAll().then(isValid => {
-                this.$emit('on-submit', this.registerForm, isValid)
+                this.$emit('on-submit', this.salvar(), isValid)
             })
-        }
-    }    ,
+        },
+        salvar() {
+            let empresa = {
+                nome: this.model.nome
+                /*razao_social: this.model.nome,
+                site: this.form.site,
+                telefone: this.form.telefone,
+                email: this.form.email,
+                cnpj: this.form.cnpj*/
+                }
+                axios.post(process.env.VUE_APP_ROOT_API  + '/empresa', empresa)
+                .then(response => {
+                    this.results = response.data
+                    alert('Empresa cadastrada com sucesso')
+                    })
+                    .catch(error => {
+                        alert(error.response)
+                        console.log(error.response.data)
+                        })
+                    }
+                },
     mounted: {
 
     }

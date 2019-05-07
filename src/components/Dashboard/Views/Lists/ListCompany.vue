@@ -25,7 +25,7 @@
             <el-table-column type="index">
 
             </el-table-column>
-            <el-table-column prop="name"
+            <el-table-column prop="nome"
                              label="Nome">
             </el-table-column>
             <el-table-column prop="job"
@@ -60,6 +60,7 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   import Vue from 'vue'
   import {Table, TableColumn} from 'element-ui'
   import PSwitch from 'src/components/UIComponents/Switch.vue'
@@ -128,6 +129,11 @@
 
         ]
       }
+    },
+    mounted () {
+       axios.get(process.env.VUE_APP_ROOT_API +'/empresa').then(response => {
+        this.tableData = response.data
+      })
     },
     methods: {
       handleLike () {
