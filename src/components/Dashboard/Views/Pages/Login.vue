@@ -72,7 +72,6 @@ export default {
               console.log('Resultado:' + result.data)
             }).catch((err) => {
               this.$router.push('/')
-
             })
             // handle login here
         }
