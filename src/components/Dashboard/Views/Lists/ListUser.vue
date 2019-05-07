@@ -24,10 +24,10 @@
           <el-table :data="tableData" header-row-class-name="text-primary">
             <el-table-column type="index">
             </el-table-column>
-            <el-table-column prop="name"
+            <el-table-column prop="username"
                              label="Nome">
             </el-table-column>
-            <el-table-column prop="job"
+            <el-table-column prop="email"
                              label="E-mail">
             </el-table-column>
             <el-table-column prop="salary"
@@ -36,7 +36,7 @@
             <el-table-column prop="salary"
                              label="Central">
             </el-table-column>
-            <el-table-column prop="salary"
+            <el-table-column prop="id_grupo.descricao"
                              label="Grupo">
             </el-table-column>
             <el-table-column
@@ -60,6 +60,7 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   import Vue from 'vue'
   import {Table, TableColumn} from 'element-ui'
   import PSwitch from 'src/components/UIComponents/Switch.vue'
@@ -125,6 +126,11 @@
           }
         ]
       }
+    },
+    mounted () {
+       axios.get(process.env.VUE_APP_ROOT_API +'/user').then(response => {
+        this.tableData = response.data
+      })
     },
     methods: {
       handleLike (index, row) {
