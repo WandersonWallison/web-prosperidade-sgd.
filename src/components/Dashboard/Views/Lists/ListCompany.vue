@@ -131,7 +131,7 @@
       }
     },
     mounted () {
-       axios.get(process.env.VUE_APP_ROOT_API +'/empresa').then(response => {
+       axios.get(process.env.VUE_APP_ROOT_API +'/empresa?where={"ativo": 1}').then(response => {
         this.tableData = response.data
       })
     },
@@ -143,7 +143,23 @@
         alert(`Your want to edit ${row.name}`)
       },
       handleDelete (index, row) {
-        alert(`Your want to delete ${row.name}`)
+        let empresa = {
+                ativo: false
+                /*razao_social: this.model.nome,
+                site: this.form.site,
+                telefone: this.form.telefone,
+                email: this.form.email,
+                cnpj: this.form.cnpj*/
+                }
+                axios.put(process.env.VUE_APP_ROOT_API  + '/empresa/'+row.id, empresa)
+                .then(response => {
+                    this.results = response.data
+                    alert(`Empresa deletada com sucesso ${row.nome}`)
+                    })
+                    .catch(error => {
+                        alert(error.response)
+                        console.log(error.response.data)
+                        })
       },
       getSummaries (param) {
         const { columns } = param
