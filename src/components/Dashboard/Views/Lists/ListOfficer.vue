@@ -6,7 +6,7 @@
           <!-- ------------------------ -->
           <div class="col-sm-10">
             <div class="card-body text-left">
-                <div><h5 class="card-title">Escritorios</h5></div>
+                <div><h5 class="card-title">Escritórios</h5></div>
             </div>
           </div>
           <!-- ------------------------- -->

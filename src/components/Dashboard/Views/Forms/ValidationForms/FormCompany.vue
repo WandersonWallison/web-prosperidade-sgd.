@@ -52,6 +52,7 @@
 
 <script>
 import axios from 'axios'
+// import state from '../util/state'
 export default {
 
     data() {
@@ -114,9 +115,6 @@ export default {
                 this.$emit('on-submit', this.registerForm, isValid)
             })
         }
-    }    ,
-    mounted: {
-
     }
 }
 </script>

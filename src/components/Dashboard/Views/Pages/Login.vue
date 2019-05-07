@@ -62,7 +62,6 @@ export default {
             document.body.classList.remove('off-canvas-sidebar')
         },
         login() {
-            // alert('chegou: email: ' + this.form.email + 'Senha' + this.form.password)
 
             // TODO - Colocar resolução desse metodo para login
 
