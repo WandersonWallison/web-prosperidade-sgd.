@@ -128,6 +128,7 @@ export default {
                 .then(response => {
                     this.results = response.data
                     alert('Empresa cadastrada com sucesso')
+                    this.$router.push('/forms/CompanyList')
                     })
                     .catch(error => {
                         alert(error.response)

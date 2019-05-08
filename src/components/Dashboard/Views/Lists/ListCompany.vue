@@ -60,6 +60,7 @@
   </div>
 </template>
 <script>
+  import swal from 'sweetalert2'
   import axios from 'axios'
   import Vue from 'vue'
   import {Table, TableColumn} from 'element-ui'
@@ -154,7 +155,9 @@
                 axios.put(process.env.VUE_APP_ROOT_API  + '/empresa/'+row.id, empresa)
                 .then(response => {
                     this.results = response.data
-                    alert(`Empresa deletada com sucesso ${row.nome}`)
+                    // alert(`Empresa deletada com sucesso ${row.nome}`)
+                    swal('Bom trabalho!', `Empresa ${row.nome} deletada com sucesso!`, 'success')
+                    window.location.reload()
                     })
                     .catch(error => {
                         alert(error.response)

@@ -62,6 +62,7 @@
 <script>
   import axios from 'axios'
   import Vue from 'vue'
+  import swal from 'sweetalert2'
   import {Table, TableColumn} from 'element-ui'
   import PSwitch from 'src/components/UIComponents/Switch.vue'
   Vue.use(Table)
@@ -151,7 +152,8 @@
                 axios.put(process.env.VUE_APP_ROOT_API  + '/user/'+row.id, user)
                 .then(response => {
                     this.results = response.data
-                    alert(`Usuario deletada com sucesso ${row.username}`)
+                    // alert(`Usuario deletada com sucesso ${row.username}`)
+                    swal('Bom trabalho!', `Usuario ${row.username} deletado com sucesso!`, 'success')
                     window.location.reload()
                     })
                     .catch(error => {

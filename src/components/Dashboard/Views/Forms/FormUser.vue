@@ -87,7 +87,7 @@
                       axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
                         .then(response => {
                     swal('Bom trabalho!', 'Usuario Cadastrado com sucesso!', 'success')
-                    window.location.reload()
+                    this.$router.push('/forms/UserList')
                     })
                   })
                     .catch(error => {
