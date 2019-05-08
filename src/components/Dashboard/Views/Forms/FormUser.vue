@@ -97,7 +97,8 @@
                     })
                   })
                     .catch(error => {
-                        alert(error.response)
+                        // alert(error.response.data)
+                        swal('Algo de errado!', 'Email invalido!', 'error')
                         console.log(error.response.data)
                         })
                     }
