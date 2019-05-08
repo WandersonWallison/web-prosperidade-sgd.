@@ -1,39 +1,56 @@
 <template>
   <div class="row justify-content-center">
     <div class="col-sm-12">
-      <h5 class="info-text"> Are you living in a nice area? </h5>
+      <h5 class="info-text"> Complete seu cadastro! </h5>
     </div>
     <div class="col-sm-7">
-      <fg-input label="Street Name"
-                name="street name"
-                v-model="model.street"
-                :error="getError('street name')"
-                v-validate="modelValidations.street">
+      <fg-input label="Cep"
+                name="cep"
+                v-model="model.cep"
+                :error="getError('cep')"
+                v-validate="modelValidations.cep">
       </fg-input>
     </div>
     <div class="col-sm-3">
-      <fg-input label="Street No"
-                name="street number"
-                v-model="model.streetNo"
-                :error="getError('street number')"
-                v-validate="modelValidations.streetNo">
+      <fg-input label="Logradouro"
+                name="logradouro"
+                v-model="model.logradouro"
+                :error="getError('logradouro')"
+                v-validate="modelValidations.logradouro">
       </fg-input>
     </div>
     <div class="col-sm-5">
-      <fg-input label="City"
-                name="city"
-                v-model="model.city"
-                :error="getError('city')"
-                v-validate="modelValidations.city">
+      <fg-input label="Cidade"
+                name="cidade"
+                v-model="model.cidade"
+                :error="getError('cidade')"
+                v-validate="modelValidations.cidade">
       </fg-input>
     </div>
+     <div class="col-sm-5">
+      <fg-input label="Bairro"
+                name="bairro"
+                v-model="model.bairro"
+                :error="getError('bairro')"
+                v-validate="modelValidations.bairro">
+      </fg-input>
+    </div>      
     <div class="col-sm-5">
-        <label>Country</label>
-        <fg-input :error="getError('country')">
+      <fg-input type="number"
+                label="Numero"
+                name="numero"
+                v-model="model.numero"
+                :error="getError('numero')"
+                v-validate="modelValidations.numero">
+      </fg-input>
+    </div>      
+    <div class="col-sm-5">
+        <label>Estado</label>
+        <fg-input :error="getError('estado')">
           <el-select v-model="model.country"
                      class="select-primary"
-                     name="country"
-                     v-validate="modelValidations.country">
+                     name="estado"
+                     v-validate="modelValidations.estado">
             <el-option v-for="country in countryOptions"
                        class="select-primary"
                        :label="country"
@@ -54,25 +71,27 @@
     data() {
       return {
         model: {
-          street: '',
-          streetNo: '',
-          city: '',
+          cep: '',
+          logradouro: '',
+          cidade: '',
+          bairro: '',
           country: ''
         },
-        countryOptions: ['One', 'Two', 'Three', 'Four', 'Five', 'Six'],
+        countryOptions: ['PE', 'RJ', 'SP', 'BH', 'MG', 'PB'],
         modelValidations: {
-          street: {
-            required: true,
-            min: 5
-          },
-          streetNo: {
-            required: true,
-            min: 5
-          },
-          city: {
+          cep: {
             required: true
           },
-          country: {
+          logradouro: {
+            required: true
+          },
+          cidade: {
+            required: true
+          },
+          bairro:{
+            required: true
+          },
+          estado: {
             required: true
           }
         }

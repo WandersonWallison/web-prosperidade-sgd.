@@ -13,7 +13,7 @@
           <div>
             <div class="col-sm-1">
               <div class="iten-center">
-                <p-button type="primary">Cadastro</p-button>
+                <p-button type="primary" @click="handleLike()">Cadastro</p-button>
               </div>
             </div>
           </div>
@@ -128,19 +128,36 @@
       }
     },
     mounted () {
-       axios.get(process.env.VUE_APP_ROOT_API +'/user').then(response => {
+       axios.get(process.env.VUE_APP_ROOT_API +'/user?where={"ativo": 1}').then(response => {
         this.tableData = response.data
       })
     },
     methods: {
       handleLike (index, row) {
-        alert(`Your clicked on Like button`)
+       this.$router.push('/forms/user')
       },
       handleEdit (index, row) {
         alert(`Your want to edit ${row.name}`)
       },
       handleDelete (index, row) {
-        alert(`Your want to delete ${row.name}`)
+          let user = {
+                ativo: false
+                /*razao_social: this.model.nome,
+                site: this.form.site,
+                telefone: this.form.telefone,
+                email: this.form.email,
+                cnpj: this.form.cnpj*/
+                }
+                axios.put(process.env.VUE_APP_ROOT_API  + '/user/'+row.id, user)
+                .then(response => {
+                    this.results = response.data
+                    alert(`Usuario deletada com sucesso ${row.username}`)
+                    window.location.reload()
+                    })
+                    .catch(error => {
+                        alert(error.response)
+                        console.log(error.response.data)
+                        })
       },
       getSummaries (param) {
         const { columns } = param

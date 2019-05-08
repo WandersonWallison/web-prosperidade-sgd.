@@ -11,25 +11,25 @@
             <wizard-tab :before-change="() => validateStep('step1')">
               <template slot="label">
                 <i class="nc-icon nc-single-02"></i>
-                About
+                Dados
               </template>
               <first-step ref="step1" @on-validated="onStepValidated"></first-step>
             </wizard-tab>
 
-            <wizard-tab :before-change="() => validateStep('step2')">
+           <!-- <wizard-tab :before-change="() => validateStep('step2')">
               <template slot="label" >
                 <i class="nc-icon nc-touch-id"></i>
                 Account
               </template>
               <second-step ref="step2" @on-validated="onStepValidated"></second-step>
-            </wizard-tab>
+            </wizard-tab>-->
 
             <wizard-tab :before-change="() => validateStep('step3')">
               <template slot="label">
                 <i class="nc-icon nc-pin-3"></i>
-                Address
+                Endereço
               </template>
-              <third-step ref="step3"></third-step>
+              <third-step ref="step3" @on-validated="onStepValidated"></third-step>
             </wizard-tab>
           </wizard>
       </div>
@@ -37,6 +37,7 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   import FirstStep from './Wizard/FirstStepUser.vue'
   import SecondStep from './Wizard/SecondStepUser.vue'
   import ThirdStep from './Wizard/ThirdStepUser.vue'
@@ -64,8 +65,38 @@
         this.wizardModel = {...this.wizardModel, ...model}
       },
       wizardComplete() {
-        swal('Good job!', 'You clicked the finish button!', 'success')
+        let user = {
+                username: this.wizardModel.firstName,
+                email: this.wizardModel.email,
+                password: this.wizardModel.senha,
+                id_grupo: this.wizardModel.tipo
+                }
+        let endereco = {
+                logradouro: this.wizardModel.logradouro,
+                cep: this.wizardModel.cep,
+                bairro: this.wizardModel.bairro,
+                cidade: this.wizardModel.cidade,
+                uf: this.wizardModel.estado,
+                numero: this.wizardModel.numero,
+                id_user: ''
       }
-    }
+                axios.post(process.env.VUE_APP_ROOT_API  + '/user', user)
+                .then(response => {
+                    this.results = response.data
+                    endereco.id_user = response.data.id
+                      axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
+                        .then(response => {
+                    swal('Bom trabalho!', 'Usuario Cadastrado com sucesso!', 'success')
+                    window.location.reload()
+                    })
+                  })
+                    .catch(error => {
+                        alert(error.response)
+                        console.log(error.response.data)
+                        })
+                    }
+        //swal('Good job!', 'You clicked the finish button!', 'success')
+
+      }
   }
 </script>

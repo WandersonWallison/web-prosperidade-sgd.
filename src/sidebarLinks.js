@@ -55,10 +55,6 @@ export default [
       path: '/forms/UserList'
   },
   {
-    name: 'Usuário',
-    path: '/forms/user'
-  },
-  {
     name: 'Controle de Usuários',
     path: '/forms/UserControlList'
   },

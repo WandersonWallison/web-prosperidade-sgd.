@@ -23,36 +23,21 @@
             :error="getError('firstName')"
             addon-left-icon="nc-icon nc-single-02">
         </fg-input>
-
-        <fg-input name="lastName"
-          placeholder="Sobrenome"
-          v-model="model.lastName"
-          v-validate="modelValidations.lastName"
-          :error="getError('lastName')"
-          addon-left-icon="nc-icon nc-circle-10">
-        </fg-input>
-
-        <fg-input name="telefone"
-          placeholder="Telefone"
-          v-model="model.email"
-          v-validate="modelValidations.telefone"
-          :error="getError('telefone')"
-          addon-left-icon="nc-icon nc-send">
-        </fg-input>
-
-        <fg-input name="celular"
-          placeholder="Celular"
-          v-model="model.celular"
-          v-validate="modelValidations.celular"
-          :error="getError('celular')"
-          addon-left-icon="nc-icon nc-send">
-        </fg-input>
-
-        <fg-input name="email"
+        <fg-input 
+            type="email"
+            name="email"
             placeholder="E-mail"
             v-model="model.email"
             v-validate="modelValidations.email"
             :error="getError('email')"
+            addon-left-icon="nc-icon nc-send">
+        </fg-input>
+        <fg-input 
+            name="senha"
+            placeholder="Senha"
+            v-model="model.senha"
+            v-validate="modelValidations.senha"
+            :error="getError('senha')"
             addon-left-icon="nc-icon nc-send">
         </fg-input>
         <el-select class="select-default"
@@ -82,10 +67,9 @@
       return {
         model: {
           firstName: '',
-          lastName: '',
           email: '',
-          telefone: '',
-          celular: '',
+          senha: '',
+          tipo: '',
           imageUrl: 'static/img/default-avatar.png'
         },
         modelValidations: {
@@ -93,9 +77,8 @@
             required: true,
             min: 5
           },
-          lastName: {
-            required: true,
-            min: 5
+          senha: {
+            required: true
           },
           email: {
             required: true,
@@ -104,15 +87,15 @@
         },
         options: [
           {
-            value: 'adm',
+            value: 1,
             label: 'Administrador'
           },
           {
-            value: 'ope',
+            value: 2,
             label: 'Operador'
           },
           {
-            value: 'ass',
+            value: 3,
             label: 'Assessor'
           }
         ]

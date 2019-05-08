@@ -135,7 +135,7 @@
       },
       finishButtonText: {
         type: String,
-        default: 'Finish',
+        default: 'Salvar',
         description: 'Finish button text'
       },
       vertical: {
