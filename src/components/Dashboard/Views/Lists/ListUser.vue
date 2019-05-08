@@ -30,11 +30,11 @@
             <el-table-column prop="email"
                              label="E-mail">
             </el-table-column>
-            <el-table-column prop="salary"
-                             label="Escriorio">
+            <el-table-column prop="telefone"
+                             label="Telefone">
             </el-table-column>
-            <el-table-column prop="salary"
-                             label="Central">
+            <el-table-column prop="celular"
+                             label="Celular">
             </el-table-column>
             <el-table-column prop="id_grupo.descricao"
                              label="Grupo">

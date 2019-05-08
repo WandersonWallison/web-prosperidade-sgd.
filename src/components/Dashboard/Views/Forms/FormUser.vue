@@ -69,6 +69,12 @@
                 username: this.wizardModel.firstName,
                 email: this.wizardModel.email,
                 password: this.wizardModel.senha,
+                cpf: this.wizardModel.cpf,
+                cnh: this.wizardModel.cnh,
+                rg: this.wizardModel.rg,
+                data_nascimento: this.wizardModel.datePicker,
+                telefone: this.wizardModel.telefone,
+                celular: this.wizardModel.celular,
                 id_grupo: this.wizardModel.tipo
                 }
         let endereco = {
