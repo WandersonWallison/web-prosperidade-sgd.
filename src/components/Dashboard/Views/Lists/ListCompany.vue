@@ -25,7 +25,7 @@
             <el-table-column type="index">
 
             </el-table-column>
-            <el-table-column prop="name"
+            <el-table-column prop="nome"
                              label="Nome">
             </el-table-column>
             <el-table-column prop="job"
@@ -60,6 +60,7 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   import Vue from 'vue'
   import {Table, TableColumn} from 'element-ui'
   import PSwitch from 'src/components/UIComponents/Switch.vue'
@@ -129,6 +130,11 @@
         ]
       }
     },
+    mounted () {
+       axios.get(process.env.VUE_APP_ROOT_API +'/empresa?where={"ativo": 1}').then(response => {
+        this.tableData = response.data
+      })
+    },
     methods: {
       handleLike () {
         this.$router.push('/forms/company')
@@ -137,7 +143,23 @@
         alert(`Your want to edit ${row.name}`)
       },
       handleDelete (index, row) {
-        alert(`Your want to delete ${row.name}`)
+        let empresa = {
+                ativo: false
+                /*razao_social: this.model.nome,
+                site: this.form.site,
+                telefone: this.form.telefone,
+                email: this.form.email,
+                cnpj: this.form.cnpj*/
+                }
+                axios.put(process.env.VUE_APP_ROOT_API  + '/empresa/'+row.id, empresa)
+                .then(response => {
+                    this.results = response.data
+                    alert(`Empresa deletada com sucesso ${row.nome}`)
+                    })
+                    .catch(error => {
+                        alert(error.response)
+                        console.log(error.response.data)
+                        })
       },
       getSummaries (param) {
         const { columns } = param
