@@ -1,61 +1,58 @@
 <template>
-<div class="card">
-    <form>
-        <div class="card-header">
-            <h4 class="card-title">
-                Cadastro de Empresa
-            </h4>
-        </div>
-        <div class="card-body">
-            <div class="form-group">
-                <label>Nome</label>
-                <fg-input type="text" name="nome" v-validate="modelValidations.nome" :error="getError('nome')" v-model="model.nome">
-                </fg-input>
-                <label>Razão Social</label>
-                <fg-input type="text" name="razao_social" v-validate="modelValidations.razao_social" :error="getError('razao_social')" v-model="model.razao_social">
-                </fg-input>
-                <label>CNPJ</label>
-                <fg-input type="text" name="cnpj" v-validate="modelValidations.cnpj" :error="getError('cnpj')" v-model="model.cnpj">
-                </fg-input>
-                <label>Telefone</label>
-                <fg-input type="text" name="telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-model="model.telefone">
-                </fg-input>
-                <label>E-mail</label>
-                <fg-input type="email" name="email" v-validate="modelValidations.email" :error="getError('email')" v-model="model.email">
-                </fg-input>
-            </div>
-            <div class="form-group">
-                <label>Logradouro</label>
-                <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
-                </fg-input>
-                <label>Número</label>
-                <fg-input type="text" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
-                </fg-input>
-                <label>Bairro</label>
-                <fg-input type="text" name="bairro" v-validate="modelValidations.bairro" :error="getError('bairro')" v-model="model.bairro">
-                </fg-input>
-                <label>Cidade</label>
-                <fg-input type="text" name="cidade" v-validate="modelValidations.cidade" :error="getError('cidade')" v-model="model.cidade">
-                </fg-input>
-                <label>Estado</label>
-                <fg-input type="text" name="estado" v-validate="modelValidations.estado" :error="getError('estado')" v-model="model.estado">
-                </fg-input>
-            </div>
-        </div>
-        <div class="card-footer text-right">
-            <p-button type="info" @click.prevent="validate">Salvar</p-button>
-        </div>
-    </form>
+  <div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-10 mr-auto ml-auto">
+          <wizard @complete="wizardComplete">
+            <template slot="header">
+              <h3 class="card-title">Build your profile</h3>
+              <h3 class="description">This information will let us know more about you.</h3>
+            </template>
 
-</div>
+            <wizard-tab :before-change="() => validateStep('step1')">
+              <template slot="label">
+                <i class="nc-icon nc-single-02"></i>
+                Dados
+              </template>
+              <first-step ref="step1" @on-validated="onStepValidated"></first-step>
+            </wizard-tab>
+
+           <!-- <wizard-tab :before-change="() => validateStep('step2')">
+              <template slot="label" >
+                <i class="nc-icon nc-touch-id"></i>
+                Account
+              </template>
+              <second-step ref="step2" @on-validated="onStepValidated"></second-step>
+            </wizard-tab>-->
+
+            <wizard-tab :before-change="() => validateStep('step3')">
+              <template slot="label">
+                <i class="nc-icon nc-pin-3"></i>
+                Endereco
+              </template>
+              <third-step ref="step3" @on-validated="onStepValidated"></third-step>
+            </wizard-tab>
+          </wizard>
+      </div>
+    </div>
+  </div>
 </template>
-
 <script>
+<<<<<<< HEAD
 import axios from 'axios'
 // import state from '../util/state'
 export default {
+=======
+  import axios from 'axios'
+  import FirstStep from '../Wizard/FirstStepEmpresa.vue'
+  import SecondStep from '../Wizard/SecondStepEmpresa.vue'
+  import ThirdStep from '../Wizard/ThirdStepEmpresa.vue'
+  import swal from 'sweetalert2'
+  import {Wizard, WizardTab} from 'src/components/UIComponents'
+>>>>>>> 01fe8ab433a10f222a55919aed4de4d9da7451e8
 
+  export default {
     data() {
+<<<<<<< HEAD
         return {
             model: {
                 nome: '',
@@ -139,3 +136,59 @@ export default {
 </script>
 <style>
 </style>
+=======
+      return {
+        wizardModel: {}
+      }
+    },
+    components: {
+      FirstStep,
+      SecondStep,
+      ThirdStep,
+      Wizard,
+      WizardTab
+    },
+    methods: {
+      validateStep(ref) {
+        return this.$refs[ref].validate()
+      },
+      onStepValidated(validated, model) {
+        this.wizardModel = {...this.wizardModel, ...model}
+      },
+      wizardComplete() {
+        let empresa = {
+                nome: this.wizardModel.firstName,
+                email: this.wizardModel.email,
+                cnpj: this.wizardModel.cnpj,
+                // id_grupo: this.wizardModel.tipo
+                }
+        let endereco = {
+                logradouro: this.wizardModel.logradouro,
+                cep: this.wizardModel.cep,
+                bairro: this.wizardModel.bairro,
+                cidade: this.wizardModel.cidade,
+                uf: this.wizardModel.estado,
+                numero: this.wizardModel.numero,
+                id_user: ''
+      }
+                axios.post(process.env.VUE_APP_ROOT_API  + '/empresa', empresa)
+                .then(response => {
+                    this.results = response.data
+                    endereco.id_empresa = response.data.id
+                      axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
+                        .then(response => {
+                    swal('Bom trabalho!', 'Empresa Cadastrado com sucesso!', 'success')
+                    this.$router.push('/forms/UserList')
+                    })
+                  })
+                    .catch(error => {
+                        alert(error.response)
+                        console.log(error.response.data)
+                        })
+                    }
+        //swal('Good job!', 'You clicked the finish button!', 'success')
+
+      }
+  }
+</script>
+>>>>>>> 01fe8ab433a10f222a55919aed4de4d9da7451e8

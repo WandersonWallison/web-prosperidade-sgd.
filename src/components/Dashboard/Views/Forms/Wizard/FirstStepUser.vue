@@ -23,38 +23,76 @@
             :error="getError('firstName')"
             addon-left-icon="nc-icon nc-single-02">
         </fg-input>
-
-        <fg-input name="lastName"
-          placeholder="Sobrenome"
-          v-model="model.lastName"
-          v-validate="modelValidations.lastName"
-          :error="getError('lastName')"
-          addon-left-icon="nc-icon nc-circle-10">
-        </fg-input>
-
-        <fg-input name="telefone"
-          placeholder="Telefone"
-          v-model="model.email"
-          v-validate="modelValidations.telefone"
-          :error="getError('telefone')"
-          addon-left-icon="nc-icon nc-send">
-        </fg-input>
-
-        <fg-input name="celular"
-          placeholder="Celular"
-          v-model="model.celular"
-          v-validate="modelValidations.celular"
-          :error="getError('celular')"
-          addon-left-icon="nc-icon nc-send">
-        </fg-input>
-
-        <fg-input name="email"
+        <fg-input 
+            type="email"
+            name="email"
             placeholder="E-mail"
             v-model="model.email"
             v-validate="modelValidations.email"
             :error="getError('email')"
-            addon-left-icon="nc-icon nc-send">
+            addon-left-icon="nc-icon nc-email-85">
         </fg-input>
+        <fg-input 
+            name="senha"
+            placeholder="Senha"
+            v-model="model.senha"
+            v-validate="modelValidations.senha"
+            :error="getError('senha')"
+            addon-left-icon="nc-icon nc-key-25">
+        </fg-input>
+        <fg-input 
+            name="cvm"
+            placeholder="cvm"
+            v-model="model.cvm"
+            v-validate="modelValidations.cvm"
+            :error="getError('cvm')"
+            addon-left-icon="nc-icon nc-hat-3">
+        </fg-input>
+        <fg-input 
+            name="cpf"
+            placeholder="cpf"
+            v-model="model.cpf"
+            v-validate="modelValidations.cpf"
+            :error="getError('cpf')"
+            addon-left-icon="nc-icon nc-badge">
+        </fg-input>
+        <fg-input 
+            name="cnh"
+            placeholder="cnh"
+            v-model="model.cnh"
+            v-validate="modelValidations.cnh"
+            :error="getError('cnh')"
+            addon-left-icon="nc-icon nc-badge">
+        </fg-input>
+        <fg-input 
+            name="rg"
+            placeholder="rg"
+            v-model="model.rg"
+            v-validate="modelValidations.rg"
+            :error="getError('rg')"
+            addon-left-icon="nc-icon nc-badge">
+        </fg-input>
+        <fg-input 
+            name="telefone"
+            placeholder="telefone"
+            v-model="model.telefone"
+            v-validate="modelValidations.telefone"
+            :error="getError('telefone')"
+            addon-left-icon="nc-icon nc-headphones">
+        </fg-input>
+        <fg-input 
+            name="celular"
+            placeholder="celular"
+            v-model="model.celular"
+            v-validate="modelValidations.celular"
+            :error="getError('celular')"
+            addon-left-icon="nc-icon nc-headphones">
+        </fg-input>
+            <div class="form-group">
+              <el-date-picker v-model="model.datePicker" type="date" placeholder="Data Nascimento"
+                              :picker-options="pickerOptions1">
+              </el-date-picker>
+          </div>
         <el-select class="select-default"
           v-model="model.tipo"
           name="tipo_user"
@@ -72,20 +110,52 @@
   </div>
 </template>
 <script>
-  import {Upload} from 'element-ui';
+  import {DatePicker, TimeSelect, Slider, Tag, Input, Button, Select, Option,Upload} from 'element-ui'
 
   export default {
     components: {
+      [DatePicker.name]: DatePicker,
       [Upload.name]: Upload
     },
     data() {
       return {
+        pickerOptions1: {
+          shortcuts: [{
+            text: 'Today',
+            onClick (picker) {
+              picker.$emit('pick', new Date())
+            }
+          },
+          {
+            text: 'Yesterday',
+            onClick (picker) {
+              const date = new Date()
+              date.setTime(date.getTime() - 3600 * 1000 * 24)
+              picker.$emit('pick', date)
+            }
+          },
+          {
+            text: 'A week ago',
+            onClick (picker) {
+              const date = new Date()
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', date)
+            }
+          }]
+        },
+        datePicker: '',
         model: {
           firstName: '',
-          lastName: '',
           email: '',
+          senha: '',
+          cvm: '',
+          cpf: '',
+          cnh: '',
+          rg: '',
+          tipo: '',
           telefone: '',
           celular: '',
+          datePicker: '',
           imageUrl: 'static/img/default-avatar.png'
         },
         modelValidations: {
@@ -93,9 +163,23 @@
             required: true,
             min: 5
           },
-          lastName: {
-            required: true,
-            min: 5
+          senha: {
+            required: true
+          },
+          cpf: {
+            required: true
+          },
+          cnh: {
+            required: true
+          },
+          rg: {
+            required: true
+          },
+          telefone: {
+            required: true
+          },
+          celular: {
+            required: true
           },
           email: {
             required: true,
@@ -104,15 +188,15 @@
         },
         options: [
           {
-            value: 'adm',
+            value: 1,
             label: 'Administrador'
           },
           {
-            value: 'ope',
+            value: 2,
             label: 'Operador'
           },
           {
-            value: 'ass',
+            value: 3,
             label: 'Assessor'
           }
         ]
