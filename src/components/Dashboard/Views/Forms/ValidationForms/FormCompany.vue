@@ -25,6 +25,14 @@
                 </fg-input>
             </div>
             <div class="form-group">
+
+                <label>Tipo de Endereço</label>
+                <div>
+                  <el-select class="select-default" v-model="model.tipoAddress" name="tipoAddress" placeholder="">
+                    <el-option class="select-default" v-for="item in optionsAddres" :key="item.value" :label="item.label" :value="item.value">
+                    </el-option>
+                </el-select>
+                </div>
                 <label>Logradouro</label>
                 <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
                 </fg-input>
@@ -37,9 +45,15 @@
                 <label>Cidade</label>
                 <fg-input type="text" name="cidade" v-validate="modelValidations.cidade" :error="getError('cidade')" v-model="model.cidade">
                 </fg-input>
-                <label>Estado</label>
-                <fg-input type="text" name="estado" v-validate="modelValidations.estado" :error="getError('estado')" v-model="model.estado">
-                </fg-input>
+                <div class="col-lg-6">
+                    <label>Estado</label>
+                    <fg-input :error="getError('estado')">
+                        <el-select class="select-default" v-model="model.estado" name="tipo_user" v-validate="modelValidations.estado" placeholder="">
+                            <el-option class="select-default" v-for="item in optionsStade" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </fg-input>
+                </div>
             </div>
         </div>
         <div class="card-footer text-right">
@@ -52,7 +66,6 @@
 
 <script>
 import axios from 'axios'
-// import state from '../util/state'
 export default {
 
     data() {
@@ -71,6 +84,7 @@ export default {
                 estado: ''
             },
             results: [],
+            resultAdress: [],
             modelValidations: {
                 nome: {
                     required: true
@@ -102,8 +116,139 @@ export default {
                 },
                 estado: {
                     required: true
+                },
+                estado: {
+                    required: true
                 }
-            }
+            },
+            optionsAddres: [
+                {
+                    value: '',
+                    label: 'Selecione..'
+                },
+                {
+                    value: 'Comercial',
+                    label: 'Comercial'
+                },
+                {
+                    value: 'Residencial',
+                    label: 'Residencial'
+                }
+            ],
+            optionsStade: [
+                {
+                    value: '',
+                    label: 'Selecione...'
+                },
+                {
+                    value: 'AC',
+                    label: 'Acre'
+                },
+                {
+                    value: 'AL',
+                    label: 'Alagoas'
+                },
+                {
+                    value: 'AP',
+                    label: 'Amapá'
+                },
+                {
+                    value: 'AM',
+                    label: 'Amazonas'
+                },
+                {
+                    value: 'BA',
+                    label: 'Bahia'
+                },
+                {
+                    value: 'CE',
+                    label: 'Ceará'
+                },
+                {
+                    value: 'DF',
+                    label: 'Distrito Federal'
+                },
+                {
+                    value: 'ES',
+                    label: 'Espírito Santo'
+                },
+                {
+                    value: 'GO',
+                    label: 'Goiás'
+                },
+                {
+                    value: 'MA',
+                    label: 'Maranhão'
+                },
+                {
+                    value: 'MT',
+                    label: 'Mato Grosso'
+                },
+                {
+                    value: 'MS',
+                    label: 'Mato Grosso do Sul'
+                },
+                {
+                    value: 'MG',
+                    label: 'Minas Gerais'
+                },
+                {
+                    value: 'PA',
+                    label: 'Pará'
+                },
+                {
+                    value: 'PB',
+                    label: 'Paraíba'
+                },
+                {
+                    value: 'PR',
+                    label: 'Paraná'
+                },
+                {
+                    value: 'PE',
+                    label: 'Pernambuco'
+                },
+                {
+                    value: 'PI',
+                    label: 'Piauí'
+                },
+                {
+                    value: 'RJ',
+                    label: 'Rio de Janeiro'
+                },
+                {
+                    value: 'RN',
+                    label: 'Rio Grande do Norte'
+                },
+                {
+                    value: 'RS',
+                    label: 'Rio Grande do Sul'
+                },
+                {
+                    value: 'RO',
+                    label: 'Rondônia'
+                },
+                {
+                    value: 'RR',
+                    label: 'Roraima'
+                },
+                {
+                    value: 'SC',
+                    label: 'Santa Catarina'
+                },
+                {
+                    value: 'SP',
+                    label: 'São Paulo'
+                },
+                {
+                    value: 'SE',
+                    label: 'Sergipe'
+                },
+                {
+                    value: 'TO',
+                    label: 'Tocantins'
+                }
+            ]
         }
     },
     methods: {
@@ -114,21 +259,37 @@ export default {
             this.$validator.validateAll().then(isValid => {
                 this.$emit('on-submit', this.salvar(), isValid)
             })
-        }
+        } // TODO - wellingon - teste essa fun��o
     },
     salvar() {
         let empresa = {
-            nome: this.model.nome
-            /*razao_social: this.model.nome,
-            site: this.form.site,
+            nome: this.model.nome,
+            razao_social: this.model.nome,
             telefone: this.form.telefone,
             email: this.form.email,
-            cnpj: this.form.cnpj*/
+            cnpj: this.form.cnpj
+        }
+        let endereco = {
+            logradouro: this.model.nome,
+            cep: this.model.logradouro,
+            uf: this.model.uf,
+            bairro: this.model.bairro,
+            cidade: this.model.cidade,
+            numero: this.model.numero
         }
         axios.post(process.env.VUE_APP_ROOT_API + '/empresa', empresa)
             .then(response => {
                 this.results = response.data
-                alert('Empresa cadastrada com sucesso')
+                this.endereco.id_empresa = response.data.id
+                // Cadastro de Endereço
+                axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
+                    .then(response => {
+                        this.resultAdress = response.data
+                        alert('Empresa cadastrada com sucesso')
+                    })
+                    .catch(error => {
+                        console.log(error.response.data)
+                    })
             })
             .catch(error => {
                 alert(error.response)
@@ -137,5 +298,6 @@ export default {
     }
 }
 </script>
+
 <style>
 </style>
