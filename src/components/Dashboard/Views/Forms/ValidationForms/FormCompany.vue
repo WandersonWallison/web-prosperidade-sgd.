@@ -37,22 +37,10 @@
   </div>
 </template>
 <script>
-<<<<<<< HEAD
 import axios from 'axios'
 // import state from '../util/state'
-export default {
-=======
-  import axios from 'axios'
-  import FirstStep from '../Wizard/FirstStepEmpresa.vue'
-  import SecondStep from '../Wizard/SecondStepEmpresa.vue'
-  import ThirdStep from '../Wizard/ThirdStepEmpresa.vue'
-  import swal from 'sweetalert2'
-  import {Wizard, WizardTab} from 'src/components/UIComponents'
->>>>>>> 01fe8ab433a10f222a55919aed4de4d9da7451e8
-
   export default {
     data() {
-<<<<<<< HEAD
         return {
             model: {
                 nome: '',
@@ -136,59 +124,3 @@ export default {
 </script>
 <style>
 </style>
-=======
-      return {
-        wizardModel: {}
-      }
-    },
-    components: {
-      FirstStep,
-      SecondStep,
-      ThirdStep,
-      Wizard,
-      WizardTab
-    },
-    methods: {
-      validateStep(ref) {
-        return this.$refs[ref].validate()
-      },
-      onStepValidated(validated, model) {
-        this.wizardModel = {...this.wizardModel, ...model}
-      },
-      wizardComplete() {
-        let empresa = {
-                nome: this.wizardModel.firstName,
-                email: this.wizardModel.email,
-                cnpj: this.wizardModel.cnpj,
-                // id_grupo: this.wizardModel.tipo
-                }
-        let endereco = {
-                logradouro: this.wizardModel.logradouro,
-                cep: this.wizardModel.cep,
-                bairro: this.wizardModel.bairro,
-                cidade: this.wizardModel.cidade,
-                uf: this.wizardModel.estado,
-                numero: this.wizardModel.numero,
-                id_user: ''
-      }
-                axios.post(process.env.VUE_APP_ROOT_API  + '/empresa', empresa)
-                .then(response => {
-                    this.results = response.data
-                    endereco.id_empresa = response.data.id
-                      axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
-                        .then(response => {
-                    swal('Bom trabalho!', 'Empresa Cadastrado com sucesso!', 'success')
-                    this.$router.push('/forms/UserList')
-                    })
-                  })
-                    .catch(error => {
-                        alert(error.response)
-                        console.log(error.response.data)
-                        })
-                    }
-        //swal('Good job!', 'You clicked the finish button!', 'success')
-
-      }
-  }
-</script>
->>>>>>> 01fe8ab433a10f222a55919aed4de4d9da7451e8
