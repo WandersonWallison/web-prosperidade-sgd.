@@ -1,15 +1,15 @@
 export default [
   {
     name: 'Dashboard',
-    icon: 'nc-icon nc-globe',
+    icon: 'nc-icon nc-chart-pie-36',
     path: '/admin/overview'
   },
  {
   name: 'Empreendimento',
-  icon: 'nc-icon nc-ruler-pencil',
+  icon: 'nc-icon nc-bank',
   children: [{
     name: 'Empresa',
-    path: '/forms/companyList'
+    path: '/forms/CompanyList'
   },
   {
     name: 'Operador',
@@ -46,6 +46,14 @@ export default [
   }]
 },
 {
+  name: 'Integração',
+  icon: 'nc-icon nc-cloud-upload-94',
+  children: [{
+    name: 'Comissionamento',
+    path: '/forms/ComissionList'
+  }]
+},
+{
   name: 'Administração',
   icon: 'nc-icon nc-badge',
   collapsed: true,
@@ -54,10 +62,10 @@ export default [
       name: 'Usuário',
       path: '/forms/UserList'
   },
-  {
+ /* {
     name: 'Controle de Usuários',
     path: '/forms/UserControlList'
-  },
+  },*/
   /*
   {
     name: 'Mensagens',

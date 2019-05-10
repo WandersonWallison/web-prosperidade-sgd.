@@ -6,14 +6,14 @@
           <!-- ------------------------ -->
           <div class="col-sm-10">
             <div class="card-body text-left">
-                <div><h5 class="card-title">Empresas</h5></div>
+                <div><h5 class="card-title">Comissões</h5></div>
             </div>
           </div>
           <!-- ------------------------- -->
           <div>
             <div class="col-sm-1">
               <div class="iten-center">
-                <p-button type="primary"  @click="handleLike()">Cadastro</p-button>
+                <p-button type="primary">Cadastro</p-button>
               </div>
             </div>
           </div>
@@ -25,26 +25,18 @@
             <el-table-column type="index">
 
             </el-table-column>
-            <el-table-column prop="nome"
+            <el-table-column prop="name"
                              label="Nome">
             </el-table-column>
             <el-table-column prop="job"
-                             label="Razão Social">
-            </el-table-column>
-            <el-table-column prop="salary"
-                             label="CNPJ">
-            </el-table-column>
-            <el-table-column prop="salary"
-                             label="Telefone">
-            </el-table-column>
-            <el-table-column prop="salary"
-                             label="E-mail">
+                             label="Escritório">
             </el-table-column>
             <el-table-column
               class-name="action-buttons td-actions"
               align="right"
               label="Ações">
               <template slot-scope="props">
+
                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                   <i class="fa fa-edit"></i>
                 </p-button>
@@ -60,8 +52,6 @@
   </div>
 </template>
 <script>
-  import swal from 'sweetalert2'
-  import axios from 'axios'
   import Vue from 'vue'
   import {Table, TableColumn} from 'element-ui'
   import PSwitch from 'src/components/UIComponents/Switch.vue'
@@ -102,10 +92,8 @@
           salary: '€ 69,201',
           active: true
         }
-        */
-       ],
+        */],
         productsTable: [
-
           {
             image: 'static/img/tables/agenda.png',
             title: 'Notebook',
@@ -127,42 +115,18 @@
             price: 799,
             quantity: 1
           }
-
         ]
       }
     },
-    mounted () {
-       axios.get(process.env.VUE_APP_ROOT_API +'/empresa').then(response => {
-        this.tableData = response.data
-      })
-    },
     methods: {
-      handleLike () {
-        this.$router.push('/forms/company')
+      handleLike (index, row) {
+        alert(`Your clicked on Like button`)
       },
       handleEdit (index, row) {
         alert(`Your want to edit ${row.name}`)
       },
       handleDelete (index, row) {
-        let empresa = {
-                ativo: false
-                /*razao_social: this.model.nome,
-                site: this.form.site,
-                telefone: this.form.telefone,
-                email: this.form.email,
-                cnpj: this.form.cnpj*/
-                }
-                axios.put(process.env.VUE_APP_ROOT_API  + '/empresa/'+row.id, empresa)
-                .then(response => {
-                    this.results = response.data
-                    // alert(`Empresa deletada com sucesso ${row.nome}`)
-                    swal('Bom trabalho!', `Empresa ${row.nome} deletada com sucesso!`, 'success')
-                    window.location.reload()
-                    })
-                    .catch(error => {
-                        alert(error.response)
-                        console.log(error.response.data)
-                        })
+        alert(`Your want to delete ${row.name}`)
       },
       getSummaries (param) {
         const { columns } = param
