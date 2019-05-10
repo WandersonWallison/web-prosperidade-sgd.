@@ -128,6 +128,11 @@
         ]
       }
     },
+    updated (){
+      axios.get(process.env.VUE_APP_ROOT_API +'/user?where={"ativo": 1}').then(response => {
+        this.tableData = response.data
+      })
+    },
     mounted () {
        axios.get(process.env.VUE_APP_ROOT_API +'/user?where={"ativo": 1}').then(response => {
         this.tableData = response.data
@@ -154,7 +159,7 @@
                     this.results = response.data
                     // alert(`Usuario deletada com sucesso ${row.username}`)
                     swal('Bom trabalho!', `Usuario ${row.username} deletado com sucesso!`, 'success')
-                    window.location.reload()
+                    this.$router.push('/forms/UserList')
                     })
                     .catch(error => {
                         alert(error.response)
