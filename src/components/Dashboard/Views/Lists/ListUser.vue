@@ -30,12 +30,12 @@
             <el-table-column prop="email"
                              label="E-mail">
             </el-table-column>
-            <el-table-column prop="telefone"
+            <!--<el-table-column prop="telefone"
                              label="Telefone">
             </el-table-column>
             <el-table-column prop="celular"
                              label="Celular">
-            </el-table-column>
+            </el-table-column>-->
             <el-table-column prop="id_grupo.descricao"
                              label="Grupo">
             </el-table-column>
@@ -129,7 +129,7 @@
       }
     },
     mounted () {
-       axios.get(process.env.VUE_APP_ROOT_API +'/user?where={"ativo": 1}').then(response => {
+       axios.get(process.env.VUE_APP_ROOT_API +'/user').then(response => {
         this.tableData = response.data
       })
     },
