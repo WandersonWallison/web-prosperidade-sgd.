@@ -44,7 +44,9 @@
               align="right"
               label="Ações">
               <template slot-scope="props">
-
+                <p-button type="error" size="sm" icon @click="handleEdit(props.$index, props.row)">
+                  <i class="fa fa-send"></i>
+                </p-button>
                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                   <i class="fa fa-edit"></i>
                 </p-button>
@@ -57,6 +59,11 @@
         </div>
       </div>
     </div>
+    <md-dialog :md-active.sync="showEndereco">
+      <div class="div">
+      <user-edit :selected="selected"></user-edit>
+      </div>
+    </md-dialog>
   </div>
 </template>
 <script>
@@ -65,14 +72,32 @@
   import swal from 'sweetalert2'
   import {Table, TableColumn} from 'element-ui'
   import PSwitch from 'src/components/UIComponents/Switch.vue'
+  import UserEdit from '../Forms/FormUserEdit.vue'
   Vue.use(Table)
   Vue.use(TableColumn)
-  export default{
+  export default {
+    name: 'ListUser',
+    props:{
+    selected:{
+        type: Object,
+        default: []
+      }
+    },
     components: {
-      PSwitch
+      PSwitch,
+      UserEdit
     },
     data () {
       return {
+        showEndereco: false,
+        selected:
+         {
+            image: 'static/img/tables/agenda.png',
+            title: 'Notebook',
+            subTitle: 'Most beautiful agenda for the office.',
+            price: 49,
+            quantity: 1
+          },
         tableData: [
         /*
         {
@@ -128,11 +153,11 @@
         ]
       }
     },
-    updated (){
+    /*updated (){
       axios.get(process.env.VUE_APP_ROOT_API +'/user?where={"ativo": 1}').then(response => {
         this.tableData = response.data
       })
-    },
+    },*/
     mounted () {
        axios.get(process.env.VUE_APP_ROOT_API +'/user').then(response => {
         this.tableData = response.data
@@ -143,7 +168,10 @@
        this.$router.push('/forms/user')
       },
       handleEdit (index, row) {
-        alert(`Your want to edit ${row.name}`)
+        this.showEndereco = true
+        this.selected = row
+        // this.$router.push('/forms/userEdit')
+        // alert(`Your want to edit ${row.name}`)
       },
       handleDelete (index, row) {
           let user = {
@@ -192,5 +220,8 @@
     button.btn {
       margin-right: 5px;
     }
+  }
+  .div{
+    overflow: auto
   }
 </style>

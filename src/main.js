@@ -10,6 +10,8 @@ import Element from 'element-ui/lib'
 import App from './App.vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import Vuetify from 'vuetify'
+import VueMaterial from 'vue-material'
 
 // Plugins
 import GlobalComponents from './globalComponents'
@@ -21,9 +23,10 @@ import initProgress from './progressbar'
 import routes from './routes/routes'
 
 // library imports
-
+// import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 import './assets/sass/paper-dashboard.scss'
 import './assets/sass/demo.scss'
+import 'vue-material/dist/vue-material.min.css'
 
 import sidebarLinks from './sidebarLinks'
 import './registerServiceWorker'
@@ -31,11 +34,13 @@ import './registerServiceWorker'
 // import Axios from 'vue-axios'
 
 // plugin setup
+Vue.use(VueMaterial)
 Vue.use(VueRouter)
 Vue.use(VueRouterPrefetch)
 Vue.use(GlobalDirectives)
 Vue.use(GlobalComponents)
 Vue.use(VueNotify)
+Vue.use(Vuetify)
 Vue.use(SideBar, {sidebarLinks: sidebarLinks})
 Vue.use(VeeValidate)
 Vue.use(axios , VueAxios)

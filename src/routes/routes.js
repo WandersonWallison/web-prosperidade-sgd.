@@ -37,6 +37,7 @@ const ComissionList = () => import(/* webpackChunkName: "forms" */ 'src/componen
 const UserControlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListUserControl.vue')
 const OfficeForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms/FormOffice.vue')
 const UserForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/FormUser.vue')
+const UserFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/FormUserEdit.vue')
 const UserList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListUser.vue')
 // const TaskList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListTask.vue')
 const Wizard = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Wizard.vue')
@@ -173,6 +174,11 @@ let formsMenu = {
       path: 'user',
       name: 'Form User',
       component: UserForms
+    },
+    {
+      path: 'userEdit',
+      name: 'Form User Edit',
+      component: UserFormsEdit
     },
     {
       path: 'UserList',
