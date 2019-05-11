@@ -59,7 +59,7 @@
       },
       logo: {
         type: String,
-        default: 'static/img/favicon.png',
+        default: 'static/img/favicon_n.png',
         description: 'Sidebar Logo'
       },
       sidebarLinks: {
