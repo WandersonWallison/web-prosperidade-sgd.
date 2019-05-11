@@ -1,49 +1,56 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <h4 class="title">Editar Usuário</h4>
+      <h4 class="title">Detalhes do Usuário</h4>
     </div>
     <div class="card-body">
       <form>
         <div class="row">
           <div class="col-md-5">
             <fg-input type="text"
+                      :disabled="true"
                       label="Nome"
                       v-model="user.username">
             </fg-input>
           </div>
           <div class="col-md-7">
             <fg-input type="text"
+                      :disabled="true"
                       label="Email"
                       v-model="user.email">
             </fg-input>
           </div>
           <div class="col-md-5">
             <fg-input type="text"
+                      :disabled="true"
                       label="Telefone"
                       v-model="user.telefone">
             </fg-input>
           </div>
           <div class="col-md-5">
             <fg-input type="text"
+                      :disabled="true"
                       label="Celular"
                       v-model="user.celular">
             </fg-input>
           </div>
           <div class="col-md-3">
             <fg-input type="text"
+                      :disabled="true"
                       label="Cpf"
                       v-model="user.cpf">
             </fg-input>
           </div>
           <div class="col-md-3">
             <fg-input type="text"
+                      :disabled="true"
                       label="Cnh"
                       v-model="user.cnh">
             </fg-input>
           </div>
           <div class="col-md-3">
             <fg-input type="text"
+                      :disabled="true"
                       label="Rg"
                       v-model="user.rg">
             </fg-input>
@@ -53,19 +60,21 @@
         <div class="row">
           <div class="col-md-4">
             <fg-input type="text"
+                      :disabled="true"
                       label="Cep"
                       v-model="user.endereco[0].cep">
             </fg-input>
           </div>
           <div class="col-md-4">
             <fg-input type="text"
+                      :disabled="true"
                       label="Logradouro"
                       v-model="user.endereco[0].logradouro">
             </fg-input>
           </div>
           <div class="col-md-4">
                     <fg-input>
-                        <el-select class="select-default" v-model="user.endereco[0].uf" name="tipo_user"  placeholder="Selecione...">
+                        <el-select class="select-default" v-model="user.endereco[0].uf" name="tipo_user" :disabled="true" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in optionsStade" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
@@ -76,28 +85,26 @@
         <div class="row">
           <div class="col-md-4">
             <fg-input type="text"
+                      :disabled="true"
                       label="Cidade"
                       v-model="user.endereco[0].cidade">
             </fg-input>
           </div>
           <div class="col-md-4">
             <fg-input type="text"
+                      :disabled="true"
                       label="Bairro"
                       v-model="user.endereco[0].bairro">
             </fg-input>
           </div>
           <div class="col-md-4">
             <fg-input type="number"
+                      :disabled="true"
                       label="Numero"
                       v-model="user.endereco[0].numero">
             </fg-input>
           </div>
           
-        </div>
-        <div class="text-center">
-          <button type="submit" class="btn btn-info btn-fill btn-wd" @click.prevent="updateProfile">
-            Atualizar Usuário
-          </button>
         </div>
         <div class="clearfix"></div>
       </form>

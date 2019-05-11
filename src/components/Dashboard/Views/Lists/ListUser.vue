@@ -44,7 +44,7 @@
               align="right"
               label="Ações">
               <template slot-scope="props">
-                <p-button type="error" size="sm" icon @click="handleEdit(props.$index, props.row)">
+                <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
                   <i class="fa fa-send"></i>
                 </p-button>
                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
@@ -59,7 +59,12 @@
         </div>
       </div>
     </div>
-    <md-dialog :md-active.sync="showEndereco">
+    <md-dialog :md-active.sync="showDetails">
+      <div class="div">
+      <user-details :selected="selected"></user-details>
+      </div>
+    </md-dialog>
+    <md-dialog :md-active.sync="showUpdate">
       <div class="div">
       <user-edit :selected="selected"></user-edit>
       </div>
@@ -73,6 +78,7 @@
   import {Table, TableColumn} from 'element-ui'
   import PSwitch from 'src/components/UIComponents/Switch.vue'
   import UserEdit from '../Forms/FormUserEdit.vue'
+  import UserDetails from '../Forms/FormUserDetails.vue'
   Vue.use(Table)
   Vue.use(TableColumn)
   export default {
@@ -85,11 +91,13 @@
     },
     components: {
       PSwitch,
-      UserEdit
+      UserEdit,
+      UserDetails
     },
     data () {
       return {
-        showEndereco: false,
+        showDetails: false,
+        showUpdate: false,
         selected:
          {
             image: 'static/img/tables/agenda.png',
@@ -164,11 +172,15 @@
       })
     },
     methods: {
+      handleDetails(index, row){
+        this.showDetails = true
+        this.selected = row
+      },
       handleLike (index, row) {
        this.$router.push('/forms/user')
       },
       handleEdit (index, row) {
-        this.showEndereco = true
+        this.showUpdate = true
         this.selected = row
         // this.$router.push('/forms/userEdit')
         // alert(`Your want to edit ${row.name}`)
