@@ -157,7 +157,7 @@ let formsMenu = {
     },
     {
       path: 'ClientList',
-      name: 'List Advisors',
+      name: 'Cad Advisors',
       component: ClientList
     },
     {
@@ -182,7 +182,7 @@ let formsMenu = {
     },
     {
       path: 'UserList',
-      name: 'Form User',
+      name: 'List User',
       component: UserList
     },
     {

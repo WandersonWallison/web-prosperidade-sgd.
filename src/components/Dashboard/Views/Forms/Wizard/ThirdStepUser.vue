@@ -3,15 +3,17 @@
     <div class="col-sm-12">
       <h5 class="info-text"> Complete seu cadastro! </h5>
     </div>
-    <div class="col-sm-7">
+    <div class="col-sm-3">
       <fg-input label="Cep"
                 name="cep"
+                v-mask="'#####-###'"
                 v-model="model.cep"
                 :error="getError('cep')"
-                v-validate="modelValidations.cep">
+                v-validate="modelValidations.cep"
+                @change="buscarEndereco($event)">
       </fg-input>
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-8">
       <fg-input label="Logradouro"
                 name="logradouro"
                 v-model="model.logradouro"
@@ -19,7 +21,24 @@
                 v-validate="modelValidations.logradouro">
       </fg-input>
     </div>
-    <div class="col-sm-5">
+    <div class="col-sm-3">
+      <fg-input label="Numero"
+                name="numero"
+                v-mask="'########'"
+                v-model="model.numero"
+                :error="getError('numero')"
+                v-validate="modelValidations.numero">
+      </fg-input>
+    </div>
+     <div class="col-sm-8">
+      <fg-input label="Bairro"
+                name="bairro"
+                v-model="model.bairro"
+                :error="getError('bairro')"
+                v-validate="modelValidations.bairro">
+      </fg-input>
+    </div>
+    <div class="col-sm-6">
       <fg-input label="Cidade"
                 name="cidade"
                 v-model="model.cidade"
@@ -27,23 +46,6 @@
                 v-validate="modelValidations.cidade">
       </fg-input>
     </div>
-     <div class="col-sm-5">
-      <fg-input label="Bairro"
-                name="bairro"
-                v-model="model.bairro"
-                :error="getError('bairro')"
-                v-validate="modelValidations.bairro">
-      </fg-input>
-    </div>      
-    <div class="col-sm-5">
-      <fg-input type="number"
-                label="Numero"
-                name="numero"
-                v-model="model.numero"
-                :error="getError('numero')"
-                v-validate="modelValidations.numero">
-      </fg-input>
-    </div>      
     <div class="col-sm-5">
         <label>Estado</label>
         <fg-input :error="getError('estado')">
@@ -53,9 +55,9 @@
                      v-validate="modelValidations.estado">
             <el-option v-for="country in countryOptions"
                        class="select-primary"
-                       :label="country"
-                       :value="country"
-                       :key="country"></el-option>
+                       :label="country.label"
+                       :value="country.value"
+                       :key="country.value"></el-option>
           </el-select>
         </fg-input>
     </div>
@@ -63,6 +65,8 @@
 </template>
 <script>
   import {Select, Option} from 'element-ui'
+  import {mask} from 'vue-the-mask'
+  import axios from 'axios'
   export default {
     components: {
       [Select.name]: Select,
@@ -77,7 +81,115 @@
           bairro: '',
           country: ''
         },
-        countryOptions: ['PE', 'RJ', 'SP', 'BH', 'MG', 'PB'],
+        countryOptions: [{
+                    value: 'AC',
+                    label: 'Acre'
+                },
+                {
+                    value: 'AL',
+                    label: 'Alagoas'
+                },
+                {
+                    value: 'AP',
+                    label: 'Amapá'
+                },
+                {
+                    value: 'AM',
+                    label: 'Amazonas'
+                },
+                {
+                    value: 'BA',
+                    label: 'Bahia'
+                },
+                {
+                    value: 'CE',
+                    label: 'Ceará'
+                },
+                {
+                    value: 'DF',
+                    label: 'Distrito Federal'
+                },
+                {
+                    value: 'ES',
+                    label: 'Espírito Santo'
+                },
+                {
+                    value: 'GO',
+                    label: 'Goiás'
+                },
+                {
+                    value: 'MA',
+                    label: 'Maranhão'
+                },
+                {
+                    value: 'MT',
+                    label: 'Mato Grosso'
+                },
+                {
+                    value: 'MS',
+                    label: 'Mato Grosso do Sul'
+                },
+                {
+                    value: 'MG',
+                    label: 'Minas Gerais'
+                },
+                {
+                    value: 'PA',
+                    label: 'Pará'
+                },
+                {
+                    value: 'PB',
+                    label: 'Paraíba'
+                },
+                {
+                    value: 'PR',
+                    label: 'Paraná'
+                },
+                {
+                    value: 'PE',
+                    label: 'Pernambuco'
+                },
+                {
+                    value: 'PI',
+                    label: 'Piauí'
+                },
+                {
+                    value: 'RJ',
+                    label: 'Rio de Janeiro'
+                },
+                {
+                    value: 'RN',
+                    label: 'Rio Grande do Norte'
+                },
+                {
+                    value: 'RS',
+                    label: 'Rio Grande do Sul'
+                },
+                {
+                    value: 'RO',
+                    label: 'Rondônia'
+                },
+                {
+                    value: 'RR',
+                    label: 'Roraima'
+                },
+                {
+                    value: 'SC',
+                    label: 'Santa Catarina'
+                },
+                {
+                    value: 'SP',
+                    label: 'São Paulo'
+                },
+                {
+                    value: 'SE',
+                    label: 'Sergipe'
+                },
+                {
+                    value: 'TO',
+                    label: 'Tocantins'
+                }
+            ],
         modelValidations: {
           cep: {
             required: true
@@ -97,6 +209,7 @@
         }
       }
     },
+    directives: {mask},
     methods: {
       getError(fieldName) {
         return this.errors.first(fieldName)
@@ -106,7 +219,37 @@
           this.$emit('on-validated', res, this.model)
           return res
         })
-      }
+      },
+      buscarEndereco() {
+            this.model.bairro = ''
+            this.model.logradouro = ''
+            this.model.cidade = ''
+            this.model.country = ''
+
+            axios.get('https://api.postmon.com.br/v1/cep/' + this.model.cep)
+                .then(response => {
+                    this.endereco = response.data
+                    if (this.endereco.cidade) {
+                        this.model.cidade = this.endereco.cidade
+                    }
+                    if (this.endereco.bairro) {
+                        this.model.bairro = this.endereco.bairro
+                    }
+                    if (this.endereco.logradouro) {
+                        this.model.logradouro = this.endereco.logradouro
+                    }
+                    if (this.endereco.complemento) {
+                        this.model.complemento = this.endereco.complemento
+                    }
+                    if (this.endereco.estado) {
+                        this.model.country = this.endereco.estado
+                    }
+                })
+                .catch(error => {
+                    // alert('Erro no cadastro do Endereço')
+                    console.log(error.response.data)
+                })
+        },
     }
 
   }

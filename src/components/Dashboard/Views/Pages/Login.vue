@@ -63,7 +63,7 @@ export default {
         },
         login() {
 
-            // TODO - Colocar resolução desse metodo para login
+            // TODO -Wellington Colocar resolução desse metodo para login
 
             axios.post(process.env.VUE_APP_ROOT_API + '/login', this.form)
             .then((result) => {
