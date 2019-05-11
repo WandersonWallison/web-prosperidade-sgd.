@@ -2,19 +2,6 @@
   <div>
     <h5 class="info-text"> Cadastro de Usuário</h5>
     <div class="row justify-content-center">
-      <!--
-      <div class="col-sm-4">
-        <div class="picture-container">
-          <el-upload class="picture"
-                     action="https://jsonplaceholder.typicode.com/posts/"
-                     :on-change="handlePreview"
-                     :auto-upload="false"
-                     :show-file-list="false">
-            <img v-if="model.imageUrl" :src="model.imageUrl" class="picture-src">
-          </el-upload>
-          <h6 class="description">Choose Picture</h6>
-        </div>
-      </div> -->
       <div class="col-12 col-sm-10 mt-3">
         <fg-input name="firstName"
             placeholder="Nome"
@@ -34,6 +21,7 @@
         </fg-input>
         <fg-input
             name="senha"
+            type="password"
             placeholder="Senha"
             v-model="model.senha"
             v-validate="modelValidations.senha"
