@@ -10,6 +10,7 @@
             </div>
           </div>
           <!-- ------------------------- -->
+          <!--
           <div>
             <div class="col-sm-1">
               <div class="iten-center">
@@ -17,6 +18,7 @@
               </div>
             </div>
           </div>
+          -->
         </div>
       </div>
       <div class="card-body row">

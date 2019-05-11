@@ -69,6 +69,7 @@
 </template>
 
 <script>
+// TODO - Wanderson - Fazer - Colocar o campo tipoUsuario para idenrificar se é Adm, Operador,
 import axios from 'axios'
 import Vue from 'vue'
 import swal from 'sweetalert2'
