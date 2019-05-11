@@ -23,7 +23,7 @@
             :error="getError('firstName')"
             addon-left-icon="nc-icon nc-single-02">
         </fg-input>
-        <fg-input 
+        <fg-input
             type="email"
             name="email"
             placeholder="E-mail"
@@ -32,7 +32,7 @@
             :error="getError('email')"
             addon-left-icon="nc-icon nc-email-85">
         </fg-input>
-        <fg-input 
+        <fg-input
             name="senha"
             placeholder="Senha"
             v-model="model.senha"
@@ -40,7 +40,7 @@
             :error="getError('senha')"
             addon-left-icon="nc-icon nc-key-25">
         </fg-input>
-        <fg-input 
+        <fg-input
             name="cvm"
             placeholder="cvm"
             v-model="model.cvm"
@@ -48,49 +48,58 @@
             :error="getError('cvm')"
             addon-left-icon="nc-icon nc-hat-3">
         </fg-input>
-        <fg-input 
+        <fg-input
             name="cpf"
             placeholder="cpf"
             v-model="model.cpf"
             v-validate="modelValidations.cpf"
             :error="getError('cpf')"
+             v-mask="'###.###.###-##'"
             addon-left-icon="nc-icon nc-badge">
         </fg-input>
-        <fg-input 
+        <fg-input
             name="cnh"
             placeholder="cnh"
             v-model="model.cnh"
             v-validate="modelValidations.cnh"
             :error="getError('cnh')"
+            v-mask="'##############'"
             addon-left-icon="nc-icon nc-badge">
         </fg-input>
-        <fg-input 
+        <fg-input
             name="rg"
             placeholder="rg"
             v-model="model.rg"
             v-validate="modelValidations.rg"
             :error="getError('rg')"
+            v-mask="'#########'"
             addon-left-icon="nc-icon nc-badge">
         </fg-input>
-        <fg-input 
+        <fg-input
             name="telefone"
             placeholder="telefone"
             v-model="model.telefone"
             v-validate="modelValidations.telefone"
             :error="getError('telefone')"
+            v-mask="'(##) ####-####'"
             addon-left-icon="nc-icon nc-headphones">
         </fg-input>
-        <fg-input 
+        <fg-input
             name="celular"
             placeholder="celular"
             v-model="model.celular"
             v-validate="modelValidations.celular"
             :error="getError('celular')"
+             v-mask="'(##) #####-####'"
             addon-left-icon="nc-icon nc-headphones">
         </fg-input>
             <div class="form-group">
-              <el-date-picker v-model="model.datePicker" type="date" placeholder="Data Nascimento"
-                              :picker-options="pickerOptions1">
+              <el-date-picker
+                  v-model="model.datePicker"
+                  type="date"
+                  placeholder="Data Nascimento"
+                  :picker-options="pickerOptions1"
+                  format="dd/MM/yyyy">
               </el-date-picker>
           </div>
         <el-select class="select-default"
@@ -111,7 +120,7 @@
 </template>
 <script>
   import {DatePicker, TimeSelect, Slider, Tag, Input, Button, Select, Option,Upload} from 'element-ui'
-
+  import {mask} from 'vue-the-mask'
   export default {
     components: {
       [DatePicker.name]: DatePicker,
@@ -202,6 +211,7 @@
         ]
       }
     },
+    directives: {mask},
     methods: {
       handlePreview(file) {
         this.model.imageUrl = URL.createObjectURL(file.raw);

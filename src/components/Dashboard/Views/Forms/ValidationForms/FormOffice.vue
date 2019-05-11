@@ -3,7 +3,7 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Cadastro de EscritÃ³rio
+                Cadastro de Escritório
             </h4>
         </div>
         <div class="card-body">
@@ -28,7 +28,7 @@
                 <label>Logradouro</label>
                 <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
                 </fg-input>
-                <label>NÃºmero</label>
+                <label>Número</label>
                 <fg-input type="text" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
                 </fg-input>
                 <label>Bairro</label>
@@ -120,7 +120,7 @@ export default {
                 },
                 {
                     value: 'AP',
-                    label: 'AmapÃ¡'
+                    label: 'Amapá'
                 },
                 {
                     value: 'AM',
@@ -132,7 +132,7 @@ export default {
                 },
                 {
                     value: 'CE',
-                    label: 'CearÃ¡'
+                    label: 'Ceará'
                 },
                 {
                     value: 'DF',
@@ -140,15 +140,15 @@ export default {
                 },
                 {
                     value: 'ES',
-                    label: 'EspÃ­rito Santo'
+                    label: 'Espí­rito Santo'
                 },
                 {
                     value: 'GO',
-                    label: 'GoiÃ¡s'
+                    label: 'Goiás'
                 },
                 {
                     value: 'MA',
-                    label: 'MaranhÃ£o'
+                    label: 'Maranhão'
                 },
                 {
                     value: 'MT',
@@ -164,15 +164,15 @@ export default {
                 },
                 {
                     value: 'PA',
-                    label: 'ParÃ¡na'
+                    label: 'Parána'
                 },
                 {
                     value: 'PB',
-                    label: 'ParaÃ­ba'
+                    label: 'Paraíba'
                 },
                 {
                     value: 'PR',
-                    label: 'ParanÃ¡'
+                    label: 'Paraná'
                 },
                 {
                     value: 'PE',
@@ -180,7 +180,7 @@ export default {
                 },
                 {
                     value: 'PI',
-                    label: 'PiauÃ­'
+                    label: 'Piauí'
                 },
                 {
                     value: 'RJ',
@@ -196,7 +196,7 @@ export default {
                 },
                 {
                     value: 'RO',
-                    label: 'RondÃ´nia'
+                    label: 'Rondônia'
                 },
                 {
                     value: 'RR',
@@ -208,7 +208,7 @@ export default {
                 },
                 {
                     value: 'SP',
-                    label: 'SÃ£o Paulo'
+                    label: 'São Paulo'
                 },
                 {
                     value: 'SE',
