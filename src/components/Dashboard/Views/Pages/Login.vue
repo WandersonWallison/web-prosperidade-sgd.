@@ -65,7 +65,7 @@ export default {
 
             // TODO - Colocar resolução desse metodo para login
 
-            axios.post('http://165.227.108.199:5050/login', this.form)
+            axios.post(process.env.VUE_APP_ROOT_API + '/login', this.form)
             .then((result) => {
               this.$router.push('/admin')
               console.log('Resultado:' + result.data)
