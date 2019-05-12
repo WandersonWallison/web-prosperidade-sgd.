@@ -27,7 +27,7 @@
             <el-table-column type="index">
 
             </el-table-column>
-            <el-table-column prop="name"
+            <el-table-column prop="username"
                              label="Nome">
             </el-table-column>
             <el-table-column prop="job"
@@ -58,6 +58,7 @@
 </template>
 <script>
   import Vue from 'vue'
+  import axios from 'axios'
   import {Table, TableColumn} from 'element-ui'
   import PSwitch from 'src/components/UIComponents/Switch.vue'
   Vue.use(Table)
@@ -71,6 +72,11 @@
         tableData: [],
         productsTable: []
       }
+    },
+    mounted() {
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1}').then(response => {
+            this.tableData = response.data
+        })
     },
     methods: {
       handleLike (index, row) {

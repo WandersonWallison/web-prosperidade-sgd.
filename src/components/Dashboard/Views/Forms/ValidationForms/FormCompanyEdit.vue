@@ -3,7 +3,7 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Cadastro de Empresa
+                Editar de Empresa
             </h4>
         </div>
         <div class="card-body">
@@ -26,7 +26,7 @@
             </div>
             <div class="form-group">
                 <label>CEP</label>
-                <fg-input type="text"  v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
+                <fg-input type="text" v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
                 </fg-input>
                 <label>Logradouro</label>
                 <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
@@ -54,6 +54,7 @@
                 <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
                 </fg-input>
                 -->
+
             </div>
         </div>
         <div class="card-footer text-right">
@@ -67,9 +68,11 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
-import {mask} from 'vue-the-mask'
+import {
+    mask
+} from 'vue-the-mask'
 export default {
-
+    name: 'EditCompany',
     data() {
         return {
             model: {
@@ -240,7 +243,23 @@ export default {
             ]
         }
     },
-    directives: {mask},
+    directives: {
+        mask
+    },
+    created () {
+
+        axios.get(process.env.VUE_APP_ROOT_API + '/empresa/'+ window.localStorage.getItem("empresa")).then(response => {
+            this.model = response.data
+            if (this.model.endereco[0]) {
+                this.model.cep = this.model.endereco[0].cep
+                this.model.logradouro = this.model.endereco[0].logradouro
+                this.model.numero = this.model.endereco[0].numero
+                this.model.bairro = this.model.endereco[0].bairro
+                this.model.cidade = this.model.endereco[0].cidade
+                this.model.estado = this.model.endereco[0].uf
+            }
+        })
+    },
     methods: {
         getError(fieldName) {
             return this.errors.first(fieldName)
@@ -255,10 +274,19 @@ export default {
             this.model.logradouro = ''
             this.model.cidade = ''
             this.model.estado = ''
+            this.model.numero = ''
+
+            console.log('buscar - Edit', this.model.cep)
 
             axios.get('https://api.postmon.com.br/v1/cep/' + this.model.cep)
                 .then(response => {
+
                     this.endereco = response.data
+
+                    if (this.endereco.cep) {
+                        this.model.cep = this.endereco.cep
+                         console.log('qual o cep', this.model.cep)
+                    }
                     if (this.endereco.cidade) {
                         this.model.cidade = this.endereco.cidade
                     }
@@ -267,6 +295,7 @@ export default {
                     }
                     if (this.endereco.logradouro) {
                         this.model.logradouro = this.endereco.logradouro
+                         console.log('Qual a rua ', this.model.logradouro)
                     }
                     if (this.endereco.complemento) {
                         this.model.complemento = this.endereco.complemento
@@ -289,20 +318,20 @@ export default {
                 cnpj: this.model.cnpj
             }
             let endereco = {
-                logradouro: this.model.logradouro,
-                cep: this.model.cep,
+                logradouro: this.model.nome,
+                cep: this.model.logradouro,
                 uf: this.model.estado,
                 bairro: this.model.bairro,
                 cidade: this.model.cidade,
                 numero: this.model.numero,
                 tipo: 'Comercial'
             }
-            axios.post(process.env.VUE_APP_ROOT_API + '/empresa', empresa)
+            axios.put(process.env.VUE_APP_ROOT_API + '/empresa', empresa)
                 .then(response => {
                     this.results = response.data
                     endereco.id_empresa = response.data.id
                     // Cadastro de Endereço
-                    axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
+                    axios.put(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
                         .then(response => {
                             this.resultAdress = response.data
                             swal('Bom trabalho!', 'Empresa Cadastrada com sucesso!', 'success')
