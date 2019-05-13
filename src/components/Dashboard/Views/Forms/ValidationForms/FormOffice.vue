@@ -75,6 +75,7 @@ export default {
                 cidade: '',
                 estado: ''
             },
+            enderecoBuscado: [],
             modelValidations: {
                 nome: {
                     required: true
@@ -240,25 +241,25 @@ export default {
 
             axios.get('https://api.postmon.com.br/v1/cep/' + this.model.cep)
                 .then(response => {
-                    this.endereco = response.data
-                    if (this.endereco.cidade) {
-                        this.model.cidade = this.endereco.cidade
+                    this.enderecoBuscado = response.data
+                    if (this.enderecoBuscado.cidade) {
+                        this.model.cidade = this.enderecoBuscado.cidade
                     }
-                    if (this.endereco.bairro) {
-                        this.model.bairro = this.endereco.bairro
+                    if (this.enderecoBuscado.bairro) {
+                        this.model.bairro = this.enderecoBuscado.bairro
                     }
-                    if (this.endereco.logradouro) {
-                        this.model.logradouro = this.endereco.logradouro
+                    if (this.enderecoBuscado.logradouro) {
+                        this.model.logradouro = this.enderecoBuscado.logradouro
                     }
-                    if (this.endereco.complemento) {
-                        this.model.complemento = this.endereco.complemento
+                    if (this.enderecoBuscado.complemento) {
+                        this.model.complemento = this.enderecoBuscado.complemento
                     }
-                    if (this.endereco.estado) {
-                        this.model.estado = this.endereco.estado
+                    if (this.enderecoBuscado.estado) {
+                        this.model.estado = this.enderecoBuscado.estado
                     }
                 })
                 .catch(error => {
-                    // alert('Erro no cadastro do EndereÃÂ§o')
+                    // alert('Erro no cadastro do Endereço
                     console.log(error.response.data)
                 })
         },

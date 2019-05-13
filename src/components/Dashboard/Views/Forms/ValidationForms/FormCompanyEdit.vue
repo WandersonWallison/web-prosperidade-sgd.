@@ -90,6 +90,8 @@ export default {
                 cidade: '',
                 estado: ''
             },
+            companyEdit: {},
+            enderecoEdit: {},
             endereco: [],
             results: [],
             resultAdress: [],
@@ -190,7 +192,7 @@ export default {
                 },
                 {
                     value: 'PB',
-                    label: 'Paraíba'
+                    label: 'Paraí­ba'
                 },
                 {
                     value: 'PR',
@@ -246,18 +248,27 @@ export default {
     directives: {
         mask
     },
-    created () {
+    created() {
 
-        axios.get(process.env.VUE_APP_ROOT_API + '/empresa/'+ window.localStorage.getItem("empresa")).then(response => {
-            this.model = response.data
-            if (this.model.endereco[0]) {
-                this.model.cep = this.model.endereco[0].cep
-                this.model.logradouro = this.model.endereco[0].logradouro
-                this.model.numero = this.model.endereco[0].numero
-                this.model.bairro = this.model.endereco[0].bairro
-                this.model.cidade = this.model.endereco[0].cidade
-                this.model.estado = this.model.endereco[0].uf
+        axios.get(process.env.VUE_APP_ROOT_API + '/empresa/' + window.localStorage.getItem("empresa")).then(response => {
+            this.companyEdit = response.data
+            this.model.nome = this.companyEdit.nome
+            this.model.razao_social = this.companyEdit.razao_social
+            this.model.cnpj = this.companyEdit.cnpj
+            this.model.telefone = this.companyEdit.telefone
+            this.model.email = this.companyEdit.email
+            this.model.nome = this.companyEdit.nome
+
+            if (this.companyEdit.endereco.length > 0) {
+                this.model.cep = this.companyEdit.endereco[0].cep
+                this.model.logradouro = this.companyEdit.endereco[0].logradouro
+                this.model.numero = this.companyEdit.endereco[0].numero
+                this.model.bairro = this.companyEdit.endereco[0].bairro
+                this.model.cidade = this.companyEdit.endereco[0].cidade
+                this.model.estado = this.companyEdit.endereco[0].uf
             }
+            window.localStorage.removeItem("empresa")
+
         })
     },
     methods: {
@@ -276,8 +287,6 @@ export default {
             this.model.estado = ''
             this.model.numero = ''
 
-            console.log('buscar - Edit', this.model.cep)
-
             axios.get('https://api.postmon.com.br/v1/cep/' + this.model.cep)
                 .then(response => {
 
@@ -285,7 +294,6 @@ export default {
 
                     if (this.endereco.cep) {
                         this.model.cep = this.endereco.cep
-                         console.log('qual o cep', this.model.cep)
                     }
                     if (this.endereco.cidade) {
                         this.model.cidade = this.endereco.cidade
@@ -295,7 +303,6 @@ export default {
                     }
                     if (this.endereco.logradouro) {
                         this.model.logradouro = this.endereco.logradouro
-                         console.log('Qual a rua ', this.model.logradouro)
                     }
                     if (this.endereco.complemento) {
                         this.model.complemento = this.endereco.complemento
@@ -305,11 +312,11 @@ export default {
                     }
                 })
                 .catch(error => {
-                    // alert('Erro no cadastro do Endereço')
                     console.log(error.response.data)
                 })
         },
         salvar() {
+
             let empresa = {
                 nome: this.model.nome,
                 razao_social: this.model.nome,
@@ -326,12 +333,13 @@ export default {
                 numero: this.model.numero,
                 tipo: 'Comercial'
             }
-            axios.put(process.env.VUE_APP_ROOT_API + '/empresa', empresa)
+
+            axios.put(process.env.VUE_APP_ROOT_API + '/empresa/' + this.companyEdit.id , empresa)
                 .then(response => {
                     this.results = response.data
                     endereco.id_empresa = response.data.id
                     // Cadastro de Endereço
-                    axios.put(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
+                    axios.put(process.env.VUE_APP_ROOT_API + '/endereco/' + this.companyEdit.endereco[0].id , endereco)
                         .then(response => {
                             this.resultAdress = response.data
                             swal('Bom trabalho!', 'Empresa Cadastrada com sucesso!', 'success')

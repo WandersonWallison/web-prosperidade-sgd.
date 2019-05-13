@@ -25,7 +25,6 @@
         <div class="col-sm-12">
           <el-table :data="tableData" header-row-class-name="text-primary">
             <el-table-column type="index">
-
             </el-table-column>
             <el-table-column prop="username"
                              label="Nome">

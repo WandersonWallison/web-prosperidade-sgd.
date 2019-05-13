@@ -12,11 +12,11 @@
 
         </navbar-toggle-button>
       </div>
-      <a class="navbar-brand" href="#pablo"><img slot="header"  width="36" height="36" src="static\img\favicon.png" alt="...">Prosperidade</a>
+      <a class="navbar-brand" href="#pablo"><!--<img slot="header"  width="36" height="36" src="static\img\favicon_n.png" alt="...">-->Prosperidade Investimentos</a>
     </div>
 
     <template slot="navbar-menu">
-      <form>
+      <!--<form>
         <div class="input-group no-border">
           <input type="text" value="" class="form-control" placeholder="Search...">
           <div class="input-group-append">
@@ -25,17 +25,17 @@
             </div>
           </div>
         </div>
-      </form>
+      </form>-->
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link btn-magnify" href="#pablo">
-            <i class="nc-icon nc-layout-11"></i>
+            <i class="nc-icon nc-chat-33"></i>
             <p>
               <span class="d-lg-none d-md-block">Stats</span>
             </p>
           </a>
         </li>
-        <drop-down icon="nc-icon nc-bell-55" tag="li"
+        <drop-down icon="nc-icon nc-single-02" tag="li"
                    position="right"
                    direction="none"
                    class="nav-item btn-rotate dropdown">
@@ -45,23 +45,23 @@
              data-toggle="dropdown"
              aria-haspopup="true"
              :aria-expanded="isOpen">
-            <i class="nc-icon nc-bell-55"></i>
+            <i class="nc-icon nc-single-02"></i>
             <p>
               <span class="d-lg-none d-md-block">Some Actions</span>
             </p>
           </a>
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <a class="dropdown-item" href="#">Meu Perfil</a>
+          <a class="dropdown-item" href="#">Alterar Senha</a>
+          <a class="dropdown-item" href="/login">Sair</a>
         </drop-down>
-        <li class="nav-item">
+        <!--<li class="nav-item">
           <a class="nav-link btn-rotate" href="#pablo">
-            <i class="nc-icon nc-settings-gear-65"></i>
+            <i class="nc-icon nc-simple-remove"></i>
             <p>
               <span class="d-lg-none d-md-block">Account</span>
             </p>
           </a>
-        </li>
+        </li>-->
       </ul>
     </template>
   </navbar>
