@@ -15,10 +15,10 @@
                 <fg-input type="text" name="razao_social" v-validate="modelValidations.razao_social" :error="getError('razao_social')" v-model="model.razao_social">
                 </fg-input>
                 <label>CNPJ</label>
-                <fg-input type="text" name="cnpj" v-validate="modelValidations.cnpj" :error="getError('cnpj')" v-model="model.cnpj">
+                <fg-input type="text" v-mask="'##.###.###/#####-##'" name="cnpj" v-validate="modelValidations.cnpj" :error="getError('cnpj')" v-model="model.cnpj">
                 </fg-input>
                 <label>Telefone</label>
-                <fg-input type="text" name="telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-model="model.telefone">
+                <fg-input type="text" v-mask="'(##)#####-####'" name="telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-model="model.telefone">
                 </fg-input>
                 <label>E-mail</label>
                 <fg-input type="email" name="email" v-validate="modelValidations.email" :error="getError('email')" v-model="model.email">
@@ -26,13 +26,13 @@
             </div>
             <div class="form-group">
                 <label>CEP</label>
-                <fg-input type="text" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
+                <fg-input type="text"  v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
                 </fg-input>
                 <label>Logradouro</label>
                 <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
                 </fg-input>
                 <label>Número</label>
-                <fg-input type="text" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
+                <fg-input type="text" v-mask="'#####'" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
                 </fg-input>
                 <label>Bairro</label>
                 <fg-input type="text" name="bairro" v-validate="modelValidations.bairro" :error="getError('bairro')" v-model="model.bairro">
@@ -49,10 +49,11 @@
                         </el-select>
                     </fg-input>
                 </div>
+                <!--
                 <label>Complemento</label>
                 <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
                 </fg-input>
-
+                -->
             </div>
         </div>
         <div class="card-footer text-right">
@@ -66,6 +67,7 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
+import {mask} from 'vue-the-mask'
 export default {
 
     data() {
@@ -238,6 +240,7 @@ export default {
             ]
         }
     },
+    directives: {mask},
     methods: {
         getError(fieldName) {
             return this.errors.first(fieldName)
@@ -286,8 +289,8 @@ export default {
                 cnpj: this.model.cnpj
             }
             let endereco = {
-                logradouro: this.model.nome,
-                cep: this.model.logradouro,
+                logradouro: this.model.logradouro,
+                cep: this.model.cep,
                 uf: this.model.estado,
                 bairro: this.model.bairro,
                 cidade: this.model.cidade,

@@ -104,13 +104,13 @@
                       v-model="user.endereco[0].numero">
             </fg-input>
           </div>
-          
+
         </div>
         <div class="clearfix"></div>
       </form>
     </div>
   </div>
-  
+
 </template>
 <script>
 import axios from 'axios'

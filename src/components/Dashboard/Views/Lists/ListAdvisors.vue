@@ -10,6 +10,7 @@
             </div>
           </div>
           <!-- ------------------------- -->
+          <!--
           <div>
             <div class="col-sm-1">
               <div class="iten-center">
@@ -17,6 +18,7 @@
               </div>
             </div>
           </div>
+          -->
         </div>
       </div>
       <div class="card-body row">
@@ -25,7 +27,7 @@
             <el-table-column type="index">
 
             </el-table-column>
-            <el-table-column prop="name"
+            <el-table-column prop="username"
                              label="Nome">
             </el-table-column>
             <el-table-column prop="job"
@@ -56,6 +58,7 @@
 </template>
 <script>
   import Vue from 'vue'
+  import axios from 'axios'
   import {Table, TableColumn} from 'element-ui'
   import PSwitch from 'src/components/UIComponents/Switch.vue'
   Vue.use(Table)
@@ -66,60 +69,14 @@
     },
     data () {
       return {
-        tableData: [
-        /*
-        {
-          name: 'Andrew Mike',
-          job: 'Develop',
-          salary: '€ 99,225',
-          active: false
-        }, {
-          name: 'John Doe',
-          job: 'Design',
-          salary: '€ 89,241',
-          active: false
-        }, {
-          name: 'Alex Mike',
-          job: 'Design',
-          salary: '€ 92,144',
-          active: false
-        }, {
-          name: 'Mike Monday',
-          job: 'Marketing',
-          salary: '€ 49,990',
-          active: true
-        },
-        {
-          name: 'Paul dickens',
-          job: 'Communication',
-          salary: '€ 69,201',
-          active: true
-        }
-        */],
-        productsTable: [
-          {
-            image: 'static/img/tables/agenda.png',
-            title: 'Notebook',
-            subTitle: 'Most beautiful agenda for the office.',
-            price: 49,
-            quantity: 1
-          },
-          {
-            image: 'static/img/tables/stylus.jpg',
-            title: 'Stylus',
-            subTitle: 'Design is not just what it looks like and feels like. Design is how it works.',
-            price: 499,
-            quantity: 2
-          },
-          {
-            image: 'static/img/tables/evernote.png',
-            title: 'Evernote iPad Stander',
-            subTitle: 'A groundbreaking Retina display. All-flash architecture. Fourth-generation Intel processors.',
-            price: 799,
-            quantity: 1
-          }
-        ]
+        tableData: [],
+        productsTable: []
       }
+    },
+    mounted() {
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1}').then(response => {
+            this.tableData = response.data
+        })
     },
     methods: {
       handleLike (index, row) {

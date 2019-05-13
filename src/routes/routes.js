@@ -26,6 +26,7 @@ const RegularForms  = () => import(/* webpackChunkName: "forms" */ 'src/componen
 const ExtendedForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ExtendedForms.vue')
 const ValidationForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms.vue')
 const CompanyForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms/FormCompany.vue')
+const CompanyFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms/FormCompanyEdit.vue')
 const CompanyList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListCompany.vue')
 const OfficeList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListOfficer.vue')
 const CentralList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListCentral.vue')
@@ -126,6 +127,11 @@ let formsMenu = {
       component: CompanyForms
     },
     {
+      path: 'companyEdit',
+      name: 'Form Edit Company',
+      component: CompanyFormsEdit
+    },
+    {
       path: 'companyList',
       name: 'List Company',
       component: CompanyList
@@ -157,7 +163,7 @@ let formsMenu = {
     },
     {
       path: 'ClientList',
-      name: 'List Advisors',
+      name: 'Cad Advisors',
       component: ClientList
     },
     {
@@ -182,7 +188,7 @@ let formsMenu = {
     },
     {
       path: 'UserList',
-      name: 'Form User',
+      name: 'List User',
       component: UserList
     },
     {

@@ -3,7 +3,7 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Cadastro de Escritório
+                Editar de Empresa
             </h4>
         </div>
         <div class="card-body">
@@ -11,11 +11,14 @@
                 <label>Nome</label>
                 <fg-input type="text" name="nome" v-validate="modelValidations.nome" :error="getError('nome')" v-model="model.nome">
                 </fg-input>
+                <label>Razão Social</label>
+                <fg-input type="text" name="razao_social" v-validate="modelValidations.razao_social" :error="getError('razao_social')" v-model="model.razao_social">
+                </fg-input>
                 <label>CNPJ</label>
                 <fg-input type="text" v-mask="'##.###.###/#####-##'" name="cnpj" v-validate="modelValidations.cnpj" :error="getError('cnpj')" v-model="model.cnpj">
                 </fg-input>
                 <label>Telefone</label>
-                <fg-input type="text" v-mask="'(##)####-####'" name="telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-model="model.telefone">
+                <fg-input type="text" v-mask="'(##)#####-####'" name="telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-model="model.telefone">
                 </fg-input>
                 <label>E-mail</label>
                 <fg-input type="email" name="email" v-validate="modelValidations.email" :error="getError('email')" v-model="model.email">
@@ -23,7 +26,7 @@
             </div>
             <div class="form-group">
                 <label>CEP</label>
-                <fg-input type="text" v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('cep')" @change="buscarEndereco($event)" v-model="model.cep">
+                <fg-input type="text" v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
                 </fg-input>
                 <label>Logradouro</label>
                 <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
@@ -40,12 +43,18 @@
                 <div class="col-lg-6">
                     <label>Estado</label>
                     <fg-input :error="getError('estado')">
-                        <el-select class="select-default" v-model="model.estado" name="estado" v-validate="modelValidations.estado" placeholder="Selecione...">
+                        <el-select class="select-default" v-model="model.estado" name="tipo_user" v-validate="modelValidations.estado" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in optionsStade" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
                     </fg-input>
                 </div>
+                <!--
+                <label>Complemento</label>
+                <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
+                </fg-input>
+                -->
+
             </div>
         </div>
         <div class="card-footer text-right">
@@ -59,15 +68,21 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
-import {mask} from 'vue-the-mask'
+import {
+    mask
+} from 'vue-the-mask'
 export default {
+    name: 'EditCompany',
     data() {
         return {
             model: {
+                // Empresa --------------
                 nome: '',
+                razao_social: '',
                 cnpj: '',
                 telefone: '',
                 email: '',
+                // Endereço --------------
                 cep: '',
                 logradouro: '',
                 numero: '',
@@ -75,6 +90,9 @@ export default {
                 cidade: '',
                 estado: ''
             },
+            endereco: [],
+            results: [],
+            resultAdress: [],
             modelValidations: {
                 nome: {
                     required: true
@@ -92,7 +110,7 @@ export default {
                     required: true,
                     email: true
                 },
-                cep: {
+                tipoAddress: {
                     required: true
                 },
                 logradouro: {
@@ -105,6 +123,9 @@ export default {
                     required: true
                 },
                 cidade: {
+                    required: true
+                },
+                cep: {
                     required: true
                 },
                 estado: {
@@ -141,7 +162,7 @@ export default {
                 },
                 {
                     value: 'ES',
-                    label: 'Espí­rito Santo'
+                    label: 'Espírito Santo'
                 },
                 {
                     value: 'GO',
@@ -165,7 +186,7 @@ export default {
                 },
                 {
                     value: 'PA',
-                    label: 'Parána'
+                    label: 'Pará'
                 },
                 {
                     value: 'PB',
@@ -222,7 +243,23 @@ export default {
             ]
         }
     },
-    directives: {mask},
+    directives: {
+        mask
+    },
+    created () {
+
+        axios.get(process.env.VUE_APP_ROOT_API + '/empresa/'+ window.localStorage.getItem("empresa")).then(response => {
+            this.model = response.data
+            if (this.model.endereco[0]) {
+                this.model.cep = this.model.endereco[0].cep
+                this.model.logradouro = this.model.endereco[0].logradouro
+                this.model.numero = this.model.endereco[0].numero
+                this.model.bairro = this.model.endereco[0].bairro
+                this.model.cidade = this.model.endereco[0].cidade
+                this.model.estado = this.model.endereco[0].uf
+            }
+        })
+    },
     methods: {
         getError(fieldName) {
             return this.errors.first(fieldName)
@@ -237,10 +274,19 @@ export default {
             this.model.logradouro = ''
             this.model.cidade = ''
             this.model.estado = ''
+            this.model.numero = ''
+
+            console.log('buscar - Edit', this.model.cep)
 
             axios.get('https://api.postmon.com.br/v1/cep/' + this.model.cep)
                 .then(response => {
+
                     this.endereco = response.data
+
+                    if (this.endereco.cep) {
+                        this.model.cep = this.endereco.cep
+                         console.log('qual o cep', this.model.cep)
+                    }
                     if (this.endereco.cidade) {
                         this.model.cidade = this.endereco.cidade
                     }
@@ -249,6 +295,7 @@ export default {
                     }
                     if (this.endereco.logradouro) {
                         this.model.logradouro = this.endereco.logradouro
+                         console.log('Qual a rua ', this.model.logradouro)
                     }
                     if (this.endereco.complemento) {
                         this.model.complemento = this.endereco.complemento
@@ -258,12 +305,11 @@ export default {
                     }
                 })
                 .catch(error => {
-                    // alert('Erro no cadastro do EndereÃÂ§o')
+                    // alert('Erro no cadastro do Endereço')
                     console.log(error.response.data)
                 })
         },
         salvar() {
-
             let empresa = {
                 nome: this.model.nome,
                 razao_social: this.model.nome,
@@ -274,22 +320,22 @@ export default {
             let endereco = {
                 logradouro: this.model.nome,
                 cep: this.model.logradouro,
-                uf: this.model.uf,
+                uf: this.model.estado,
                 bairro: this.model.bairro,
                 cidade: this.model.cidade,
                 numero: this.model.numero,
                 tipo: 'Comercial'
             }
-            axios.post(process.env.VUE_APP_ROOT_API + '/escritorio', empresa)
+            axios.put(process.env.VUE_APP_ROOT_API + '/empresa', empresa)
                 .then(response => {
                     this.results = response.data
-                    endereco.id_escritorio = response.data.id
+                    endereco.id_empresa = response.data.id
                     // Cadastro de Endereço
-                    axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
+                    axios.put(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
                         .then(response => {
                             this.resultAdress = response.data
-                            swal('Bom trabalho!', 'Escritório Cadastrado com sucesso!', 'success')
-                            this.$router.push('/forms/OfficeList')
+                            swal('Bom trabalho!', 'Empresa Cadastrada com sucesso!', 'success')
+                            this.$router.push('/forms/companyList')
                         })
                         .catch(error => {
                             swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
@@ -301,8 +347,7 @@ export default {
                     console.log(error.response.data)
                 })
         }
-    },
-
+    }
 }
 </script>
 
