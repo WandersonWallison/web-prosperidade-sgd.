@@ -97,9 +97,9 @@
           <el-option
               class="select-default"
               v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              :key="item.id"
+              :label="item.descricao"
+              :value="item.id">
           </el-option>
         </el-select>
       </div>
@@ -107,6 +107,7 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   import {DatePicker, TimeSelect, Slider, Tag, Input, Button, Select, Option,Upload} from 'element-ui'
   import {mask} from 'vue-the-mask'
   export default {
@@ -183,23 +184,15 @@
             email: true
           }
         },
-        options: [
-          {
-            value: 1,
-            label: 'Administrador'
-          },
-          {
-            value: 2,
-            label: 'Operador'
-          },
-          {
-            value: 3,
-            label: 'Assessor'
-          }
-        ]
+        options: [],
       }
     },
     directives: {mask},
+    mounted() {
+        axios.get(process.env.VUE_APP_ROOT_API + '/grupo').then(response => {
+            this.options = response.data
+        })
+    },
     methods: {
       handlePreview(file) {
         this.model.imageUrl = URL.createObjectURL(file.raw);
