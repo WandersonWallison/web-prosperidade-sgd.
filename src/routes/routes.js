@@ -40,6 +40,7 @@ const OfficeForms = () => import(/* webpackChunkName: "forms" */ 'src/components
 const UserForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/FormUser.vue')
 const UserFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/FormUserEdit.vue')
 const UserList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListUser.vue')
+const GroupList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListGroup.vue')
 // const TaskList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListTask.vue')
 const Wizard = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Wizard.vue')
 
@@ -190,6 +191,11 @@ let formsMenu = {
       path: 'UserList',
       name: 'List User',
       component: UserList
+    },
+    {
+      path: 'GroupList',
+      name: 'List Group',
+      component: GroupList
     },
     {
       path: 'UserControlList',

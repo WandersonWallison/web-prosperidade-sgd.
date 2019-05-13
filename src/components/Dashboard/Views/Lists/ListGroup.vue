@@ -7,7 +7,7 @@
                 <div class="col-sm-10">
                     <div class="card-body text-left">
                         <div>
-                            <h5 class="card-title">Usuários</h5>
+                            <h5 class="card-title">Grupo</h5>
                         </div>
                     </div>
                 </div>
@@ -26,17 +26,7 @@
                 <el-table :data="tableData" header-row-class-name="text-primary">
                     <el-table-column type="index">
                     </el-table-column>
-                    <el-table-column prop="username" label="Nome">
-                    </el-table-column>
-                    <el-table-column prop="email" label="E-mail">
-                    </el-table-column>
-                    <!--<el-table-column prop="telefone"
-                             label="Telefone">
-            </el-table-column>
-            <el-table-column prop="celular"
-                             label="Celular">
-            </el-table-column>-->
-                    <el-table-column prop="id_grupo.descricao" label="Grupo">
+                    <el-table-column prop="descricao" label="Descrição">
                     </el-table-column>
                     <el-table-column class-name="action-buttons td-actions" align="right" label="Ações">
                         <template slot-scope="props">
@@ -55,14 +45,19 @@
             </div>
         </div>
     </div>
+    <md-dialog :md-active.sync="showcadastrar">
+        <div class="div">
+            <group-cadastrar></group-cadastrar>
+        </div>
+    </md-dialog>
     <md-dialog :md-active.sync="showDetails">
         <div class="div">
-            <user-details :selected="selected"></user-details>
+            <group-details :selected="selected"></group-details>
         </div>
     </md-dialog>
     <md-dialog :md-active.sync="showUpdate">
         <div class="div">
-            <user-edit :selected="selected"></user-edit>
+            <group-edit :selected="selected"></group-edit>
         </div>
     </md-dialog>
 </div>
@@ -78,12 +73,13 @@ import {
     TableColumn
 } from 'element-ui'
 import PSwitch from 'src/components/UIComponents/Switch.vue'
-import UserEdit from '../Forms/FormUserEdit.vue'
-import UserDetails from '../Forms/FormUserDetails.vue'
+import GroupEdit from '../Forms/Group/FormGroupEdit.vue'
+import GroupDetails from '../Forms/Group/FormGroupDetails.vue'
+import GroupCadastrar from '../Forms/Group/FormGroup.vue'
 Vue.use(Table)
 Vue.use(TableColumn)
 export default {
-    name: 'ListUser',
+    name: 'ListGroup',
     props: {
         selected: {
             type: Object,
@@ -92,43 +88,17 @@ export default {
     },
     components: {
         PSwitch,
-        UserEdit,
-        UserDetails
+        GroupCadastrar,
+        GroupDetails,
+        GroupEdit
     },
     data() {
         return {
+            showcadastrar: false,
             showDetails: false,
             showUpdate: false,
-            selected: {
-                image: 'static/img/tables/agenda.png',
-                title: 'Notebook',
-                subTitle: 'Most beautiful agenda for the office.',
-                price: 49,
-                quantity: 1
-            },
             tableData: [],
-            productsTable: [{
-                    image: 'static/img/tables/agenda.png',
-                    title: 'Notebook',
-                    subTitle: 'Most beautiful agenda for the office.',
-                    price: 49,
-                    quantity: 1
-                },
-                {
-                    image: 'static/img/tables/stylus.jpg',
-                    title: 'Stylus',
-                    subTitle: 'Design is not just what it looks like and feels like. Design is how it works.',
-                    price: 499,
-                    quantity: 2
-                },
-                {
-                    image: 'static/img/tables/evernote.png',
-                    title: 'Evernote iPad Stander',
-                    subTitle: 'A groundbreaking Retina display. All-flash architecture. Fourth-generation Intel processors.',
-                    price: 799,
-                    quantity: 1
-                }
-            ]
+            productsTable: []
         }
     },
     /*updated (){
@@ -137,7 +107,7 @@ export default {
       })
     },*/
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/grupo?where={"ativo": 1}').then(response => {
             this.tableData = response.data
         })
     },
@@ -146,30 +116,23 @@ export default {
             this.showDetails = true
             this.selected = row
         },
-        handleLike(index, row) {
-            this.$router.push('/forms/user')
+        handleLike() {
+            this.showcadastrar = true
         },
         handleEdit(index, row) {
             this.showUpdate = true
             this.selected = row
-            // this.$router.push('/forms/userEdit')
-            // alert(`Your want to edit ${row.name}`)
         },
         handleDelete(index, row) {
             let user = {
                 ativo: false
-                /*razao_social: this.model.nome,
-                site: this.form.site,
-                telefone: this.form.telefone,
-                email: this.form.email,
-                cnpj: this.form.cnpj*/
             }
-            axios.put(process.env.VUE_APP_ROOT_API + '/user/' + row.id, user)
+            axios.put(process.env.VUE_APP_ROOT_API + '/grupo/' + row.id, user)
                 .then(response => {
                     this.results = response.data
-                    axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1}').then(response => {
+                    axios.get(process.env.VUE_APP_ROOT_API + '/grupo?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', `Usuario ${row.username} deletado com sucesso!`, 'success')
+                        swal('Bom trabalho!', `Usuario ${row.descricao} deletado com sucesso!`, 'success')
                         // this.$router.push('/forms/UserList')
                     })
                 })
