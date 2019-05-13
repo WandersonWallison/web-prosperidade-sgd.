@@ -29,13 +29,15 @@
                     </el-table-column>
                     <el-table-column prop="nome" label="Nome">
                     </el-table-column>
-                    <el-table-column prop="razao_social" label="Razão Social">
+                   <!-- <el-table-column prop="razao_social" label="Razão Social">
                     </el-table-column>
                     <el-table-column prop="cnpj" label="CNPJ">
                     </el-table-column>
                     <el-table-column prop="telefone" label="Telefone">
-                    </el-table-column>
+                    </el-table-column>-->
                     <el-table-column prop="email" label="E-mail">
+                    </el-table-column>
+                    <el-table-column prop="status" label="Status">
                     </el-table-column>
                     <el-table-column class-name="action-buttons td-actions" align="right" label="Ações">
                         <template slot-scope="props">
@@ -98,7 +100,8 @@ export default {
                     this.results = response.data
                     axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', `Empresa ${row.nome} deletada com sucesso!`, 'success')
+                        swal('Bom trabalho!', `Empresa ${row.nome} excluída com sucesso!`, 'success')
+                        this.$router.push('/forms/companyList')
                     })
                     //this.$router.push('/forms/companyList')
                 })
@@ -123,7 +126,7 @@ export default {
                     this.productsTable.forEach((obj) => {
                         sum += obj.quantity * obj.price
                     })
-                    sums[index] = `€ ${sum}`
+                    sums[index] = `â‚¬ ${sum}`
                 }
             })
             return sums
