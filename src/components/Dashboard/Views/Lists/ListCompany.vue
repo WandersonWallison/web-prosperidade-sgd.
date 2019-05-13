@@ -87,7 +87,7 @@ export default {
         handleEdit(index, row) {
             window.localStorage.setItem('empresa', row.id)
             this.$router.push('/forms/companyEdit')
-            alert(`Your want to edit ${row.name}`)
+            // alert(`Your want to edit ${row.name}`)
         },
         handleDelete(index, row) {
             let empresa = {

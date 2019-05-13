@@ -24,17 +24,19 @@
       <div class="card-body row">
         <div class="col-sm-12">
           <el-table :data="tableData" header-row-class-name="text-primary">
-            <el-table-column type="index">
-
+           <el-table-column type="index">
             </el-table-column>
             <el-table-column prop="username"
                              label="Nome">
             </el-table-column>
             <el-table-column prop="job"
-                             label="Escritório">
+                             label="Empresa">
             </el-table-column>
-            <el-table-column prop="salary"
+            <el-table-column prop="cpf"
                              label="CPF">
+            </el-table-column>
+            <el-table-column prop="id_grupo.descricao"
+                             label="Grupo">
             </el-table-column>
             <el-table-column
               class-name="action-buttons td-actions"
@@ -74,7 +76,7 @@
       }
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}').then(response => {
             this.tableData = response.data
         })
     },
