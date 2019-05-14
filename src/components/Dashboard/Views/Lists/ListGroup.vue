@@ -127,7 +127,8 @@ export default {
             let user = {
                 ativo: false
             }
-            axios.put(process.env.VUE_APP_ROOT_API + '/grupo/' + row.id, user)
+            if (row.id > 3) {
+                axios.put(process.env.VUE_APP_ROOT_API + '/grupo/' + row.id, user)
                 .then(response => {
                     this.results = response.data
                     axios.get(process.env.VUE_APP_ROOT_API + '/grupo?where={"ativo": 1}').then(response => {
@@ -140,6 +141,10 @@ export default {
                     alert(error.response)
                     console.log(error.response.data)
                 })
+            } else {
+              swal('Bom trabalho!', `Usuario ${row.descricao} deletado com sucesso!`, 'success')
+            }
+
         },
         getSummaries(param) {
             const {

@@ -68,6 +68,7 @@ import PSwitch from 'src/components/UIComponents/Switch.vue'
 Vue.use(Table)
 Vue.use(TableColumn)
 export default {
+   name: 'ListCompany',
     components: {
         PSwitch
     },

@@ -72,7 +72,7 @@ import {
     mask
 } from 'vue-the-mask'
 export default {
-    name: 'EditCompany',
+    name: 'FormCompanyEdit',
     data() {
         return {
             model: {
@@ -342,7 +342,7 @@ export default {
                     axios.put(process.env.VUE_APP_ROOT_API + '/endereco/' + this.companyEdit.endereco[0].id , endereco)
                         .then(response => {
                             this.resultAdress = response.data
-                            swal('Bom trabalho!', 'Empresa Cadastrada com sucesso!', 'success')
+                            swal('Bom trabalho!', 'Empresa Atualizda com sucesso!', 'success')
                             this.$router.push('/forms/companyList')
                         })
                         .catch(error => {

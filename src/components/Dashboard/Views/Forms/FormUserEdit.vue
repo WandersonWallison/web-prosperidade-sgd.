@@ -93,7 +93,7 @@ import {
     setInterval
 } from 'timers';
 export default {
-    name: 'UserEdit',
+    name: 'FormUserEdit',
     props: ['selected'],
     components: {
         [Select.name]: Select,

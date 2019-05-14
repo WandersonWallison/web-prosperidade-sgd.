@@ -49,6 +49,7 @@ import {
 } from 'src/components/UIComponents'
 
 export default {
+    name: 'FormUser',
     data() {
         return {
             wizardModel: {}

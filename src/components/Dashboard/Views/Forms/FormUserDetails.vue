@@ -118,7 +118,7 @@ import {Select, Option} from 'element-ui'
 import swal from 'sweetalert2'
 import { setInterval } from 'timers';
   export default {
-      name: 'UserEdit',
+      name: 'FormUserDetail',
       props: ['selected'],
       components: {
       [Select.name]: Select,

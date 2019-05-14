@@ -67,6 +67,7 @@ export default {
 
             axios.post(process.env.VUE_APP_ROOT_API + '/login', this.form)
             .then((result) => {
+              console.log()
               this.$router.push('/admin')
               console.log('Resultado:' + result.data)
             }).catch((err) => {

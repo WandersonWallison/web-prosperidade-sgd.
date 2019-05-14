@@ -29,6 +29,8 @@ const CompanyForms = () => import(/* webpackChunkName: "forms" */ 'src/component
 const CompanyFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms/FormCompanyEdit.vue')
 const CompanyList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListCompany.vue')
 const OfficeList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListOfficer.vue')
+const OfficeForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms/FormOffice.vue')
+const OfficeFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms/FormOfficeEdit.vue')
 const CentralList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListCentral.vue')
 const OperatorlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListOperator.vue')
 const AdvisorsList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisors.vue')
@@ -36,7 +38,6 @@ const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/
 const MovementList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListMovement.vue')
 const ComissionList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListComission.vue')
 const UserControlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListUserControl.vue')
-const OfficeForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms/FormOffice.vue')
 const UserForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/FormUser.vue')
 const UserFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/FormUserEdit.vue')
 const UserList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListUser.vue')
@@ -146,6 +147,11 @@ let formsMenu = {
       path: 'OfficeList',
       name: 'Form Office',
       component: OfficeList
+    },
+    {
+      path: 'OfficeFormsEdit',
+      name: 'Edit Office',
+      component: OfficeFormsEdit
     },
     {
       path: 'CentralList',

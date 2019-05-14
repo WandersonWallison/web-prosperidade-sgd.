@@ -43,7 +43,6 @@
               align="right"
               label="Ações">
               <template slot-scope="props">
-
                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                   <i class="fa fa-edit"></i>
                 </p-button>
@@ -66,6 +65,7 @@
   Vue.use(Table)
   Vue.use(TableColumn)
   export default{
+    name: 'ListAdvisors',
     components: {
       PSwitch
     },
@@ -76,7 +76,7 @@
       }
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}').then(response => {
             this.tableData = response.data
         })
     },

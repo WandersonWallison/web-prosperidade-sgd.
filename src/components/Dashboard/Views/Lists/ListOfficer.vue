@@ -55,8 +55,6 @@
 </template>
 
 <script>
-// TODO - Wanderson - Fazer - Colocar na API os campos do cadastro de Escritório
-
 
 import swal from 'sweetalert2'
 import axios from 'axios'
@@ -69,6 +67,7 @@ import PSwitch from 'src/components/UIComponents/Switch.vue'
 Vue.use(Table)
 Vue.use(TableColumn)
 export default {
+    name: 'ListOffice',
     components: {
         PSwitch
     },
@@ -88,7 +87,8 @@ export default {
             this.$router.push('/forms/office')
         },
         handleEdit(index, row) {
-            alert(`Your want to edit ${row.name}`)
+            window.localStorage.setItem('escritorio', row.id)
+            this.$router.push('/forms/OfficeFormsEdit')
         },
         handleDelete(index, row) {
             let escritorio = {

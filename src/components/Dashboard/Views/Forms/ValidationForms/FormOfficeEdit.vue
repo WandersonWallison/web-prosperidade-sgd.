@@ -3,7 +3,7 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Cadastro de Empresa
+                Editar de Escritório
             </h4>
         </div>
         <div class="card-body">
@@ -26,7 +26,7 @@
             </div>
             <div class="form-group">
                 <label>CEP</label>
-                <fg-input type="text"  v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
+                <fg-input type="text" v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
                 </fg-input>
                 <label>Logradouro</label>
                 <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
@@ -54,6 +54,7 @@
                 <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
                 </fg-input>
                 -->
+
             </div>
         </div>
         <div class="card-footer text-right">
@@ -67,9 +68,11 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
-import {mask} from 'vue-the-mask'
+import {
+    mask
+} from 'vue-the-mask'
 export default {
-    name: 'FormCompany',
+    name: 'FormOfficeEdit',
     data() {
         return {
             model: {
@@ -87,6 +90,8 @@ export default {
                 cidade: '',
                 estado: ''
             },
+            officeEdit: {},
+            enderecoEdit: {},
             endereco: [],
             results: [],
             resultAdress: [],
@@ -106,9 +111,6 @@ export default {
                 email: {
                     required: true,
                     email: true
-                },
-                tipoAddress: {
-                    required: true
                 },
                 logradouro: {
                     required: true
@@ -187,7 +189,7 @@ export default {
                 },
                 {
                     value: 'PB',
-                    label: 'Paraíba'
+                    label: 'Paraí­ba'
                 },
                 {
                     value: 'PR',
@@ -240,7 +242,32 @@ export default {
             ]
         }
     },
-    directives: {mask},
+    directives: {
+        mask
+    },
+    created() {
+
+        axios.get(process.env.VUE_APP_ROOT_API + '/escritorio/' + window.localStorage.getItem("escritorio")).then(response => {
+            this.officeEdit = response.data
+            this.model.nome = this.officeEdit.nome
+            this.model.razao_social = this.officeEdit.razao_social
+            this.model.cnpj = this.officeEdit.cnpj
+            this.model.telefone = this.officeEdit.telefone
+            this.model.email = this.officeEdit.email
+            this.model.nome = this.officeEdit.nome
+
+            if (this.officeEdit.endereco.length > 0) {
+                this.model.cep = this.officeEdit.endereco[0].cep
+                this.model.logradouro = this.officeEdit.endereco[0].logradouro
+                this.model.numero = this.officeEdit.endereco[0].numero
+                this.model.bairro = this.officeEdit.endereco[0].bairro
+                this.model.cidade = this.officeEdit.endereco[0].cidade
+                this.model.estado = this.officeEdit.endereco[0].uf
+            }
+            window.localStorage.removeItem("escritorio")
+
+        })
+    },
     methods: {
         getError(fieldName) {
             return this.errors.first(fieldName)
@@ -255,10 +282,16 @@ export default {
             this.model.logradouro = ''
             this.model.cidade = ''
             this.model.estado = ''
+            this.model.numero = ''
 
             axios.get('https://api.postmon.com.br/v1/cep/' + this.model.cep)
                 .then(response => {
+
                     this.endereco = response.data
+
+                    if (this.endereco.cep) {
+                        this.model.cep = this.endereco.cep
+                    }
                     if (this.endereco.cidade) {
                         this.model.cidade = this.endereco.cidade
                     }
@@ -276,12 +309,12 @@ export default {
                     }
                 })
                 .catch(error => {
-                    // alert('Erro no cadastro do Endereço')
                     console.log(error.response.data)
                 })
         },
         salvar() {
-            let empresa = {
+
+            let escritorio = {
                 nome: this.model.nome,
                 razao_social: this.model.nome,
                 telefone: this.model.telefone,
@@ -297,16 +330,17 @@ export default {
                 numero: this.model.numero,
                 tipo: 'Comercial'
             }
-            axios.post(process.env.VUE_APP_ROOT_API + '/empresa', empresa)
+
+            axios.put(process.env.VUE_APP_ROOT_API + '/escritorio/' + this.officeEdit.id , escritorio)
                 .then(response => {
                     this.results = response.data
                     endereco.id_empresa = response.data.id
                     // Cadastro de Endereço
-                    axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
+                    axios.put(process.env.VUE_APP_ROOT_API + '/endereco/' + this.officeEdit.endereco[0].id , endereco)
                         .then(response => {
                             this.resultAdress = response.data
-                            swal('Bom trabalho!', 'Empresa Cadastrada com sucesso!', 'success')
-                            this.$router.push('/forms/companyList')
+                            swal('Bom trabalho!', 'Escritório Atualizado com sucesso!', 'success')
+                            this.$router.push('/forms/officeList')
                         })
                         .catch(error => {
                             swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')

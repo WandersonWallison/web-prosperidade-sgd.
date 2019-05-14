@@ -61,6 +61,7 @@ import axios from 'axios'
 import swal from 'sweetalert2'
 import {mask} from 'vue-the-mask'
 export default {
+    name: 'FormOffice',
     data() {
         return {
             model: {
@@ -267,15 +268,15 @@ export default {
 
             let empresa = {
                 nome: this.model.nome,
-                razao_social: this.model.nome,
+                razao_social: this.model.razao_social,
                 telefone: this.model.telefone,
                 email: this.model.email,
                 cnpj: this.model.cnpj
             }
             let endereco = {
-                logradouro: this.model.nome,
-                cep: this.model.logradouro,
-                uf: this.model.uf,
+                logradouro: this.model.logradouro,
+                cep: this.model.cep,
+                uf: this.model.estado,
                 bairro: this.model.bairro,
                 cidade: this.model.cidade,
                 numero: this.model.numero,
