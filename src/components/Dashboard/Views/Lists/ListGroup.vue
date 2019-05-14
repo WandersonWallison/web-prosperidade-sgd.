@@ -98,7 +98,8 @@ export default {
             showDetails: false,
             showUpdate: false,
             tableData: [],
-            productsTable: []
+            productsTable: [],
+            qtd: null
         }
     },
     /*updated (){
@@ -124,16 +125,17 @@ export default {
             this.selected = row
         },
         handleDelete(index, row) {
+            this.qtd = row.usuario.length
             let user = {
                 ativo: false
             }
-            if (row.id > 3) {
+            if (row.id > 3 || row.usuario.length == 0 ) {
                 axios.put(process.env.VUE_APP_ROOT_API + '/grupo/' + row.id, user)
                 .then(response => {
                     this.results = response.data
                     axios.get(process.env.VUE_APP_ROOT_API + '/grupo?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', `Usuario ${row.descricao} deletado com sucesso!`, 'success')
+                        swal('Bom trabalho!', `Grupo ${row.descricao} deletado com sucesso!`, 'success')
                         // this.$router.push('/forms/UserList')
                     })
                 })
@@ -142,7 +144,7 @@ export default {
                     console.log(error.response.data)
                 })
             } else {
-              swal('Bom trabalho!', `Usuario ${row.descricao} deletado com sucesso!`, 'success')
+              swal('Importante!', `Grupo ${row.descricao} não pode ser deletado!`, 'error')
             }
 
         },
