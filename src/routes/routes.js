@@ -41,7 +41,11 @@ const UserControlList = () => import(/* webpackChunkName: "forms" */ 'src/compon
 const UserForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/FormUser.vue')
 const UserFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/FormUserEdit.vue')
 const UserList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListUser.vue')
-const GroupList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListGroup.vue')
+const GroupList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Group/ListGroup.vue')
+const LinkList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Link/ListLink.vue')
+const LinkForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Link/FormLink.vue')
+const TipoLinkForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoLink/FormTipoLink.vue')
+const TipoLinkList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoLink/ListTipoLink.vue')
 // const TaskList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListTask.vue')
 const Wizard = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Wizard.vue')
 
@@ -202,6 +206,26 @@ let formsMenu = {
       path: 'GroupList',
       name: 'List Group',
       component: GroupList
+    },
+    {
+      path: 'LinkList',
+      name: 'List Link',
+      component: LinkList
+    },
+    {
+      path: 'LinkForms',
+      name: 'Form Link',
+      component: LinkForms
+    },
+    {
+      path: 'TipoLinkForms',
+      name: 'Form Tipo Link',
+      component: TipoLinkForms
+    },
+    {
+      path: 'TipoLinkList',
+      name: 'Form Tipo Link',
+      component: TipoLinkList
     },
     {
       path: 'UserControlList',

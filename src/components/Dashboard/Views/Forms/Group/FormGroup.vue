@@ -13,6 +13,23 @@
                 </fg-input>                
             </div>
         </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>Links</label>
+                <el-select multiple
+                 class="select-primary"
+                 collapse-tags
+                 v-model="selects.multiple"
+                 placeholder="Multiple Select">
+                 <el-option v-for="option in selects.links"
+                 class="select-primary"
+                 :value="option.id"
+                 :label="option.link"
+                 :key="option.id">
+                 </el-option>
+                 </el-select>              
+            </div>
+        </div>
         <div class="card-footer text-right">
             <p-button type="info" @click.prevent="validate">Salvar</p-button>
         </div>
@@ -31,12 +48,21 @@ export default {
             model: {
                 nome: ''
             },
+             selects: {
+            links: [],
+            multiple: 'ARS'
+          },
             modelValidations: {
                 nome: {
                     required: true
                       }
             },
         }      
+    },
+    mounted() {
+        axios.get(process.env.VUE_APP_ROOT_API + '/link?where={"ativo": 1}').then(response => {
+            this.selects.links = response.data
+        })
     },
     directives: {mask},
     methods: {
@@ -52,6 +78,7 @@ export default {
 
             let Grupo = {
                 descricao: this.model.nome,
+                links: this.selects.multiple
             }
             axios.post(process.env.VUE_APP_ROOT_API + '/grupo', Grupo)
                 .then(response => {

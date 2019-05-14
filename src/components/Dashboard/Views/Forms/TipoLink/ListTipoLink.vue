@@ -7,7 +7,7 @@
                 <div class="col-sm-10">
                     <div class="card-body text-left">
                         <div>
-                            <h5 class="card-title">Grupo</h5>
+                            <h5 class="card-title">Links</h5>
                         </div>
                     </div>
                 </div>
@@ -30,9 +30,6 @@
                     </el-table-column>
                     <el-table-column class-name="action-buttons td-actions" align="right" label="Ações">
                         <template slot-scope="props">
-                            <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
-                                <i class="fa fa-send"></i>
-                            </p-button>
                             <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                 <i class="fa fa-edit"></i>
                             </p-button>
@@ -57,7 +54,7 @@
     </md-dialog>
     <md-dialog :md-active.sync="showUpdate">
         <div class="div">
-            <group-edit :selected="selected"></group-edit>
+            <link-edit :selected="selected"></link-edit>
         </div>
     </md-dialog>
 </div>
@@ -73,13 +70,13 @@ import {
     TableColumn
 } from 'element-ui'
 import PSwitch from 'src/components/UIComponents/Switch.vue'
-import GroupEdit from '../Forms/Group/FormGroupEdit.vue'
-import GroupDetails from '../Forms/Group/FormGroupDetails.vue'
-import GroupCadastrar from '../Forms/Group/FormGroup.vue'
+// import LinkEdit from '../Link/FormLinkEdit.vue'
+// import GroupDetails from '../Forms/Group/FormGroupDetails.vue'
+// import GroupCadastrar from '../Forms/Group/FormGroup.vue'
 Vue.use(Table)
 Vue.use(TableColumn)
 export default {
-    name: 'ListGroup',
+    name: 'ListTipoLink',
     props: {
         selected: {
             type: Object,
@@ -88,9 +85,9 @@ export default {
     },
     components: {
         PSwitch,
-        GroupCadastrar,
-        GroupDetails,
-        GroupEdit
+ //       GroupCadastrar,
+ //       GroupDetails,
+ //        LinkEdit
     },
     data() {
         return {
@@ -108,7 +105,7 @@ export default {
       })
     },*/
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/grupo?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_link?where={"ativo": 1}').then(response => {
             this.tableData = response.data
         })
     },
@@ -118,24 +115,23 @@ export default {
             this.selected = row
         },
         handleLike() {
-            this.showcadastrar = true
+            this.$router.push('/forms/TipoLinkForms')
         },
         handleEdit(index, row) {
             this.showUpdate = true
             this.selected = row
         },
         handleDelete(index, row) {
-            this.qtd = row.usuario.length
-            let user = {
+
+            let link = {
                 ativo: false
             }
-            if (row.id > 3 || row.usuario.length == 0 ) {
-                axios.put(process.env.VUE_APP_ROOT_API + '/grupo/' + row.id, user)
+            axios.put(process.env.VUE_APP_ROOT_API + '/tipo_link/' + row.id, link)
                 .then(response => {
                     this.results = response.data
-                    axios.get(process.env.VUE_APP_ROOT_API + '/grupo?where={"ativo": 1}').then(response => {
+                    axios.get(process.env.VUE_APP_ROOT_API + '/tipo_link?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', `Grupo ${row.descricao} deletado com sucesso!`, 'success')
+                        swal('Bom trabalho!', `Link ${row.descricao} deletado com sucesso!`, 'success')
                         // this.$router.push('/forms/UserList')
                     })
                 })
@@ -143,9 +139,6 @@ export default {
                     alert(error.response)
                     console.log(error.response.data)
                 })
-            } else {
-              swal('Importante!', `Grupo ${row.descricao} não pode ser deletado!`, 'error')
-            }
 
         },
         getSummaries(param) {

@@ -66,6 +66,14 @@ export default [
     name: 'Grupo',
     path: '/forms/GroupList'
   },
+  {
+    name: 'Link',
+    path: '/forms/LinkList'
+  },
+  {
+    name: 'Tipo Link',
+    path: '/forms/TipoLinkList'
+  },
  /* {
     name: 'Controle de Usuários',
     path: '/forms/UserControlList'
