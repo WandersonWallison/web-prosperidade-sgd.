@@ -48,10 +48,16 @@ export default [
 {
   name: 'Integração',
   icon: 'nc-icon nc-cloud-upload-94',
-  children: [{
+  children: [
+    {
     name: 'Comissionamento',
     path: '/forms/ComissionList'
-  }]
+    },
+    {
+      name: 'Importação',
+      path: '/forms/Import'
+      }
+  ]
 },
 {
   name: 'Administração',
