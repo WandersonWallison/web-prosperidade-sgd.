@@ -44,6 +44,7 @@ import AppFooter from './Layout/AppFooter'
 import axios from 'axios'
 
 export default {
+    name: 'Login',
     components: {
         Card,
         AppNavbar,
@@ -63,16 +64,18 @@ export default {
         },
         login() {
 
-            // TODO -Wellington Colocar resoluÃ§Ã£o desse metodo para login
+            // TODO -Wellington Colocar resolução desse metodo para login
 
             axios.post(process.env.VUE_APP_ROOT_API + '/login', this.form)
-            .then((result) => {
-              console.log()
-              this.$router.push('/admin')
-              console.log('Resultado:' + result.data)
-            }).catch((err) => {
-              this.$router.push('/')
-            })
+                .then((result) => {
+                    this.valorLogin = result.data
+                    console.log('Valor Chegou no login: ', result.data.status)
+
+                    this.$router.push('/admin')
+                    console.log('Resultado:' + result.data)
+                }).catch((err) => {
+                    // this.$router.push('/')
+                })
             // handle login here
         }
     },
@@ -91,7 +94,8 @@ export default {
                     required: true,
                     min: 5
                 }
-            }
+            },
+            valorLogin: [],
         }
     },
     beforeDestroy() {
