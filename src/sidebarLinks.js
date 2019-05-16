@@ -20,6 +20,10 @@ export default [
     path: '/forms/CentralList'
   },
   {
+    name: 'Tipo Central',
+    path: '/forms/TipoCentralList'
+  },
+  {
     name: 'Escritorio',
     path: '/forms/OfficeList'
   },
@@ -50,13 +54,13 @@ export default [
   icon: 'nc-icon nc-cloud-upload-94',
   children: [
     {
-    name: 'Comissionamento',
-    path: '/forms/ComissionList'
+      name: 'Comissionamento',
+      path: '/forms/ComissionList'
     },
     {
       name: 'Importação',
       path: '/forms/Import'
-      }
+    }
   ]
 },
 {
@@ -65,8 +69,8 @@ export default [
   collapsed: true,
   children: [
   {
-      name: 'Usuário',
-      path: '/forms/UserList'
+    name: 'Usuário',
+    path: '/forms/UserList'
   },
   {
     name: 'Grupo',

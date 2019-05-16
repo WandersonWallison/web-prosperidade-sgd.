@@ -31,7 +31,11 @@ const CompanyList = () => import(/* webpackChunkName: "forms" */ 'src/components
 const OfficeList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListOfficer.vue')
 const OfficeForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms/FormOffice.vue')
 const OfficeFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms/FormOfficeEdit.vue')
-const CentralList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListCentral.vue')
+const TipoCentralForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoCentral/FormTipoCentral.vue')
+const TipoCentralEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoCentral/FormTipoCentralEdit.vue')
+const TipoCentralList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoCentral/ListTipoCentral.vue')
+const CentralForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/FormCentral.vue')
+const CentralList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/ListCentral.vue')
 const OperatorlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListOperator.vue')
 const AdvisorsList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisors.vue')
 const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListClient.vue')
@@ -159,9 +163,29 @@ let formsMenu = {
       component: OfficeFormsEdit
     },
     {
+      path: 'CentralForms',
+      name: 'Form Central',
+      component: CentralForms
+    },
+    {
       path: 'CentralList',
       name: 'List Central',
       component: CentralList
+    },
+    {
+      path: 'TipoCentralForms',
+      name: 'Form Tipo Central',
+      component: TipoCentralForms
+    },
+    {
+      path: 'TipoCentralList',
+      name: 'List Tipo Central',
+      component: TipoCentralList
+    },
+    {
+      path: 'TipoCentralEdit',
+      name: 'Edit Tipo Central',
+      component: TipoCentralEdit
     },
     {
       path: 'OperatorlList',
