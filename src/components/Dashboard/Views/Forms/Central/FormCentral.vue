@@ -8,6 +8,15 @@
         </div>
         <div class="card-body">
             <div class="form-group">
+                <div class="col-lg-6">
+                    <label>Tipo Central</label>
+                    <fg-input :error="getError('tipo_central')">
+                        <el-select class="select-default" v-model="model.tipo_central" name="tipo_central" v-validate="modelValidations.tipo_central" placeholder="Selecione...">
+                            <el-option class="select-default" v-for="item in tipoCentral" :key="item.value" :label="item.descricao" :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </fg-input>
+                </div>
                 <label>Nome</label>
                 <fg-input type="text" name="nome" v-validate="modelValidations.nome" :error="getError('nome')" v-model="model.nome">
                 </fg-input>
@@ -59,7 +68,9 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
-import {mask} from 'vue-the-mask'
+import {
+    mask
+} from 'vue-the-mask'
 export default {
     name: 'FormOffice',
     data() {
@@ -74,8 +85,10 @@ export default {
                 numero: '',
                 bairro: '',
                 cidade: '',
-                estado: ''
+                estado: '',
+                tipo_central: ''
             },
+            tipoCentral: [],
             enderecoBuscado: [],
             modelValidations: {
                 nome: {
@@ -224,7 +237,14 @@ export default {
             ]
         }
     },
-    directives: {mask},
+    directives: {
+        mask
+    },
+    mounted() {
+        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_central?where={"ativo": 1}').then(response => {
+            this.tipoCentral = response.data
+        })
+    },
     methods: {
         getError(fieldName) {
             return this.errors.first(fieldName)
@@ -266,12 +286,15 @@ export default {
         },
         salvar() {
 
+            const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let central = {
                 nome: this.model.nome,
                 razao_social: this.model.razao_social,
                 telefone: this.model.telefone,
                 email: this.model.email,
-                cnpj: this.model.cnpj
+                cnpj: this.model.cnpj,
+                id_tipo_central: this.model.tipo_central,
+                id_responsavel: authUser.id
             }
             let endereco = {
                 logradouro: this.model.logradouro,

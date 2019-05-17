@@ -293,13 +293,14 @@ export default {
                 })
         },
         salvar() {
-
+            const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let central = {
                 nome: this.model.nome,
                 razao_social: this.model.razao_social,
                 telefone: this.model.telefone,
                 email: this.model.email,
-                cnpj: this.model.cnpj
+                cnpj: this.model.cnpj,
+                id_responsavel: authUser.id
             }
             let endereco = {
                 logradouro: this.model.logradouro,
