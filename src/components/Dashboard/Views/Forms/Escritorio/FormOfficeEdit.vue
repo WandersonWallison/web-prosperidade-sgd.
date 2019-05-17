@@ -11,7 +11,7 @@
                 <div class="col-lg-6">
                     <label>Central</label>
                     <fg-input :error="getError('central')">
-                        <el-select multiple class="select-default" v-model="this.officeEdit.centrais" name="central" v-validate="modelValidations.central" placeholder="Selecione...">
+                        <el-select multiple class="select-default" v-model="selectCentrais" name="central" v-validate="modelValidations.central" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in centralOffice" :key="item.value" :label="item.nome" :value="item.id">
                             </el-option>
                         </el-select>
@@ -102,6 +102,7 @@ export default {
             },
             selectCentrais: [],
             centralOffice: [],
+            centralEscritorio: [],
             officeEdit: {},
             enderecoEdit: {},
             endereco: [],
@@ -262,28 +263,12 @@ export default {
         axios.get(process.env.VUE_APP_ROOT_API + '/escritorio/' + window.localStorage.getItem("escritorio")).then(response => {
             this.officeEdit = response.data
             this.model = this.officeEdit
-            //this.selectCentrais = this.officeEdit.centrais
-            /*
-            this.model.nome = this.officeEdit.nome
-            this.model.razao_social = this.officeEdit.razao_social
-            this.model.cnpj = this.officeEdit.cnpj
-            this.model.telefone = this.officeEdit.telefone
-            this.model.email = this.officeEdit.email
-            this.model.nome = this.officeEdit.nome
-            this.model.selectCentrais
-            */
 
-
-            if (this.officeEdit.endereco.length > 0) {
-                this.model.cep = this.officeEdit.endereco[0].cep
-                this.model.logradouro = this.officeEdit.endereco[0].logradouro
-                this.model.numero = this.officeEdit.endereco[0].numero
-                this.model.bairro = this.officeEdit.endereco[0].bairro
-                this.model.cidade = this.officeEdit.endereco[0].cidade
-                this.model.estado = this.officeEdit.endereco[0].uf
+            for (let index = 0; index < this.officeEdit.centrais.length; index++) {
+                this.centralEscritorio.push(this.officeEdit.centrais[index].id)
             }
+            this.selectCentrais = this.centralEscritorio
             window.localStorage.removeItem("escritorio")
-            // TODO - Colocar a central no editar
         })
     },
     mounted() {
