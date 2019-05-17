@@ -3,20 +3,11 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Cadastro de Central
+                Editar Central
             </h4>
         </div>
         <div class="card-body">
             <div class="form-group">
-                <div class="col-lg-6">
-                    <label>Tipo Central</label>
-                    <fg-input :error="getError('tipo_central')">
-                        <el-select class="select-default" v-model="model.tipo_central" name="tipo_central" v-validate="modelValidations.tipo_central" placeholder="Selecione...">
-                            <el-option class="select-default" v-for="item in tipoCentral" :key="item.value" :label="item.descricao" :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </fg-input>
-                </div>
                 <label>Nome</label>
                 <fg-input type="text" name="nome" v-validate="modelValidations.nome" :error="getError('nome')" v-model="model.nome">
                 </fg-input>
@@ -85,10 +76,9 @@ export default {
                 numero: '',
                 bairro: '',
                 cidade: '',
-                estado: '',
-                tipo_central: ''
+                estado: ''
             },
-            tipoCentral: [],
+            CentralEdit: {},
             enderecoBuscado: [],
             modelValidations: {
                 nome: {
@@ -240,9 +230,27 @@ export default {
     directives: {
         mask
     },
-    mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_central?where={"ativo": 1}').then(response => {
-            this.tipoCentral = response.data
+    created() {
+
+        axios.get(process.env.VUE_APP_ROOT_API + '/central/' + window.localStorage.getItem("central")).then(response => {
+            this.CentralEdit = response.data
+            this.model.nome = this.CentralEdit.nome
+            this.model.razao_social = this.CentralEdit.razao_social
+            this.model.cnpj = this.CentralEdit.cnpj
+            this.model.telefone = this.CentralEdit.telefone
+            this.model.email = this.CentralEdit.email
+            this.model.nome = this.CentralEdit.nome
+
+            if (this.CentralEdit.endereco.length > 0) {
+                this.model.cep = this.CentralEdit.endereco[0].cep
+                this.model.logradouro = this.CentralEdit.endereco[0].logradouro
+                this.model.numero = this.CentralEdit.endereco[0].numero
+                this.model.bairro = this.CentralEdit.endereco[0].bairro
+                this.model.cidade = this.CentralEdit.endereco[0].cidade
+                this.model.estado = this.CentralEdit.endereco[0].uf
+            }
+            window.localStorage.removeItem("central")
+
         })
     },
     methods: {
@@ -285,7 +293,6 @@ export default {
                 })
         },
         salvar() {
-
             const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let central = {
                 nome: this.model.nome,
@@ -293,7 +300,6 @@ export default {
                 telefone: this.model.telefone,
                 email: this.model.email,
                 cnpj: this.model.cnpj,
-                id_tipo_central: this.model.tipo_central,
                 id_responsavel: authUser.id
             }
             let endereco = {
@@ -305,26 +311,29 @@ export default {
                 numero: this.model.numero,
                 tipo: 'Comercial'
             }
-            axios.post(process.env.VUE_APP_ROOT_API + '/central', central)
+            // --------------------------------------------------------------------------
+            axios.put(process.env.VUE_APP_ROOT_API + '/central/' + this.CentralEdit.id, central)
                 .then(response => {
                     this.results = response.data
                     endereco.id_central = response.data.id
-                    // Cadastro de Endereço
-                    axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
+                    // Edita o Endereço
+                    axios.put(process.env.VUE_APP_ROOT_API + '/endereco/' + this.CentralEdit.endereco[0].id, endereco)
                         .then(response => {
                             this.resultAdress = response.data
-                            swal('Bom trabalho!', 'Central Cadastrado com sucesso!', 'success')
+                            swal('Bom trabalho!', 'Registro Atualizda com sucesso!', 'success')
                             this.$router.push('/forms/CentralList')
                         })
                         .catch(error => {
-                            swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
+                            swal('Algo de errado!', 'Verifique os campos!', 'error')
                             console.log(error.response.data)
                         })
                 })
                 .catch(error => {
-                    swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
+                    swal('Algo de errado!', 'Verifique os campos!', 'error')
                     console.log(error.response.data)
                 })
+            // ---------------------------------------------------------------------------
+
         }
     },
 

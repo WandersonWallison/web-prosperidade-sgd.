@@ -80,26 +80,27 @@ export default {
             // alert(`Your clicked on Like button`)
         },
         handleEdit(index, row) {
-            alert(`Your want to edit ${row.name}`)
+            window.localStorage.setItem('tipo_central', row.id)
+            this.$router.push('/forms/TipoCentralEdit')
         },
         handleDelete(index, row) {
 
-          let Tipocentral = {
-              ativo: false
-          }
-          axios.put(process.env.VUE_APP_ROOT_API + '/tipo_central/' + row.id, Tipocentral)
-              .then(response => {
-                  this.results = response.data
-                  axios.get(process.env.VUE_APP_ROOT_API + '/tipo_central?where={"ativo": 1}').then(response => {
-                      this.tableData = response.data
-                      swal('Bom trabalho!','Registro excluída com sucesso!', 'success')
-                      this.$router.push('/forms/TipoCentralList')
-                  })
-              })
-              .catch(error => {
-                  swal('Algo de errado!', 'Verifique o registro selecionado!', 'error')
-                  console.log(error.response.data)
-              })
+            let Tipocentral = {
+                ativo: false
+            }
+            axios.put(process.env.VUE_APP_ROOT_API + '/tipo_central/' + row.id, Tipocentral)
+                .then(response => {
+                    this.results = response.data
+                    axios.get(process.env.VUE_APP_ROOT_API + '/tipo_central?where={"ativo": 1}').then(response => {
+                        this.tableData = response.data
+                        swal('Bom trabalho!', 'Registro excluída com sucesso!', 'success')
+                        this.$router.push('/forms/TipoCentralList')
+                    })
+                })
+                .catch(error => {
+                    swal('Algo de errado!', 'Verifique o registro selecionado!', 'error')
+                    console.log(error.response.data)
+                })
         },
         getSummaries(param) {
             const {
