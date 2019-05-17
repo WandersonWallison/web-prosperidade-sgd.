@@ -306,7 +306,7 @@ export default {
                         .then(response => {
                             this.resultAdress = response.data
                             swal('Bom trabalho!', 'Empresa Cadastrada com sucesso!', 'success')
-                            this.$router.push('/forms/companyList')
+                            this.$router.push('/forms/empresa/companyList')
                         })
                         .catch(error => {
                             swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')

@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label>Nome</label>
                 <fg-input type="text" name="nome" v-validate="modelValidations.nome" :error="getError('nome')" v-model="model.nome">
-                </fg-input>                
+                </fg-input>
             </div>
         </div>
         <div class="card-body">
@@ -27,7 +27,7 @@
                  :label="option.link"
                  :key="option.id">
                  </el-option>
-                 </el-select>              
+                 </el-select>
             </div>
         </div>
         <div class="card-footer text-right">
@@ -57,7 +57,7 @@ export default {
                     required: true
                       }
             },
-        }      
+        }
     },
     mounted() {
         axios.get(process.env.VUE_APP_ROOT_API + '/link?where={"ativo": 1}').then(response => {

@@ -268,7 +268,6 @@ export default {
                 this.model.estado = this.companyEdit.endereco[0].uf
             }
             window.localStorage.removeItem("empresa")
-
         })
     },
     methods: {
@@ -316,17 +315,18 @@ export default {
                 })
         },
         salvar() {
-
+            const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let empresa = {
                 nome: this.model.nome,
                 razao_social: this.model.nome,
                 telefone: this.model.telefone,
                 email: this.model.email,
-                cnpj: this.model.cnpj
+                cnpj: this.model.cnpj,
+                id_responsavel: authUser.id
             }
             let endereco = {
-                logradouro: this.model.nome,
-                cep: this.model.logradouro,
+                logradouro: this.model.logradouro,
+                cep: this.model.cep,
                 uf: this.model.estado,
                 bairro: this.model.bairro,
                 cidade: this.model.cidade,
@@ -334,25 +334,41 @@ export default {
                 tipo: 'Comercial'
             }
 
-            axios.put(process.env.VUE_APP_ROOT_API + '/empresa/' + this.companyEdit.id , empresa)
+            axios.put(process.env.VUE_APP_ROOT_API + '/empresa/' + this.companyEdit.id, empresa)
                 .then(response => {
                     this.results = response.data
                     endereco.id_empresa = response.data.id
+
                     // Cadastro de Endereço
-                    axios.put(process.env.VUE_APP_ROOT_API + '/endereco/' + this.companyEdit.endereco[0].id , endereco)
-                        .then(response => {
-                            this.resultAdress = response.data
-                            swal('Bom trabalho!', 'Empresa Atualizda com sucesso!', 'success')
-                            this.$router.push('/forms/companyList')
-                        })
-                        .catch(error => {
-                            swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
-                            console.log(error.response.data)
-                        })
+                    if (this.companyEdit.endereco.length > 0) {
+                        axios.put(process.env.VUE_APP_ROOT_API + '/endereco/' + this.companyEdit.endereco[0].id, endereco)
+                            .then(response => {
+                                this.resultAdress = response.data
+                                swal('Bom trabalho!', 'Empresa Atualizda com sucesso!', 'success')
+                                this.$router.push('/forms/companyList')
+                            })
+                            .catch(error => {
+                                swal('Algo de errado!', 'Verifique os campos do endereço no cadastro!', 'error')
+                                console.log(error.response)
+                            })
+
+                    } else {
+                        axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
+                            .then(response => {
+                                this.resultAdress = response.data
+                                swal('Bom trabalho!', 'Empresa Atualizda com sucesso!', 'success')
+                                this.$router.push('/forms/companyList')
+                            })
+                            .catch(error => {
+                                swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
+                                console.log(error.response.data)
+                            })
+                    }
+
                 })
                 .catch(error => {
-                    swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
-                    console.log(error.response.data)
+                    swal('Algo de errado!', 'Verifique os campos da empresa no cadastro!', 'error')
+                    console.log(error.response)
                 })
         }
     }

@@ -3,11 +3,20 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Editar de Escritório
+                Cadastro de Escritório
             </h4>
         </div>
         <div class="card-body">
             <div class="form-group">
+                <div class="col-lg-6">
+                    <label>Central</label>
+                    <fg-input :error="getError('central')">
+                        <el-select multiple class="select-default" v-model="selectCentrais" name="central" v-validate="modelValidations.central" placeholder="Selecione...">
+                            <el-option class="select-default" v-for="item in centralOffice" :key="item.value" :label="item.nome" :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </fg-input>
+                </div>
                 <label>Nome</label>
                 <fg-input type="text" name="nome" v-validate="modelValidations.nome" :error="getError('nome')" v-model="model.nome">
                 </fg-input>
@@ -18,7 +27,7 @@
                 <fg-input type="text" v-mask="'##.###.###/#####-##'" name="cnpj" v-validate="modelValidations.cnpj" :error="getError('cnpj')" v-model="model.cnpj">
                 </fg-input>
                 <label>Telefone</label>
-                <fg-input type="text" v-mask="'(##)#####-####'" name="telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-model="model.telefone">
+                <fg-input type="text" v-mask="'(##)####-####'" name="telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-model="model.telefone">
                 </fg-input>
                 <label>E-mail</label>
                 <fg-input type="email" name="email" v-validate="modelValidations.email" :error="getError('email')" v-model="model.email">
@@ -26,7 +35,7 @@
             </div>
             <div class="form-group">
                 <label>CEP</label>
-                <fg-input type="text" v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
+                <fg-input type="text" v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('cep')" @change="buscarEndereco($event)" v-model="model.cep">
                 </fg-input>
                 <label>Logradouro</label>
                 <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
@@ -43,18 +52,12 @@
                 <div class="col-lg-6">
                     <label>Estado</label>
                     <fg-input :error="getError('estado')">
-                        <el-select class="select-default" v-model="model.estado" name="tipo_user" v-validate="modelValidations.estado" placeholder="Selecione...">
+                        <el-select class="select-default" v-model="model.estado" name="estado" v-validate="modelValidations.estado" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in optionsStade" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
                     </fg-input>
                 </div>
-                <!--
-                <label>Complemento</label>
-                <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
-                </fg-input>
-                -->
-
             </div>
         </div>
         <div class="card-footer text-right">
@@ -72,29 +75,26 @@ import {
     mask
 } from 'vue-the-mask'
 export default {
-    name: 'FormOfficeEdit',
+    name: 'FormOffice',
     data() {
         return {
             model: {
-                // Empresa --------------
                 nome: '',
-                razao_social: '',
                 cnpj: '',
                 telefone: '',
+                razao_social: '',
                 email: '',
-                // Endereço --------------
                 cep: '',
                 logradouro: '',
                 numero: '',
                 bairro: '',
                 cidade: '',
-                estado: ''
+                estado: '',
+                central: ''
             },
-            officeEdit: {},
-            enderecoEdit: {},
-            endereco: [],
-            results: [],
-            resultAdress: [],
+            selectCentrais: [],
+            centralOffice: [],
+            enderecoBuscado: [],
             modelValidations: {
                 nome: {
                     required: true
@@ -112,6 +112,9 @@ export default {
                     required: true,
                     email: true
                 },
+                cep: {
+                    required: true
+                },
                 logradouro: {
                     required: true
                 },
@@ -122,9 +125,6 @@ export default {
                     required: true
                 },
                 cidade: {
-                    required: true
-                },
-                cep: {
                     required: true
                 },
                 estado: {
@@ -161,7 +161,7 @@ export default {
                 },
                 {
                     value: 'ES',
-                    label: 'Espírito Santo'
+                    label: 'Espí­rito Santo'
                 },
                 {
                     value: 'GO',
@@ -185,11 +185,11 @@ export default {
                 },
                 {
                     value: 'PA',
-                    label: 'Pará'
+                    label: 'Parána'
                 },
                 {
                     value: 'PB',
-                    label: 'Paraí­ba'
+                    label: 'Paraíba'
                 },
                 {
                     value: 'PR',
@@ -245,27 +245,9 @@ export default {
     directives: {
         mask
     },
-    created() {
-
-        axios.get(process.env.VUE_APP_ROOT_API + '/escritorio/' + window.localStorage.getItem("escritorio")).then(response => {
-            this.officeEdit = response.data
-            this.model.nome = this.officeEdit.nome
-            this.model.razao_social = this.officeEdit.razao_social
-            this.model.cnpj = this.officeEdit.cnpj
-            this.model.telefone = this.officeEdit.telefone
-            this.model.email = this.officeEdit.email
-            this.model.nome = this.officeEdit.nome
-
-            if (this.officeEdit.endereco.length > 0) {
-                this.model.cep = this.officeEdit.endereco[0].cep
-                this.model.logradouro = this.officeEdit.endereco[0].logradouro
-                this.model.numero = this.officeEdit.endereco[0].numero
-                this.model.bairro = this.officeEdit.endereco[0].bairro
-                this.model.cidade = this.officeEdit.endereco[0].cidade
-                this.model.estado = this.officeEdit.endereco[0].uf
-            }
-            window.localStorage.removeItem("escritorio")
-
+    mounted() {
+        axios.get(process.env.VUE_APP_ROOT_API + '/central?where={"ativo": 1}').then(response => {
+            this.centralOffice = response.data
         })
     },
     methods: {
@@ -282,44 +264,42 @@ export default {
             this.model.logradouro = ''
             this.model.cidade = ''
             this.model.estado = ''
-            this.model.numero = ''
 
             axios.get('https://api.postmon.com.br/v1/cep/' + this.model.cep)
                 .then(response => {
-
-                    this.endereco = response.data
-
-                    if (this.endereco.cep) {
-                        this.model.cep = this.endereco.cep
+                    this.enderecoBuscado = response.data
+                    if (this.enderecoBuscado.cidade) {
+                        this.model.cidade = this.enderecoBuscado.cidade
                     }
-                    if (this.endereco.cidade) {
-                        this.model.cidade = this.endereco.cidade
+                    if (this.enderecoBuscado.bairro) {
+                        this.model.bairro = this.enderecoBuscado.bairro
                     }
-                    if (this.endereco.bairro) {
-                        this.model.bairro = this.endereco.bairro
+                    if (this.enderecoBuscado.logradouro) {
+                        this.model.logradouro = this.enderecoBuscado.logradouro
                     }
-                    if (this.endereco.logradouro) {
-                        this.model.logradouro = this.endereco.logradouro
+                    if (this.enderecoBuscado.complemento) {
+                        this.model.complemento = this.enderecoBuscado.complemento
                     }
-                    if (this.endereco.complemento) {
-                        this.model.complemento = this.endereco.complemento
-                    }
-                    if (this.endereco.estado) {
-                        this.model.estado = this.endereco.estado
+                    if (this.enderecoBuscado.estado) {
+                        this.model.estado = this.enderecoBuscado.estado
                     }
                 })
                 .catch(error => {
+                    // alert('Erro no cadastro do Endereço
                     console.log(error.response.data)
                 })
         },
         salvar() {
 
-            let escritorio = {
+            let empresa = {
                 nome: this.model.nome,
-                razao_social: this.model.nome,
+                razao_social: this.model.razao_social,
                 telefone: this.model.telefone,
                 email: this.model.email,
-                cnpj: this.model.cnpj
+                cnpj: this.model.cnpj,
+                centrais: this.selectCentrais
+                // id_central: this.model.central
+                // TODO - Retirar o comentario assim q estiver pronto na API
             }
             let endereco = {
                 logradouro: this.model.logradouro,
@@ -330,17 +310,16 @@ export default {
                 numero: this.model.numero,
                 tipo: 'Comercial'
             }
-
-            axios.put(process.env.VUE_APP_ROOT_API + '/escritorio/' + this.officeEdit.id , escritorio)
+            axios.post(process.env.VUE_APP_ROOT_API + '/escritorio', empresa)
                 .then(response => {
                     this.results = response.data
-                    endereco.id_empresa = response.data.id
+                    endereco.id_escritorio = response.data.id
                     // Cadastro de Endereço
-                    axios.put(process.env.VUE_APP_ROOT_API + '/endereco/' + this.officeEdit.endereco[0].id , endereco)
+                    axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
                         .then(response => {
                             this.resultAdress = response.data
-                            swal('Bom trabalho!', 'Escritório Atualizado com sucesso!', 'success')
-                            this.$router.push('/forms/officeList')
+                            swal('Bom trabalho!', 'Escritório Cadastrado com sucesso!', 'success')
+                            this.$router.push('/forms/OfficeList')
                         })
                         .catch(error => {
                             swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
@@ -352,7 +331,8 @@ export default {
                     console.log(error.response.data)
                 })
         }
-    }
+    },
+
 }
 </script>
 
