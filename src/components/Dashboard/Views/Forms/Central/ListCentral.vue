@@ -51,6 +51,7 @@
 <script>
 import Vue from 'vue'
 import axios from 'axios'
+import swal from 'sweetalert2'
 import {
     Table,
     TableColumn
@@ -78,7 +79,8 @@ export default {
             this.$router.push('/forms/CentralForms')
         },
         handleEdit(index, row) {
-            alert(`Your want to edit ${row.name}`)
+            window.localStorage.setItem('central', row.id)
+            this.$router.push('/forms/CentralEdit')
         },
         handleDelete(index, row) {
            let central = {
@@ -89,7 +91,7 @@ export default {
                     this.results = response.data
                     axios.get(process.env.VUE_APP_ROOT_API + '/central?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', 'Central ${row.nome} excluí­da com sucesso!', 'success')
+                        swal('Bom trabalho!', 'Registro excluí­do com sucesso!', 'success')
                         this.$router.push('/forms/CentralList')
                     })
                 })
