@@ -25,14 +25,14 @@
       </md-content>
   </div>
         </div>
-        <div class="card-footer text-right">
+        <div class="card-footer text-right" v-if="carregado == false">
+            <p-button type="info" @click.prevent="importarLeads">Salvar</p-button>
         </div>
     </form>
     <!-- inicio da lista -->
-    <div class="row">
-    <div class="col-md-12 card">
+   
       <div class="card-header">
-        <div class="category">Registros importados</div>
+        <div class="category">Registros aguardando importação</div>
       </div>
       <div class="card-body row">
         <div class="col-sm-6">
@@ -52,7 +52,7 @@
         <div class="col-sm-6">
           <div class="pull-right">
             <fg-input class="input-sm"
-                      placeholder="Search"
+                      placeholder="Procurar"
                       v-model="searchQuery"
                       addon-right-icon="nc-icon nc-zoom-split">
             </fg-input>
@@ -89,7 +89,7 @@
           </el-table>
         </div>
         <div class="col-sm-6 pagination-info">
-          <p class="category">Showing {{from + 1}} to {{to}} of {{total}} entries</p>
+          <p class="category">Mostrando  {{from + 1}} para {{to}} de {{total}} Entradas</p>
         </div>
         <div class="col-sm-6">
           <p-pagination class="pull-right"
@@ -99,8 +99,6 @@
           </p-pagination>
         </div>
       </div>
-    </div>
-    </div>
 
 </div>
 </template>
@@ -108,6 +106,7 @@
 <script>
 import Vue from 'vue'
 import axios from 'axios'
+import swal from 'sweetalert2'
 import moment from 'moment'
 import XLSX from 'xlsx'
 import {Table, TableColumn, Select, Option} from 'element-ui'
@@ -134,29 +133,45 @@ export default {
           total: 0
         },
         searchQuery: '',
-        propsToSearch: ['name'],
+        propsToSearch: ['Assessor','Cliente','Produto','Sub Produto','Produto em Garantia','Ativo', 'Emissor'],
         tableColumns: [
           {
-            prop: 'name',
-            label: 'Produto',
+            prop: 'Assessor',
+            label: 'Assessor',
             minWidth: 200
           },
-          /*{
-            prop: 'email',
-            label: 'Email',
+          {
+            prop: 'Cliente',
+            label: 'Cliente',
             minWidth: 250
           },
           {
-            prop: 'age',
-            label: 'Age',
+            prop: 'Produto',
+            label: 'Produto',
             minWidth: 100
           },
           {
-            prop: 'salary',
-            label: 'Salary',
+            prop: 'SubProduto',
+            label: 'Sub Produto',
             minWidth: 120
-          }*/
+          },
+          {
+            prop: 'ProdutoemGarantia',
+            label: 'Produto em Garantia',
+            minWidth: 120
+          },
+          {
+            prop: 'Ativo',
+            label: 'Ativo',
+            minWidth: 120
+          },
+          {
+            prop: 'Emissor',
+            label: 'Emissor',
+            minWidth: 120
+          }
         ],
+        carregado: true, 
         tableData: [],
       loading: false,
       excelData: {
@@ -169,9 +184,6 @@ export default {
       leadsError: [],
       valor_importacao: null
     }
-  },
-  updated () {
-    this.tableData = users  
   },
   computed: {
       pagedData () {
@@ -217,7 +229,7 @@ export default {
     this.userAtual = authUser2
   },
   methods: {
-     handleLike (index, row) {
+     /*handleLike (index, row) {
         alert(`Your want to like ${row.name}`)
       },
       handleEdit (index, row) {
@@ -228,16 +240,18 @@ export default {
         if (indexToDelete >= 0) {
           this.tableData.splice(indexToDelete, 1)
         }
-      },
+      },*/
     generateData ({ header, results }) {
       this.excelData.header = header
       this.excelData.results = results
       this.onSuccess && this.onSuccess(this.excelData)
       if (this.excelData.results.length > 0) {
         this.loading = true
-        this.importarLeads()
+        this.carregado = false
+        this.tableData = this.excelData.results
+        // this.importarLeads()
       } else {
-        alert('Arquivo sem informaÃ§Ãµes para importaÃ§Ã£o')
+        alert('Arquivo sem imformações para importação')
         this.arquivo = ''
       }
     },
@@ -270,7 +284,7 @@ export default {
     handleClick (e) {
       const files = e.target.files
       const rawFile = files[0] // only use files[0]
-      console.log(rawFile)
+      // console.log(rawFile)
       if (!rawFile) return
       this.upload(rawFile)
     },
@@ -326,15 +340,18 @@ export default {
     importarLeads () {
       for (let i = 0; i < this.excelData.results.length; i++) {
         let newImport = {
+          id_assessor: this.excelData.results[i].Assessor,
+          produto: this.excelData.results[i].Cliente,
           produto: this.excelData.results[i].Produto,
-          //email: this.excelData.results[i].Email ? this.removerEspacos(this.excelData.results[i].Email) : this.removeAcento(this.excelData.results[i].Cliente) + this.retiraMascara(this.excelData.results[i].Celular) + '@importacao.com',
-          //telefone: this.excelData.results[i].Telefone,
-          //celular: this.excelData.results[i].Celular,
-          //numero_operadora: this.excelData.results[i].NumeroXP,
-          //data_criacao: moment(Date.now()).format(),
-          //id_user_criador: this.userAtual.id,
-          //id_office: this.userAtual.id_office,
-          //id_importacao: this.valor_importacao
+          sub_produto: this.excelData.results[i].SubProduto,
+          produto_garantia: this.excelData.results[i].ProdutoemGarantia,
+          cnpj_fundo: this.excelData.results[i].CNPJFundo,
+          descricao: this.excelData.results[i].Ativo,
+          emissor: this.excelData.results[i].Emissor,
+          data_vencimento: this.excelData.results[i].DatadeVencimento,
+          quantidade: this.excelData.results[i].Quantidade,
+          net: this.excelData.results[i].NET,  
+          arquivo: this.arquivo       
         }
 
         try {
@@ -343,15 +360,17 @@ export default {
             })
             .catch(error => {
               this.leadsError.push(error.response.config.data)
-              console.log('Erro do Axios ', error.response.config.data)
+              // console.log('Erro do Axios ', error.response.config.data)
             })
         } catch (error) {
-          console.log('Erro Try', error)
+          // console.log('Erro Try', error)
         }
       }
       this.loading = false
       this.arquivo = ''
-      alert('ImportaÃ§Ã£o realizada com sucesso !!!')
+      // alert('Importação realizada com sucesso !!!')
+      swal('Bom trabalho!', 'Importação realizada com sucesso!', 'success')
+      this.tableData = []
     },
     maskFone: function (v) {
       if (v) {
@@ -362,9 +381,9 @@ export default {
       return v
     },
     retiraMascara (campo) {
-      console.log(campo.lenght)
+      // console.log(campo.lenght)
       if (campo.lenght > 11) {
-        campo = campo.replace(' ', '') // remover espaÃ§os
+        campo = campo.replace(' ', '') // remover espa�os
         campo = campo.replace(/\D/g, '') // Remove tudo o que nÃ£o Ã© dÃ­gito
       }
       return campo
@@ -376,12 +395,12 @@ export default {
       text = text.replace(' ', '')
       text = text.replace(' ', '')
       text = text.toLowerCase()
-      text = text.replace(new RegExp('[ÃÃÃÃ]', 'gi'), 'a')
-      text = text.replace(new RegExp('[ÃÃÃ]', 'gi'), 'e')
-      text = text.replace(new RegExp('[ÃÃÃ]', 'gi'), 'i')
-      text = text.replace(new RegExp('[ÃÃÃÃ]', 'gi'), 'o')
-      text = text.replace(new RegExp('[ÃÃÃ]', 'gi'), 'u')
-      text = text.replace(new RegExp('[Ã]', 'gi'), 'c')
+      text = text.replace(new RegExp('[ÁÀÂÃ]','gi'), 'a');
+      text = text.replace(new RegExp('[ÉÈÊ]','gi'), 'e');
+      text = text.replace(new RegExp('[ÍÌÎ]','gi'), 'i');
+      text = text.replace(new RegExp('[ÓÒÔÕ]','gi'), 'o');
+      text = text.replace(new RegExp('[ÚÙÛ]','gi'), 'u');
+      text = text.replace(new RegExp('[Ç]','gi'), 'c');
       text = text.substring(0, 12)
       return text
     },

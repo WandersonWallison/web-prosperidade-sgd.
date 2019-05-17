@@ -26,9 +26,9 @@
                 <el-table :data="tableData" header-row-class-name="text-primary">
                     <el-table-column type="index">
                     </el-table-column>
-                    <el-table-column prop="descricao" label="Descrição">
+                    <el-table-column prop="descricao" label="DescriÃ§Ã£o">
                     </el-table-column>
-                    <el-table-column class-name="action-buttons td-actions" align="right" label="Ações">
+                    <el-table-column class-name="action-buttons td-actions" align="right" label="AÃ§Ãµes">
                         <template slot-scope="props">
                             <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
                                 <i class="fa fa-send"></i>
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-// TODO - Wanderson - Fazer - Colocar o campo tipoUsuario para idenrificar se � Adm, Operador,
+// TODO - Wanderson - Fazer - Colocar o campo tipoUsuario para idenrificar se ï¿½ Adm, Operador,
 import axios from 'axios'
 import Vue from 'vue'
 import swal from 'sweetalert2'
@@ -144,7 +144,7 @@ export default {
                     console.log(error.response.data)
                 })
             } else {
-              swal('Importante!', `Grupo ${row.descricao} não pode ser deletado!`, 'error')
+              swal('Importante!', `Grupo ${row.descricao} nÃ£o pode ser deletado!`, 'error')
             }
 
         },
@@ -163,7 +163,7 @@ export default {
                     this.productsTable.forEach((obj) => {
                         sum += obj.quantity * obj.price
                     })
-                    sums[index] = `€ ${sum}`
+                    sums[index] = `â¬ ${sum}`
                 }
             })
             return sums
