@@ -1,9 +1,16 @@
 <template>
-   <div class="has-icon-right">
-    <input ref="excel-upload-input" class="form-input" type="file" accept=".xlsx, .xls" @change="handleClick">
-    <div @drop="handleDrop" @dragover="handleDragover" @dragenter="handleDragover">
+<div class="card">
+    <form>
+        <div class="card-header">
+            <h4 class="card-title">
+                Importador
+            </h4>
+        </div>
+        <div class="card-body">
+           <input ref="excel-upload-input" class="form-input" type="file" accept=".xlsx, .xls" @change="handleClick">
+    <!-- <div @drop="handleDrop" @dragover="handleDragover" @dragenter="handleDragover">
       <md-button class="md-raised md-primary" name="importador" :loading="loading" style="margin-left:10px; cursor:pointer;" size="mini" type="primary" @click="handleUpload">Importador de Lead</md-button>
-    </div>
+    </div>-->
     <span>{{this.arquivo}}</span>
     <div class="loading-overlay2" v-if="loading">
       <md-progress-spinner md-mode='indeterminate' md-diameter='50' :md-stroke='4'></md-progress-spinner>
@@ -12,25 +19,145 @@
       <md-content>
           <ul id="leadsError">
             <li v-for="item in leadsError" v-bind:key="item.nome">
-              <label>Registro NÃ£o importado: {{ item }}</label>
+              <label>Registro não importado: {{ item }}</label>
             </li>
           </ul>
       </md-content>
   </div>
-  </div>
+        </div>
+        <div class="card-footer text-right">
+        </div>
+    </form>
+    <!-- inicio da lista -->
+    <div class="row">
+    <div class="col-md-12 card">
+      <div class="card-header">
+        <div class="category">Registros importados</div>
+      </div>
+      <div class="card-body row">
+        <div class="col-sm-6">
+          <el-select
+            class="select-default"
+            v-model="pagination.perPage"
+            placeholder="Per page">
+            <el-option
+              class="select-default"
+              v-for="item in pagination.perPageOptions"
+              :key="item"
+              :label="item"
+              :value="item">
+            </el-option>
+          </el-select>
+        </div>
+        <div class="col-sm-6">
+          <div class="pull-right">
+            <fg-input class="input-sm"
+                      placeholder="Search"
+                      v-model="searchQuery"
+                      addon-right-icon="nc-icon nc-zoom-split">
+            </fg-input>
+          </div>
+        </div>
+        <div class="col-sm-12 mt-2">
+          <el-table class="table-striped"
+                    :data="queriedData"
+                    border
+                    style="width: 100%">
+            <el-table-column v-for="column in tableColumns"
+                             :key="column.label"
+                             :min-width="column.minWidth"
+                             :prop="column.prop"
+                             :label="column.label">
+            </el-table-column>
+            <!--<el-table-column
+              :min-width="120"
+              fixed="right"
+              class-name="td-actions"
+              label="Actions">
+              <template slot-scope="props">
+                <p-button type="info" size="sm" icon @click="handleLike(props.$index, props.row)">
+                  <i class="fa fa-user"></i>
+                </p-button>
+                <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
+                  <i class="fa fa-edit"></i>
+                </p-button>
+                <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                  <i class="fa fa-times"></i>
+                </p-button>
+              </template>
+            </el-table-column>-->
+          </el-table>
+        </div>
+        <div class="col-sm-6 pagination-info">
+          <p class="category">Showing {{from + 1}} to {{to}} of {{total}} entries</p>
+        </div>
+        <div class="col-sm-6">
+          <p-pagination class="pull-right"
+                        v-model="pagination.currentPage"
+                        :per-page="pagination.perPage"
+                        :total="pagination.total">
+          </p-pagination>
+        </div>
+      </div>
+    </div>
+    </div>
+
+</div>
 </template>
 
 <script>
+import Vue from 'vue'
 import axios from 'axios'
 import moment from 'moment'
 import XLSX from 'xlsx'
+import {Table, TableColumn, Select, Option} from 'element-ui'
+import PPagination from 'src/components/UIComponents/Pagination.vue'
+import users from './users'
+  Vue.use(Table)
+  Vue.use(TableColumn)
+  Vue.use(Select)
+  Vue.use(Option)
 export default {
+  components: {
+      PPagination
+    },
   props: {
     beforeUpload: Function, // eslint-disable-line
     onSuccess: Function// eslint-disable-line
   },
   data () {
     return {
+      pagination: {
+          perPage: 5,
+          currentPage: 1,
+          perPageOptions: [5, 10, 25, 50],
+          total: 0
+        },
+        searchQuery: '',
+        propsToSearch: ['name'],
+        tableColumns: [
+          {
+            prop: 'name',
+            label: 'Produto',
+            minWidth: 200
+          },
+          /*{
+            prop: 'email',
+            label: 'Email',
+            minWidth: 250
+          },
+          {
+            prop: 'age',
+            label: 'Age',
+            minWidth: 100
+          },
+          {
+            prop: 'salary',
+            label: 'Salary',
+            minWidth: 120
+          }*/
+        ],
+        tableData: [],
       loading: false,
       excelData: {
         header: null,
@@ -43,12 +170,65 @@ export default {
       valor_importacao: null
     }
   },
+  updated () {
+    this.tableData = users  
+  },
+  computed: {
+      pagedData () {
+        return this.tableData.slice(this.from, this.to)
+      },
+      queriedData () {
+        if (!this.searchQuery) {
+          this.pagination.total = this.tableData.length
+          return this.pagedData
+        }
+        let result = this.tableData
+          .filter((row) => {
+            let isIncluded = false
+            for (let key of this.propsToSearch) {
+              let rowValue = row[key].toString()
+              if (rowValue.includes && rowValue.includes(this.searchQuery)) {
+                isIncluded = true
+              }
+            }
+            return isIncluded
+          })
+        this.pagination.total = result.length
+        return result.slice(this.from, this.to)
+      },
+      to () {
+        let highBound = this.from + this.pagination.perPage
+        if (this.total < highBound) {
+          highBound = this.total
+        }
+        return highBound
+      },
+      from () {
+        return this.pagination.perPage * (this.pagination.currentPage - 1)
+      },
+      total () {
+        this.pagination.total = this.tableData.length
+        return this.tableData.length
+      }
+    },
   mounted () {
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2
   },
   methods: {
+     handleLike (index, row) {
+        alert(`Your want to like ${row.name}`)
+      },
+      handleEdit (index, row) {
+        alert(`Your want to edit ${row.name}`)
+      },
+      handleDelete (index, row) {
+        let indexToDelete = this.tableData.findIndex((tableRow) => tableRow.id === row.id)
+        if (indexToDelete >= 0) {
+          this.tableData.splice(indexToDelete, 1)
+        }
+      },
     generateData ({ header, results }) {
       this.excelData.header = header
       this.excelData.results = results
@@ -221,7 +401,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 .excel-upload-input{
   display: none;
   z-index: -9999;
@@ -238,4 +418,9 @@ export default {
   color: #bbb;
   position: relative;
 }
+.el-table .td-actions{
+  button.btn {
+    margin-right: 5px;
+  }
+  }
 </style>
