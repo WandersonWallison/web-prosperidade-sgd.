@@ -2,5 +2,6 @@
     "diffEditor.renderIndicators": false,
     "editor.acceptSuggestionOnCommitCharacter": false,
     "editor.suggest.localityBonus": true,
-    "files.autoGuessEncoding": true
+    "editor.formatOnSave": true,
+    "editor.find.autoFindInSelection": true
 }
