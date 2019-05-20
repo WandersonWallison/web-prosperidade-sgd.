@@ -21,7 +21,7 @@
                 <fg-input type="text" name="nome" v-validate="modelValidations.nome" :error="getError('nome')" v-model="model.nome">
                 </fg-input>
                 <label>CNPJ</label>
-                <fg-input type="text" v-mask="'##.###.###/#####-##'" name="cnpj" v-validate="modelValidations.cnpj" :error="getError('cnpj')" v-model="model.cnpj">
+                <fg-input type="text" v-mask="'##.###.###/####-##'" name="cnpj" v-validate="modelValidations.cnpj" :error="getError('cnpj')" v-model="model.cnpj">
                 </fg-input>
                 <label>Telefone</label>
                 <fg-input type="text" v-mask="'(##)####-####'" name="telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-model="model.telefone">
@@ -326,8 +326,7 @@ export default {
                     console.log(error.response.data)
                 })
         }
-    },
-
+    }
 }
 </script>
 
