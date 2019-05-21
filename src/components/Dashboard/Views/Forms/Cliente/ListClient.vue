@@ -7,7 +7,7 @@
             <div class="col-sm-6">
                 <div class="card-body text-left">
                     <div>
-                        <h5 class="card-title">Empresas</h5>
+                        <h5 class="card-title">Clientes</h5>
                     </div>
                 </div>
             </div>
@@ -153,7 +153,7 @@ export default {
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}').then(response => {
             this.tableData = response.data
         })
     },

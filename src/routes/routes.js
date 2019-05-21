@@ -39,7 +39,7 @@ const CentralEdit = () => import(/* webpackChunkName: "forms" */ 'src/components
 const CentralList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/ListCentral.vue')
 const OperatorlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListOperator.vue')
 const AdvisorsList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisors.vue')
-const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListClient.vue')
+const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Cliente/ListClient.vue')
 const MovementList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListMovement.vue')
 const ComissionList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListComission.vue')
 const UserControlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListUserControl.vue')
