@@ -7,7 +7,7 @@
             <div class="col-sm-6">
                 <div class="card-body text-left">
                     <div>
-                        <h5 class="card-title">Tipos de Centrais </h5>
+                        <h5 class="card-title">Usuários</h5>
                     </div>
                 </div>
             </div>
@@ -36,6 +36,9 @@
                     </el-table-column>
                     <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
+                            <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
+                                <i class="fa fa-send"></i>
+                            </p-button>
                             <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                 <i class="fa fa-edit"></i>
                             </p-button>
@@ -55,12 +58,21 @@
             </div>
         </div>
     </div>
+    <md-dialog :md-active.sync="showDetails">
+        <div class="div">
+            <user-details :selected="selected"></user-details>
+        </div>
+    </md-dialog>
+    <md-dialog :md-active.sync="showUpdate">
+        <div class="div">
+            <user-edit :selected="selected"></user-edit>
+        </div>
+    </md-dialog>
 </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import swal from 'sweetalert2'
 import {
     Table,
     TableColumn,
@@ -68,11 +80,26 @@ import {
     Option
 } from 'element-ui'
 import axios from 'axios'
+import swal from 'sweetalert2'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
+import PSwitch from 'src/components/UIComponents/Switch.vue'
+import UserEdit from './FormUserEdit'
+import UserDetails from './FormUserDetails.vue'
+Vue.use(Table)
+Vue.use(TableColumn)
 export default {
-    name: 'ListCompany',
+    name: 'ListUser',
+    props: {
+        selected: {
+            type: Object,
+            default: []
+        }
+    },
     components: {
-        PPagination
+        PPagination,
+        PSwitch,
+        UserEdit,
+        UserDetails
     },
     computed: {
         pagedData() {
@@ -120,6 +147,8 @@ export default {
     },
     data() {
         return {
+            showDetails: false,
+            showUpdate: false,
             pagination: {
                 perPage: 5,
                 currentPage: 1,
@@ -127,50 +156,70 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['descricao', 'sigla'],
+            propsToSearch: ['username', 'email', 'telefone'],
             tableColumns: [{
-                    prop: 'descricao',
+                    prop: 'username',
                     label: 'Nome',
-                    minWidth: 250
+                    minWidth: 150
                 },
                 {
-                    prop: 'sigla',
-                    label: 'Sigla',
-                    minWidth: 250
+                    prop: 'id_grupo.descricao',
+                    label: 'Grupo',
+                    minWidth: 150
+                },
+                {
+                    prop: 'email',
+                    label: 'E-mail',
+                    minWidth: 150
+                },
+                {
+                    prop: 'telefone',
+                    label: 'Telefone',
+                    minWidth: 100
                 }
             ],
             tableData: []
         }
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_central?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1}').then(response => {
             this.tableData = response.data
         })
     },
     methods: {
-        handleLike() {
-            this.$router.push('/forms/TipoCentralForms')
+        handleDetails(index, row) {
+            this.showDetails = true
+            this.selected = row
+        },
+        handleLike(index, row) {
+            this.$router.push('/forms/user')
         },
         handleEdit(index, row) {
-            window.localStorage.setItem('tipo_central', row.id)
-            this.$router.push('/forms/TipoCentralEdit')
+            this.showUpdate = true
+            this.selected = row
+            // this.$router.push('/forms/userEdit')
+            // alert(`Your want to edit ${row.name}`)
         },
         handleDelete(index, row) {
-
-            let Tipocentral = {
+            let user = {
                 ativo: false
+                /*razao_social: this.model.nome,
+                site: this.form.site,
+                telefone: this.form.telefone,
+                email: this.form.email,
+                cnpj: this.form.cnpj*/
             }
-            axios.put(process.env.VUE_APP_ROOT_API + '/tipo_central/' + row.id, Tipocentral)
+            axios.put(process.env.VUE_APP_ROOT_API + '/user/' + row.id, user)
                 .then(response => {
                     this.results = response.data
-                    axios.get(process.env.VUE_APP_ROOT_API + '/tipo_central?where={"ativo": 1}').then(response => {
+                    axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', 'Registro excluída com sucesso!', 'success')
-                        this.$router.push('/forms/TipoCentralList')
+                        swal('Bom trabalho!', `Usuario ${row.username} deletado com sucesso!`, 'success')
+                        // this.$router.push('/forms/UserList')
                     })
                 })
                 .catch(error => {
-                    swal('Algo de errado!', 'Verifique o registro selecionado!', 'error')
+                    alert(error.response)
                     console.log(error.response.data)
                 })
         }

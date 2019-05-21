@@ -3,7 +3,7 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Editar de Tipo de Central
+                Cadastro de Tipo de Movimentação
             </h4>
         </div>
         <div class="card-body">
@@ -38,7 +38,7 @@ export default {
                 descricao: '',
                 sigla: ''
             },
-            tipoCentralEdit: {},
+            enderecoBuscado: [],
             modelValidations: {
                 descricao: {
                     required: true
@@ -51,16 +51,6 @@ export default {
     },
     directives: {
         mask
-    },
-    created() {
-
-        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_central/' + window.localStorage.getItem("tipo_central")).then(response => {
-            this.tipoCentralEdit = response.data
-            this.model.descricao = this.tipoCentralEdit.descricao
-            this.model.sigla = this.tipoCentralEdit.sigla
-            window.localStorage.removeItem("empresa")
-
-        })
     },
     methods: {
         getError(fieldName) {
@@ -78,10 +68,10 @@ export default {
                 sigla: this.model.sigla,
                 id_responsavel: authUser.id
             }
-            axios.put(process.env.VUE_APP_ROOT_API + '/tipo_central/' + this.tipoCentralEdit.id, tipoCentral)
+            axios.post(process.env.VUE_APP_ROOT_API + '/tipo_central', tipoCentral)
                 .then(response => {
                     this.results = response.data
-                    swal('Bom trabalho!', 'Tpo Central Alterado com sucesso!', 'success')
+                    swal('Bom trabalho!', 'Tpo Central Cadastrado com sucesso!', 'success')
                     this.$router.push('/forms/TipoCentralList')
                 })
                 .catch(error => {

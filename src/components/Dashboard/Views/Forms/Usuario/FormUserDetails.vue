@@ -149,7 +149,7 @@ import { setInterval } from 'timers';
                 },
                 {
                     value: 'CE',
-                    label: 'Cear?'
+                    label: 'Ceará'
                 },
                 {
                     value: 'DF',
@@ -181,7 +181,7 @@ import { setInterval } from 'timers';
                 },
                 {
                     value: 'PA',
-                    label: 'Par?'
+                    label: 'Pará'
                 },
                 {
                     value: 'PB',
@@ -225,7 +225,7 @@ import { setInterval } from 'timers';
                 },
                 {
                     value: 'SP',
-                    label: 'S?o Paulo'
+                    label: 'São Paulo'
                 },
                 {
                     value: 'SE',

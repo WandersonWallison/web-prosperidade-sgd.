@@ -11,7 +11,7 @@
                 <div class="col-lg-6">
                     <label>Central</label>
                     <fg-input :error="getError('central')">
-                        <el-select multiple class="select-default" v-model="selectCentrais" name="central" v-validate="modelValidations.central" placeholder="Selecione...">
+                        <el-select class="select-default" v-model="selectCentrais" name="central" v-validate="modelValidations.central" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in centralOffice" :key="item.value" :label="item.nome" :value="item.id">
                             </el-option>
                         </el-select>
