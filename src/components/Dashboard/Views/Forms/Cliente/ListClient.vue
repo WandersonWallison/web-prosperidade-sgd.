@@ -7,7 +7,7 @@
             <div class="col-sm-6">
                 <div class="card-body text-left">
                     <div>
-                        <h5 class="card-title">Empresas</h5>
+                        <h5 class="card-title">Clientes</h5>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <fg-input class="input-sm" placeholder="Pesquisar" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
+                    <fg-input class="input-sm" placeholder="Search" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
                     </fg-input>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                                 <i class="fa fa-edit"></i>
                             </p-button>
                             <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                                <i class="fa fa-trash-o"></i>
+                                <i class="fa fa-times"></i>
                             </p-button>
                         </template>
                     </el-table-column>
@@ -133,11 +133,11 @@ export default {
                     label: 'Nome',
                     minWidth: 150
                 },
-                //{
-                 //   prop: 'razao_social',
-                   // label: 'Razão Social',
-                 //   minWidth: 150
-                //},
+                {
+                    prop: 'razao_social',
+                    label: 'Razão Social',
+                    minWidth: 150
+                },
                 {
                     prop: 'email',
                     label: 'E-mail',
@@ -153,7 +153,7 @@ export default {
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}').then(response => {
             this.tableData = response.data
         })
     },
