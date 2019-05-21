@@ -341,7 +341,7 @@ export default {
                             this.resultAdress = response.data
                             swal(
                                 "Bom trabalho!",
-                                "Registro Atualizda com sucesso!",
+                                "Registro Atualizada com sucesso!",
                                 "success"
                             )
                             this.$router.push("/forms/CentralList")

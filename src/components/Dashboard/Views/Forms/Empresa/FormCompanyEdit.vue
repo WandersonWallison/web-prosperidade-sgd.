@@ -317,7 +317,7 @@ export default {
             const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let empresa = {
                 nome: this.model.nome,
-                razao_social: this.model.nome,
+                razao_social: this.model.razao_social,
                 telefone: this.model.telefone,
                 email: this.model.email,
                 cnpj: this.model.cnpj,
@@ -343,7 +343,7 @@ export default {
                         axios.put(process.env.VUE_APP_ROOT_API + '/endereco/' + this.companyEdit.endereco[0].id, endereco)
                             .then(response => {
                                 this.resultAdress = response.data
-                                swal('Bom trabalho!', 'Empresa Atualizda com sucesso!', 'success')
+                                swal('Bom trabalho!', 'Empresa Atualizada com sucesso!', 'success')
                                 this.$router.push('/forms/companyList')
                             })
                             .catch(error => {
@@ -355,7 +355,7 @@ export default {
                         axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
                             .then(response => {
                                 this.resultAdress = response.data
-                                swal('Bom trabalho!', 'Empresa Atualizda com sucesso!', 'success')
+                                swal('Bom trabalho!', 'Empresa Atualizada com sucesso!', 'success')
                                 this.$router.push('/forms/companyList')
                             })
                             .catch(error => {

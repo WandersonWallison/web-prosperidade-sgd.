@@ -13,7 +13,7 @@ export default [
   },
   {
     name: 'Operador',
-    path: '/forms/OperatorlList'
+    path: '/forms/OperatorList'
   },
   {
     name: 'Central',
@@ -29,7 +29,7 @@ export default [
   },
   {
     name: 'Assessor',
-    path: '/forms/AdvisorsList'
+    path: '/forms/AdvisorList'
   }
   ]
 },
