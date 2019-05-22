@@ -3,7 +3,7 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Importador
+                Comissionamento
             </h4>
         </div>
         <div class="card-body">
@@ -133,41 +133,47 @@ export default {
           total: 0
         },
         searchQuery: '',
-        propsToSearch: ['Assessor','Cliente','Produto','Sub Produto','Produto em Garantia','Ativo', 'Emissor'],
+        propsToSearch: ['Classificação','ProdutoCategoria','Mercado','Nome do Cliente',
+                        'Nível1','Nível2', 'CódigoCliente','CódigoMaster'],
         tableColumns: [
           {
-            prop: 'Assessor',
-            label: 'Assessor',
+            prop: 'Classificação',
+            label: 'Classificação',
             minWidth: 200
           },
           {
-            prop: 'Cliente',
-            label: 'Cliente',
+            prop: 'ProdutoCategoria',
+            label: 'Produto/Categoria',
             minWidth: 250
           },
           {
-            prop: 'Produto',
-            label: 'Produto',
+            prop: 'Mercado',
+            label: 'Mercado',
             minWidth: 100
           },
           {
-            prop: 'SubProduto',
-            label: 'Sub Produto',
+            prop: 'NomedoCliente',
+            label: 'Nome do Cliente',
             minWidth: 120
           },
           {
-            prop: 'ProdutoemGarantia',
-            label: 'Produto em Garantia',
+            prop: 'Nível1',
+            label: 'Nível 1',
             minWidth: 120
           },
           {
-            prop: 'Ativo',
-            label: 'Ativo',
+            prop: 'Nível2',
+            label: 'Nível 2',
             minWidth: 120
           },
           {
-            prop: 'Emissor',
-            label: 'Emissor',
+            prop: 'CódigoCliente',
+            label: 'Código Cliente',
+            minWidth: 120
+          },
+          {
+            prop: 'CódigoMaster',
+            label: 'Código Master',
             minWidth: 120
           }
         ],
@@ -330,6 +336,7 @@ export default {
         /* find the cell in the first row */
         let hdr = 'UNKNOWN ' + C // <-- replace with your desired default
         if (cell && cell.t) hdr = XLSX.utils.format_cell(cell)
+        // hdr = hdr.replace(' ', '') // Remove tudos os espaços
         headers.push(hdr)
       }
       return headers
@@ -340,22 +347,25 @@ export default {
     importarLeads () {
       for (let i = 0; i < this.excelData.results.length; i++) {
         let newImport = {
-          id_assessor: this.excelData.results[i].Assessor,
-          produto: this.excelData.results[i].Cliente,
-          produto: this.excelData.results[i].Produto,
-          sub_produto: this.excelData.results[i].SubProduto,
-          produto_garantia: this.excelData.results[i].ProdutoemGarantia,
-          cnpj_fundo: this.excelData.results[i].CNPJFundo,
-          descricao: this.excelData.results[i].Ativo,
-          emissor: this.excelData.results[i].Emissor,
-          data_vencimento: this.excelData.results[i].DatadeVencimento,
-          quantidade: this.excelData.results[i].Quantidade,
-          net: this.excelData.results[i].NET,  
-          arquivo: this.arquivo       
+          classificacao: this.excelData.results[i].Classificação,
+          produto_categoria: this.excelData.results[i].ProdutoCategoria,
+          mercado: this.excelData.results[i].Mercado,
+          nome_cliente: this.excelData.results[i].NomedoCliente,
+          nivel_1: this.excelData.results[i].Nível1,
+          nivel_2: this.excelData.results[i].Nível2,
+          codigo_cliente: this.excelData.results[i].CódigoCliente,
+          codigo_master: this.excelData.results[i].CódigoMaster,
+          data: moment(this.excelData.results[i].Data,'DD/MM/YYYY'),
+          receita_bruta: this.excelData.results[i].ReceitaBrutaR$,
+          receita_liquida: this.excelData.results[i].ReceitaLíquidaR$,
+          comissao_escritorio_p: this.excelData.results[i].ComissãoEscritório,
+          comissao_escritorio_r: this.excelData.results[i].ComissãoEscritórioR$,
+          imposto: this.excelData.results[i].Imposto,
+          comissao_liquida: this.excelData.results[i].Comissãoliquida
         }
 
         try {
-          axios.post(process.env.VUE_APP_ROOT_API + '/importacao', newImport)
+          axios.post(process.env.VUE_APP_ROOT_API + '/comissionamento_item', newImport)
             .then(response => {
             })
             .catch(error => {
