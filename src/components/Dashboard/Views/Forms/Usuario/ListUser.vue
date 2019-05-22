@@ -90,10 +90,7 @@ Vue.use(TableColumn)
 export default {
     name: 'ListUser',
     props: {
-        selected: {
-            type: Object,
-            default: []
-        }
+        selected: []
     },
     components: {
         PPagination,
