@@ -31,13 +31,13 @@
                     <el-table-column class-name="action-buttons td-actions" align="right" label="AÃ§Ãµes">
                         <template slot-scope="props">
                             <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
-                                <i class="fa fa-send"></i>
+                                <i class="fa fa-search"></i>
                             </p-button>
                             <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                 <i class="fa fa-edit"></i>
                             </p-button>
                             <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                                <i class="fa fa-times"></i>
+                                <i class="fa fa-trash-o"></i>
                             </p-button>
                         </template>
                     </el-table-column>

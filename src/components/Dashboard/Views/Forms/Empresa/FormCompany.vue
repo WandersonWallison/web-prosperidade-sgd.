@@ -283,7 +283,7 @@ export default {
         salvar() {
             let empresa = {
                 nome: this.model.nome,
-                razao_social: this.model.nome,
+                razao_social: this.model.razao_social,
                 telefone: this.model.telefone,
                 email: this.model.email,
                 cnpj: this.model.cnpj
@@ -306,7 +306,7 @@ export default {
                         .then(response => {
                             this.resultAdress = response.data
                             swal('Bom trabalho!', 'Empresa Cadastrada com sucesso!', 'success')
-                            this.$router.push('/forms/empresa/companyList')
+                            this.$router.push('/forms/companyList')
                         })
                         .catch(error => {
                             swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')

@@ -6,7 +6,7 @@
           <!-- ------------------------ -->
           <div class="col-sm-10">
             <div class="card-body text-left">
-                <div><h5 class="card-title">Movimentações</h5></div>
+                <div><h5 class="card-title">Clientes</h5></div>
             </div>
           </div>
           <!-- ------------------------- -->
@@ -29,17 +29,16 @@
                              label="Nome">
             </el-table-column>
             <el-table-column prop="job"
-                             label="Escritório">
+                             label="CPF">
             </el-table-column>
             <el-table-column prop="salary"
-                             label="CPF">
+                             label="Valor Investido">
             </el-table-column>
             <el-table-column
               class-name="action-buttons td-actions"
               align="right"
               label="Ações">
               <template slot-scope="props">
-
                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                   <i class="fa fa-edit"></i>
                 </p-button>
@@ -95,7 +94,8 @@
           salary: '€ 69,201',
           active: true
         }
-        */],
+        */
+        ],
         productsTable: [
           {
             image: 'static/img/tables/agenda.png',

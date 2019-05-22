@@ -12,7 +12,7 @@
 
         </navbar-toggle-button>
       </div>
-      <a class="navbar-brand" href="#pablo"><!--<img slot="header"  width="36" height="36" src="static\img\favicon_n.png" alt="...">-->Prosperidade Investimentos</a>
+      <a class="navbar-brand" href="#"><!--<img slot="header"  width="36" height="36" src="static\img\favicon_n.png" alt="...">-->Prosperidade Investimentos</a>
     </div>
 
     <template slot="navbar-menu">
@@ -28,7 +28,7 @@
       </form>-->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link btn-magnify" href="#pablo">
+          <a class="nav-link btn-magnify" href="#">
             <i class="nc-icon nc-chat-33"></i>
             <p>
               <span class="d-lg-none d-md-block">Stats</span>

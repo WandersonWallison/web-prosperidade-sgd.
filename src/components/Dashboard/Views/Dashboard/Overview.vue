@@ -304,33 +304,33 @@
           {
             type: 'warning',
             icon: 'nc-icon nc-globe',
-            title: 'Capacity',
-            value: '105GB',
-            footerText: 'Updated now',
+            title: 'Centrais',
+            value: '5',
+            footerText: 'Atualizado agora',
             footerIcon: 'nc-icon nc-refresh-69'
           },
           {
             type: 'success',
             icon: 'nc-icon nc-money-coins',
-            title: 'Revenue',
-            value: '$1,345',
-            footerText: 'Last day',
+            title: 'Investimento',
+            value: 'R$ 1,345',
+            footerText: 'Hoje',
             footerIcon: 'nc-icon nc-calendar-60'
           },
           {
             type: 'danger',
             icon: 'nc-icon nc-vector',
-            title: 'Errors',
+            title: 'Escritorios',
             value: '23',
-            footerText: 'In the last hour',
+            footerText: 'Hoje',
             footerIcon: 'nc-icon nc-bell-55'
           },
           {
             type: 'info',
             icon: 'nc-icon nc-favourite-28',
-            title: 'Followers',
-            value: '+45',
-            footerText: 'Updated now',
+            title: 'Assessores',
+            value: '67',
+            footerText: 'Atualizado agora',
             footerIcon: 'nc-icon nc-refresh-69'
           }
         ],

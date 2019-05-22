@@ -26,7 +26,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <fg-input class="input-sm" placeholder="Search" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
+                    <fg-input class="input-sm" placeholder="Pesquisar" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
                     </fg-input>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                                 <i class="fa fa-edit"></i>
                             </p-button>
                             <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                                <i class="fa fa-times"></i>
+                                <i class="fa fa-trash-o"></i>
                             </p-button>
                         </template>
                     </el-table-column>
@@ -127,22 +127,22 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['nome','cnpj', 'razao_social' ,'email', 'telefone'],
+            propsToSearch: ['nome','email', 'telefone'],
             tableColumns: [{
                     prop: 'nome',
                     label: 'Nome',
                     minWidth: 170
                 },
-                {
-                    prop: 'cnpj',
-                    label: 'CNPJ',
-                    minWidth: 120
-                },
-                {
-                    prop: 'razao_social',
-                    label: 'Razão Social',
-                    minWidth: 120
-                },
+                //{
+                //    prop: 'cnpj',
+                //    label: 'CNPJ',
+                //    minWidth: 120
+                //},
+                //{
+                //    prop: 'razao_social',
+                //    label: 'Razão Social',
+                //    minWidth: 120
+                //},
                 {
                     prop: 'email',
                     label: 'E-mail',

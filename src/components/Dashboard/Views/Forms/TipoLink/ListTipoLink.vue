@@ -34,7 +34,7 @@
                                 <i class="fa fa-edit"></i>
                             </p-button>
                             <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                                <i class="fa fa-times"></i>
+                                <i class="fa fa-trash-o"></i>
                             </p-button>
                         </template>
                     </el-table-column>
