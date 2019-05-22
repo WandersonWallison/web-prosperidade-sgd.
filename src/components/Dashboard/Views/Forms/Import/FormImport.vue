@@ -3,7 +3,7 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Comissionamento
+                Importador
             </h4>
         </div>
         <div class="card-body">
@@ -26,7 +26,7 @@
   </div>
         </div>
         <div class="card-footer text-right" v-if="carregado == false">
-            <p-button type="info" @click.prevent="importarLeads">Importar</p-button>
+            <p-button type="info" @click.prevent="importarLeads">Salvar</p-button>
         </div>
     </form>
     <!-- inicio da lista -->

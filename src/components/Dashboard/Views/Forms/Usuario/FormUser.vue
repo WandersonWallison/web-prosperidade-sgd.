@@ -39,9 +39,9 @@
 
 <script>
 import axios from 'axios'
-import FirstStep from './Wizard/FirstStepUser.vue'
-import SecondStep from './Wizard/SecondStepUser.vue'
-import ThirdStep from './Wizard/ThirdStepUser.vue'
+import FirstStep from '../Wizard/FirstStepUser.vue'
+import SecondStep from '../Wizard/SecondStepUser.vue'
+import ThirdStep from '../Wizard/ThirdStepUser.vue'
 import swal from 'sweetalert2'
 import {
     Wizard,

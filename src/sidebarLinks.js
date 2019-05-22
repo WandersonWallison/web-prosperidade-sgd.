@@ -20,8 +20,8 @@ export default [
     path: '/forms/CentralList'
   },
   {
-    name: 'Tipo Central',
-    path: '/forms/TipoCentralList'
+    name: 'Tipo Movimentação',
+    path: '/forms/TipoMovimentacaoList'
   },
   {
     name: 'Escritorio',

@@ -4,20 +4,13 @@
     <div class="col-md-12 card">
         <div class="card-body row">
             <!-- ***************************************************  -->
-            <div class="col-sm-6">
+            <div class="col-sm-8">
                 <div class="card-body text-left">
                     <div>
-                        <h5 class="card-title">Grupos</h5>
+                        <h5 class="card-title">Operadores</h5>
                     </div>
                 </div>
             </div>
-            <!-- ------------------------- -->
-            <div class="col-sm-6">
-                <div class="pull-right">
-                    <p-button type="primary" @click="handleLike()">Cadastro</p-button>
-                </div>
-            </div>
-<<<<<<< HEAD
             <!-- ***************************************************  -->
             <div class="col-sm-6">
                 <el-select class="select-default" v-model="pagination.perPage" placeholder="Per page">
@@ -27,38 +20,13 @@
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <fg-input class="input-sm" placeholder="Search" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
+                    <fg-input class="input-sm" placeholder="Pesquisar" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
                     </fg-input>
                 </div>
             </div>
             <div class="col-sm-12 mt-2">
                 <el-table class="table-striped" :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
-                    </el-table-column>
-                    <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
-                        <template slot-scope="props">
-=======
-        </div>
-        <div class="card-body row">
-            <div class="col-sm-12">
-                <el-table :data="tableData" header-row-class-name="text-primary">
-                    <el-table-column type="index">
-                    </el-table-column>
-                    <el-table-column prop="descricao" label="Descrição">
-                    </el-table-column>
-                    <el-table-column class-name="action-buttons td-actions" align="right" label="Ações">
-                        <template slot-scope="props">
-                            <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
-                                <i class="fa fa-search"></i>
-                            </p-button>
->>>>>>> cb0c8e711612ae9da55ca12d002435ac539969b9
-                            <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
-                                <i class="fa fa-edit"></i>
-                            </p-button>
-                            <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                                <i class="fa fa-trash-o"></i>
-                            </p-button>
-                        </template>
                     </el-table-column>
                 </el-table>
             </div>
@@ -83,22 +51,9 @@ import {
     Option
 } from 'element-ui'
 import axios from 'axios'
-import swal from 'sweetalert2'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
-import PSwitch from 'src/components/UIComponents/Switch.vue'
-import GroupEdit from '../Group/FormGroupEdit.vue'
-import GroupDetails from '../Group/FormGroupDetails.vue'
-import GroupCadastrar from '../Group/FormGroup.vue'
-Vue.use(Table)
-Vue.use(TableColumn)
 export default {
-    name: 'ListCompany',
-    props: {
-        selected: {
-            type: Object,
-            default: []
-        }
-    },
+    name: 'ListOperator',
     components: {
         PPagination
     },
@@ -148,12 +103,6 @@ export default {
     },
     data() {
         return {
-            showcadastrar: false,
-            showDetails: false,
-            showUpdate: false,
-            tableData: [],
-            productsTable: [],
-            qtd: null,
             pagination: {
                 perPage: 5,
                 currentPage: 1,
@@ -161,20 +110,20 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['nome', 'email', 'telefone'],
+            propsToSearch: ['username', 'cpf' ,'email', 'telefone'],
             tableColumns: [{
-                    prop: 'nome',
+                    prop: 'username',
                     label: 'Nome',
-                    minWidth: 150
+                    minWidth: 200
                 },
                 {
-                    prop: 'razao_social',
-                    label: 'Razão Social',
+                    prop: 'cpf',
+                    label: 'CPF',
                     minWidth: 150
                 },
                 {
                     prop: 'email',
-                    label: 'E-mail',
+                    label: 'Email',
                     minWidth: 150
                 },
                 {
@@ -186,47 +135,10 @@ export default {
             tableData: []
         }
     },
-    mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/grupo?where={"ativo": 1}').then(response => {
+   mounted() {
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}').then(response => {
             this.tableData = response.data
         })
-    },
-    methods: {
-        handleDetails(index, row) {
-            this.showDetails = true
-            this.selected = row
-        },
-        handleLike() {
-            this.showcadastrar = true
-        },
-        handleEdit(index, row) {
-            this.showUpdate = true
-            this.selected = row
-        },
-        handleDelete(index, row) {
-            this.qtd = row.usuario.length
-            let user = {
-                ativo: false
-            }
-            if (row.id > 3 || row.usuario.length == 0) {
-                axios.put(process.env.VUE_APP_ROOT_API + '/grupo/' + row.id, user)
-                    .then(response => {
-                        this.results = response.data
-                        axios.get(process.env.VUE_APP_ROOT_API + '/grupo?where={"ativo": 1}').then(response => {
-                            this.tableData = response.data
-                            swal('Bom trabalho!', `Grupo ${row.descricao} deletado com sucesso!`, 'success')
-                            // this.$router.push('/forms/UserList')
-                        })
-                    })
-                    .catch(error => {
-                        alert(error.response)
-                        console.log(error.response.data)
-                    })
-            } else {
-                swal('Importante!', `Grupo ${row.descricao} nÃ£o pode ser deletado!`, 'error')
-            }
-
-        }
     }
 }
 </script>
