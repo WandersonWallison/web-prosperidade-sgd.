@@ -55,10 +55,6 @@ export default [
   children: [
     {
       name: 'Comissionamento',
-      path: '/forms/ComissionList'
-    },
-    {
-      name: 'Importação',
       path: '/forms/Import'
     }
   ]
