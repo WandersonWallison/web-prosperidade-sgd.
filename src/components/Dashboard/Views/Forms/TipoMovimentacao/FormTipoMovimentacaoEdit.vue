@@ -54,11 +54,11 @@ export default {
     },
     created() {
 
-        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_central/' + window.localStorage.getItem("tipo_central")).then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_central/' + window.localStorage.getItem("tipo_movimentacao")).then(response => {
             this.tipoCentralEdit = response.data
             this.model.descricao = this.tipoCentralEdit.descricao
             this.model.sigla = this.tipoCentralEdit.sigla
-            window.localStorage.removeItem("empresa")
+            window.localStorage.removeItem("tipo_movimentacao")
 
         })
     },

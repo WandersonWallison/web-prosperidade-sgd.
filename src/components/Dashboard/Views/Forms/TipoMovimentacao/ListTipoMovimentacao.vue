@@ -152,7 +152,7 @@ export default {
             this.$router.push('/forms/TipoMovimentacaoForms')
         },
         handleEdit(index, row) {
-            window.localStorage.setItem('tipo_central', row.id)
+            window.localStorage.setItem('tipo_movimentacao', row.id)
             this.$router.push('/forms/TipoMovimentacaoEdit')
         },
         handleDelete(index, row) {

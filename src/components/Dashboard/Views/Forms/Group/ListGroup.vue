@@ -17,7 +17,6 @@
                     <p-button type="primary" @click="handleLike()">Cadastro</p-button>
                 </div>
             </div>
-<<<<<<< HEAD
             <!-- ***************************************************  -->
             <div class="col-sm-6">
                 <el-select class="select-default" v-model="pagination.perPage" placeholder="Per page">
@@ -27,7 +26,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <fg-input class="input-sm" placeholder="Search" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
+                    <fg-input class="input-sm" placeholder="Pesquisar" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
                     </fg-input>
                 </div>
             </div>
@@ -37,21 +36,6 @@
                     </el-table-column>
                     <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
-=======
-        </div>
-        <div class="card-body row">
-            <div class="col-sm-12">
-                <el-table :data="tableData" header-row-class-name="text-primary">
-                    <el-table-column type="index">
-                    </el-table-column>
-                    <el-table-column prop="descricao" label="Descrição">
-                    </el-table-column>
-                    <el-table-column class-name="action-buttons td-actions" align="right" label="Ações">
-                        <template slot-scope="props">
-                            <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
-                                <i class="fa fa-search"></i>
-                            </p-button>
->>>>>>> cb0c8e711612ae9da55ca12d002435ac539969b9
                             <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                 <i class="fa fa-edit"></i>
                             </p-button>
@@ -82,23 +66,18 @@ import {
     Select,
     Option
 } from 'element-ui'
+import PSwitch from 'src/components/UIComponents/Switch.vue'
+import GroupEdit from './FormGroupEdit'
+import GroupDetails from './FormGroupDetails.vue'
+import GroupCadastrar from './FormGroup.vue'
 import axios from 'axios'
 import swal from 'sweetalert2'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
-import PSwitch from 'src/components/UIComponents/Switch.vue'
-import GroupEdit from '../Group/FormGroupEdit.vue'
-import GroupDetails from '../Group/FormGroupDetails.vue'
-import GroupCadastrar from '../Group/FormGroup.vue'
-Vue.use(Table)
-Vue.use(TableColumn)
+import {
+    mask
+} from 'vue-the-mask'
 export default {
-    name: 'ListCompany',
-    props: {
-        selected: {
-            type: Object,
-            default: []
-        }
-    },
+    name: 'ListGroup',
     components: {
         PPagination
     },
@@ -148,12 +127,6 @@ export default {
     },
     data() {
         return {
-            showcadastrar: false,
-            showDetails: false,
-            showUpdate: false,
-            tableData: [],
-            productsTable: [],
-            qtd: null,
             pagination: {
                 perPage: 5,
                 currentPage: 1,
@@ -161,29 +134,18 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['nome', 'email', 'telefone'],
+            propsToSearch: ['descricao'],
             tableColumns: [{
-                    prop: 'nome',
-                    label: 'Nome',
-                    minWidth: 150
-                },
-                {
-                    prop: 'razao_social',
-                    label: 'Razão Social',
-                    minWidth: 150
-                },
-                {
-                    prop: 'email',
-                    label: 'E-mail',
-                    minWidth: 150
-                },
-                {
-                    prop: 'telefone',
-                    label: 'Telefone',
-                    minWidth: 100
-                }
-            ],
-            tableData: []
+                prop: 'descricao',
+                label: 'Descrição',
+                minWidth: 400
+            }],
+            showcadastrar: false,
+            showDetails: false,
+            showUpdate: false,
+            tableData: [],
+            productsTable: [],
+            qtd: null
         }
     },
     mounted() {
@@ -193,15 +155,16 @@ export default {
     },
     methods: {
         handleDetails(index, row) {
-            this.showDetails = true
-            this.selected = row
+            // this.showDetails = true
+            // this.selected = row
         },
         handleLike() {
+            this.$router.push('/forms/GroupForm')
             this.showcadastrar = true
         },
         handleEdit(index, row) {
-            this.showUpdate = true
-            this.selected = row
+            window.localStorage.setItem('grupo', row.id)
+            this.$router.push('/forms/GroupFormEdit')
         },
         handleDelete(index, row) {
             this.qtd = row.usuario.length
@@ -215,7 +178,6 @@ export default {
                         axios.get(process.env.VUE_APP_ROOT_API + '/grupo?where={"ativo": 1}').then(response => {
                             this.tableData = response.data
                             swal('Bom trabalho!', `Grupo ${row.descricao} deletado com sucesso!`, 'success')
-                            // this.$router.push('/forms/UserList')
                         })
                     })
                     .catch(error => {

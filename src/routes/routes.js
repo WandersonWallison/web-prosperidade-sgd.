@@ -47,6 +47,8 @@ const UserForms = () => import(/* webpackChunkName: "forms" */ 'src/components/D
 const UserFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/FormUserEdit.vue')
 const UserList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/ListUser.vue')
 const GroupList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Group/ListGroup.vue')
+const GroupForm = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Group/FormGroup.vue')
+const GroupFormEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Group/FormGroupEdit.vue')
 const LinkList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Link/ListLink.vue')
 const LinkForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Link/FormLink.vue')
 const TipoLinkForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoLink/FormTipoLink.vue')
@@ -229,9 +231,19 @@ let formsMenu = {
       component: UserList
     },
     {
+      path: 'GroupForm',
+      name: 'Form Group',
+      component: GroupForm
+    },
+    {
       path: 'GroupList',
       name: 'List Group',
       component: GroupList
+    },
+    {
+      path: 'GroupFormEdit',
+      name: 'Edit Group',
+      component: GroupFormEdit
     },
     {
       path: 'LinkList',
@@ -389,5 +401,5 @@ const routes = [
     ]
   },
   {path: '*', component: NotFound}
-];
+]
 export default routes
