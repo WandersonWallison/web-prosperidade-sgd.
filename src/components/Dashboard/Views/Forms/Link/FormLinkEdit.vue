@@ -48,7 +48,7 @@ import axios from 'axios'
 import swal from 'sweetalert2'
 import {mask} from 'vue-the-mask'
 export default {
-    name: 'FormLink',
+    name: 'FormLinkEdit',
     data() {
         return {
             model: {

@@ -70,7 +70,7 @@ import {
 import axios from 'axios'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
 export default {
-    name: 'ListCompany',
+    name: 'ListLink',
     components: {
         PPagination
     },
