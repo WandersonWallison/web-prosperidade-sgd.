@@ -4,14 +4,12 @@ import NotFound from '../components/GeneralViews/NotFoundPage.vue'
 // Dashboard pages
 const Overview = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/Overview.vue')
 const Widgets = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/Widgets.vue')
-
 // Pages
 import User from 'src/components/Dashboard/Views/Pages/UserProfile.vue'
 import TimeLine from 'src/components/Dashboard/Views/Pages/TimeLinePage.vue'
 import Login from 'src/components/Dashboard/Views/Pages/Login.vue'
 import Register from 'src/components/Dashboard/Views/Pages/Register.vue'
 import Lock from 'src/components/Dashboard/Views/Pages/Lock.vue'
-
 // Components pages
 import Buttons from 'src/components/Dashboard/Views/Components/Buttons.vue'
 import GridSystem from 'src/components/Dashboard/Views/Components/GridSystem.vue'
@@ -20,7 +18,6 @@ import SweetAlert from 'src/components/Dashboard/Views/Components/SweetAlert.vue
 import Notifications from 'src/components/Dashboard/Views/Components/Notifications.vue'
 import Icons from 'src/components/Dashboard/Views/Components/Icons.vue'
 import Typography from 'src/components/Dashboard/Views/Components/Typography.vue'
-
 // Forms pages
 const RegularForms  = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/RegularForms.vue')
 const ExtendedForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ExtendedForms.vue')
@@ -37,20 +34,12 @@ const TipoMovimentacaoList = () => import(/* webpackChunkName: "forms" */ 'src/c
 const CentralForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/FormCentral.vue')
 const CentralEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/FormCentralEdit.vue')
 const CentralList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/ListCentral.vue')
-<<<<<<< HEAD
-const OperatorlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/ListOperator.vue')
-const AdvisorsList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/ListAdvisors.vue')
-=======
-<<<<<<< HEAD
-const OperatorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListOperator.vue')
+const OperatorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/ListOperator.vue')
+// const OperatorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListOperator.vue')
 const AdvisorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisor.vue')
-const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListClient.vue')
-=======
-const OperatorlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListOperator.vue')
-const AdvisorsList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisors.vue')
->>>>>>> cb0c8e711612ae9da55ca12d002435ac539969b9
+// const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListClient.vue')
+// const AdvisorsList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisors.vue')
 const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Cliente/ListClient.vue')
->>>>>>> 76ce2b5e43a9227773fc01abbd701ea4fa15d304
 const MovementList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListMovement.vue')
 const ComissionList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListComission.vue')
 const UserControlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/ListUserControl.vue')
@@ -65,9 +54,6 @@ const TipoLinkList = () => import(/* webpackChunkName: "forms" */ 'src/component
 const ImportForm = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Import/FormImport.vue')
 // const TaskList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListTask.vue')
 const Wizard = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Wizard.vue')
-
-
-
 // TableList pages
 const RegularTables = () => import(/* webpackChunkName: "tables" */ 'src/components/Dashboard/Views/Tables/RegularTables.vue');
 const ExtendedTables = () => import(/* webpackChunkName: "tables" */ 'src/components/Dashboard/Views/Tables/ExtendedTables.vue');
@@ -76,12 +62,10 @@ const PaginatedTables = () => import(/* webpackChunkName: "tables" */ 'src/compo
 const GoogleMaps = () => import(/* webpackChunkName: "maps" */ 'src/components/Dashboard/Views/Maps/GoogleMaps.vue')
 const FullScreenMap = () => import(/* webpackChunkName: "maps" */ 'src/components/Dashboard/Views/Maps/FullScreenMap.vue')
 const VectorMaps = () => import(/* webpackChunkName: "maps" */ 'src/components/Dashboard/Views/Maps/VectorMapsPage.vue');
-
 // Calendar
 import Calendar from 'src/components/Dashboard/Views/Calendar/CalendarRoute.vue'
 // Charts
 const Charts = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Charts.vue')
-
 let componentsMenu = {
   path: '/components',
   component: DashboardLayout,
@@ -122,7 +106,6 @@ let componentsMenu = {
       name: 'Typography',
       component: Typography
     }
-
   ]
 }
 let formsMenu = {
@@ -287,7 +270,6 @@ let formsMenu = {
     }
   ]
 }
-
 let tablesMenu = {
   path: '/table-list',
   component: DashboardLayout,
@@ -309,7 +291,6 @@ let tablesMenu = {
       component: PaginatedTables
     }]
 }
-
 let mapsMenu = {
   path: '/maps',
   component: DashboardLayout,
@@ -332,7 +313,6 @@ let mapsMenu = {
     }
   ]
 }
-
 let pagesMenu = {
   path: '/pages',
   component: DashboardLayout,
@@ -350,25 +330,21 @@ let pagesMenu = {
     }
   ]
 }
-
 let loginPage = {
   path: '/login',
   name: 'Login',
   component: Login
 }
-
 let registerPage = {
   path: '/register',
   name: 'Register',
   component: Register
 }
-
 let lockPage = {
   path: '/lock',
   name: 'Lock',
   component: Lock
 }
-
 const routes = [
   {
     path: '/',
@@ -414,5 +390,4 @@ const routes = [
   },
   {path: '*', component: NotFound}
 ];
-
 export default routes
