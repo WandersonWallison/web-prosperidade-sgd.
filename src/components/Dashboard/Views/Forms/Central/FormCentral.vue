@@ -11,7 +11,7 @@
                 <div class="col-lg-6">
                     <label>Tipo Central</label>
                     <fg-input :error="getError('tipo_central')">
-                        <el-select class="select-default" v-model="model.tipo_central" name="tipo_central" v-validate="modelValidations.tipo_central" placeholder="Selecione...">
+                        <el-select no-data-text="Sem Informações" class="select-default" v-model="model.tipo_central" name="tipo_central" v-validate="modelValidations.tipo_central" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in tipoCentral" :key="item.value" :label="item.descricao" :value="item.id">
                             </el-option>
                         </el-select>

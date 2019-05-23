@@ -90,7 +90,7 @@
                   format="dd/MM/yyyy">
               </el-date-picker>
           </div>
-        <el-select class="select-default"
+        <el-select no-data-text="Sem Informações" class="select-default"
           v-model="model.tipo"
           name="tipo_user"
           placeholder="Tipos de Usuario">
