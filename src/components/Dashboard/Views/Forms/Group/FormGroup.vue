@@ -16,18 +16,10 @@
         <div class="card-body">
             <div class="form-group">
                 <label>Links</label>
-                <el-select multiple
-                 class="select-primary"
-                 collapse-tags
-                 v-model="selects.multiple"
-                 placeholder="Multiple Select">
-                 <el-option v-for="option in selects.links"
-                 class="select-primary"
-                 :value="option.id"
-                 :label="option.link"
-                 :key="option.id">
-                 </el-option>
-                 </el-select>
+                <el-select no-data-text="Sem Informações" multiple class="select-primary" collapse-tags v-model="selects.multiple" placeholder="Multiple Select">
+                    <el-option v-for="option in selects.links" class="select-primary" :value="option.id" :label="option.link" :key="option.id">
+                    </el-option>
+                </el-select>
             </div>
         </div>
         <div class="card-footer text-right">
@@ -41,21 +33,23 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
-import {mask} from 'vue-the-mask'
+import {
+    mask
+} from 'vue-the-mask'
 export default {
     data() {
         return {
             model: {
                 nome: ''
             },
-             selects: {
-            links: [],
-            multiple: 'ARS'
-          },
+            selects: {
+                links: [],
+                multiple: 'ARS'
+            },
             modelValidations: {
                 nome: {
                     required: true
-                      }
+                }
             },
         }
     },
@@ -64,7 +58,9 @@ export default {
             this.selects.links = response.data
         })
     },
-    directives: {mask},
+    directives: {
+        mask
+    },
     methods: {
         getError(fieldName) {
             return this.errors.first(fieldName)
@@ -83,13 +79,13 @@ export default {
             axios.post(process.env.VUE_APP_ROOT_API + '/grupo', Grupo)
                 .then(response => {
                     this.results = response.data
-                            swal('Bom trabalho!', 'Grupo Cadastrado com sucesso!', 'success')
-                            this.$router.push('/forms/GroupList')
-                        })
-                        .catch(error => {
-                            swal('Algo de errado!', 'Verifique os campos do cadastros!', 'error')
-                            console.log(error.response.data)
-                        })
+                    swal('Bom trabalho!', 'Grupo Cadastrado com sucesso!', 'success')
+                    this.$router.push('/forms/GroupList')
+                })
+                .catch(error => {
+                    swal('Algo de errado!', 'Verifique os campos do cadastros!', 'error')
+                    console.log(error.response.data)
+                })
         }
     },
 

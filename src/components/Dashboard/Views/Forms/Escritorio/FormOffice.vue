@@ -11,7 +11,7 @@
                 <div class="col-lg-6">
                     <label>Central</label>
                     <fg-input :error="getError('central')">
-                        <el-select multiple class="select-default" v-model="selectCentrais" name="central" v-validate="modelValidations.central" placeholder="Selecione...">
+                        <el-select no-data-text="Sem Informações" class="select-default" v-model="selectCentrais" name="central" v-validate="modelValidations.central" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in centralOffice" :key="item.value" :label="item.nome" :value="item.id">
                             </el-option>
                         </el-select>
@@ -31,6 +31,9 @@
                 </fg-input>
                 <label>E-mail</label>
                 <fg-input type="email" name="email" v-validate="modelValidations.email" :error="getError('email')" v-model="model.email">
+                </fg-input>
+                <label>ISS</label>
+                <fg-input type="iss" name="iss" v-validate="modelValidations.iss" :error="getError('iss')" v-model="model.iss">
                 </fg-input>
             </div>
             <div class="form-group">

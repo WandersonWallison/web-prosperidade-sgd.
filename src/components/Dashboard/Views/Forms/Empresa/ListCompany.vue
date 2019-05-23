@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="col-sm-12 mt-2">
-                <el-table class="table-striped" :data="queriedData" border style="width: 100%">
+                <el-table empty-text="Sem Informações" class="table-striped" :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
                     </el-table-column>
                     <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
@@ -164,7 +164,6 @@ export default {
         handleEdit(index, row) {
             window.localStorage.setItem('empresa', row.id)
             this.$router.push('/forms/companyEdit')
-            // alert(`Your want to edit ${row.name}`)
         },
         handleDelete(index, row) {
             let empresa = {

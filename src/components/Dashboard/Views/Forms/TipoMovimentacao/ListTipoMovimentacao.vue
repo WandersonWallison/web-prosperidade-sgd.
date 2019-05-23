@@ -7,7 +7,7 @@
             <div class="col-sm-6">
                 <div class="card-body text-left">
                     <div>
-                        <h5 class="card-title">Tipos de Centrais </h5>
+                        <h5 class="card-title">Tipos de Movimentações </h5>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="col-sm-12 mt-2">
-                <el-table class="table-striped" :data="queriedData" border style="width: 100%">
+                <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
                     </el-table-column>
                     <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
@@ -149,11 +149,11 @@ export default {
     },
     methods: {
         handleLike() {
-            this.$router.push('/forms/TipoCentralForms')
+            this.$router.push('/forms/TipoMovimentacaoForms')
         },
         handleEdit(index, row) {
-            window.localStorage.setItem('tipo_central', row.id)
-            this.$router.push('/forms/TipoCentralEdit')
+            window.localStorage.setItem('tipo_movimentacao', row.id)
+            this.$router.push('/forms/TipoMovimentacaoEdit')
         },
         handleDelete(index, row) {
 

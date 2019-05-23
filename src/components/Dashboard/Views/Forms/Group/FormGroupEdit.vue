@@ -3,14 +3,23 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Detalhes do Grupo
+                Editar Grupo
             </h4>
         </div>
         <div class="card-body">
             <div class="form-group">
                 <label>Nome</label>
-                <fg-input type="text" name="nome" v-validate="modelValidations.nome" :error="getError('nome')" v-model="model.nome">
-                </fg-input>                
+                <fg-input type="text" name="descricao" v-validate="modelValidations.descricao" :error="getError('descricao')" v-model="model.descricao">
+                </fg-input>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>Links</label>
+                <el-select multiple class="select-primary" collapse-tags v-model="groupLinks" placeholder="Multiple Select">
+                    <el-option v-for="option in selects.links" class="select-primary" :value="option.id" :label="option.link" :key="option.id">
+                    </el-option>
+                </el-select>
             </div>
         </div>
         <div class="card-footer text-right">
@@ -24,23 +33,50 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
-import {mask} from 'vue-the-mask'
+import {
+    mask
+} from 'vue-the-mask'
 export default {
-    name: 'FormGroupDetails',
-    props: ['selected'],
+    name: 'FormGroupEdit',
     data() {
         return {
+            groupEdit: {},
+            groupLinks: [],
+            selectLinks: [],
             model: {
-                nome: this.selected.descricao
+                nome: ''
+            },
+            selects: {
+                links: [],
+                multiple: 'ARS'
             },
             modelValidations: {
-                nome: {
+                descricao: {
                     required: true
-                      }
-            },
-        }      
+                }
+            }
+        }
     },
-    directives: {mask},
+    created() {
+        axios.get(process.env.VUE_APP_ROOT_API + '/grupo/' + window.localStorage.getItem("grupo")).then(response => {
+            this.groupEdit = response.data
+            this.model = this.groupEdit
+
+            for (let index = 0; index < this.groupEdit.links.length; index++) {
+                this.groupLinks.push(this.groupEdit.links[index].id)
+            }
+            this.selectLinks = this.groupLinks
+            window.localStorage.removeItem("grupo")
+        })
+    },
+    mounted() {
+        axios.get(process.env.VUE_APP_ROOT_API + '/link?where={"ativo": 1}').then(response => {
+            this.selects.links = response.data
+        })
+    },
+    directives: {
+        mask
+    },
     methods: {
         getError(fieldName) {
             return this.errors.first(fieldName)
@@ -53,21 +89,21 @@ export default {
         salvar() {
 
             let Grupo = {
-                descricao: this.model.nome,
+                descricao: this.model.descricao,
+                links: this.groupLinks
             }
-            axios.put(process.env.VUE_APP_ROOT_API + '/grupo/'+ this.selected.id, Grupo)
+            axios.put(process.env.VUE_APP_ROOT_API + '/grupo/' + this.groupEdit.id, Grupo)
                 .then(response => {
                     this.results = response.data
-                            swal('Bom trabalho!', 'Grupo A com sucesso!', 'success')
-                            this.$router.push('/forms/GroupList')
-                        })
-                        .catch(error => {
-                            swal('Algo de errado!', 'Verifique os campos do cadastros!', 'error')
-                            console.log(error.response.data)
-                        })
+                    swal('Bom trabalho!', 'Grupo Alterado com sucesso!', 'success')
+                    this.$router.push('/forms/GroupList')
+                })
+                .catch(error => {
+                    swal('Algo de errado!', 'Verifique os campos do cadastros!', 'error')
+                    console.log(error.response.data)
+                })
         }
-    },
-
+    }
 }
 </script>
 

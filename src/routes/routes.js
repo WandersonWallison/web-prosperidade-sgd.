@@ -4,14 +4,12 @@ import NotFound from '../components/GeneralViews/NotFoundPage.vue'
 // Dashboard pages
 const Overview = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/Overview.vue')
 const Widgets = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/Widgets.vue')
-
 // Pages
 import User from 'src/components/Dashboard/Views/Pages/UserProfile.vue'
 import TimeLine from 'src/components/Dashboard/Views/Pages/TimeLinePage.vue'
 import Login from 'src/components/Dashboard/Views/Pages/Login.vue'
 import Register from 'src/components/Dashboard/Views/Pages/Register.vue'
 import Lock from 'src/components/Dashboard/Views/Pages/Lock.vue'
-
 // Components pages
 import Buttons from 'src/components/Dashboard/Views/Components/Buttons.vue'
 import GridSystem from 'src/components/Dashboard/Views/Components/GridSystem.vue'
@@ -20,7 +18,6 @@ import SweetAlert from 'src/components/Dashboard/Views/Components/SweetAlert.vue
 import Notifications from 'src/components/Dashboard/Views/Components/Notifications.vue'
 import Icons from 'src/components/Dashboard/Views/Components/Icons.vue'
 import Typography from 'src/components/Dashboard/Views/Components/Typography.vue'
-
 // Forms pages
 const RegularForms  = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/RegularForms.vue')
 const ExtendedForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ExtendedForms.vue')
@@ -31,31 +28,43 @@ const CompanyList = () => import(/* webpackChunkName: "forms" */ 'src/components
 const OfficeList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Escritorio/ListOfficer.vue')
 const OfficeForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Escritorio/FormOffice.vue')
 const OfficeFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Escritorio/FormOfficeEdit.vue')
-const TipoCentralForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoCentral/FormTipoCentral.vue')
-const TipoCentralEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoCentral/FormTipoCentralEdit.vue')
-const TipoCentralList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoCentral/ListTipoCentral.vue')
+const TipoMovimentacaoForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoMovimentacao/FormTipoMovimentacao.vue')
+const TipoMovimentacaoEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoMovimentacao/FormTipoMovimentacaoEdit.vue')
+const TipoMovimentacaoList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoMovimentacao/ListTipoMovimentacao.vue')
 const CentralForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/FormCentral.vue')
 const CentralEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/FormCentralEdit.vue')
 const CentralList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/ListCentral.vue')
+<<<<<<< HEAD
 const OperatorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListOperator.vue')
 const AdvisorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisor.vue')
 const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListClient.vue')
+=======
+const OperatorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/ListOperator.vue')
+// const OperatorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListOperator.vue')
+const AdvisorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisor.vue')
+// const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListClient.vue')
+// const AdvisorsList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisors.vue')
+const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Cliente/ListClient.vue')
+>>>>>>> 0236aea7df3a0cab78f8df62afa5fb78532e5bee
 const MovementList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListMovement.vue')
 const ComissionList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListComission.vue')
-const UserControlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListUserControl.vue')
-const UserForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/FormUser.vue')
-const UserFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/FormUserEdit.vue')
-const UserList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListUser.vue')
+const UserControlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/ListUserControl.vue')
+const UserForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/FormUser.vue')
+const UserFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/FormUserEdit.vue')
+const UserList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/ListUser.vue')
 const GroupList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Group/ListGroup.vue')
+const GroupForm = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Group/FormGroup.vue')
+const GroupFormEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Group/FormGroupEdit.vue')
+
+const LinkFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Link/FormLinkEdit.vue')
 const LinkList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Link/ListLink.vue')
 const LinkForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Link/FormLink.vue')
+
 const TipoLinkForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoLink/FormTipoLink.vue')
 const TipoLinkList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoLink/ListTipoLink.vue')
 const ImportForm = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Import/FormImport.vue')
 // const TaskList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListTask.vue')
 const Wizard = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Wizard.vue')
-
-
 // TableList pages
 const RegularTables = () => import(/* webpackChunkName: "tables" */ 'src/components/Dashboard/Views/Tables/RegularTables.vue');
 const ExtendedTables = () => import(/* webpackChunkName: "tables" */ 'src/components/Dashboard/Views/Tables/ExtendedTables.vue');
@@ -64,12 +73,10 @@ const PaginatedTables = () => import(/* webpackChunkName: "tables" */ 'src/compo
 const GoogleMaps = () => import(/* webpackChunkName: "maps" */ 'src/components/Dashboard/Views/Maps/GoogleMaps.vue')
 const FullScreenMap = () => import(/* webpackChunkName: "maps" */ 'src/components/Dashboard/Views/Maps/FullScreenMap.vue')
 const VectorMaps = () => import(/* webpackChunkName: "maps" */ 'src/components/Dashboard/Views/Maps/VectorMapsPage.vue');
-
 // Calendar
 import Calendar from 'src/components/Dashboard/Views/Calendar/CalendarRoute.vue'
 // Charts
 const Charts = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Charts.vue')
-
 let componentsMenu = {
   path: '/components',
   component: DashboardLayout,
@@ -110,7 +117,6 @@ let componentsMenu = {
       name: 'Typography',
       component: Typography
     }
-
   ]
 }
 let formsMenu = {
@@ -179,19 +185,19 @@ let formsMenu = {
       component: CentralList
     },
     {
-      path: 'TipoCentralForms',
-      name: 'Form Tipo Central',
-      component: TipoCentralForms
+      path: 'TipoMovimentacaoForms',
+      name: 'Form Tipo Movimentacao',
+      component: TipoMovimentacaoForms
     },
     {
-      path: 'TipoCentralList',
-      name: 'List Tipo Central',
-      component: TipoCentralList
+      path: 'TipoMovimentacaoList',
+      name: 'List Tipo Movimentacao',
+      component: TipoMovimentacaoList
     },
     {
-      path: 'TipoCentralEdit',
-      name: 'Edit Tipo Central',
-      component: TipoCentralEdit
+      path: 'TipoMovimentacaoEdit',
+      name: 'Edit Tipo Movimentacao',
+      component: TipoMovimentacaoEdit
     },
     {
       path: 'OperatorList',
@@ -234,9 +240,19 @@ let formsMenu = {
       component: UserList
     },
     {
+      path: 'GroupForm',
+      name: 'Form Group',
+      component: GroupForm
+    },
+    {
       path: 'GroupList',
       name: 'List Group',
       component: GroupList
+    },
+    {
+      path: 'GroupFormEdit',
+      name: 'Edit Group',
+      component: GroupFormEdit
     },
     {
       path: 'LinkList',
@@ -247,6 +263,11 @@ let formsMenu = {
       path: 'LinkForms',
       name: 'Form Link',
       component: LinkForms
+    },
+    {
+      path: 'LinkFormsEdit',
+      name: 'Edit Link',
+      component: LinkFormsEdit
     },
     {
       path: 'TipoLinkForms',
@@ -275,7 +296,6 @@ let formsMenu = {
     }
   ]
 }
-
 let tablesMenu = {
   path: '/table-list',
   component: DashboardLayout,
@@ -297,7 +317,6 @@ let tablesMenu = {
       component: PaginatedTables
     }]
 }
-
 let mapsMenu = {
   path: '/maps',
   component: DashboardLayout,
@@ -320,7 +339,6 @@ let mapsMenu = {
     }
   ]
 }
-
 let pagesMenu = {
   path: '/pages',
   component: DashboardLayout,
@@ -338,25 +356,21 @@ let pagesMenu = {
     }
   ]
 }
-
 let loginPage = {
   path: '/login',
   name: 'Login',
   component: Login
 }
-
 let registerPage = {
   path: '/register',
   name: 'Register',
   component: Register
 }
-
 let lockPage = {
   path: '/lock',
   name: 'Lock',
   component: Lock
 }
-
 const routes = [
   {
     path: '/',
@@ -401,6 +415,5 @@ const routes = [
     ]
   },
   {path: '*', component: NotFound}
-];
-
+]
 export default routes

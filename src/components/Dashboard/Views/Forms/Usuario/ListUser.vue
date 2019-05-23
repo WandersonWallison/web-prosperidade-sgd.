@@ -7,14 +7,14 @@
             <div class="col-sm-6">
                 <div class="card-body text-left">
                     <div>
-                        <h5 class="card-title">Comissionamentos</h5>
+                        <h5 class="card-title">Usuários</h5>
                     </div>
                 </div>
             </div>
             <!-- ------------------------- -->
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <p-button type="primary" @click="handleLike()">Importar</p-button>
+                    <p-button type="primary" @click="handleLike()">Cadastro</p-button>
                 </div>
             </div>
             <!-- ***************************************************  -->
@@ -26,7 +26,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <fg-input class="input-sm" placeholder="Pesquisar" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
+                    <fg-input class="input-sm" placeholder="Search" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
                     </fg-input>
                 </div>
             </div>
@@ -36,11 +36,14 @@
                     </el-table-column>
                     <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
+                            <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
+                                <i class="fa fa-send"></i>
+                            </p-button>
                             <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                 <i class="fa fa-edit"></i>
                             </p-button>
                             <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                                <i class="fa fa-trash-o"></i>
+                                <i class="fa fa-times"></i>
                             </p-button>
                         </template>
                     </el-table-column>
@@ -55,6 +58,16 @@
             </div>
         </div>
     </div>
+    <md-dialog :md-active.sync="showDetails">
+        <div class="div">
+            <user-details :selected="selected"></user-details>
+        </div>
+    </md-dialog>
+    <md-dialog :md-active.sync="showUpdate">
+        <div class="div">
+            <user-edit :selected="selected"></user-edit>
+        </div>
+    </md-dialog>
 </div>
 </template>
 
@@ -69,10 +82,21 @@ import {
 import axios from 'axios'
 import swal from 'sweetalert2'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
+import PSwitch from 'src/components/UIComponents/Switch.vue'
+import UserEdit from './FormUserEdit'
+import UserDetails from './FormUserDetails.vue'
+Vue.use(Table)
+Vue.use(TableColumn)
 export default {
-    name: 'ListComission',
+    name: 'ListUser',
+    props: {
+        selected: []
+    },
     components: {
-        PPagination
+        PPagination,
+        PSwitch,
+        UserEdit,
+        UserDetails
     },
     computed: {
         pagedData() {
@@ -120,6 +144,8 @@ export default {
     },
     data() {
         return {
+            showDetails: false,
+            showUpdate: false,
             pagination: {
                 perPage: 5,
                 currentPage: 1,
@@ -127,66 +153,72 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['nome','email', 'telefone'],
+            propsToSearch: ['username', 'email', 'telefone'],
             tableColumns: [{
-                    prop: 'nome',
+                    prop: 'username',
                     label: 'Nome',
-                    minWidth: 170
+                    minWidth: 150
                 },
-                //{
-                //    prop: 'cnpj',
-                //    label: 'CNPJ',
-                //    minWidth: 120
-                //},
-                //{
-                //    prop: 'razao_social',
-                //    label: 'Razão Social',
-                //    minWidth: 120
-                //},
+                {
+                    prop: 'id_grupo.descricao',
+                    label: 'Grupo',
+                    minWidth: 100
+                },
                 {
                     prop: 'email',
                     label: 'E-mail',
-                    minWidth: 120
+                    minWidth: 150
                 },
                 {
                     prop: 'telefone',
                     label: 'Telefone',
-                    minWidth: 100
+                    minWidth: 80
                 }
             ],
             tableData: []
         }
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/escritorio?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1}').then(response => {
             this.tableData = response.data
         })
     },
     methods: {
-        handleLike() {
-            this.$router.push('/forms/office')
+        handleDetails(index, row) {
+            this.showDetails = true
+            this.selected = row
+        },
+        handleLike(index, row) {
+            this.$router.push('/forms/user')
         },
         handleEdit(index, row) {
-            window.localStorage.setItem('escritorio', row.id)
-            this.$router.push('/forms/OfficeFormsEdit')
+            this.showUpdate = true
+            this.selected = row
+            // this.$router.push('/forms/userEdit')
+            // alert(`Your want to edit ${row.name}`)
         },
         handleDelete(index, row) {
-            let escritorio = {
+            let user = {
                 ativo: false
+                /*razao_social: this.model.nome,
+                site: this.form.site,
+                telefone: this.form.telefone,
+                email: this.form.email,
+                cnpj: this.form.cnpj*/
             }
-            axios.put(process.env.VUE_APP_ROOT_API + '/escritorio/' + row.id, escritorio)
+            axios.put(process.env.VUE_APP_ROOT_API + '/user/' + row.id, user)
                 .then(response => {
                     this.results = response.data
-                    axios.get(process.env.VUE_APP_ROOT_API + '/escritorio?where={"ativo": 1}').then(response => {
+                    axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', 'comissionamento ${row.nome} excluído com sucesso!', 'success')
+                        swal('Bom trabalho!', `Usuario ${row.username} deletado com sucesso!`, 'success')
+                        // this.$router.push('/forms/UserList')
                     })
                 })
                 .catch(error => {
                     alert(error.response)
                     console.log(error.response.data)
                 })
-
         }
     }
 }

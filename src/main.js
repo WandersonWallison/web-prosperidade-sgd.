@@ -12,7 +12,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vuetify from 'vuetify'
 import VueMaterial from 'vue-material'
-
+import VueMoment from 'vue-moment'
 // Plugins
 import GlobalComponents from './globalComponents'
 import GlobalDirectives from './globalDirectives'
@@ -45,6 +45,7 @@ Vue.use(SideBar, {sidebarLinks: sidebarLinks})
 Vue.use(VeeValidate)
 Vue.use(axios , VueAxios)
 Vue.use(Element)
+Vue.use(VueMoment)
 locale.use(lang)
 
 

@@ -20,8 +20,8 @@ export default [
     path: '/forms/CentralList'
   },
   {
-    name: 'Tipo Central',
-    path: '/forms/TipoCentralList'
+    name: 'Tipo Movimentação',
+    path: '/forms/TipoMovimentacaoList'
   },
   {
     name: 'Escritorio',
@@ -55,10 +55,6 @@ export default [
   children: [
     {
       name: 'Comissionamento',
-      path: '/forms/ComissionList'
-    },
-    {
-      name: 'Importação',
       path: '/forms/Import'
     }
   ]
