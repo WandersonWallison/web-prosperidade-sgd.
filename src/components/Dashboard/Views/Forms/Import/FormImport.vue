@@ -69,15 +69,31 @@
               class-name="td-actions"
               label="Status">
               <template slot-scope="props">
-                <p-button type="info" size="sm" icon @click="handleLike(props.$index, props.row)">
-                  <i class="fa fa-user"></i>
-                </p-button>
-                <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
-                  <i class="fa fa-edit"></i>
-                </p-button>
-                <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                  <i class="fa fa-times"></i>
-                </p-button>
+                  <el-tooltip content="download" placement="top">
+                    <p-button type="info" size="sm" icon @click="handleLike(props.$index, props.row)">
+                    <i class="fa fa-download"></i>
+                    </p-button>
+                  </el-tooltip>
+                  <el-tooltip content="detalhes" placement="top">
+                    <p-button type="primary" size="sm" icon @click="handleEdit(props.$index, props.row)">
+                    <i class="fa fa-info"></i>
+                    </p-button>
+                  </el-tooltip>
+                  <el-tooltip content="validar" placement="top">
+                    <p-button type="success" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                    <i class="fa fa-check"></i>
+                    </p-button>                      
+                  </el-tooltip>
+                  <el-tooltip content="processar" placement="top">
+                    <p-button type="warning" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                    <i class="fa fa-microchip"></i>
+                    </p-button>
+                  </el-tooltip>
+                  <el-tooltip content="excluir" placement="top">
+                    <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                    <i class="fa fa-trash"></i>
+                    </p-button>
+                  </el-tooltip>
               </template>
             </el-table-column>
             </el-table>
@@ -173,12 +189,12 @@ export default {
             tableColumns: [{
                     prop: 'nome_arquivo',
                     label: 'Nome do Arquivo',
-                    minWidth: 200
+                    minWidth: 150
                 },
                 {
                     prop: 'descricao',
                     label: 'Descricao',
-                    minWidth: 200
+                    minWidth: 150
                 },
                 {
                     prop: 'data_ref',
