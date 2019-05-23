@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="col-sm-12 mt-2">
-                <el-table class="table-striped" :data="queriedData" border style="width: 100%">
+                <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
                     </el-table-column>
                 </el-table>
