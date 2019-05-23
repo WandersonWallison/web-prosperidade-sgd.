@@ -32,6 +32,9 @@
                 <label>E-mail</label>
                 <fg-input type="email" name="email" v-validate="modelValidations.email" :error="getError('email')" v-model="model.email">
                 </fg-input>
+                <label>ISS %</label>
+                <fg-input name="iss" v-mask="'##.##'" v-validate="modelValidations.iss" :error="getError('iss')" v-model="model.iss">
+                </fg-input>
             </div>
             <div class="form-group">
                 <label>CEP</label>
@@ -92,6 +95,7 @@ export default {
                 telefone: '',
                 email: '',
                 central: '',
+                iss: '',
                 // Endereço --------------
                 cep: '',
                 logradouro: '',
@@ -142,6 +146,9 @@ export default {
                 },
                 estado: {
                     required: true
+                },
+                iss: {
+                  required: true
                 }
             },
             optionsStade: [{
@@ -268,6 +275,15 @@ export default {
                 this.centralEscritorio.push(this.officeEdit.centrais[index].id)
             }
             this.selectCentrais = this.centralEscritorio
+
+            if (this.officeEdit.endereco.length > 0) {
+                this.model.cep = this.officeEdit.endereco[0].cep
+                this.model.logradouro = this.officeEdit.endereco[0].logradouro
+                this.model.numero = this.officeEdit.endereco[0].numero
+                this.model.bairro = this.officeEdit.endereco[0].bairro
+                this.model.cidade = this.officeEdit.endereco[0].cidade
+                this.model.estado = this.officeEdit.endereco[0].uf
+            }
             window.localStorage.removeItem("escritorio")
         })
     },
@@ -328,7 +344,8 @@ export default {
                 telefone: this.model.telefone,
                 email: this.model.email,
                 cnpj: this.model.cnpj,
-                centrais: this.selectCentrais
+                centrais: this.selectCentrais,
+                iss: this.model.iss
             }
             let endereco = {
                 logradouro: this.model.logradouro,
