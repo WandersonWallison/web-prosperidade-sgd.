@@ -32,8 +32,8 @@
                 <label>E-mail</label>
                 <fg-input type="email" name="email" v-validate="modelValidations.email" :error="getError('email')" v-model="model.email">
                 </fg-input>
-                <label>ISS</label>
-                <fg-input type="iss" name="iss" v-mask="'###.###.###.###,##'" v-validate="modelValidations.iss" :error="getError('iss')" v-model="model.iss">
+                <label>ISS %</label>
+                <fg-input name="iss" v-mask="'##.##'" v-validate="modelValidations.iss" :error="getError('iss')" v-model="model.iss">
                 </fg-input>
             </div>
             <div class="form-group">
@@ -297,14 +297,17 @@ export default {
                 })
         },
         salvar() {
-
-            let empresa = {
+            this.model.iss = this.model.iss.replace('$','')
+            console.log('ISS:',this.model.iss)
+            let escritorio = {
                 nome: this.model.nome,
                 razao_social: this.model.razao_social,
                 telefone: this.model.telefone,
                 email: this.model.email,
                 cnpj: this.model.cnpj,
-                centrais: this.selectCentrais
+                centrais: this.selectCentrais,
+                iss: this.model.iss
+
                 // id_central: this.model.central
                 // TODO - Retirar o comentario assim q estiver pronto na API
             }
@@ -317,10 +320,10 @@ export default {
                 numero: this.model.numero,
                 tipo: 'Comercial'
             }
-            axios.post(process.env.VUE_APP_ROOT_API + '/escritorio', empresa)
+            axios.post(process.env.VUE_APP_ROOT_API + '/escritorio', escritorio)
                 .then(response => {
                     this.results = response.data
-                    endereco.id_escritorio = response.data.id
+                    endereco.id_escritorio = this.results.id
                     // Cadastro de Endereço
                     axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
                         .then(response => {
@@ -329,17 +332,16 @@ export default {
                             this.$router.push('/forms/OfficeList')
                         })
                         .catch(error => {
-                            swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
+                            swal('Algo de errado!', 'Verifique os campos do cadastro de endereço!', 'error')
                             console.log(error.response.data)
                         })
                 })
                 .catch(error => {
-                    swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
+                    swal('Algo de errado!', 'Verifique os campos do cadastro de escritorio!', 'error')
                     console.log(error.response.data)
                 })
         }
-    },
-
+    }
 }
 </script>
 
