@@ -162,7 +162,7 @@ export default {
                 {
                     prop: 'id_grupo.descricao',
                     label: 'Grupo',
-                    minWidth: 150
+                    minWidth: 100
                 },
                 {
                     prop: 'email',
@@ -172,7 +172,7 @@ export default {
                 {
                     prop: 'telefone',
                     label: 'Telefone',
-                    minWidth: 100
+                    minWidth: 80
                 }
             ],
             tableData: []

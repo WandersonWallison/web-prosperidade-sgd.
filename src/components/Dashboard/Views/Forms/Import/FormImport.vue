@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="col-sm-12 mt-2">
-            <el-table class="table-striped" :data="queriedData" border style="width: 100%">
+            <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
                 <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
                 </el-table-column>
                 <el-table-column
@@ -178,12 +178,12 @@ export default {
                 {
                     prop: 'descricao',
                     label: 'Descricao',
-                    minWidth: 250
+                    minWidth: 200
                 },
                 {
                     prop: 'data_ref',
                     label: 'Data Referência',
-                    minWidth: 100
+                    minWidth: 150
                 }
             ],
             carregado: true,
@@ -402,7 +402,7 @@ export default {
                             this.leadsError.push(error.response.config.data)
                             // console.log('Erro do Axios ', error.response.config.data)
                         })
-                
+
                 } catch (error) {
                     // console.log('Erro Try', error)
                 }
