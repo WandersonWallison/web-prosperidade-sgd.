@@ -33,7 +33,7 @@
                 <fg-input type="email" name="email" v-validate="modelValidations.email" :error="getError('email')" v-model="model.email">
                 </fg-input>
                 <label>ISS</label>
-                <fg-input type="iss" name="iss" v-validate="modelValidations.iss" :error="getError('iss')" v-model="model.iss">
+                <fg-input type="iss" name="iss" v-mask="'###.###.###.###,##'" v-validate="modelValidations.iss" :error="getError('iss')" v-model="model.iss">
                 </fg-input>
             </div>
             <div class="form-group">
@@ -93,7 +93,8 @@ export default {
                 bairro: '',
                 cidade: '',
                 estado: '',
-                central: ''
+                central: '',
+                iss: ''
             },
             selectCentrais: [],
             centralOffice: [],
@@ -131,6 +132,9 @@ export default {
                     required: true
                 },
                 estado: {
+                    required: true
+                },
+                iss: {
                     required: true
                 }
             },
