@@ -7,15 +7,12 @@
             <div class="col-sm-6">
                 <div class="card-body text-left">
                     <div>
-                        <h5 class="card-title">Clientes</h5>
+                        <h5 class="card-title">Itens</h5>
                     </div>
                 </div>
             </div>
             <!-- ------------------------- -->
             <div class="col-sm-6">
-                <div class="pull-right">
-                    <p-button type="primary" @click="handleLike()">Cadastro</p-button>
-                </div>
             </div>
             <!-- ***************************************************  -->
             <div class="col-sm-6">
@@ -26,7 +23,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <fg-input class="input-sm" placeholder="Search" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
+                    <fg-input class="input-sm" placeholder="Pesquisar" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
                     </fg-input>
                 </div>
             </div>
@@ -34,17 +31,17 @@
                 <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
                     </el-table-column>
-                    <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
+                    <!-- <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
                             <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                 <i class="fa fa-edit"></i>
                             </p-button>
                             <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                                <i class="fa fa-times"></i>
+                                <i class="fa fa-trash-o"></i>
                             </p-button>
                         </template>
-                    </el-table-column>
-                </el-table>
+                    </el-table-column>-->
+                </el-table> 
             </div>
             <div class="col-sm-6 pagination-info">
                 <p class="category">Mostrando {{from + 1}} de {{to}} de {{total}} Entradas</p>
@@ -66,11 +63,16 @@ import {
     Select,
     Option
 } from 'element-ui'
+import PSwitch from 'src/components/UIComponents/Switch.vue'
 import axios from 'axios'
 import swal from 'sweetalert2'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
+import {
+    mask
+} from 'vue-the-mask'
 export default {
-    name: 'ListCompany',
+    name: 'ListItens',
+    props: ['selected'],
     components: {
         PPagination
     },
@@ -127,63 +129,75 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['nome', 'email', 'telefone'],
+            propsToSearch: ['nome_cliente','classificacao','codigo_cliente','produto_categoria'],
             tableColumns: [{
-                    prop: 'nome',
-                    label: 'Nome',
-                    minWidth: 150
-                },
-                {
-                    prop: 'razao_social',
-                    label: 'Razão Social',
-                    minWidth: 150
-                },
-                {
-                    prop: 'email',
-                    label: 'E-mail',
-                    minWidth: 150
-                },
-                {
-                    prop: 'telefone',
-                    label: 'Telefone',
-                    minWidth: 100
-                }
-            ],
-            tableData: []
+                prop: 'nome_cliente',
+                label: 'Nome',
+                minWidth: 150
+            },
+            {
+                prop: 'classificacao',
+                label: 'Classificacao',
+                minWidth: 150
+            },
+            {
+                prop: 'produto_categoria',
+                label: 'Produto/Categoria',
+                minWidth: 200
+            },
+            {
+                prop: 'codigo_cliente',
+                label: 'XP Cliente',
+                minWidth: 150
+            }],
+            showcadastrar: false,
+            showDetails: false,
+            showUpdate: false,
+            tableData: [],
+            productsTable: [],
+            qtd: null
         }
     },
-    created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}').then(response => {
-            this.tableData = response.data
+    mounted() {
+        axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento/'+ this.selected).then(response => {
+            this.tableData = response.data.itens
         })
     },
     methods: {
+        handleDetails(index, row) {
+            // this.showDetails = true
+            // this.selected = row
+        },
         handleLike() {
-            this.$router.push('/forms/ClientForm')
+            this.$router.push('/forms/GroupForm')
+            this.showcadastrar = true
         },
         handleEdit(index, row) {
-            window.localStorage.setItem('empresa', row.id)
-            this.$router.push('/forms/companyEdit')
-            // alert(`Your want to edit ${row.name}`)
+            window.localStorage.setItem('grupo', row.id)
+            this.$router.push('/forms/GroupFormEdit')
         },
         handleDelete(index, row) {
-            let empresa = {
+            this.qtd = row.usuario.length
+            let user = {
                 ativo: false
             }
-            axios.put(process.env.VUE_APP_ROOT_API + '/empresa/' + row.id, empresa)
-                .then(response => {
-                    this.results = response.data
-                    axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
-                        this.tableData = response.data
-                        swal('Bom trabalho!', `Empresa ${row.nome} excluída com sucesso!`, 'success')
-                        this.$router.push('/forms/companyList')
+            if (row.id > 3 || row.usuario.length == 0) {
+                axios.put(process.env.VUE_APP_ROOT_API + '/grupo/' + row.id, user)
+                    .then(response => {
+                        this.results = response.data
+                        axios.get(process.env.VUE_APP_ROOT_API + '/grupo?where={"ativo": 1}').then(response => {
+                            this.tableData = response.data
+                            swal('Bom trabalho!', `Grupo ${row.descricao} deletado com sucesso!`, 'success')
+                        })
                     })
-                    //this.$router.push('/forms/companyList')
-                })
-                .catch(error => {
-                    alert(error.response)
-                    console.log(error.response.data)
-                })
+                    .catch(error => {
+                        alert(error.response)
+                        console.log(error.response.data)
+                    })
+            } else {
+                swal('Importante!', `Grupo ${row.descricao} nÃ£o pode ser deletado!`, 'error')
+            }
+
         }
     }
 }

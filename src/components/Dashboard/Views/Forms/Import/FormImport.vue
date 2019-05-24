@@ -8,7 +8,11 @@
         </div>
         <div class="card-body">
             <div class="col-lg-6">
-                <el-date-picker v-model="model.data_ref" type="date" placeholder="Data Referência" :picker-options="pickerOptions1" format="dd/MM/yyyy">
+                <el-date-picker v-model="model.data_ref" 
+                type="date" 
+                placeholder="Data Referência"
+                :picker-options="pickerOptions1" 
+                format="dd/MM/yyyy">
                 </el-date-picker>
             </div>
             <br>
@@ -69,15 +73,31 @@
               class-name="td-actions"
               label="Status">
               <template slot-scope="props">
-                <p-button type="info" size="sm" icon @click="handleLike(props.$index, props.row)">
-                  <i class="fa fa-user"></i>
-                </p-button>
-                <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
-                  <i class="fa fa-edit"></i>
-                </p-button>
-                <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                  <i class="fa fa-times"></i>
-                </p-button>
+                  <el-tooltip content="download" placement="top">
+                    <p-button type="info" size="sm" icon @click="handleLike(props.$index, props.row)">
+                    <i class="fa fa-download"></i>
+                    </p-button>
+                  </el-tooltip>
+                  <el-tooltip content="detalhes" placement="top">
+                    <p-button type="primary" size="sm" icon @click="handleDetails(props.$index, props.row)">
+                    <i class="fa fa-info"></i>
+                    </p-button>
+                  </el-tooltip>
+                  <el-tooltip content="validar" placement="top">
+                    <p-button type="success" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                    <i class="fa fa-check"></i>
+                    </p-button>                      
+                  </el-tooltip>
+                  <el-tooltip content="processar" placement="top">
+                    <p-button type="warning" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                    <i class="fa fa-microchip"></i>
+                    </p-button>
+                  </el-tooltip>
+                  <el-tooltip content="excluir" placement="top">
+                    <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                    <i class="fa fa-trash"></i>
+                    </p-button>
+                  </el-tooltip>
               </template>
             </el-table-column>
             </el-table>
@@ -90,7 +110,11 @@
             </p-pagination>
         </div>
     </div>
-
+    <md-dialog :md-active.sync="showDetails">
+        <div class="div">
+            <liste-itens :selected="selected"></liste-itens>
+        </div>
+    </md-dialog>
 </div>
 </template>
 
@@ -100,6 +124,8 @@ import axios from 'axios'
 import swal from 'sweetalert2'
 import moment from 'moment'
 import XLSX from 'xlsx'
+
+import ListeItens from './ListItens.vue'
 // import {Table, TableColumn, Select, Option} from 'element-ui'
 import {
     Table,
@@ -123,11 +149,13 @@ Vue.use(Option)
 export default {
     components: {
         PPagination,
+        ListeItens,
         [DatePicker.name]: DatePicker,
     },
     props: {
         beforeUpload: Function, // eslint-disable-line
-        onSuccess: Function // eslint-disable-line
+        onSuccess: Function, // eslint-disable-line
+        selected: ''
     },
     data() {
         return {
@@ -173,12 +201,12 @@ export default {
             tableColumns: [{
                     prop: 'nome_arquivo',
                     label: 'Nome do Arquivo',
-                    minWidth: 200
+                    minWidth: 150
                 },
                 {
                     prop: 'descricao',
                     label: 'Descricao',
-                    minWidth: 200
+                    minWidth: 150
                 },
                 {
                     prop: 'data_ref',
@@ -186,6 +214,7 @@ export default {
                     minWidth: 150
                 }
             ],
+            showDetails: false,
             carregado: true,
             tableData: [],
             loading: false,
@@ -249,6 +278,10 @@ export default {
       },
         handleLike (index, row) {
            alert(`Your want to like ${row.name}`)
+         },
+         handleDetails (index, row) {
+           this.showDetails = true
+           this.selected = row.id
          },
          handleEdit (index, row) {
            alert(`Your want to edit ${row.name}`)
@@ -479,6 +512,9 @@ export default {
     text-align: center;
     color: #bbb;
     position: relative;
+}
+.div {
+  overflow: scroll;
 }
 
 .el-table .td-actions {
