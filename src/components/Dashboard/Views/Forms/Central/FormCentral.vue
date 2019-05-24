@@ -313,7 +313,7 @@ export default {
                     axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
                         .then(response => {
                             this.resultAdress = response.data
-                            swal('Bom trabalho!', 'Central Cadastrado com sucesso!', 'success')
+                            swal('Bom trabalho!', 'Central Cadastrada com sucesso!', 'success')
                             this.$router.push('/forms/CentralList')
                         })
                         .catch(error => {

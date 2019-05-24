@@ -180,9 +180,7 @@ export default {
                         .then(response => {
                             this.tableData = response.data;
                             swal(
-                                "Bom trabalho!",
-                                "Registro excluí­do com sucesso!",
-                                "success"
+                                'Bom trabalho!',`Central ${row.nome} Excluída com sucesso!`,'success'
                             );
                             this.$router.push("/forms/CentralList");
                         });

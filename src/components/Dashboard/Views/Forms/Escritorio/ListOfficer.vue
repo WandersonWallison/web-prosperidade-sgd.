@@ -179,7 +179,7 @@ export default {
                     this.results = response.data
                     axios.get(process.env.VUE_APP_ROOT_API + '/escritorio?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', 'escritorio ${row.nome} excluído com sucesso!', 'success')
+                        swal('Bom trabalho!', `Escritorio ${row.nome} Excluído com sucesso!`, 'success')
                     })
                 })
                 .catch(error => {
