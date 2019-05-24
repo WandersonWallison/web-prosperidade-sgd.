@@ -14,7 +14,7 @@
             <!-- ------------------------- -->
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <p-button type="primary" @click="handleLike()">Cadastro</p-button>
+                    <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
                 </div>
             </div>
             <!-- ***************************************************  -->
@@ -143,7 +143,7 @@ export default {
     },
     methods: {
 
-        handleLike() {
+        handleRegister() {
             this.$router.push('/forms/TipoLinkForms')
         },
         handleEdit(index, row) {

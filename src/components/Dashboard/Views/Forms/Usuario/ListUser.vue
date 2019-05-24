@@ -14,7 +14,7 @@
             <!-- ------------------------- -->
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <p-button type="primary" @click="handleLike()">Cadastro</p-button>
+                    <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
                 </div>
             </div>
             <!-- ***************************************************  -->
@@ -188,7 +188,7 @@ export default {
             this.showDetails = true
             this.selected = row
         },
-        handleLike(index, row) {
+        handleRegister(index, row) {
             this.$router.push('/forms/user')
         },
         handleEdit(index, row) {

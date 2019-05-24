@@ -24,7 +24,7 @@
               align="right"
               label="Actions">
               <template slot-scope="props">
-                <p-button type="info" size="sm" icon @click="handleLike(props.$index, props.row)">
+                <p-button type="info" size="sm" icon @click="handleRegister(props.$index, props.row)">
                   <i class="fa fa-user"></i>
                 </p-button>
                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
@@ -201,7 +201,7 @@
       }
     },
     methods: {
-      handleLike (index, row) {
+      handleRegister (index, row) {
         alert(`Your clicked on Like button`)
       },
       handleEdit (index, row) {
