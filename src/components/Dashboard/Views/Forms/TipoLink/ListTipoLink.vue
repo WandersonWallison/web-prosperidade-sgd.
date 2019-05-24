@@ -36,11 +36,11 @@
                     </el-table-column>
                     <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
-                            <!--  <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
+                            <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                 <i class="fa fa-edit"></i>
-                            </p-button> -->
+                            </p-button>
                             <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                                <i class="fa fa-times"></i>
+                                <i class="fa fa-trash-o"></i>
                             </p-button>
                         </template>
                     </el-table-column>
@@ -146,6 +146,10 @@ export default {
         handleLike() {
             this.$router.push('/forms/TipoLinkForms')
         },
+        handleEdit(index, row) {
+            window.localStorage.setItem('tipo_link', row.id)
+            this.$router.push('/forms/TipoLinkEdit')
+         },
         handleDelete(index, row) {
 
             let link = {
@@ -156,7 +160,7 @@ export default {
                     this.results = response.data
                     axios.get(process.env.VUE_APP_ROOT_API + '/tipo_link?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', `Link ${row.descricao} deletado com sucesso!`, 'success')
+                        swal('Bom trabalho!', `Link ${row.descricao} Excluído com sucesso!`, 'success')
                         // this.$router.push('/forms/UserList')
                     })
                 })

@@ -110,7 +110,7 @@ export default {
             axios.put(process.env.VUE_APP_ROOT_API + '/link/' + this.id_link, link)
                 .then(response => {
                     this.results = response.data
-                    swal('Bom trabalho!', 'Empresa Editada com sucesso!', 'success')
+                    swal('Bom trabalho!', 'Link Editado com sucesso!', 'success')
                             this.$router.push('/forms/LinkList')
                 })
                 .catch(error => {

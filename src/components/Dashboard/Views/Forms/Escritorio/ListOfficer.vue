@@ -127,7 +127,7 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['nome','email', 'telefone'],
+            propsToSearch: ['nome','email', 'iss'],
             tableColumns: [{
                     prop: 'nome',
                     label: 'Nome',
@@ -149,8 +149,8 @@ export default {
                     minWidth: 120
                 },
                 {
-                    prop: 'telefone',
-                    label: 'Telefone',
+                    prop: 'iss',
+                    label: 'ISS (%)',
                     minWidth: 100
                 }
             ],

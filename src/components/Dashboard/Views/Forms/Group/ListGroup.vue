@@ -185,7 +185,7 @@ export default {
                         console.log(error.response.data)
                     })
             } else {
-                swal('Importante!', `Grupo ${row.descricao} nÃ£o pode ser deletado!`, 'error')
+                swal('Importante!', `Grupo ${row.descricao} não pode ser deletado!`, 'error')
             }
 
         }

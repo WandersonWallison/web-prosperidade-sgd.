@@ -3,16 +3,13 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Cadastro de Tipo de Movimentação
+                Editar Tipo de Link
             </h4>
         </div>
         <div class="card-body">
             <div class="form-group">
-                <label>Nome</label>
+                <label>descrição</label>
                 <fg-input type="text" name="descricao" v-validate="modelValidations.descricao" :error="getError('descricao')" v-model="model.descricao">
-                </fg-input>
-                <label>Sigla</label>
-                <fg-input type="text" name="sigla" v-validate="modelValidations.sigla" :error="getError('sigla')" v-model="model.sigla">
                 </fg-input>
             </div>
         </div>
@@ -31,19 +28,15 @@ import {
     mask
 } from 'vue-the-mask'
 export default {
-    name: 'FormOffice',
+    name: 'FormTipoLinkEdit',
     data() {
         return {
             model: {
-                descricao: '',
-                sigla: ''
+                descricao: ''
             },
-            enderecoBuscado: [],
+            tipoLinkEdit: {},
             modelValidations: {
                 descricao: {
-                    required: true
-                },
-                sigla: {
                     required: true
                 }
             }
@@ -51,6 +44,15 @@ export default {
     },
     directives: {
         mask
+    },
+    created() {
+
+        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_link/' + window.localStorage.getItem("tipo_link")).then(response => {
+            this.tipoLinkEdit = response.data
+            this.model.descricao = this.tipoLinkEdit.descricao
+            window.localStorage.removeItem("tipo_link")
+
+        })
     },
     methods: {
         getError(fieldName) {
@@ -63,16 +65,14 @@ export default {
         },
         salvar() {
             const authUser = JSON.parse(window.localStorage.getItem('usuario'))
-            let tipoCentral = {
+            let tipoLink = {
                 descricao: this.model.descricao,
-                sigla: this.model.sigla,
-                id_responsavel: authUser.id
             }
-            axios.post(process.env.VUE_APP_ROOT_API + '/tipo_central', tipoCentral)
+            axios.put(process.env.VUE_APP_ROOT_API + '/tipo_link/' + this.tipoLinkEdit.id, tipoLink)
                 .then(response => {
                     this.results = response.data
-                    swal('Bom trabalho!', 'Tipo de Movimentação Cadastrado com sucesso!', 'success')
-                    this.$router.push('/forms/TipoMovimentacaoList')
+                    swal('Bom trabalho!', 'Tipo de Link Alterado com sucesso!', 'success')
+                    this.$router.push('/forms/TipoLinkList')
                 })
                 .catch(error => {
                     swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')

@@ -81,8 +81,8 @@ export default {
             axios.put(process.env.VUE_APP_ROOT_API + '/tipo_central/' + this.tipoCentralEdit.id, tipoCentral)
                 .then(response => {
                     this.results = response.data
-                    swal('Bom trabalho!', 'Tpo Central Alterado com sucesso!', 'success')
-                    this.$router.push('/forms/TipoCentralList')
+                    swal('Bom trabalho!', 'Tipo de Movimentação Alterado com sucesso!', 'success')
+                    this.$router.push('/forms/TipoMovimentacaoList')
                 })
                 .catch(error => {
                     swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')

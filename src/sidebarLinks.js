@@ -20,10 +20,6 @@ export default [
     path: '/forms/CentralList'
   },
   {
-    name: 'Tipo Movimentação',
-    path: '/forms/TipoMovimentacaoList'
-  },
-  {
     name: 'Escritorio',
     path: '/forms/OfficeList'
   },
@@ -79,6 +75,10 @@ export default [
   {
     name: 'Tipo Link',
     path: '/forms/TipoLinkList'
+  },
+  {
+    name: 'Tipo Movimentação',
+    path: '/forms/TipoMovimentacaoList'
   },
  /* {
     name: 'Controle de Usuários',

@@ -133,11 +133,11 @@ export default {
                     label: 'Nome',
                     minWidth: 150
                 },
-                {
-                    prop: 'id_tipo_central.descricao',
-                    label: 'Tipo Central',
-                    minWidth: 150
-                },
+                //{
+                //    prop: 'id_tipo_central.descricao',
+                //    label: 'Tipo Central',
+                //    minWidth: 150
+                //},
                 {
                     prop: 'email',
                     label: 'E-mail',
