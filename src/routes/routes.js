@@ -22,30 +22,37 @@ import Typography from 'src/components/Dashboard/Views/Components/Typography.vue
 const RegularForms  = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/RegularForms.vue')
 const ExtendedForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ExtendedForms.vue')
 const ValidationForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/ValidationForms.vue')
+
 const CompanyForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Empresa/FormCompany.vue')
 const CompanyFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Empresa/FormCompanyEdit.vue')
 const CompanyList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Empresa/ListCompany.vue')
+
 const OfficeList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Escritorio/ListOfficer.vue')
 const OfficeForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Escritorio/FormOffice.vue')
 const OfficeFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Escritorio/FormOfficeEdit.vue')
+
 const TipoMovimentacaoForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoMovimentacao/FormTipoMovimentacao.vue')
 const TipoMovimentacaoEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoMovimentacao/FormTipoMovimentacaoEdit.vue')
 const TipoMovimentacaoList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoMovimentacao/ListTipoMovimentacao.vue')
+
 const CentralForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/FormCentral.vue')
 const CentralEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/FormCentralEdit.vue')
 const CentralList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/ListCentral.vue')
+
 const OperatorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/ListOperator.vue')
-// const OperatorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListOperator.vue')
 const AdvisorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisor.vue')
-// const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListClient.vue')
-// const AdvisorsList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisors.vue')
-const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Cliente/ListClient.vue')
 const MovementList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListMovement.vue')
 const ComissionList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListComission.vue')
+
+const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Cliente/ListClient.vue')
+const ClientForm = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Cliente/FormClient.vue')
+const ClientFormEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Cliente/FormClientEdit.vue')
+
 const UserControlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/ListUserControl.vue')
 const UserForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/FormUser.vue')
 const UserFormsEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/FormUserEdit.vue')
 const UserList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/ListUser.vue')
+
 const GroupList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Group/ListGroup.vue')
 const GroupForm = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Group/FormGroup.vue')
 const GroupFormEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Group/FormGroupEdit.vue')
@@ -207,6 +214,16 @@ let formsMenu = {
       path: 'ClientList',
       name: 'Cad Advisors',
       component: ClientList
+    },
+    {
+      path: 'ClientForm',
+      name: 'Form Client',
+      component: ClientForm
+    },
+    {
+      path: 'ClientFormEdit',
+      name: 'Form Client Edit',
+      component: ClientFormEdit
     },
     {
       path: 'MovementList',

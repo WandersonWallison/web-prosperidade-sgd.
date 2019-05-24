@@ -136,6 +136,9 @@ export default {
                 },
                 iss: {
                     required: true
+                },
+                central:{
+                    required: true
                 }
             },
             optionsStade: [{

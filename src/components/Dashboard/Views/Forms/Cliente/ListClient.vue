@@ -159,7 +159,7 @@ export default {
     },
     methods: {
         handleLike() {
-            this.$router.push('/forms/company')
+            this.$router.push('/forms/ClientForm')
         },
         handleEdit(index, row) {
             window.localStorage.setItem('empresa', row.id)

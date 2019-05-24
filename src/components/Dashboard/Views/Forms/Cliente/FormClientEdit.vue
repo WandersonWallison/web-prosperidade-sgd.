@@ -3,77 +3,102 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Editar de Escritório
+                Editar Cliente
             </h4>
         </div>
-        <div class="card-body">
-            <div class="form-group">
-                <div class="col-lg-6">
-                    <label>Central</label>
-                    <fg-input :error="getError('central')">
-                        <el-select multiple class="select-default" v-model="selectCentrais" name="central" v-validate="modelValidations.central" placeholder="Selecione...">
-                            <el-option class="select-default" v-for="item in centralOffice" :key="item.value" :label="item.nome" :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </fg-input>
-                </div>
-                <label>Nome</label>
-                <fg-input type="text" name="nome" v-validate="modelValidations.nome" :error="getError('nome')" v-model="model.nome">
-                </fg-input>
-                <label>Razão Social</label>
-                <fg-input type="text" name="razao_social" v-validate="modelValidations.razao_social" :error="getError('razao_social')" v-model="model.razao_social">
-                </fg-input>
-                <label>CNPJ</label>
-                <fg-input type="text" v-mask="'##.###.###/####-##'" name="cnpj" v-validate="modelValidations.cnpj" :error="getError('cnpj')" v-model="model.cnpj">
-                </fg-input>
-                <label>Telefone</label>
-                <fg-input type="text" v-mask="'(##)#####-####'" name="telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-model="model.telefone">
-                </fg-input>
-                <label>E-mail</label>
-                <fg-input type="email" name="email" v-validate="modelValidations.email" :error="getError('email')" v-model="model.email">
-                </fg-input>
-                <label>ISS %</label>
-                <fg-input name="iss" v-mask="'##.##'" v-validate="modelValidations.iss" :error="getError('iss')" v-model="model.iss">
-                </fg-input>
+        <div class="card-body row justify-content-center">
+
+            <div class="form-group col-md-10">
+                <el-switch v-model="model.value1" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Pessoa Jurídica" inactive-text="Pessoa Física">
+                </el-switch>
             </div>
-            <div class="form-group">
-                <label>CEP</label>
-                <fg-input type="text" v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
-                </fg-input>
-                <label>Logradouro</label>
-                <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
-                </fg-input>
-                <label>Número</label>
-                <fg-input type="text" v-mask="'#####'" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
-                </fg-input>
-                <label>Bairro</label>
-                <fg-input type="text" name="bairro" v-validate="modelValidations.bairro" :error="getError('bairro')" v-model="model.bairro">
-                </fg-input>
-                <label>Cidade</label>
-                <fg-input type="text" name="cidade" v-validate="modelValidations.cidade" :error="getError('cidade')" v-model="model.cidade">
-                </fg-input>
-                <div class="col-lg-6">
+            <br/>
+            <div class="form-group col-md-6">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span>Dados</span>
+                    </div>
+                    <label>Numero XP</label>
+                    <fg-input type="text" name="numero_xp" v-validate="modelValidations.numero_xp" :error="getError('numero_xp')" v-model="model.numero_xp">
+                    </fg-input>
+                    <label>Nome</label>
+                    <fg-input type="text" name="nome" v-validate="modelValidations.nome" :error="getError('nome')" v-model="model.nome">
+                    </fg-input>
+                    <label>Telefone</label>
+                    <fg-input type="text" v-mask="'(##)#####-####'" name="telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-model="model.telefone">
+                    </fg-input>
+                    <label>E-mail</label>
+                    <fg-input type="email" name="email" v-validate="modelValidations.email" :error="getError('email')" v-model="model.email">
+                    </fg-input>
+                    <label>Investimento Inicial</label>
+                    <fg-input type="text" v-mask="'########,##'" name="investimento_inicial" v-validate="modelValidations.investimento_inicial" :error="getError('investimento_inicial')" v-model="model.investimento_inicial">
+                    </fg-input>
+                    <label>Potencial de Investimento</label>
+                    <fg-input type="text" v-mask="'########,##'" name="potencial_investimento" v-validate="modelValidations.potencial_investimento" :error="getError('potencial_investimento')" v-model="model.potencial_investimento">
+                    </fg-input>
+                </el-card>
+                <br>
+                <div name="fisica" v-if="!this.model.value1">
+                    <el-card class="box-card">
+                        <div slot="header" class="clearfix">
+                            <span>Pessoa Física</span>
+                        </div>
+                        <label>RG</label>
+                        <fg-input type="text" v-mask="'###############'" name="rg" v-validate="modelValidations.rg" :error="getError('rg')" v-model="model.rg">
+                        </fg-input>
+                        <label>CPF</label>
+                        <fg-input type="text" v-mask="'###.###.###-##'" name="cpf" v-validate="modelValidations.cpf" :error="getError('cpf')" v-model="model.cpf">
+                        </fg-input>
+                    </el-card>
+                </div>
+                <div name="juridica" v-if="this.model.value1">
+                    <el-card class="box-card">
+                        <div slot="header" class="clearfix">
+                            <span>Pessoa Jurídica</span>
+                        </div>
+                        <label>Razão Social</label>
+                        <fg-input type="text" name="razao_social" v-validate="modelValidations.razao_social" :error="getError('razao_social')" v-model="model.razao_social">
+                        </fg-input>
+                        <label>CNPJ</label>
+                        <fg-input type="text" v-mask="'##.###.###/####-##'" name="cnpj" v-validate="modelValidations.cnpj" :error="getError('cnpj')" v-model="model.cnpj">
+                        </fg-input>
+                    </el-card>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span>Endereço</span>
+                    </div>
+                    <label>CEP</label>
+                    <fg-input type="text" v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
+                    </fg-input>
+                    <label>Logradouro</label>
+                    <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
+                    </fg-input>
+                    <label>Número</label>
+                    <fg-input type="text" v-mask="'######'" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
+                    </fg-input>
+                    <label>Bairro</label>
+                    <fg-input type="text" name="bairro" v-validate="modelValidations.bairro" :error="getError('bairro')" v-model="model.bairro">
+                    </fg-input>
+                    <label>Cidade</label>
+                    <fg-input type="text" name="cidade" v-validate="modelValidations.cidade" :error="getError('cidade')" v-model="model.cidade">
+                    </fg-input>
                     <label>Estado</label>
-                    <fg-input :error="getError('estado')">
-                        <el-select class="select-default" v-model="model.estado" name="tipo_user" v-validate="modelValidations.estado" placeholder="Selecione...">
+                    <fg-input :error="getError('estado')" v-validate="modelValidations.estado">
+                        <el-select class="select-default" v-model="model.estado" name="estado" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in optionsStade" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
                     </fg-input>
-                </div>
-                <!--
-                <label>Complemento</label>
-                <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
-                </fg-input>
-                -->
-
+                </el-card>
             </div>
         </div>
         <div class="card-footer text-right">
             <p-button type="info" @click.prevent="validate">Salvar</p-button>
         </div>
     </form>
-
 </div>
 </template>
 
@@ -84,7 +109,7 @@ import {
     mask
 } from 'vue-the-mask'
 export default {
-    name: 'FormOfficeEdit',
+    name: 'FormCompany',
     data() {
         return {
             model: {
@@ -94,32 +119,29 @@ export default {
                 cnpj: '',
                 telefone: '',
                 email: '',
-                central: '',
-                iss: '',
+                numero_xp: '',
+                investimento_inicial: '',
+                potencial_investimento: '',
+                // Física ----------------
+                rg:'',
+                cpf:'',
+                // Jurídica --------------
+                razao_social: '',
+                cnpj:'',
                 // Endereço --------------
                 cep: '',
                 logradouro: '',
                 numero: '',
                 bairro: '',
                 cidade: '',
-                estado: ''
+                estado: '',
+                value1: true
             },
-            selectCentrais: [],
-            centralOffice: [],
-            centralEscritorio: [],
-            officeEdit: {},
-            enderecoEdit: {},
             endereco: [],
             results: [],
             resultAdress: [],
             modelValidations: {
                 nome: {
-                    required: true
-                },
-                razao_social: {
-                    required: true
-                },
-                cnpj: {
                     required: true
                 },
                 telefone: {
@@ -128,6 +150,18 @@ export default {
                 email: {
                     required: true,
                     email: true
+                },
+                numero_xp: {
+                  required: true
+                },
+                investimento_inicial: {
+                  required: true
+                },
+                potencial_investimento: {
+                  required: true
+                },
+                tipoAddress: {
+                    required: true
                 },
                 logradouro: {
                     required: true
@@ -146,12 +180,6 @@ export default {
                 },
                 estado: {
                     required: true
-                },
-                iss: {
-                  required: true
-                },
-                central: {
-                  required: true
                 }
             },
             optionsStade: [{
@@ -212,7 +240,7 @@ export default {
                 },
                 {
                     value: 'PB',
-                    label: 'Paraí­ba'
+                    label: 'Paraíba'
                 },
                 {
                     value: 'PR',
@@ -268,33 +296,6 @@ export default {
     directives: {
         mask
     },
-    created() {
-
-        axios.get(process.env.VUE_APP_ROOT_API + '/escritorio/' + window.localStorage.getItem("escritorio")).then(response => {
-            this.officeEdit = response.data
-            this.model = this.officeEdit
-
-            for (let index = 0; index < this.officeEdit.centrais.length; index++) {
-                this.centralEscritorio.push(this.officeEdit.centrais[index].id)
-            }
-            this.selectCentrais = this.centralEscritorio
-
-            if (this.officeEdit.endereco.length > 0) {
-                this.model.cep = this.officeEdit.endereco[0].cep
-                this.model.logradouro = this.officeEdit.endereco[0].logradouro
-                this.model.numero = this.officeEdit.endereco[0].numero
-                this.model.bairro = this.officeEdit.endereco[0].bairro
-                this.model.cidade = this.officeEdit.endereco[0].cidade
-                this.model.estado = this.officeEdit.endereco[0].uf
-            }
-            window.localStorage.removeItem("escritorio")
-        })
-    },
-    mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/central?where={"ativo": 1}').then(response => {
-            this.centralOffice = response.data
-        })
-    },
     methods: {
         getError(fieldName) {
             return this.errors.first(fieldName)
@@ -309,16 +310,10 @@ export default {
             this.model.logradouro = ''
             this.model.cidade = ''
             this.model.estado = ''
-            this.model.numero = ''
 
             axios.get('https://api.postmon.com.br/v1/cep/' + this.model.cep)
                 .then(response => {
-
                     this.endereco = response.data
-
-                    if (this.endereco.cep) {
-                        this.model.cep = this.endereco.cep
-                    }
                     if (this.endereco.cidade) {
                         this.model.cidade = this.endereco.cidade
                     }
@@ -336,19 +331,17 @@ export default {
                     }
                 })
                 .catch(error => {
+                    // alert('Erro no cadastro do Endereço')
                     console.log(error.response.data)
                 })
         },
         salvar() {
-
-            let escritorio = {
+            let empresa = {
                 nome: this.model.nome,
-                razao_social: this.model.nome,
+                razao_social: this.model.razao_social,
                 telefone: this.model.telefone,
                 email: this.model.email,
-                cnpj: this.model.cnpj,
-                centrais: this.selectCentrais,
-                iss: this.model.iss
+                cnpj: this.model.cnpj
             }
             let endereco = {
                 logradouro: this.model.logradouro,
@@ -359,17 +352,16 @@ export default {
                 numero: this.model.numero,
                 tipo: 'Comercial'
             }
-
-            axios.put(process.env.VUE_APP_ROOT_API + '/escritorio/' + this.officeEdit.id, escritorio)
+            axios.post(process.env.VUE_APP_ROOT_API + '/empresa', empresa)
                 .then(response => {
                     this.results = response.data
                     endereco.id_empresa = response.data.id
                     // Cadastro de Endereço
-                    axios.put(process.env.VUE_APP_ROOT_API + '/endereco/' + this.officeEdit.endereco[0].id, endereco)
+                    axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
                         .then(response => {
                             this.resultAdress = response.data
-                            swal('Bom trabalho!', 'Escritório Atualizado com sucesso!', 'success')
-                            this.$router.push('/forms/officeList')
+                            swal('Bom trabalho!', 'Empresa Cadastrada com sucesso!', 'success')
+                            this.$router.push('/forms/companyList')
                         })
                         .catch(error => {
                             swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
