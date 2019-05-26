@@ -70,7 +70,7 @@ import axios from 'axios'
 import swal from 'sweetalert2'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
 export default {
-    name: 'ListCompany',
+    name: 'ListClient',
     components: {
         PPagination
     },
@@ -134,8 +134,8 @@ export default {
                     minWidth: 150
                 },
                 {
-                    prop: 'razao_social',
-                    label: 'Razão Social',
+                    prop: 'id_xp',
+                    label: 'Numero XP',
                     minWidth: 150
                 },
                 {
@@ -162,23 +162,22 @@ export default {
             this.$router.push('/forms/ClientForm')
         },
         handleEdit(index, row) {
-            window.localStorage.setItem('empresa', row.id)
-            this.$router.push('/forms/companyEdit')
+            window.localStorage.setItem('cliente', row.id)
+            this.$router.push('/forms/ClientFormEdit')
             // alert(`Your want to edit ${row.name}`)
         },
         handleDelete(index, row) {
             let empresa = {
                 ativo: false
             }
-            axios.put(process.env.VUE_APP_ROOT_API + '/empresa/' + row.id, empresa)
+            axios.put(process.env.VUE_APP_ROOT_API + '/cliente/' + row.id, empresa)
                 .then(response => {
                     this.results = response.data
-                    axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
+                    axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', `Empresa ${row.nome} excluída com sucesso!`, 'success')
-                        this.$router.push('/forms/companyList')
+                        swal('Bom trabalho!', `Cliente ${row.nome} excluída com sucesso!`, 'success')
+                        this.$router.push('/forms/ClientList')
                     })
-                    //this.$router.push('/forms/companyList')
                 })
                 .catch(error => {
                     alert(error.response)
