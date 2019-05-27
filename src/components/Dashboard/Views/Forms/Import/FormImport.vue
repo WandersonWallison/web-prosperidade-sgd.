@@ -89,7 +89,7 @@
                     </p-button>                      
                   </el-tooltip>
                   <el-tooltip content="processar" placement="top">
-                    <p-button type="warning" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                    <p-button type="warning" size="sm" icon @click="handleProcess(props.$index, props.row)">
                     <i class="fa fa-microchip"></i>
                     </p-button>
                   </el-tooltip>
@@ -272,10 +272,22 @@ export default {
     },
     methods: {
       atualilarLista () {
+          
           axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento?where={"ativo": 1}').then(response => {
             this.tableData = response.data
         })
       },
+        handleProcess (index, row){
+            axios.get(process.env.VUE_APP_ROOT_API + '/valida_comissionamento?comissionamento_id='+row.id+'&'+'user_id='+row.id_responsavel).then(response => {
+            this.mensagem = response.data
+            swal('Bom trabalho!', 'Arquivo processado com sucesso!', 'success')
+        })
+        .catch(error => {
+            //this.leadsError.push(error.response.config.data)
+            // console.log('Erro do Axios ', error.response.config.data)
+            swal('Algo de errado!', 'Verifique o arquivo importado!', 'error')
+        })
+        },
         handleRegister (index, row) {
            alert(`Your want to like ${row.name}`)
          },
@@ -286,12 +298,23 @@ export default {
          handleEdit (index, row) {
            alert(`Your want to edit ${row.name}`)
          },
-         handleDelete (index, row) {
-           let indexToDelete = this.tableData.findIndex((tableRow) => tableRow.id === row.id)
-           if (indexToDelete >= 0) {
-             this.tableData.splice(indexToDelete, 1)
-           }
-         },
+           handleDelete(index, row) {
+            let comissionamento = {
+                ativo: false
+            };
+            axios
+                .put(process.env.VUE_APP_ROOT_API + "/comissionamento/" + row.id, comissionamento)
+                .then(response => {
+                    this.results = response.data
+                            swal('Bom trabalho!',`Arquivo ${row.nome_arquivo} Excluído com sucesso!`,'success')
+                            //this.$router.push("/forms/CentralList");
+                            this.atualilarLista()                            
+                        })
+                .catch(error => {
+                    alert(error.response);
+                    console.log(error.response.data);
+                });
+        },
         generateData({
             header,
             results
