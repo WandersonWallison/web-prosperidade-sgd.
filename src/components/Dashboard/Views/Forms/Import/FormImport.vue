@@ -83,11 +83,11 @@
                     <i class="fa fa-info"></i>
                     </p-button>
                   </el-tooltip>
-                  <el-tooltip content="validar" placement="top">
+                  <!--<el-tooltip content="validar" placement="top">
                     <p-button type="success" size="sm" icon @click="handleDelete(props.$index, props.row)">
                     <i class="fa fa-check"></i>
                     </p-button>                      
-                  </el-tooltip>
+                  </el-tooltip>-->
                   <el-tooltip content="processar" placement="top">
                     <p-button type="warning" size="sm" icon @click="handleProcess(props.$index, props.row)">
                     <i class="fa fa-microchip"></i>
