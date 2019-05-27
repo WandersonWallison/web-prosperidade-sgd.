@@ -14,7 +14,7 @@
             <!-- ------------------------- -->
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <p-button type="primary" @click="handleLike()">Cadastro</p-button>
+                    <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
                 </div>
             </div>
             <!-- ***************************************************  -->
@@ -127,7 +127,7 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['nome','email', 'telefone'],
+            propsToSearch: ['nome','email', 'iss'],
             tableColumns: [{
                     prop: 'nome',
                     label: 'Nome',
@@ -149,8 +149,8 @@ export default {
                     minWidth: 120
                 },
                 {
-                    prop: 'telefone',
-                    label: 'Telefone',
+                    prop: 'iss',
+                    label: 'ISS (%)',
                     minWidth: 100
                 }
             ],
@@ -163,7 +163,7 @@ export default {
         })
     },
     methods: {
-        handleLike() {
+        handleRegister() {
             this.$router.push('/forms/office')
         },
         handleEdit(index, row) {
@@ -179,7 +179,7 @@ export default {
                     this.results = response.data
                     axios.get(process.env.VUE_APP_ROOT_API + '/escritorio?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', 'escritorio ${row.nome} excluído com sucesso!', 'success')
+                        swal('Bom trabalho!', `Escritorio ${row.nome} Excluído com sucesso!`, 'success')
                     })
                 })
                 .catch(error => {

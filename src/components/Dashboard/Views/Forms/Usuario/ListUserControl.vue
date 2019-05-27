@@ -144,7 +144,7 @@
       }
     },
     methods: {
-      handleLike (index, row) {
+      handleRegister (index, row) {
         alert(`Your clicked on Like button`)
       },
       handleEdit (index, row) {

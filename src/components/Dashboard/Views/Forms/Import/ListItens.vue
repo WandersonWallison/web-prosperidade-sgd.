@@ -168,7 +168,7 @@ export default {
             // this.showDetails = true
             // this.selected = row
         },
-        handleLike() {
+        handleRegister() {
             this.$router.push('/forms/GroupForm')
             this.showcadastrar = true
         },

@@ -11,18 +11,12 @@
                 <label>Descrição</label>
                 <fg-input type="text" name="descricao" v-validate="modelValidations.descricao" :error="getError('descricao')" v-model="model.descricao">
                 </fg-input>
-                <!--
-                <label>Complemento</label>
-                <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
-                </fg-input>
-                -->
             </div>
         </div>
         <div class="card-footer text-right">
             <p-button type="info" @click.prevent="validate">Salvar</p-button>
         </div>
     </form>
-
 </div>
 </template>
 
@@ -31,15 +25,11 @@ import axios from 'axios'
 import swal from 'sweetalert2'
 import {mask} from 'vue-the-mask'
 export default {
-    name: 'FormLink',
+    name: 'FormTipoLink',
     data() {
         return {
             model: {
-                // link --------------
-                descricao: '',
-                link: '',
-                imagem: '',
-                id_tipo_link: ''
+                descricao: ''
             },
             results: [],
             resultAdress: [],
@@ -67,7 +57,7 @@ export default {
             axios.post(process.env.VUE_APP_ROOT_API + '/tipo_link', link)
                 .then(response => {
                     this.results = response.data
-                    swal('Bom trabalho!', 'Tipo link Cadastrada com sucesso!', 'success')
+                    swal('Bom trabalho!', 'Tipo link Cadastrado com sucesso!', 'success')
                             this.$router.push('/forms/TipoLinkList')
                 })
                 .catch(error => {

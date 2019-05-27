@@ -14,7 +14,7 @@
             <!-- ------------------------- -->
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <p-button type="primary" @click="handleLike()">Cadastro</p-button>
+                    <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
                 </div>
             </div>
             <!-- ***************************************************  -->
@@ -37,13 +37,13 @@
                     <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
                             <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
-                                <i class="fa fa-send"></i>
+                                <i class="fa fa-search"></i>
                             </p-button>
                             <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                 <i class="fa fa-edit"></i>
                             </p-button>
                             <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                                <i class="fa fa-times"></i>
+                                <i class="fa fa-trash-o"></i>
                             </p-button>
                         </template>
                     </el-table-column>
@@ -188,7 +188,7 @@ export default {
             this.showDetails = true
             this.selected = row
         },
-        handleLike(index, row) {
+        handleRegister(index, row) {
             this.$router.push('/forms/user')
         },
         handleEdit(index, row) {

@@ -74,7 +74,7 @@
               label="Status">
               <template slot-scope="props">
                   <el-tooltip content="download" placement="top">
-                    <p-button type="info" size="sm" icon @click="handleLike(props.$index, props.row)">
+                    <p-button type="info" size="sm" icon @click="handleRegister(props.$index, props.row)">
                     <i class="fa fa-download"></i>
                     </p-button>
                   </el-tooltip>
@@ -276,7 +276,7 @@ export default {
             this.tableData = response.data
         })
       },
-        handleLike (index, row) {
+        handleRegister (index, row) {
            alert(`Your want to like ${row.name}`)
          },
          handleDetails (index, row) {

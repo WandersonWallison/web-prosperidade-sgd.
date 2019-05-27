@@ -14,7 +14,7 @@
             <!-- ------------------------- -->
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <p-button type="primary" @click="handleLike()">Cadastro</p-button>
+                    <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
                 </div>
             </div>
             <!-- ***************************************************  -->
@@ -158,7 +158,7 @@ export default {
             // this.showDetails = true
             // this.selected = row
         },
-        handleLike() {
+        handleRegister() {
             this.$router.push('/forms/GroupForm')
             this.showcadastrar = true
         },
@@ -185,7 +185,7 @@ export default {
                         console.log(error.response.data)
                     })
             } else {
-                swal('Importante!', `Grupo ${row.descricao} nÃ£o pode ser deletado!`, 'error')
+                swal('Importante!', `Grupo ${row.descricao} não pode ser deletado!`, 'error')
             }
 
         }

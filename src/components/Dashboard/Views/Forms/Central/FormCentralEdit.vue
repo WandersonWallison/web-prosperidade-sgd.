@@ -7,6 +7,14 @@
         <div class="card-body">
             <div class="form-group">
                 <div class="col-lg-6">
+                    <label>Empresa</label>
+                    <fg-input :error="getError('empresa')">
+                        <el-select class="select-default" v-model="model.empresa" name="tipo_central" v-validate="modelValidations.empresa" placeholder="Selecione uma Empresa.">
+                            <el-option class="select-default" v-for="item in empresa" :key="item.nome" :label="item.nome" :value="item.id"></el-option>
+                        </el-select>
+                    </fg-input>
+                </div>
+                <div class="col-lg-6">
                     <label>Tipo Central</label>
                     <fg-input :error="getError('tipo_central')">
                         <el-select class="select-default" v-model="model.tipo_central" name="tipo_central" v-validate="modelValidations.tipo_central" placeholder="Selecione...">
@@ -72,9 +80,11 @@ export default {
                 bairro: '',
                 cidade: '',
                 estado: '',
-                tipo_central: ''
+                tipo_central: '',
+                empresa: ''
             },
             tipoCentral: [],
+            empresa: [],
             CentralEdit: {},
             enderecoBuscado: [],
             modelValidations: {
@@ -110,6 +120,9 @@ export default {
                     required: true
                 },
                 estado: {
+                    required: true
+                },
+                empresa: {
                     required: true
                 }
             },
@@ -246,6 +259,7 @@ export default {
                 this.model.nome = this.CentralEdit.nome
 
                 this.model.tipo_central = this.CentralEdit.id_tipo_central.id
+                this.model.empresa = this.CentralEdit.id_empresa.id
                 if (this.CentralEdit.endereco.length > 0) {
                     this.model.cep = this.CentralEdit.endereco[0].cep
                     this.model.logradouro = this.CentralEdit.endereco[0].logradouro
@@ -258,6 +272,10 @@ export default {
             })
         axios.get(process.env.VUE_APP_ROOT_API + '/tipo_central?where={"ativo": 1}').then(response => {
             this.tipoCentral = response.data
+        })
+
+        axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
+            this.empresa = response.data
         })
     },
     methods: {
@@ -309,7 +327,8 @@ export default {
                 email: this.model.email,
                 cnpj: this.model.cnpj,
                 id_responsavel: authUser.id,
-                id_tipo_central: this.model.tipo_central
+                id_tipo_central: this.model.tipo_central,
+                id_empresa: this.model.empresa
             }
             let endereco = {
                 logradouro: this.model.logradouro,
@@ -341,7 +360,7 @@ export default {
                             this.resultAdress = response.data
                             swal(
                                 "Bom trabalho!",
-                                "Registro Atualizada com sucesso!",
+                                "Central Atualizada com sucesso!",
                                 "success"
                             )
                             this.$router.push("/forms/CentralList")
