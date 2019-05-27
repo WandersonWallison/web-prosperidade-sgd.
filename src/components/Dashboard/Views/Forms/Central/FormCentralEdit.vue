@@ -328,7 +328,7 @@ export default {
                 cnpj: this.model.cnpj,
                 id_responsavel: authUser.id,
                 id_tipo_central: this.model.tipo_central,
-                id_empresa: this.model.empresa.empresa
+                id_empresa: this.model.empresa
             }
             let endereco = {
                 logradouro: this.model.logradouro,
