@@ -440,7 +440,7 @@ export default {
             axios.post(process.env.VUE_APP_ROOT_API + '/cliente', cliente)
                 .then(response => {
                     this.results = response.data
-                    endereco.id_user = response.data.id
+                    endereco.id_cliente = response.data.id
                     // Cadastro de Endereço o cliente será referenciado no campo de id_user da tabela de endereço
                     axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
                         .then(response => {

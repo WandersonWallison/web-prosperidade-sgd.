@@ -12,7 +12,7 @@
             <div class="form-group col-md-6">
                 <el-card class="box-card">
                     <div class="form-group col-md-10">
-                        <el-switch v-model="model.value1" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Pessoa Jurídica" inactive-text="Pessoa Física">
+                        <el-switch v-model="model.value1" name="value1" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Pessoa Jurídica" inactive-text="Pessoa Física">
                         </el-switch>
                     </div>
                     <div slot="header" class="clearfix">
@@ -36,7 +36,7 @@
                     <label>Tipo Endereço</label>
                     <fg-input :error="getError('tipo')" v-validate="modelValidations.tipo">
                         <el-select class="select-default" v-model="model.tipo" name="estado" placeholder="Selecione...">
-                            <el-option class="select-default" v-for="item in optionsTipo" :key="item.value" :label="item.label" :value="item.value">
+                            <el-option class="select-default" v-for="item in optionsTipo" :key="item.id" :label="item.label" :value="item.id">
                             </el-option>
                         </el-select>
                     </fg-input>
@@ -71,10 +71,10 @@
                         <span>Dados Conta</span>
                     </div>
                     <div>
-                        <el-checkbox v-model="model.habilitado_bovespa">Habilitado bovespa</el-checkbox>
+                        <el-checkbox name="habilitado_bovespa" v-model="model.habilitado_bovespa">Habilitado bovespa</el-checkbox>
                     </div>
                     <label>Numero XP</label>
-                    <fg-input type="text" name="numero_xp" v-validate="modelValidations.numero_xp" :error="getError('numero_xp')" v-model="model.numero_xp">
+                    <fg-input type="text" name="id_xp" v-validate="modelValidations.id_xp" :error="getError('id_xp')" v-model="model.id_xp">
                     </fg-input>
                     <label>Operador</label>
                     <fg-input :error="getError('operador')" v-validate="modelValidations.operador">
@@ -151,7 +151,7 @@ export default {
                 cnpj: '',
                 telefone: '',
                 email: '',
-                numero_xp: '',
+                id_xp: '',
                 investimento_inicial: '',
                 potencial_investimento: '',
                 // Física ----------------
@@ -176,7 +176,9 @@ export default {
             },
             dataOperadores: [],
             dataAssessores: [],
+            dataCliente: [],
             endereco: [],
+            enderecoCliente: [],
             results: [],
             resultAdress: [],
             modelValidations: {
@@ -190,7 +192,7 @@ export default {
                     required: true,
                     email: true
                 },
-                numero_xp: {
+                id_xp: {
                     required: true
                 },
                 investimento_inicial: {
@@ -221,10 +223,10 @@ export default {
                     required: true
                 },
                 operador: {
-                   required: true
+                    required: true
                 },
                 assessor: {
-                  required: true
+                    required: true
                 }
             },
             optionsTipo: [{
@@ -350,37 +352,33 @@ export default {
     directives: {
         mask
     },
-    created() {
-
-        axios.get(process.env.VUE_APP_ROOT_API + '/empresa/' + window.localStorage.getItem("cliente")).then(response => {
-            this.companyEdit = response.data
-            this.model = response.data
-            /*
-            this.model.nome = this.companyEdit.nome
-            this.model.razao_social = this.companyEdit.razao_social
-            this.model.cnpj = this.companyEdit.cnpj
-            this.model.telefone = this.companyEdit.telefone
-            this.model.email = this.companyEdit.email
-            this.model.nome = this.companyEdit.nome
-            */
-
-            if (this.companyEdit.endereco.length > 0) {
-                this.model.cep = this.companyEdit.endereco[0].cep
-                this.model.logradouro = this.companyEdit.endereco[0].logradouro
-                this.model.numero = this.companyEdit.endereco[0].numero
-                this.model.bairro = this.companyEdit.endereco[0].bairro
-                this.model.cidade = this.companyEdit.endereco[0].cidade
-                this.model.estado = this.companyEdit.endereco[0].uf
-            }
-            window.localStorage.removeItem("cliente")
-        })
-    },
     mounted() {
+
         axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}').then(response => {
             this.dataOperadores = response.data
         })
         axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}').then(response => {
             this.dataAssessores = response.data
+        })
+
+        axios.get(process.env.VUE_APP_ROOT_API + '/cliente/' + window.localStorage.getItem("cliente")).then(response => {
+            this.dataCliente = response.data
+            this.model = response.data
+            this.model.assessor = this.model.id_assessor.id
+            this.model.operador = this.model.id_operador
+            this.model.cpf = this.dataCliente.cpf_cnpj
+            this.model.cnpj = this.dataCliente.cpf_cnpj
+
+            if (this.dataCliente.endereco.length > 0) {
+                this.model.cep = this.dataCliente.endereco[0].cep
+                this.model.logradouro = this.dataCliente.endereco[0].logradouro
+                this.model.numero = this.dataCliente.endereco[0].numero
+                this.model.bairro = this.dataCliente.endereco[0].bairro
+                this.model.cidade = this.dataCliente.endereco[0].cidade
+                this.model.estado = this.dataCliente.endereco[0].uf
+                this.model.tipo = this.dataCliente[0].tipo
+            }
+            window.localStorage.removeItem("cliente")
         })
     },
     methods: {
@@ -437,7 +435,7 @@ export default {
 
             let cliente = {
 
-                id_xp: this.model.numero_xp,
+                id_xp: this.model.id_xp,
                 nome: this.model.nome,
                 razao_social: this.model.razao_social,
                 telefone: this.model.telefone,
@@ -462,15 +460,55 @@ export default {
                 numero: this.model.numero,
                 tipo: this.model.tipo
             }
+            // -----------------------------------------------------------
+            axios.put(process.env.VUE_APP_ROOT_API + '/cliente/' + this.dataCliente.id, cliente)
+                .then(response => {
+                    this.results = response.data
+                    endereco.id_cliente = response.data.id
+
+                    // Cadastro de Endereço
+                    if (this.dataCliente.endereco.length > 0) {
+                        axios.put(process.env.VUE_APP_ROOT_API + '/endereco/' + this.dataCliente.endereco[0].id, endereco)
+                            .then(response => {
+                                this.resultAdress = response.data
+                                swal('Bom trabalho!', 'Cliente Atualizado com sucesso!', 'success')
+                                this.$router.push('/forms/ClientList')
+                            })
+                            .catch(error => {
+                                swal('Algo de errado!', 'Verifique os campos do endereço no cadastro!', 'error')
+                                console.log(error.response)
+                            })
+
+                    } else {
+                        axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
+                            .then(response => {
+                                this.resultAdress = response.data
+                                swal('Bom trabalho!', 'Cliente Atualizado com sucesso!', 'success')
+                                this.$router.push('/forms/ClientList')
+                            })
+                            .catch(error => {
+                                swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
+                                console.log(error.response.data)
+                            })
+                    }
+
+                })
+                .catch(error => {
+                    swal('Algo de errado!', 'Verifique os campos da empresa no cadastro!', 'error')
+                    console.log(error.response)
+                })
+
+            // -----------------------------------------------------------
+            /*
             axios.post(process.env.VUE_APP_ROOT_API + '/cliente', cliente)
                 .then(response => {
                     this.results = response.data
-                    endereco.id_user = response.data.id
+                    endereco.id_cliente = response.data.id
                     // Cadastro de Endereço o cliente será referenciado no campo de id_user da tabela de endereço
                     axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
                         .then(response => {
                             this.resultAdress = response.data
-                            swal('Bom trabalho!', 'Cliente Cadastrada com sucesso!', 'success')
+                            swal('Bom trabalho!', 'Cliente Alterado com sucesso!', 'success')
                             this.$router.push('/forms/ClientList')
                         })
                         .catch(error => {
@@ -479,9 +517,10 @@ export default {
                         })
                 })
                 .catch(error => {
-                    swal('Algo de errado!', 'Verifique os campos do cadastro de cliente!', 'error')
+                    swal('Algo de errado!', 'Verifique os campos de cliente!', 'error')
                     console.log(error.response.data)
                 })
+                */
         }
     }
 }
