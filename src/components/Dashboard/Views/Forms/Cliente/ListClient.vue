@@ -36,11 +36,14 @@
                     </el-table-column>
                     <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
+                            <p-button type="info" size="sm" icon @click="handleAdd(props.$index, props.row)">
+                               <i class="fas fa-donate"></i>
+                            </p-button>
                             <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                 <i class="fa fa-edit"></i>
                             </p-button>
                             <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                                <i class="fa fa-times"></i>
+                                <i class="fa fa-trash-o"></i>
                             </p-button>
                         </template>
                     </el-table-column>
@@ -131,22 +134,22 @@ export default {
             tableColumns: [{
                     prop: 'nome',
                     label: 'Nome',
-                    minWidth: 150
+                    minWidth: 130
                 },
                 {
                     prop: 'id_xp',
                     label: 'Numero XP',
-                    minWidth: 150
+                    minWidth: 80
                 },
                 {
                     prop: 'email',
                     label: 'E-mail',
-                    minWidth: 150
+                    minWidth: 130
                 },
                 {
                     prop: 'telefone',
                     label: 'Telefone',
-                    minWidth: 100
+                    minWidth: 80
                 }
             ],
             tableData: []
@@ -162,6 +165,11 @@ export default {
             this.$router.push('/forms/ClientForm')
         },
         handleEdit(index, row) {
+            window.localStorage.setItem('cliente', row.id)
+            this.$router.push('/forms/ClientFormEdit')
+            // alert(`Your want to edit ${row.name}`)
+        },
+        handleAdd(index, row) {
             window.localStorage.setItem('cliente', row.id)
             this.$router.push('/forms/ClientFormEdit')
             // alert(`Your want to edit ${row.name}`)

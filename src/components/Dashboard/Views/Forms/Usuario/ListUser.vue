@@ -162,12 +162,12 @@ export default {
                 {
                     prop: 'id_grupo.descricao',
                     label: 'Grupo',
-                    minWidth: 100
+                    minWidth: 90
                 },
                 {
                     prop: 'email',
                     label: 'E-mail',
-                    minWidth: 150
+                    minWidth: 100
                 },
                 {
                     prop: 'telefone',
