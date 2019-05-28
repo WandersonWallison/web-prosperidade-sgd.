@@ -46,6 +46,7 @@ const ComissionList = () => import(/* webpackChunkName: "forms" */ 'src/componen
 
 const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Cliente/ListClient.vue')
 const ClientForm = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Cliente/FormClient.vue')
+const ClientFormAporte = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Cliente/FormClientAporte.vue')
 const ClientFormEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Cliente/FormClientEdit.vue')
 
 const UserControlList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/ListUserControl.vue')
@@ -226,6 +227,11 @@ let formsMenu = {
       path: 'ClientFormEdit',
       name: 'Form Client Edit',
       component: ClientFormEdit
+    },
+    {
+      path: 'ClientFormAporte',
+      name: 'Form Client Aporte',
+      component: ClientFormAporte
     },
     {
       path: 'MovementList',

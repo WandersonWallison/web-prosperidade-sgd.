@@ -36,12 +36,16 @@
                     </el-table-column>
                     <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
-                            <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
-                                <i class="fa fa-edit"></i>
-                            </p-button>
-                            <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                                <i class="fa fa-trash-o"></i>
-                            </p-button>
+                            <el-tooltip class="item" effect="dark" content="Editar" placement="top">
+                                <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
+                                    <i class="fa fa-edit"></i>
+                                </p-button>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="Excluir" placement="top">
+                                <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                                    <i class="fa fa-trash-o"></i>
+                                </p-button>
+                            </el-tooltip>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -127,7 +131,7 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['nome','email', 'iss'],
+            propsToSearch: ['nome', 'email', 'iss'],
             tableColumns: [{
                     prop: 'nome',
                     label: 'Nome',

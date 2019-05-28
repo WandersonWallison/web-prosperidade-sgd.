@@ -36,15 +36,26 @@
                     </el-table-column>
                     <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
-                            <p-button type="info" size="sm" icon @click="handleAdd(props.$index, props.row)">
-                               <i class="fas fa-donate"></i>
-                            </p-button>
-                            <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
-                                <i class="fa fa-edit"></i>
-                            </p-button>
-                            <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                                <i class="fa fa-trash-o"></i>
-                            </p-button>
+                            <el-tooltip class="item" effect="dark" content="Aporte" placement="top">
+                                <p-button type="info" size="sm" icon @click="handleAdd(props.$index, props.row)">
+                                    <i class="fas fa-donate"></i>
+                                </p-button>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="Detalhar" placement="top">
+                                <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
+                                    <i class="fa fa-search"></i>
+                                </p-button>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="Editar" placement="top">
+                                <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
+                                    <i class="fa fa-edit"></i>
+                                </p-button>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="Excluir" placement="top">
+                                <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                                    <i class="fa fa-trash-o"></i>
+                                </p-button>
+                            </el-tooltip>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -56,6 +67,23 @@
                 <p-pagination class="pull-right" v-model="pagination.currentPage" :per-page="pagination.perPage" :total="pagination.total">
                 </p-pagination>
             </div>
+            <el-dialog title="Aporte Cliente" :visible.sync="dialogFormVisible">
+                <el-form :model="form">
+                    <el-form-item label="Valor R$" :label-width="formLabelWidth">
+                        <el-input v-model="form.valor" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">Cancelar</el-button>
+                <el-button type="primary" @click="dialogFormVisible = false">Adicionar</el-button>
+              </span>
+            </el-dialog>
+            <el-dialog title="Detalhamento" :visible.sync="dialogFormVisibleDetail">
+                <cliente-details />
+                <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisibleDetail = false">Cancelar</el-button>
+              </span>
+            </el-dialog>
         </div>
     </div>
 </div>
@@ -71,11 +99,13 @@ import {
 } from 'element-ui'
 import axios from 'axios'
 import swal from 'sweetalert2'
+import clienteDetails from './FormClientDetail.vue'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
 export default {
     name: 'ListClient',
     components: {
-        PPagination
+        PPagination,
+        clienteDetails
     },
     computed: {
         pagedData() {
@@ -123,6 +153,13 @@ export default {
     },
     data() {
         return {
+            dialogFormVisible: false,
+            dialogFormVisibleDetail: false,
+            formLabelWidth: '60px',
+            form: {
+                valor: '',
+                valorLinha: ''
+            },
             pagination: {
                 perPage: 5,
                 currentPage: 1,
@@ -130,21 +167,22 @@ export default {
                 total: 0
             },
             searchQuery: '',
+            newRow: '',
             propsToSearch: ['nome', 'email', 'telefone'],
             tableColumns: [{
                     prop: 'nome',
                     label: 'Nome',
-                    minWidth: 130
+                    minWidth: 120
                 },
                 {
                     prop: 'id_xp',
                     label: 'Numero XP',
-                    minWidth: 80
+                    minWidth: 70
                 },
                 {
                     prop: 'email',
                     label: 'E-mail',
-                    minWidth: 130
+                    minWidth: 100
                 },
                 {
                     prop: 'telefone',
@@ -167,12 +205,16 @@ export default {
         handleEdit(index, row) {
             window.localStorage.setItem('cliente', row.id)
             this.$router.push('/forms/ClientFormEdit')
-            // alert(`Your want to edit ${row.name}`)
+        },
+        handleDetails(index, row) {
+            window.localStorage.setItem('cliente', row.id)
+            this.dialogFormVisibleDetail = true
         },
         handleAdd(index, row) {
-            window.localStorage.setItem('cliente', row.id)
-            this.$router.push('/forms/ClientFormEdit')
-            // alert(`Your want to edit ${row.name}`)
+            this.newRow = row.id
+            // window.localStorage.setItem('cliente', row.id)
+            // this.$router.push('/forms/ClientFormAporte')
+            this.dialogFormVisible = true
         },
         handleDelete(index, row) {
             let empresa = {
@@ -201,5 +243,9 @@ export default {
     button.btn {
         margin-right: 5px;
     }
+}
+
+.top {
+    text-align: center;
 }
 </style>
