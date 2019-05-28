@@ -82,7 +82,8 @@ export default {
                 data_nascimento: this.wizardModel.datePicker,
                 telefone: this.wizardModel.telefone,
                 celular: this.wizardModel.celular,
-                id_grupo: this.wizardModel.tipo
+                id_grupo: this.wizardModel.tipo,
+                id_comissionamento_faixa: 1
             }
             let endereco = {
                 logradouro: this.wizardModel.logradouro,

@@ -66,6 +66,7 @@ const TipoLinkEdit = () => import(/* webpackChunkName: "forms" */ 'src/component
 const TipoLinkForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoLink/FormTipoLink.vue')
 const TipoLinkList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoLink/ListTipoLink.vue')
 
+const ListItens = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Import/ListItens.vue')
 const ImportForm = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Import/FormImport.vue')
 // const TaskList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListTask.vue')
 const Wizard = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Wizard.vue')
@@ -312,6 +313,11 @@ let formsMenu = {
       path: 'Import',
       name: 'Import List',
       component: ImportForm
+    },
+    {
+      path: 'Itens',
+      name: 'Itens List',
+      component: ListItens
     },
     {
       path: 'wizard',

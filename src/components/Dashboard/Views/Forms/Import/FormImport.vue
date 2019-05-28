@@ -289,7 +289,7 @@ export default {
         })
         },
         handleRegister (index, row) {
-           alert(`Your want to like ${row.name}`)
+           alert(`Arquivo ainda não disponível ${row.nome_arquivo} para download !`)
          },
          handleDetails (index, row) {
            this.showDetails = true
