@@ -41,7 +41,8 @@ const CentralList = () => import(/* webpackChunkName: "forms" */ 'src/components
 
 const OperatorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/ListOperator.vue')
 const AdvisorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisor.vue')
-const MovementList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListMovement.vue')
+const MovementList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Movimentacao/ListMovement.vue')
+const MovementForm = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Movimentacao/FormMovement.vue')
 const ComissionList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListComission.vue')
 
 const ClientList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Cliente/ListClient.vue')
@@ -237,6 +238,11 @@ let formsMenu = {
       path: 'MovementList',
       name: 'List Movement',
       component: MovementList
+    },
+    {
+      path: 'MovementForm',
+      name: 'Form Movement',
+      component: MovementForm
     },
     {
       path: 'ComissionList',

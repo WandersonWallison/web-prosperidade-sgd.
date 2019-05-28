@@ -172,12 +172,12 @@ export default {
             tableColumns: [{
                     prop: 'nome',
                     label: 'Nome',
-                    minWidth: 120
+                    minWidth: 100
                 },
                 {
                     prop: 'id_xp',
                     label: 'Numero XP',
-                    minWidth: 70
+                    minWidth: 60
                 },
                 {
                     prop: 'email',

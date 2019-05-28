@@ -13,7 +13,7 @@
           <div>
             <div class="col-sm-1">
               <div class="iten-center">
-                <p-button type="primary">Cadastro</p-button>
+                <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
               </div>
             </div>
           </div>
@@ -123,7 +123,7 @@
     },
     methods: {
       handleRegister (index, row) {
-        alert(`Your clicked on Like button`)
+         this.$router.push('/forms/MovementForm')
       },
       handleEdit (index, row) {
         alert(`Your want to edit ${row.name}`)

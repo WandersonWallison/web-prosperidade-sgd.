@@ -1,218 +1,165 @@
 <template>
-  <div>
+<div>
     <h5 class="info-text"> Cadastro de Usuário</h5>
     <div class="row justify-content-center">
-      <div class="col-12 col-sm-10 mt-3">
-        <fg-input name="firstName"
-            placeholder="Nome"
-            v-model="model.firstName"
-            v-validate="modelValidations.firstName"
-            :error="getError('firstName')"
-            addon-left-icon="nc-icon nc-single-02">
-        </fg-input>
-        <fg-input
-            type="email"
-            name="email"
-            placeholder="E-mail"
-            v-model="model.email"
-            v-validate="modelValidations.email"
-            :error="getError('email')"
-            addon-left-icon="nc-icon nc-email-85">
-        </fg-input>
-        <fg-input
-            name="senha"
-            type="password"
-            placeholder="Senha"
-            v-model="model.senha"
-            v-validate="modelValidations.senha"
-            :error="getError('senha')"
-            addon-left-icon="nc-icon nc-key-25">
-        </fg-input>
-        <fg-input
-            name="cvm"
-            placeholder="cvm"
-            v-model="model.cvm"
-            v-validate="modelValidations.cvm"
-            :error="getError('cvm')"
-            addon-left-icon="nc-icon nc-hat-3">
-        </fg-input>
-        <fg-input
-            name="cpf"
-            placeholder="cpf"
-            v-model="model.cpf"
-            v-validate="modelValidations.cpf"
-            :error="getError('cpf')"
-             v-mask="'###.###.###-##'"
-            addon-left-icon="nc-icon nc-badge">
-        </fg-input>
-        <fg-input
-            name="cnh"
-            placeholder="cnh"
-            v-model="model.cnh"
-            v-validate="modelValidations.cnh"
-            :error="getError('cnh')"
-            v-mask="'##############'"
-            addon-left-icon="nc-icon nc-badge">
-        </fg-input>
-        <fg-input
-            name="rg"
-            placeholder="rg"
-            v-model="model.rg"
-            v-validate="modelValidations.rg"
-            :error="getError('rg')"
-            v-mask="'#########'"
-            addon-left-icon="nc-icon nc-badge">
-        </fg-input>
-        <fg-input
-            name="telefone"
-            placeholder="telefone"
-            v-model="model.telefone"
-            v-validate="modelValidations.telefone"
-            :error="getError('telefone')"
-            v-mask="'(##) ####-####'"
-            addon-left-icon="nc-icon nc-headphones">
-        </fg-input>
-        <fg-input
-            name="celular"
-            placeholder="celular"
-            v-model="model.celular"
-            v-validate="modelValidations.celular"
-            :error="getError('celular')"
-             v-mask="'(##) #####-####'"
-            addon-left-icon="nc-icon nc-headphones">
-        </fg-input>
+        <div class="col-12 col-sm-10 mt-3">
+            <fg-input name="firstName" placeholder="Nome" v-model="model.firstName" v-validate="modelValidations.firstName" :error="getError('firstName')" addon-left-icon="nc-icon nc-single-02">
+            </fg-input>
+            <fg-input type="email" name="email" placeholder="E-mail" v-model="model.email" v-validate="modelValidations.email" :error="getError('email')" addon-left-icon="nc-icon nc-email-85">
+            </fg-input>
+            <fg-input name="senha" type="password" placeholder="Senha" v-model="model.senha" v-validate="modelValidations.senha" :error="getError('senha')" addon-left-icon="nc-icon nc-key-25">
+            </fg-input>
+            <fg-input name="cvm" placeholder="cvm" v-model="model.cvm" v-validate="modelValidations.cvm" :error="getError('cvm')" addon-left-icon="nc-icon nc-hat-3">
+            </fg-input>
+            <fg-input name="cpf" placeholder="cpf" v-model="model.cpf" v-validate="modelValidations.cpf" :error="getError('cpf')" v-mask="'###.###.###-##'" addon-left-icon="nc-icon nc-badge">
+            </fg-input>
+            <fg-input name="cnh" placeholder="cnh" v-model="model.cnh" v-validate="modelValidations.cnh" :error="getError('cnh')" v-mask="'##############'" addon-left-icon="nc-icon nc-badge">
+            </fg-input>
+            <fg-input name="rg" placeholder="rg" v-model="model.rg" v-validate="modelValidations.rg" :error="getError('rg')" v-mask="'#########'" addon-left-icon="nc-icon nc-badge">
+            </fg-input>
+            <fg-input name="telefone" placeholder="telefone" v-model="model.telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-mask="'(##) ####-####'" addon-left-icon="nc-icon nc-headphones">
+            </fg-input>
+            <fg-input name="celular" placeholder="celular" v-model="model.celular" v-validate="modelValidations.celular" :error="getError('celular')" v-mask="'(##) #####-####'" addon-left-icon="nc-icon nc-headphones">
+            </fg-input>
             <div class="form-group">
-              <el-date-picker
-                  v-model="model.datePicker"
-                  type="date"
-                  placeholder="Data Nascimento"
-                  :picker-options="pickerOptions1"
-                  format="dd/MM/yyyy">
-              </el-date-picker>
-          </div>
-        <el-select no-data-text="Sem Informações" class="select-default"
-          v-model="model.tipo"
-          name="tipo_user"
-          placeholder="Tipos de Usuario">
-          <el-option
-              class="select-default"
-              v-for="item in options"
-              :key="item.id"
-              :label="item.descricao"
-              :value="item.id">
-          </el-option>
-        </el-select>
-      </div>
+                <div class="block">
+                    <span class="demonstration">Default</span>
+                    <el-date-picker v-model="value1" type="date" placeholder="Pick a day">
+                    </el-date-picker>
+                </div>
+            </div>
+            <el-select no-data-text="Sem Informações" class="select-default" v-model="model.tipo" name="tipo_user" placeholder="Tipos de Usuario">
+                <el-option class="select-default" v-for="item in options" :key="item.id" :label="item.descricao" :value="item.id">
+                </el-option>
+            </el-select>
+        </div>
     </div>
-  </div>
+</div>
 </template>
+
 <script>
-  import axios from 'axios'
-  import {DatePicker, TimeSelect, Slider, Tag, Input, Button, Select, Option,Upload} from 'element-ui'
-  import {mask} from 'vue-the-mask'
-  export default {
+import axios from 'axios'
+import {
+    DatePicker,
+    TimeSelect,
+    Slider,
+    Tag,
+    Input,
+    Button,
+    Select,
+    Option,
+    Upload
+} from 'element-ui'
+import {
+    mask
+} from 'vue-the-mask'
+export default {
     components: {
-      [DatePicker.name]: DatePicker,
-      [Upload.name]: Upload
+        [DatePicker.name]: DatePicker,
+        [Upload.name]: Upload
     },
     data() {
-      return {
-        pickerOptions1: {
-          shortcuts: [{
-            text: 'Today',
-            onClick (picker) {
-              picker.$emit('pick', new Date())
-            }
-          },
-          {
-            text: 'Yesterday',
-            onClick (picker) {
-              const date = new Date()
-              date.setTime(date.getTime() - 3600 * 1000 * 24)
-              picker.$emit('pick', date)
-            }
-          },
-          {
-            text: 'A week ago',
-            onClick (picker) {
-              const date = new Date()
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
-              picker.$emit('pick', date)
-            }
-          }]
-        },
-        datePicker: '',
-        model: {
-          firstName: '',
-          email: '',
-          senha: '',
-          cvm: '',
-          cpf: '',
-          cnh: '',
-          rg: '',
-          tipo: '',
-          telefone: '',
-          celular: '',
-          datePicker: '',
-          imageUrl: 'static/img/default-avatar.png'
-        },
-        modelValidations: {
-          firstName: {
-            required: true,
-            min: 5
-          },
-          senha: {
-            required: true
-          },
-          cpf: {
-            required: true
-          },
-          cnh: {
-            required: true
-          },
-          rg: {
-            required: true
-          },
-          telefone: {
-            required: true
-          },
-          celular: {
-            required: true
-          },
-          email: {
-            required: true,
-            email: true
-          }
-        },
-        options: [],
-      }
+        return {
+            pickerOptions1: {
+                shortcuts: [{
+                        text: 'Today',
+                        onClick(picker) {
+                            picker.$emit('pick', new Date())
+                        }
+                    },
+                    {
+                        text: 'Yesterday',
+                        onClick(picker) {
+                            const date = new Date()
+                            date.setTime(date.getTime() - 3600 * 1000 * 24)
+                            picker.$emit('pick', date)
+                        }
+                    },
+                    {
+                        text: 'A week ago',
+                        onClick(picker) {
+                            const date = new Date()
+                            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+                            picker.$emit('pick', date)
+                        }
+                    }
+                ]
+            },
+            datePicker: '',
+            model: {
+                firstName: '',
+                email: '',
+                senha: '',
+                cvm: '',
+                cpf: '',
+                cnh: '',
+                rg: '',
+                tipo: '',
+                telefone: '',
+                celular: '',
+                datePicker: '',
+                imageUrl: 'static/img/default-avatar.png'
+            },
+            modelValidations: {
+                firstName: {
+                    required: true,
+                    min: 5
+                },
+                senha: {
+                    required: true
+                },
+                cpf: {
+                    required: true
+                },
+                cnh: {
+                    required: true
+                },
+                rg: {
+                    required: true
+                },
+                telefone: {
+                    required: true
+                },
+                celular: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                }
+            },
+            options: [],
+        }
     },
-    directives: {mask},
+    directives: {
+        mask
+    },
     mounted() {
         axios.get(process.env.VUE_APP_ROOT_API + '/grupo').then(response => {
             this.options = response.data
         })
     },
     methods: {
-      handlePreview(file) {
-        this.model.imageUrl = URL.createObjectURL(file.raw);
-      },
-      getError(fieldName) {
-        return this.errors.first(fieldName)
-      },
-      validate() {
-        return this.$validator.validateAll().then(res => {
-          this.$emit('on-validated', res, this.model)
-          return res
-        })
-      }
+        handlePreview(file) {
+            this.model.imageUrl = URL.createObjectURL(file.raw);
+        },
+        getError(fieldName) {
+            return this.errors.first(fieldName)
+        },
+        validate() {
+            return this.$validator.validateAll().then(res => {
+                this.$emit('on-validated', res, this.model)
+                return res
+            })
+        }
     }
-  }
+}
 </script>
+
 <style lang="scss">
-  .card-wizard .picture-container .picture {
+.card-wizard .picture-container .picture {
     input[type="file"] {
-      display: none;
+        display: none;
     }
-  }
+}
 </style>
