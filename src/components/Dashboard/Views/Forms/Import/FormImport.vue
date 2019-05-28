@@ -110,11 +110,11 @@
             </p-pagination>
         </div>
     </div>
-    <md-dialog :md-active.sync="showDetails">
+    <!--<md-dialog :md-active.sync="showDetails">
         <div class="div">
             <liste-itens :selected="selected"></liste-itens>
         </div>
-    </md-dialog>
+    </md-dialog>-->
 </div>
 </template>
 
@@ -125,7 +125,7 @@ import swal from 'sweetalert2'
 import moment from 'moment'
 import XLSX from 'xlsx'
 
-import ListeItens from './ListItens.vue'
+// import ListeItens from './ListItens.vue'
 // import {Table, TableColumn, Select, Option} from 'element-ui'
 import {
     Table,
@@ -149,13 +149,13 @@ Vue.use(Option)
 export default {
     components: {
         PPagination,
-        ListeItens,
+        // ListeItens,
         [DatePicker.name]: DatePicker,
     },
     props: {
         beforeUpload: Function, // eslint-disable-line
         onSuccess: Function, // eslint-disable-line
-        selected: ''
+        // selected: []
     },
     data() {
         return {
@@ -292,8 +292,10 @@ export default {
            alert(`Arquivo ainda não disponível ${row.nome_arquivo} para download !`)
          },
          handleDetails (index, row) {
-           this.showDetails = true
-           this.selected = row.id
+            window.localStorage.setItem('comissionamento', row.id)
+            this.$router.push('/forms/Itens')
+           // this.showDetails = true
+           //this.selected = row.id
          },
          handleEdit (index, row) {
            alert(`Your want to edit ${row.name}`)

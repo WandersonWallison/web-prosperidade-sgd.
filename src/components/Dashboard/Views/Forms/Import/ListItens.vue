@@ -31,16 +31,16 @@
                 <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
                     </el-table-column>
-                    <!-- <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
+                    <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
-                            <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
+                            <!--<p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                 <i class="fa fa-edit"></i>
-                            </p-button>
+                            </p-button>-->
                             <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
                                 <i class="fa fa-trash-o"></i>
                             </p-button>
                         </template>
-                    </el-table-column>-->
+                    </el-table-column>
                 </el-table> 
             </div>
             <div class="col-sm-6 pagination-info">
@@ -128,21 +128,27 @@ export default {
                 perPageOptions: [5, 10, 25, 50],
                 total: 0
             },
+            results: [],
             searchQuery: '',
-            propsToSearch: ['nome_cliente','classificacao','codigo_cliente','produto_categoria'],
+            propsToSearch: ['nome_cliente','classificacao','codigo_cliente','mensagem','produto_categoria'],
             tableColumns: [{
                 prop: 'nome_cliente',
                 label: 'Nome',
-                minWidth: 150
+                minWidth: 180
             },
             {
                 prop: 'classificacao',
                 label: 'Classificacao',
-                minWidth: 150
+                minWidth: 100
             },
             {
                 prop: 'produto_categoria',
                 label: 'Produto/Categoria',
+                minWidth: 100
+            },
+            {
+                prop: 'mensagem',
+                label: 'Mensagem',
                 minWidth: 200
             },
             {
@@ -159,9 +165,10 @@ export default {
         }
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento/'+ this.selected).then(response => {
-            this.tableData = response.data.itens
+        axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento_item?where={"ativo": 1,"id_comissionamento":'+window.localStorage.getItem('comissionamento')+'}').then(response => {
+            this.tableData = response.data
         })
+        window.localStorage.removeItem("comissionamento")
     },
     methods: {
         handleDetails(index, row) {
@@ -169,35 +176,32 @@ export default {
             // this.selected = row
         },
         handleRegister() {
-            this.$router.push('/forms/GroupForm')
-            this.showcadastrar = true
+            //this.$router.push('/forms/GroupForm')
+            //this.showcadastrar = true
         },
         handleEdit(index, row) {
-            window.localStorage.setItem('grupo', row.id)
-            this.$router.push('/forms/GroupFormEdit')
+            //window.localStorage.setItem('grupo', row.id)
+            //this.$router.push('/forms/GroupFormEdit')
         },
         handleDelete(index, row) {
-            this.qtd = row.usuario.length
-            let user = {
+            let comissionamentoItem = {
                 ativo: false
-            }
-            if (row.id > 3 || row.usuario.length == 0) {
-                axios.put(process.env.VUE_APP_ROOT_API + '/grupo/' + row.id, user)
-                    .then(response => {
-                        this.results = response.data
-                        axios.get(process.env.VUE_APP_ROOT_API + '/grupo?where={"ativo": 1}').then(response => {
-                            this.tableData = response.data
-                            swal('Bom trabalho!', `Grupo ${row.descricao} deletado com sucesso!`, 'success')
+            };
+            axios
+                .put(process.env.VUE_APP_ROOT_API + "/comissionamento_item/" + row.id, comissionamentoItem)
+                .then(response => {
+                    this.results = response.data
+                            swal('Bom trabalho!',`Item ${row.nome_arquivo} Excluído com sucesso!`,'success')
+                            axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento_item?where={"ativo": 1,"id_comissionamento":'+this.results.id_comissionamento.id+'}').then(response => {
+                                  this.tableData = response.data
+                            })
+                            //this.$router.push("/forms/CentralList");
+                            //this.atualilarLista()                            
                         })
-                    })
-                    .catch(error => {
-                        alert(error.response)
-                        console.log(error.response.data)
-                    })
-            } else {
-                swal('Importante!', `Grupo ${row.descricao} nÃ£o pode ser deletado!`, 'error')
-            }
-
+                .catch(error => {
+                    alert(error.response);
+                    console.log(error.response.data);
+                });
         }
     }
 }
