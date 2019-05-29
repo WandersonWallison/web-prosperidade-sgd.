@@ -176,6 +176,9 @@ export default {
             if( tmp.length > 6 )
             tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")*/
             var tmp = row[column.property]
+            if(tmp == null || tmp == ""){
+                tmp = 0,0
+            }
             tmp = tmp.toFixed(2).replace(".",",")
             tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
             return 'R$ '+ tmp
