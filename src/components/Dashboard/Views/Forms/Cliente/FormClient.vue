@@ -91,10 +91,10 @@
                         </el-select>
                     </fg-input>
                     <label>Investimento Inicial</label>
-                    <fg-input type="text" v-mask="'########,##'" name="investimento_inicial" v-validate="modelValidations.investimento_inicial" :error="getError('investimento_inicial')" v-model="model.investimento_inicial">
+                    <fg-input type="text" v-money="money" name="investimento_inicial" v-validate="modelValidations.investimento_inicial" :error="getError('investimento_inicial')" v-model="model.investimento_inicial">
                     </fg-input>
                     <label>Potencial de Investimento</label>
-                    <fg-input type="text" v-mask="'########,##'" name="potencial_investimento" v-validate="modelValidations.potencial_investimento" :error="getError('potencial_investimento')" v-model="model.potencial_investimento">
+                    <fg-input type="text" v-money="money" name="potencial_investimento" v-validate="modelValidations.potencial_investimento" :error="getError('potencial_investimento')" v-model="model.potencial_investimento">
                     </fg-input>
                 </el-card>
                 <br>
@@ -138,12 +138,22 @@
 import axios from 'axios'
 import swal from 'sweetalert2'
 import {
+    VMoney
+} from 'v-money'
+import {
     mask
 } from 'vue-the-mask'
 export default {
     name: 'FormClient',
     data() {
         return {
+            money: {
+                decimal: ',',
+                thousands: '.',
+                prefix: 'R$ ',
+                precision: 2,
+                masked: false /* doesn't work with directive */
+            },
             model: {
                 // cliente --------------
                 nome: '',
@@ -221,10 +231,10 @@ export default {
                     required: true
                 },
                 operador: {
-                   required: true
+                    required: true
                 },
                 assessor: {
-                  required: true
+                    required: true
                 }
             },
             optionsTipo: [{
@@ -348,7 +358,8 @@ export default {
         }
     },
     directives: {
-        mask
+        mask,
+        money: VMoney
     },
     mounted() {
         axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}').then(response => {
@@ -397,6 +408,10 @@ export default {
                     console.log(error.response.data)
                 })
         },
+        retiraMascara(campo) {
+            campo = campo.replace(/\D/g, '') // Remove tudo o que não é dígito
+            return campo
+        },
         salvar() {
 
             const authUser = JSON.parse(window.localStorage.getItem("usuario"))
@@ -418,8 +433,8 @@ export default {
                 telefone: this.model.telefone,
                 email: this.model.email,
                 cpf_cnpj: documento,
-                potencial_investimento: this.model.potencial_investimento,
-                investimento_inicial: this.model.investimento_inicial,
+                potencial_investimento: this.retiraMascara(this.model.potencial_investimento),
+                investimento_inicial: this.retiraMascara(this.model.investimento_inicial),
                 razao_social: this.model.razao_social,
                 rg: this.model.rg,
                 habilitado_bovespa: this.model.habilitado_bovespa,

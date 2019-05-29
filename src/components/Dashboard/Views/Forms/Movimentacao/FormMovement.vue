@@ -17,21 +17,21 @@
                     <label>Clientes</label>
                     <fg-input>
                         <el-select no-data-text="Sem informações" class="select-default" v-model="model.cliente" name="cliente" placeholder="Selecione...">
-                            <el-option class="select-default" v-for="item in this.dataCliente" :key="item" :label="item.nome" :value="[item.id,item.id_xp,item.nome,item.telefone,item.email,item.id_assessor.username,item.id_assessor.telefone,item.id_assessor.cpf]">
+                            <el-option class="select-default" v-for="item in this.dataCliente" :key="item.id" :label="item.nome" :value="[item.id,item.id_xp,item.nome,item.telefone,item.email,item.id_assessor.username,item.id_assessor.telefone,item.id_assessor.cpf]">
                             </el-option>
                         </el-select>
                     </fg-input>
                     <label>Numero XP</label>
-                    <fg-input type="text" name="numero_xp"  disabled v-model="model.cliente[1]">
+                    <fg-input type="text" name="numero_xp" disabled v-model="model.cliente[1]">
                     </fg-input>
                     <label>Nome</label>
-                    <fg-input type="text" name="nome"  disabled v-model="model.cliente[2]">
+                    <fg-input type="text" name="nome" disabled v-model="model.cliente[2]">
                     </fg-input>
                     <label>Telefone</label>
-                    <fg-input type="text" v-mask="'(##)#####-####'"  disabled name="telefone" v-model="model.cliente[3]">
+                    <fg-input type="text" v-mask="'(##)#####-####'" disabled name="telefone" v-model="model.cliente[3]">
                     </fg-input>
                     <label>E-mail</label>
-                    <fg-input type="email" name="email"  disabled v-model="model.cliente[4]">
+                    <fg-input type="email" name="email" disabled v-model="model.cliente[4]">
                     </fg-input>
                 </el-card>
             </div>
@@ -41,13 +41,13 @@
                         <span>Assessor</span>
                     </div>
                     <label>Nome</label>
-                    <fg-input type="text" name="nome_assessor"  disabled v-model="model.cliente[5]">
+                    <fg-input type="text" name="nome_assessor" disabled v-model="model.cliente[5]">
                     </fg-input>
                     <label>Telefone</label>
-                    <fg-input type="text" name="telefone"  disabled v-model="model.cliente[6]">
+                    <fg-input type="text" name="telefone" disabled v-model="model.cliente[6]">
                     </fg-input>
                     <label>CPF</label>
-                    <fg-input type="text" name="cpf"  disabled v-model="model.cliente[7]">
+                    <fg-input type="text" name="cpf" disabled v-model="model.cliente[7]">
                     </fg-input>
                 </el-card>
             </div>
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <label>Valor movimentado</label>
-                    <fg-input type="text" v-mask="'###.###.###-##'" name="valor" v-model="model.valor">
+                    <fg-input type="text" v-money="money" name="valor" v-model="model.valor">
                     </fg-input>
                     <label>Status</label>
                     <fg-input>
@@ -86,7 +86,11 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
+
 import state from '../../UtilProject/state'
+import {
+    VMoney
+} from 'v-money'
 import {
     mask
 } from 'vue-the-mask'
@@ -102,7 +106,14 @@ export default {
     data() {
         return {
             datePicker: '',
-            selected:[],
+            selected: [],
+            money: {
+                decimal: ',',
+                thousands: '.',
+                prefix: 'R$ ',
+                precision: 2,
+                masked: false /* doesn't work with directive */
+            },
             model: {
                 nome: '',
                 data_registro: '',
@@ -133,10 +144,8 @@ export default {
         }
     },
     directives: {
-        mask
-    },
-    created() {
-      console.log(this.$data)
+        mask,
+        money: VMoney
     },
     mounted() {
 
@@ -155,9 +164,6 @@ export default {
             this.$validator.validateAll().then(isValid => {
                 this.$emit('on-submit', this.salvar(), isValid)
             })
-        },
-        buscarCliente() {
-            alert('teste')
         },
         salvar() {
 
