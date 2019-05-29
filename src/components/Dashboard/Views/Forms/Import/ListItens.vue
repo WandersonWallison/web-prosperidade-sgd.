@@ -130,31 +130,31 @@ export default {
             },
             results: [],
             searchQuery: '',
-            propsToSearch: ['nome_cliente','classificacao','codigo_cliente','mensagem','produto_categoria'],
+            propsToSearch: ['codigo_cliente','nome_cliente','mercado','mensagem','calculo_comissao_assessor'],
             tableColumns: [{
+                prop: 'codigo_cliente',
+                label: 'Codigo',
+                minWidth: 70
+            },
+            {
                 prop: 'nome_cliente',
                 label: 'Nome',
                 minWidth: 180
             },
             {
-                prop: 'classificacao',
-                label: 'Classificacao',
-                minWidth: 100
-            },
-            {
-                prop: 'produto_categoria',
-                label: 'Produto/Categoria',
+                prop: 'mercado',
+                label: 'Mercado',
                 minWidth: 100
             },
             {
                 prop: 'mensagem',
-                label: 'Mensagem',
+                label: 'Status',
                 minWidth: 200
             },
             {
-                prop: 'codigo_cliente',
-                label: 'XP Cliente',
-                minWidth: 150
+                prop: 'calculo_comissao_assessor',
+                label: 'Comissão',
+                minWidth: 70
             }],
             showcadastrar: false,
             showDetails: false,

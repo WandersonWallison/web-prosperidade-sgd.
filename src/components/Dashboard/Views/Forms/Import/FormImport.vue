@@ -17,7 +17,7 @@
             </div>
             <br>
             <div class="col-lg-6">
-                <el-input type="textarea" :rows="2" placeholder="Desccrição" v-model="model.descricao">
+                <el-input type="textarea" :rows="2" placeholder="Descrição" v-model="model.descricao">
                 </el-input>
             </div>
             <br>
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="card-footer text-right" v-if="carregado == false">
-                <p-button type="info" @click.prevent="importarLeads">Salvar</p-button>
+                <p-button type="info" @click.prevent="importarLeads">Importar</p-button>
             </div>
     </form>
     <!-- inicio da lista -->
@@ -59,7 +59,7 @@
         </div>
         <div class="col-sm-6">
             <div class="pull-right">
-                <fg-input class="input-sm" placeholder="Procurar" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
+                <fg-input class="input-sm" placeholder="Pesquisar" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
                 </fg-input>
             </div>
         </div>
@@ -71,13 +71,13 @@
               :min-width="120"
               fixed="right"
               class-name="td-actions"
-              label="Status">
+              label="Ações">
               <template slot-scope="props">
-                  <el-tooltip content="download" placement="top">
+                  <!--<el-tooltip content="download" placement="top">
                     <p-button type="info" size="sm" icon @click="handleRegister(props.$index, props.row)">
                     <i class="fa fa-download"></i>
                     </p-button>
-                  </el-tooltip>
+                  </el-tooltip>-->
                   <el-tooltip content="detalhes" placement="top">
                     <p-button type="primary" size="sm" icon @click="handleDetails(props.$index, props.row)">
                     <i class="fa fa-info"></i>
@@ -90,7 +90,7 @@
                   </el-tooltip>-->
                   <el-tooltip content="processar" placement="top">
                     <p-button type="warning" size="sm" icon @click="handleProcess(props.$index, props.row)">
-                    <i class="fa fa-microchip"></i>
+                    <i class="fa fa-cog"></i>
                     </p-button>
                   </el-tooltip>
                   <el-tooltip content="excluir" placement="top">
@@ -161,13 +161,13 @@ export default {
         return {
             pickerOptions1: {
                 shortcuts: [{
-                        text: 'Today',
+                        text: 'Hoje',
                         onClick(picker) {
                             picker.$emit('pick', new Date())
                         }
                     },
                     {
-                        text: 'Yesterday',
+                        text: 'Ontem',
                         onClick(picker) {
                             const date = new Date()
                             date.setTime(date.getTime() - 3600 * 1000 * 24)
@@ -175,7 +175,7 @@ export default {
                         }
                     },
                     {
-                        text: 'A week ago',
+                        text: 'Uma semana atrás',
                         onClick(picker) {
                             const date = new Date()
                             date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
@@ -197,11 +197,11 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['nome_arquivo', 'descricao', 'data_ref'],
+            propsToSearch: ['nome_arquivo', 'descricao', 'data_ref','mensagem'],
             tableColumns: [{
                     prop: 'nome_arquivo',
                     label: 'Nome do Arquivo',
-                    minWidth: 150
+                    minWidth: 80
                 },
                 {
                     prop: 'descricao',
@@ -211,7 +211,12 @@ export default {
                 {
                     prop: 'data_ref',
                     label: 'Data Referência',
-                    minWidth: 150
+                    minWidth: 80
+                },
+                {
+                    prop: 'mensagem',
+                    label: 'status',
+                    minWidth: 80
                 }
             ],
             showDetails: false,
@@ -467,9 +472,10 @@ export default {
             }
             this.loading = false
             this.arquivo = ''
+            this.atualilarLista()
             // alert('Importação realizada com sucesso !!!')
             swal('Bom trabalho!', 'Importação realizada com sucesso!', 'success')
-            this.atualilarLista()
+            
           })
         },
         maskFone: function (v) {

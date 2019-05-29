@@ -445,11 +445,11 @@ export default {
                     axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
                         .then(response => {
                             this.resultAdress = response.data
-                            swal('Bom trabalho!', 'Cliente Cadastrada com sucesso!', 'success')
+                            swal('Bom trabalho!', 'Cliente Cadastrado com sucesso!', 'success')
                             this.$router.push('/forms/ClientList')
                         })
                         .catch(error => {
-                            swal('Algo de errado!', 'Verifique os campos do endereço cadastro!', 'error')
+                            swal('Algo de errado!', 'Verifique os campos do endereço de cadastro!', 'error')
                             console.log(error.response.data)
                         })
                 })
