@@ -86,10 +86,10 @@
                         </el-select>
                     </fg-input>
                     <label>Investimento Inicial</label>
-                    <fg-input type="text" v-mask="'########,##'" name="investimento_inicial" v-validate="modelValidations.investimento_inicial" :error="getError('investimento_inicial')" v-model="model.investimento_inicial">
+                    <fg-input type="text" name="investimento_inicial" v-validate="modelValidations.investimento_inicial" :error="getError('investimento_inicial')" v-model="model.investimento_inicial">
                     </fg-input>
                     <label>Potencial de Investimento</label>
-                    <fg-input type="text" v-mask="'########,##'" name="potencial_investimento" v-validate="modelValidations.potencial_investimento" :error="getError('potencial_investimento')" v-model="model.potencial_investimento">
+                    <fg-input type="text" name="potencial_investimento" v-validate="modelValidations.potencial_investimento" :error="getError('potencial_investimento')" v-model="model.potencial_investimento">
                     </fg-input>
                 </el-card>
                 <br>
@@ -129,12 +129,22 @@
 import axios from 'axios'
 import swal from 'sweetalert2'
 import {
+    VMoney
+} from 'v-money'
+import {
     mask
 } from 'vue-the-mask'
 export default {
     name: 'FormClientEdit',
     data() {
         return {
+            money: {
+                decimal: ',',
+                thousands: '.',
+                prefix: 'R$ ',
+                precision: 2,
+                masked: false /* doesn't work with directive */
+            },
             model: {
                 // cliente --------------
                 nome: '',
@@ -341,7 +351,8 @@ export default {
         }
     },
     directives: {
-        mask
+        mask,
+        money: VMoney
     },
     mounted() {
 
@@ -352,8 +363,10 @@ export default {
             this.dataAssessores = response.data
         })
 
-        axios.get(process.env.VUE_APP_ROOT_API + '/cliente/' + window.localStorage.getItem("cliente")).then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/cliente/' + window.localStorage.getItem("clienteDetail")).then(response => {
             this.dataCliente = response.data
+            console.log('Chegou')
+            window.localStorage.removeItem("clienteDetail")
             this.model = response.data
             this.model.assessor = this.model.id_assessor.id
             this.model.operador = this.model.id_operador
@@ -369,7 +382,6 @@ export default {
                 this.model.estado = this.dataCliente.endereco[0].uf
                 this.model.tipo = this.dataCliente[0].tipo
             }
-            window.localStorage.removeItem("cliente")
         })
     },
     methods: {

@@ -207,7 +207,8 @@ export default {
             this.$router.push('/forms/ClientFormEdit')
         },
         handleDetails(index, row) {
-            window.localStorage.setItem('cliente', row.id)
+            console.log('Valor do row: ',row)
+            window.localStorage.setItem('clienteDetail', row.id)
             this.dialogFormVisibleDetail = true
         },
         handleAdd(index, row) {
