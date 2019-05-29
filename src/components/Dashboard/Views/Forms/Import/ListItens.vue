@@ -162,7 +162,7 @@ export default {
         }
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento_item?where={"ativo": 1,"id_comissionamento":'+window.localStorage.getItem('comissionamento')+'}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento_item?where={"ativo": 1,"id_comissionamento":'+window.localStorage.getItem('comissionamento')+'}&limit=10000').then(response => {
             this.tableData = response.data
         })
         window.localStorage.removeItem("comissionamento")
