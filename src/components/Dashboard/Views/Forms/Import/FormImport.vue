@@ -67,6 +67,8 @@
             <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
                 <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
                 </el-table-column>
+                <el-table-column :min-width="120" fixed="right" class-name="td-actions" prop="data_ref" :formatter="dateFormat" label="Data Referência">
+                </el-table-column>
                 <el-table-column
               :min-width="120"
               fixed="right"
@@ -197,7 +199,7 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['nome_arquivo', 'descricao', 'data_ref','mensagem'],
+            propsToSearch: ['nome_arquivo', 'descricao','mensagem'],
             tableColumns: [{
                     prop: 'nome_arquivo',
                     label: 'Nome do Arquivo',
@@ -207,11 +209,6 @@ export default {
                     prop: 'descricao',
                     label: 'Descricao',
                     minWidth: 150
-                },
-                {
-                    prop: 'data_ref',
-                    label: 'Data Referência',
-                    minWidth: 80
                 },
                 {
                     prop: 'mensagem',
@@ -276,6 +273,13 @@ export default {
         this.atualilarLista()
     },
     methods: {
+        dateFormat (row, column) {  
+                   var date = row[column.property];  
+                        if (date == undefined) {  
+                                return "";  
+                        }  
+                            return moment(date).format("DD/MM/YYYY")
+        },
       atualilarLista () {
           
           axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento?where={"ativo": 1}').then(response => {
