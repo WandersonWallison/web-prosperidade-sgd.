@@ -17,21 +17,21 @@
                     <label>Clientes</label>
                     <fg-input>
                         <el-select no-data-text="Sem informações" class="select-default" v-model="model.cliente" name="cliente" placeholder="Selecione...">
-                            <el-option class="select-default" v-for="item in this.dataCliente" :key="item.id" :label="item.nome" :value="[item.id,item.nome]">
+                            <el-option class="select-default" v-for="item in this.dataCliente" :key="item" :label="item.nome" :value="[item.id,item.id_xp,item.nome,item.telefone,item.email,item.id_assessor.username,item.id_assessor.telefone,item.id_assessor.cpf]">
                             </el-option>
                         </el-select>
                     </fg-input>
                     <label>Numero XP</label>
-                    <fg-input type="text" name="numero_xp" v-model="model.cliente.item">
+                    <fg-input type="text" name="numero_xp"  disabled v-model="model.cliente[1]">
                     </fg-input>
                     <label>Nome</label>
-                    <fg-input type="text" name="nome" v-model="model.nome">
+                    <fg-input type="text" name="nome"  disabled v-model="model.cliente[2]">
                     </fg-input>
                     <label>Telefone</label>
-                    <fg-input type="text" v-mask="'(##)#####-####'" name="telefone" v-model="model.telefone">
+                    <fg-input type="text" v-mask="'(##)#####-####'"  disabled name="telefone" v-model="model.cliente[3]">
                     </fg-input>
                     <label>E-mail</label>
-                    <fg-input type="email" name="email" v-model="model.email">
+                    <fg-input type="email" name="email"  disabled v-model="model.cliente[4]">
                     </fg-input>
                 </el-card>
             </div>
@@ -40,14 +40,14 @@
                     <div slot="header" class="clearfix">
                         <span>Assessor</span>
                     </div>
-                    <label>CVN</label>
-                    <fg-input type="text" name="cvn" v-model="model.cvn">
-                    </fg-input>
                     <label>Nome</label>
-                    <fg-input type="text" name="nome_assessor" v-model="model.nome_assessor">
+                    <fg-input type="text" name="nome_assessor"  disabled v-model="model.cliente[5]">
                     </fg-input>
-                    <label>Escritorio</label>
-                    <fg-input type="text" name="escritorio" v-model="model.escritorio">
+                    <label>Telefone</label>
+                    <fg-input type="text" name="telefone"  disabled v-model="model.cliente[6]">
+                    </fg-input>
+                    <label>CPF</label>
+                    <fg-input type="text" name="cpf"  disabled v-model="model.cliente[7]">
                     </fg-input>
                 </el-card>
             </div>
@@ -86,6 +86,7 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
+import state from '../../UtilProject/state'
 import {
     mask
 } from 'vue-the-mask'
@@ -97,9 +98,11 @@ export default {
         [DatePicker.name]: DatePicker
     },
     name: 'FormMovimentacao',
+    mixins: [state],
     data() {
         return {
             datePicker: '',
+            selected:[],
             model: {
                 nome: '',
                 data_registro: '',
@@ -132,7 +135,11 @@ export default {
     directives: {
         mask
     },
+    created() {
+      console.log(this.$data)
+    },
     mounted() {
+
         axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}').then(response => {
             this.dataCliente = response.data
         })
