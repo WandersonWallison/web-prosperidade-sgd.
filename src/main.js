@@ -13,6 +13,7 @@ import VueAxios from 'vue-axios'
 import Vuetify from 'vuetify'
 import VueMaterial from 'vue-material'
 import VueMoment from 'vue-moment'
+
 // Plugins
 import GlobalComponents from './globalComponents'
 import GlobalDirectives from './globalDirectives'
