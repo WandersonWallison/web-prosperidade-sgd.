@@ -31,6 +31,8 @@
                 <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
                     </el-table-column>
+                    <el-table-column :min-width="120" fixed="right" class-name="td-actions" prop="calculo_comissao_assessor" :formatter="formatReal" label="Comissão">
+                    </el-table-column>
                     <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
                             <!--<p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
@@ -130,7 +132,7 @@ export default {
             },
             results: [],
             searchQuery: '',
-            propsToSearch: ['codigo_cliente','nome_cliente','mercado','mensagem','calculo_comissao_assessor'],
+            propsToSearch: ['codigo_cliente','nome_cliente','mercado','mensagem'],
             tableColumns: [{
                 prop: 'codigo_cliente',
                 label: 'Codigo',
@@ -150,11 +152,6 @@ export default {
                 prop: 'mensagem',
                 label: 'Status',
                 minWidth: 200
-            },
-            {
-                prop: 'calculo_comissao_assessor',
-                label: 'Comissão',
-                minWidth: 70
             }],
             showcadastrar: false,
             showDetails: false,
@@ -171,6 +168,18 @@ export default {
         window.localStorage.removeItem("comissionamento")
     },
     methods: {
+        formatReal (row,column)
+        {
+            /*var numero = row[column.property]+''
+            var tmp = row[column.property].toFixed(2)
+            tmp = tmp.replace(/([0-9]{2})$/g, ",$1")
+            if( tmp.length > 6 )
+            tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")*/
+            var tmp = row[column.property]
+            tmp = tmp.toFixed(2).replace(".",",")
+            tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
+            return 'R$ '+ tmp
+        },  
         handleDetails(index, row) {
             // this.showDetails = true
             // this.selected = row

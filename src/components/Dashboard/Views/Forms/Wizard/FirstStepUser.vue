@@ -23,8 +23,7 @@
             </fg-input>
             <div class="form-group">
                 <div class="block">
-                    <span class="demonstration">Default</span>
-                    <el-date-picker v-model="value1" type="date" placeholder="Pick a day">
+                    <el-date-picker v-model="value1" type="date" placeholder="Data Nascimento">
                     </el-date-picker>
                 </div>
             </div>
