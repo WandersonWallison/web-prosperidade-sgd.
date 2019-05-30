@@ -66,6 +66,9 @@
                     <label>Valor movimentado</label>
                     <fg-input type="text" v-money="money" name="valor" v-model="model.valor">
                     </fg-input>
+                    <label>Observação</label>
+                    <fg-input type="text"  name="observacao" v-model="model.observacao">
+                    </fg-input>
                     <label>Status</label>
                     <fg-input>
                         <el-select no-data-text="Sem informações" class="select-default" v-model="model.status" name="cliente" placeholder="Selecione...">
@@ -73,6 +76,7 @@
                             </el-option>
                         </el-select>
                     </fg-input>
+
                 </el-card>
             </div>
         </div>
@@ -86,7 +90,7 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
-
+import moment from 'moment'
 import state from '../../UtilProject/state'
 import {
     VMoney
@@ -123,6 +127,7 @@ export default {
                 numero_xp: '',
                 cliente: '',
                 numero_xp: '',
+                observacao: ''
             },
             disabledDates: {
                 to: new Date(Date.now() - 8640000)
@@ -165,25 +170,29 @@ export default {
                 this.$emit('on-submit', this.salvar(), isValid)
             })
         },
+        retiraMascara(campo) {
+            campo = campo.replace(/\D/g, '') // Remove tudo o que não é dígito
+            return campo
+        },
         salvar() {
 
             const authUser = JSON.parse(window.localStorage.getItem("usuario"))
 
             let movimentacao = {
-                /*
-                id_cliente: this.model.numero_xp,
-                data_registro: this.model.data_registro,
-                status: this.model.razao_social,
-                id_responsavel: authUser.id
-                */
 
+                id_cliente: this.model.cliente[0],
+                data_registro: moment(this.model.data_registro,"DD/MM/YYYY"),
+                id_situacao_movimento: this.model.status,
+                valor: this.retiraMascara(this.model.valor),
+                observacao: this.model.observacao,
+                id_responsavel: authUser.id
             }
 
             axios.post(process.env.VUE_APP_ROOT_API + '/movimentacao', movimentacao)
                 .then(response => {
                     this.results = response.data
-                    swal('Bom trabalho!', 'Cliente Cadastrada com sucesso!', 'success')
-                    this.$router.push('/forms/ClientList')
+                    swal('Bom trabalho!', 'Movimentação cadastrada com sucesso!', 'success')
+                    this.$router.push('/forms/MovementList')
 
                 })
                 .catch(error => {
