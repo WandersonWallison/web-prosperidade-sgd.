@@ -497,30 +497,6 @@ export default {
                     swal('Algo de errado!', 'Verifique os campos da empresa no cadastro!', 'error')
                     console.log(error.response)
                 })
-
-            // -----------------------------------------------------------
-            /*
-            axios.post(process.env.VUE_APP_ROOT_API + '/cliente', cliente)
-                .then(response => {
-                    this.results = response.data
-                    endereco.id_cliente = response.data.id
-                    // Cadastro de Endereço o cliente será referenciado no campo de id_user da tabela de endereço
-                    axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
-                        .then(response => {
-                            this.resultAdress = response.data
-                            swal('Bom trabalho!', 'Cliente Alterado com sucesso!', 'success')
-                            this.$router.push('/forms/ClientList')
-                        })
-                        .catch(error => {
-                            swal('Algo de errado!', 'Verifique os campos do endereço cadastro!', 'error')
-                            console.log(error.response.data)
-                        })
-                })
-                .catch(error => {
-                    swal('Algo de errado!', 'Verifique os campos de cliente!', 'error')
-                    console.log(error.response.data)
-                })
-                */
         }
     }
 }

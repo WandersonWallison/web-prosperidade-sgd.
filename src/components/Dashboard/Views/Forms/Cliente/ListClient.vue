@@ -78,12 +78,12 @@
                 <el-button type="primary" @click="dialogFormVisible = false">Adicionar</el-button>
               </span>
             </el-dialog>
-            <el-dialog title="Detalhamento" :visible.sync="dialogFormVisibleDetail">
-                <cliente-details />
+            <md-dialog class="dialog" title="Detalhamento" :md-active.sync="dialogFormVisibleDetail">
+                <cliente-details :cliente="cliente" />
                 <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisibleDetail = false">Cancelar</el-button>
               </span>
-            </el-dialog>
+            </md-dialog>
         </div>
     </div>
 </div>
@@ -106,6 +106,10 @@ export default {
     components: {
         PPagination,
         clienteDetails
+    },
+    props: {
+        type: Object,
+        name: 'cliente'
     },
     computed: {
         pagedData() {
@@ -168,6 +172,7 @@ export default {
             },
             searchQuery: '',
             newRow: '',
+            cliente: null,
             propsToSearch: ['nome', 'email', 'telefone'],
             tableColumns: [{
                     prop: 'nome',
@@ -207,8 +212,7 @@ export default {
             this.$router.push('/forms/ClientFormEdit')
         },
         handleDetails(index, row) {
-            console.log('Valor do row: ',row)
-            window.localStorage.setItem('clienteDetail', row.id)
+            this.cliente = row
             this.dialogFormVisibleDetail = true
         },
         handleAdd(index, row) {
@@ -248,5 +252,10 @@ export default {
 
 .top {
     text-align: center;
+}
+
+.dialog {
+    width: 57%;
+    overflow: scroll;
 }
 </style>

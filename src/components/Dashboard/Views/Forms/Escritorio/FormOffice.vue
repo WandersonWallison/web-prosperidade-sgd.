@@ -310,9 +310,6 @@ export default {
                 cnpj: this.model.cnpj,
                 centrais: this.selectCentrais,
                 iss: this.model.iss
-
-                // id_central: this.model.central
-                // TODO - Retirar o comentario assim q estiver pronto na API
             }
             let endereco = {
                 logradouro: this.model.logradouro,
