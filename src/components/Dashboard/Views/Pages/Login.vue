@@ -13,15 +13,15 @@
                                     <img slot="header" width="300" height="90" src="static\img\prosperidade.png" alt="...">
                                     <img slot="header" width="130" height="40" src="static\img\xp.png" alt="...">
                                 </div>
-                                <br>
-                                <!-- <h3 slot="header" class="header text-center">Login</h3> -->
-                                <fg-input name="email" v-model="form.email" required v-validate="modelValidations.email" :error="getError('email')" addon-left-icon="nc-icon nc-single-02" placeholder="E-mail">
-                                </fg-input>
+                                    <br>
+                                    <!-- <h3 slot="header" class="header text-center">Login</h3> -->
+                                    <fg-input name="email" v-model="form.email" required v-validate="modelValidations.email" :error="getError('email')" addon-left-icon="nc-icon nc-single-02" placeholder="E-mail">
+                                    </fg-input>
 
-                                <fg-input name="password" v-model="form.password" required v-validate="modelValidations.password" :error="getError('password')" addon-left-icon="nc-icon nc-key-25" placeholder="Password" type="password">
-                                </fg-input>
-                                <br>
-                                <p-button native-type="submit" slot="footer" type="warning" round block class="mb-3">Entrar</p-button>
+                                    <fg-input name="password" v-model="form.password" required v-validate="modelValidations.password" :error="getError('password')" addon-left-icon="nc-icon nc-key-25" placeholder="Password" type="password">
+                                    </fg-input>
+                                    <br>
+                                    <p-button native-type="submit" slot="footer" type="warning" round block class="mb-3">Entrar</p-button>
                             </card>
                         </form>
                     </div>
@@ -67,43 +67,47 @@ export default {
             // TODO - implemntar mais segurança no login
             axios.post(process.env.VUE_APP_ROOT_API + '/login', this.form)
                 .then((result) => {
-                    this.valorLogin = result.data
-                    this.valorLogin.message == 'Username not found' ? this.valorLogin.message = 'Usuário não encontrado' : this.valorLogin.message = 'Senha incorreta'
+                        this.valorLogin = result.data
+                        this.valorLogin.message == 'Username not found' ? this.valorLogin.message = 'Usuário não encontrado' : this.valorLogin.message = 'Senha incorreta'
 
-                    if (!this.valorLogin.user) {
-                        swal(this.valorLogin.message, '', 'warning')
-                    } else {
-                        window.localStorage.setItem('usuario', JSON.stringify(this.valorLogin.user))
-                        this.$router.push('/admin')
-                    }
-                }).catch((err) => {
-                    this.$router.push('/')
-                })
-        }
-    },
-    data() {
-        return {
-            form: {
-                email: '',
-                password: ''
-            },
-            modelValidations: {
-                email: {
-                    required: true,
-                    email: true
-                },
-                password: {
-                    required: true,
-                    min: 5
+                        if (!this.valorLogin.user) {
+                            swal(this.valorLogin.message, '', 'warning')
+                        } else {
+                            window.localStorage.setItem('usuario', JSON.stringify(this.valorLogin.user))
+                            axios.get(process.env.VUE_APP_ROOT_API + '/grupo/' + this.valorLogin.user.id_grupo)
+                                .then((result) => {
+                                        window.localStorage.setItem('grupo', JSON.stringify(result.data.links))
+                                    })
+                                    this.$router.push('/admin')
+                                }
+                        }).catch((err) => {
+                        this.$router.push('/')
+                    })
                 }
-            },
-            valorLogin: [],
+        },
+        data() {
+            return {
+                form: {
+                    email: '',
+                    password: ''
+                },
+                modelValidations: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        required: true,
+                        min: 5
+                    }
+                },
+                valorLogin: [],
+            }
+        },
+        beforeDestroy() {
+            this.closeMenu()
         }
-    },
-    beforeDestroy() {
-        this.closeMenu()
     }
-}
 </script>
 
 <style>
