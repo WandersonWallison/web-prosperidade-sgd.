@@ -8,11 +8,7 @@
         </div>
         <div class="card-body">
             <div class="col-lg-6">
-                <el-date-picker v-model="model.data_ref" 
-                type="date" 
-                placeholder="Data Referência"
-                :picker-options="pickerOptions1" 
-                format="dd/MM/yyyy">
+                <el-date-picker v-model="model.data_ref" type="date" placeholder="Data Referência" :picker-options="pickerOptions1" format="dd/MM/yyyy">
                 </el-date-picker>
             </div>
             <br>
@@ -69,39 +65,35 @@
                 </el-table-column>
                 <el-table-column :min-width="120" fixed="right" class-name="td-actions" prop="data_ref" :formatter="dateFormat" label="Data Referência">
                 </el-table-column>
-                <el-table-column
-              :min-width="120"
-              fixed="right"
-              class-name="td-actions"
-              label="Ações">
-              <template slot-scope="props">
-                  <!--<el-tooltip content="download" placement="top">
+                <el-table-column :min-width="120" fixed="right" class-name="td-actions" label="Ações">
+                    <template slot-scope="props">
+                        <!--<el-tooltip content="download" placement="top">
                     <p-button type="info" size="sm" icon @click="handleRegister(props.$index, props.row)">
                     <i class="fa fa-download"></i>
                     </p-button>
                   </el-tooltip>-->
-                  <el-tooltip content="detalhes" placement="top">
-                    <p-button type="primary" size="sm" icon @click="handleDetails(props.$index, props.row)">
-                    <i class="fa fa-info"></i>
-                    </p-button>
-                  </el-tooltip>
-                  <!--<el-tooltip content="validar" placement="top">
+                        <el-tooltip content="detalhes" placement="top">
+                            <p-button type="primary" size="sm" icon @click="handleDetails(props.$index, props.row)">
+                                <i class="fa fa-info"></i>
+                            </p-button>
+                        </el-tooltip>
+                        <!--<el-tooltip content="validar" placement="top">
                     <p-button type="success" size="sm" icon @click="handleDelete(props.$index, props.row)">
                     <i class="fa fa-check"></i>
-                    </p-button>                      
+                    </p-button>
                   </el-tooltip>-->
-                  <el-tooltip content="processar" placement="top">
-                    <p-button type="warning" size="sm" icon @click="handleProcess(props.$index, props.row)">
-                    <i class="fa fa-cog"></i>
-                    </p-button>
-                  </el-tooltip>
-                  <el-tooltip content="excluir" placement="top">
-                    <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                    <i class="fa fa-trash"></i>
-                    </p-button>
-                  </el-tooltip>
-              </template>
-            </el-table-column>
+                        <el-tooltip content="processar" placement="top">
+                            <p-button type="warning" size="sm" icon @click="handleProcess(props.$index, props.row)">
+                                <i class="fa fa-cog"></i>
+                            </p-button>
+                        </el-tooltip>
+                        <el-tooltip content="excluir" placement="top">
+                            <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                                <i class="fa fa-trash"></i>
+                            </p-button>
+                        </el-tooltip>
+                    </template>
+                </el-table-column>
             </el-table>
         </div>
         <div class="col-sm-6 pagination-info">
@@ -199,7 +191,7 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['nome_arquivo', 'descricao','mensagem'],
+            propsToSearch: ['nome_arquivo', 'descricao', 'mensagem'],
             tableColumns: [{
                     prop: 'nome_arquivo',
                     label: 'Nome do Arquivo',
@@ -269,47 +261,47 @@ export default {
             return this.tableData.length
         }
     },
-    mounted () {
+    mounted() {
         this.atualilarLista()
     },
     methods: {
-        dateFormat (row, column) {  
-                   var date = row[column.property];  
-                        if (date == undefined) {  
-                                return "";  
-                        }  
-                            return moment(date).format("DD/MM/YYYY")
+        dateFormat(row, column) {
+            var date = row[column.property];
+            if (date == undefined) {
+                return "";
+            }
+            return moment(date).format("DD/MM/YYYY")
         },
-      atualilarLista () {
-          
-          axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento?where={"ativo": 1}').then(response => {
-            this.tableData = response.data
-        })
-      },
-        handleProcess (index, row){
-            axios.get(process.env.VUE_APP_ROOT_API + '/valida_comissionamento?comissionamento_id='+row.id+'&'+'user_id='+row.id_responsavel).then(response => {
-            this.mensagem = response.data
-            swal('Bom trabalho!', 'Arquivo processado com sucesso!', 'success')
-        })
-        .catch(error => {
-            //this.leadsError.push(error.response.config.data)
-            // console.log('Erro do Axios ', error.response.config.data)
-            swal('Algo de errado!', 'Verifique o arquivo importado!', 'error')
-        })
+        atualilarLista() {
+
+            axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento?where={"ativo": 1}').then(response => {
+                this.tableData = response.data
+            })
         },
-        handleRegister (index, row) {
-           alert(`Arquivo ainda não disponível ${row.nome_arquivo} para download !`)
-         },
-         handleDetails (index, row) {
+        handleProcess(index, row) {
+            axios.get(process.env.VUE_APP_ROOT_API + '/valida_comissionamento?comissionamento_id=' + row.id + '&' + 'user_id=' + row.id_responsavel).then(response => {
+                    this.mensagem = response.data
+                    swal('Bom trabalho!', 'Arquivo processado com sucesso!', 'success')
+                })
+                .catch(error => {
+                    //this.leadsError.push(error.response.config.data)
+                    // console.log('Erro do Axios ', error.response.config.data)
+                    swal('Algo de errado!', 'Verifique o arquivo importado!', 'error')
+                })
+        },
+        handleRegister(index, row) {
+            alert(`Arquivo ainda não disponível ${row.nome_arquivo} para download !`)
+        },
+        handleDetails(index, row) {
             window.localStorage.setItem('comissionamento', row.id)
             this.$router.push('/forms/Itens')
-           // this.showDetails = true
-           //this.selected = row.id
-         },
-         handleEdit (index, row) {
-           alert(`Your want to edit ${row.name}`)
-         },
-           handleDelete(index, row) {
+            // this.showDetails = true
+            //this.selected = row.id
+        },
+        handleEdit(index, row) {
+            alert(`Your want to edit ${row.name}`)
+        },
+        handleDelete(index, row) {
             let comissionamento = {
                 ativo: false
             };
@@ -317,10 +309,10 @@ export default {
                 .put(process.env.VUE_APP_ROOT_API + "/comissionamento/" + row.id, comissionamento)
                 .then(response => {
                     this.results = response.data
-                            swal('Bom trabalho!',`Arquivo ${row.nome_arquivo} Excluído com sucesso!`,'success')
-                            //this.$router.push("/forms/CentralList");
-                            this.atualilarLista()                            
-                        })
+                    swal('Bom trabalho!', `Arquivo ${row.nome_arquivo} Excluído com sucesso!`, 'success')
+                    //this.$router.push("/forms/CentralList");
+                    this.atualilarLista()
+                })
                 .catch(error => {
                     alert(error.response);
                     console.log(error.response.data);
@@ -435,52 +427,52 @@ export default {
             return /\.(xlsx|xls|csv)$/.test(file.name)
         },
         importarLeads() {
-          let newItem = {
-            data_ref: this.model.data_ref,
-            descricao: this.model.descricao,
-            nome_arquivo: this.arquivo
-          }
+            let newItem = {
+                data_ref: this.model.data_ref,
+                descricao: this.model.descricao,
+                nome_arquivo: this.arquivo
+            }
             axios.post(process.env.VUE_APP_ROOT_API + '/comissionamento', newItem)
                 .then(response => {
                     this.resp = response.data
-            for (let i = 0; i < this.excelData.results.length; i++) {
-                let newImport = {
-                    classificacao: this.excelData.results[i].Classificação,
-                    produto_categoria: this.excelData.results[i].ProdutoCategoria,
-                    mercado: this.excelData.results[i].Mercado,
-                    nome_cliente: this.excelData.results[i].NomedoCliente,
-                    nivel_1: this.excelData.results[i].Nível1,
-                    nivel_2: this.excelData.results[i].Nível2,
-                    codigo_cliente: this.excelData.results[i].CódigoCliente,
-                    codigo_master: this.excelData.results[i].CódigoMaster,
-                    data: moment(this.excelData.results[i].Data, 'DD/MM/YYYY'),
-                    receita_bruta: this.excelData.results[i].ReceitaBrutaR$,
-                    receita_liquida: this.excelData.results[i].ReceitaLíquidaR$,
-                    comissao_escritorio_p: this.excelData.results[i].ComissãoEscritório,
-                    comissao_escritorio_r: this.excelData.results[i].ComissãoEscritórioR$,
-                    imposto: this.excelData.results[i].Imposto,
-                    comissao_liquida: this.excelData.results[i].Comissãoliquida,
-                    id_comissionamento: this.resp.id
-                }
-                try {
-                    axios.post(process.env.VUE_APP_ROOT_API + '/comissionamento_item', newImport)
-                        .then(response => {})
-                        .catch(error => {
-                            this.leadsError.push(error.response.config.data)
-                            // console.log('Erro do Axios ', error.response.config.data)
-                        })
+                    for (let i = 0; i < this.excelData.results.length; i++) {
+                        let newImport = {
+                            classificacao: this.excelData.results[i].Classificação,
+                            produto_categoria: this.excelData.results[i].ProdutoCategoria,
+                            mercado: this.excelData.results[i].Mercado,
+                            nome_cliente: this.excelData.results[i].NomedoCliente,
+                            nivel_1: this.excelData.results[i].Nível1,
+                            nivel_2: this.excelData.results[i].Nível2,
+                            codigo_cliente: this.excelData.results[i].CódigoCliente,
+                            codigo_master: this.excelData.results[i].CódigoMaster,
+                            data: moment(this.excelData.results[i].Data, 'DD/MM/YYYY'),
+                            receita_bruta: this.excelData.results[i].ReceitaBrutaR$,
+                            receita_liquida: this.excelData.results[i].ReceitaLíquidaR$,
+                            comissao_escritorio_p: this.excelData.results[i].ComissãoEscritório,
+                            comissao_escritorio_r: this.excelData.results[i].ComissãoEscritórioR$,
+                            imposto: this.excelData.results[i].Imposto,
+                            comissao_liquida: this.excelData.results[i].Comissãoliquida,
+                            id_comissionamento: this.resp.id
+                        }
+                        try {
+                            axios.post(process.env.VUE_APP_ROOT_API + '/comissionamento_item', newImport)
+                                .then(response => {})
+                                .catch(error => {
+                                    this.leadsError.push(error.response.config.data)
+                                    // console.log('Erro do Axios ', error.response.config.data)
+                                })
 
-                } catch (error) {
-                    // console.log('Erro Try', error)
-                }
-            }
-            this.loading = false
-            this.arquivo = ''
-            this.atualilarLista()
-            // alert('Importação realizada com sucesso !!!')
-            swal('Bom trabalho!', 'Importação realizada com sucesso!', 'success')
-            
-          })
+                        } catch (error) {
+                            // console.log('Erro Try', error)
+                        }
+                    }
+                    this.loading = false
+                    this.arquivo = ''
+                    this.atualilarLista()
+                    // alert('Importação realizada com sucesso !!!')
+                    swal('Bom trabalho!', 'Importação realizada com sucesso!', 'success')
+
+                })
         },
         maskFone: function (v) {
             if (v) {
@@ -548,8 +540,9 @@ export default {
     color: #bbb;
     position: relative;
 }
+
 .div {
-  overflow: scroll;
+    overflow: scroll;
 }
 
 .el-table .td-actions {

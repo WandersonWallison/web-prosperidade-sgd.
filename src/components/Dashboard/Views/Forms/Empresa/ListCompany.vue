@@ -157,13 +157,13 @@ export default {
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}').then(response => {
             this.tableData = response.data
         })
     },
     methods: {
-        handleRegister() {
-            this.$router.push('/forms/company')
+        handleRegister(index, row) {
+            this.$router.push('/forms/MovementForm')
         },
         handleEdit(index, row) {
             window.localStorage.setItem('empresa', row.id)

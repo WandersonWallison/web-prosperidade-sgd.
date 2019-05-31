@@ -114,7 +114,6 @@ export default {
             money: {
                 decimal: ',',
                 thousands: '.',
-                prefix: 'R$ ',
                 precision: 2,
                 masked: false /* doesn't work with directive */
             },
@@ -171,13 +170,14 @@ export default {
             })
         },
         retiraMascara(campo) {
-            campo = campo.replace(/\D/g, '') // Remove tudo o que não é dígito
+            campo = campo.replace('.', '') // Remove tudo o que não é dígito
+            campo = campo.replace(',', '.') // Remove tudo o que não é dígito
             return campo
         },
         salvar() {
 
             const authUser = JSON.parse(window.localStorage.getItem("usuario"))
-
+            // console.log('valor Tela: ',this.model.valor)
             let movimentacao = {
 
                 id_cliente: this.model.cliente[0],
@@ -187,7 +187,7 @@ export default {
                 observacao: this.model.observacao,
                 id_responsavel: authUser.id
             }
-
+            // console.log('valor Tela2 : ',movimentacao.valor)
             axios.post(process.env.VUE_APP_ROOT_API + '/movimentacao', movimentacao)
                 .then(response => {
                     this.results = response.data
