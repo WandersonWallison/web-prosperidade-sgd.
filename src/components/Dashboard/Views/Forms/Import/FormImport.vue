@@ -168,14 +168,14 @@ export default {
                             picker.$emit('pick', date)
                         }
                     },
-                    {
-                        text: 'Uma semana atrás',
-                        onClick(picker) {
-                            const date = new Date()
-                            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
-                            picker.$emit('pick', date)
-                        }
-                    }
+                   // {
+                   //     text: 'Uma semana atrás',
+                   //     onClick(picker) {
+                   //         const date = new Date()
+                   //         date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+                   //         picker.$emit('pick', date)
+                   //     }
+                   // }
                 ]
             },
             model: {
@@ -427,6 +427,7 @@ export default {
             return /\.(xlsx|xls|csv)$/.test(file.name)
         },
         importarLeads() {
+<<<<<<< HEAD
             let newItem = {
                 data_ref: this.model.data_ref,
                 descricao: this.model.descricao,
@@ -461,6 +462,46 @@ export default {
                                     this.leadsError.push(error.response.config.data)
                                     // console.log('Erro do Axios ', error.response.config.data)
                                 })
+=======
+          let newItem = {
+            data_ref: this.model.data_ref,
+            descricao: this.model.descricao,
+            nome_arquivo: this.arquivo,
+            status: '0',
+            mensagem: 'Novo'
+          }
+            axios.post(process.env.VUE_APP_ROOT_API + '/comissionamento', newItem)
+                .then(response => {
+                    this.resp = response.data
+            for (let i = 0; i < this.excelData.results.length; i++) {
+                let newImport = {
+                    classificacao: this.excelData.results[i].Classificação,
+                    produto_categoria: this.excelData.results[i].ProdutoCategoria,
+                    //mercado: this.excelData.results[i].Mercado,
+                    //nome_cliente: this.excelData.results[i].NomedoCliente,
+                    nivel_1: this.excelData.results[i].Nível1,
+                    nivel_2: this.excelData.results[i].Nível2,
+                    codigo_cliente: this.excelData.results[i].CódigoCliente,
+                    codigo_master: this.excelData.results[i].CódigoMaster,
+                    data: moment(this.excelData.results[i].Data, 'DD/MM/YYYY'),
+                    receita_bruta: this.excelData.results[i].ReceitaBrutaR$,
+                    receita_liquida: this.excelData.results[i].ReceitaLíquidaR$,
+                    comissao_escritorio_p: this.excelData.results[i].ComissãoEscritório,
+                    comissao_escritorio_r: this.excelData.results[i].ComissãoEscritórioR$,
+                    status: '0',
+                    mensagem: 'Novo',
+                   // imposto: this.excelData.results[i].Imposto,
+                   // comissao_liquida: this.excelData.results[i].Comissãoliquida,
+                    id_comissionamento: this.resp.id
+                }
+                try {
+                    axios.post(process.env.VUE_APP_ROOT_API + '/comissionamento_item', newImport)
+                        .then(response => {})
+                        .catch(error => {
+                            this.leadsError.push(error.response.config.data)
+                            // console.log('Erro do Axios ', error.response.config.data)
+                        })
+>>>>>>> 51afed569bb8756a8c8252112d52d1ccabb50647
 
                         } catch (error) {
                             // console.log('Erro Try', error)

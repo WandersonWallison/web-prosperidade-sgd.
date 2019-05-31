@@ -31,9 +31,11 @@
                 <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
                     </el-table-column>
-                    <el-table-column :min-width="120" fixed="right" class-name="td-actions" prop="calculo_comissao_assessor" :formatter="formatReal" label="Comissão">
+                    <el-table-column :min-width="80" fixed="right" class-name="td-actions" prop="comissao_escritorio_r" :formatter="formatReal" label="Comissão Esc.">
                     </el-table-column>
-                    <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
+                    <el-table-column :min-width="80" fixed="right" class-name="td-actions" prop="calculo_comissao_assessor" :formatter="formatReal" label="Comissão Asses.">
+                    </el-table-column>
+                    <el-table-column :min-width="50" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
                             <!--<p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                 <i class="fa fa-edit"></i>
@@ -125,27 +127,22 @@ export default {
     data() {
         return {
             pagination: {
-                perPage: 5,
+                perPage: 25,
                 currentPage: 1,
-                perPageOptions: [5, 10, 25, 50],
+                perPageOptions: [25, 50, 100, 150],
                 total: 0
             },
             results: [],
             searchQuery: '',
-            propsToSearch: ['codigo_cliente','nome_cliente','mercado','mensagem'],
+            propsToSearch: ['codigo_cliente','produto_categoria','mensagem'],
             tableColumns: [{
                 prop: 'codigo_cliente',
                 label: 'Codigo',
                 minWidth: 70
             },
             {
-                prop: 'nome_cliente',
-                label: 'Nome',
-                minWidth: 180
-            },
-            {
-                prop: 'mercado',
-                label: 'Mercado',
+                prop: 'produto_categoria',
+                label: 'Produto',
                 minWidth: 100
             },
             {
