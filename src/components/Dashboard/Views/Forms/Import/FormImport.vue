@@ -176,14 +176,14 @@ export default {
                             picker.$emit('pick', date)
                         }
                     },
-                    {
-                        text: 'Uma semana atrás',
-                        onClick(picker) {
-                            const date = new Date()
-                            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
-                            picker.$emit('pick', date)
-                        }
-                    }
+                   // {
+                   //     text: 'Uma semana atrás',
+                   //     onClick(picker) {
+                   //         const date = new Date()
+                   //         date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+                   //         picker.$emit('pick', date)
+                   //     }
+                   // }
                 ]
             },
             model: {
@@ -438,7 +438,9 @@ export default {
           let newItem = {
             data_ref: this.model.data_ref,
             descricao: this.model.descricao,
-            nome_arquivo: this.arquivo
+            nome_arquivo: this.arquivo,
+            status: '0',
+            mensagem: 'Novo'
           }
             axios.post(process.env.VUE_APP_ROOT_API + '/comissionamento', newItem)
                 .then(response => {
@@ -447,8 +449,8 @@ export default {
                 let newImport = {
                     classificacao: this.excelData.results[i].Classificação,
                     produto_categoria: this.excelData.results[i].ProdutoCategoria,
-                    mercado: this.excelData.results[i].Mercado,
-                    nome_cliente: this.excelData.results[i].NomedoCliente,
+                    //mercado: this.excelData.results[i].Mercado,
+                    //nome_cliente: this.excelData.results[i].NomedoCliente,
                     nivel_1: this.excelData.results[i].Nível1,
                     nivel_2: this.excelData.results[i].Nível2,
                     codigo_cliente: this.excelData.results[i].CódigoCliente,
@@ -458,8 +460,10 @@ export default {
                     receita_liquida: this.excelData.results[i].ReceitaLíquidaR$,
                     comissao_escritorio_p: this.excelData.results[i].ComissãoEscritório,
                     comissao_escritorio_r: this.excelData.results[i].ComissãoEscritórioR$,
-                    imposto: this.excelData.results[i].Imposto,
-                    comissao_liquida: this.excelData.results[i].Comissãoliquida,
+                    status: '0',
+                    mensagem: 'Novo',
+                   // imposto: this.excelData.results[i].Imposto,
+                   // comissao_liquida: this.excelData.results[i].Comissãoliquida,
                     id_comissionamento: this.resp.id
                 }
                 try {
