@@ -25,7 +25,7 @@
     </div>-->
                 <span>{{this.arquivo}}</span>
                 <div class="loading-overlay2" v-if="loading">
-                    <md-progress-spinner md-mode='indeterminate' md-diameter='50' :md-stroke='4'></md-progress-spinner>
+                    <md-progress-spinner md-mode='indeterminate' md-diameter=50 :md-stroke='4'></md-progress-spinner>
                 </div>
                 <div>
                     <md-content>
@@ -65,7 +65,7 @@
                 </el-table-column>
                 <el-table-column :min-width="120" fixed="right" class-name="td-actions" prop="data_ref" :formatter="dateFormat" label="Data Referência">
                 </el-table-column>
-                <el-table-column :min-width="120" fixed="right" class-name="td-actions" label="Ações">
+                <el-table-column :min-width="80" fixed="right" class-name="td-actions" label="Ações">
                     <template slot-scope="props">
                         <!--<el-tooltip content="download" placement="top">
                     <p-button type="info" size="sm" icon @click="handleRegister(props.$index, props.row)">
@@ -427,11 +427,12 @@ export default {
             return /\.(xlsx|xls|csv)$/.test(file.name)
         },
         importarLeads() {
-<<<<<<< HEAD
             let newItem = {
                 data_ref: this.model.data_ref,
                 descricao: this.model.descricao,
-                nome_arquivo: this.arquivo
+                nome_arquivo: this.arquivo,
+                status: '0',
+                mensagem: 'Novo'
             }
             axios.post(process.env.VUE_APP_ROOT_API + '/comissionamento', newItem)
                 .then(response => {
@@ -440,8 +441,8 @@ export default {
                         let newImport = {
                             classificacao: this.excelData.results[i].Classificação,
                             produto_categoria: this.excelData.results[i].ProdutoCategoria,
-                            mercado: this.excelData.results[i].Mercado,
-                            nome_cliente: this.excelData.results[i].NomedoCliente,
+                            //mercado: this.excelData.results[i].Mercado,
+                            //nome_cliente: this.excelData.results[i].NomedoCliente,
                             nivel_1: this.excelData.results[i].Nível1,
                             nivel_2: this.excelData.results[i].Nível2,
                             codigo_cliente: this.excelData.results[i].CódigoCliente,
@@ -451,57 +452,19 @@ export default {
                             receita_liquida: this.excelData.results[i].ReceitaLíquidaR$,
                             comissao_escritorio_p: this.excelData.results[i].ComissãoEscritório,
                             comissao_escritorio_r: this.excelData.results[i].ComissãoEscritórioR$,
-                            imposto: this.excelData.results[i].Imposto,
-                            comissao_liquida: this.excelData.results[i].Comissãoliquida,
+                            status: '0',
+                            mensagem: 'Novo',
+                            //imposto: this.excelData.results[i].Imposto,
+                            //comissao_liquida: this.excelData.results[i].Comissãoliquida,
                             id_comissionamento: this.resp.id
                         }
                         try {
                             axios.post(process.env.VUE_APP_ROOT_API + '/comissionamento_item', newImport)
                                 .then(response => {})
                                 .catch(error => {
-                                    this.leadsError.push(error.response.config.data)
+                                    //this.leadsError.push(error.response.config.data)
                                     // console.log('Erro do Axios ', error.response.config.data)
                                 })
-=======
-          let newItem = {
-            data_ref: this.model.data_ref,
-            descricao: this.model.descricao,
-            nome_arquivo: this.arquivo,
-            status: '0',
-            mensagem: 'Novo'
-          }
-            axios.post(process.env.VUE_APP_ROOT_API + '/comissionamento', newItem)
-                .then(response => {
-                    this.resp = response.data
-            for (let i = 0; i < this.excelData.results.length; i++) {
-                let newImport = {
-                    classificacao: this.excelData.results[i].Classificação,
-                    produto_categoria: this.excelData.results[i].ProdutoCategoria,
-                    //mercado: this.excelData.results[i].Mercado,
-                    //nome_cliente: this.excelData.results[i].NomedoCliente,
-                    nivel_1: this.excelData.results[i].Nível1,
-                    nivel_2: this.excelData.results[i].Nível2,
-                    codigo_cliente: this.excelData.results[i].CódigoCliente,
-                    codigo_master: this.excelData.results[i].CódigoMaster,
-                    data: moment(this.excelData.results[i].Data, 'DD/MM/YYYY'),
-                    receita_bruta: this.excelData.results[i].ReceitaBrutaR$,
-                    receita_liquida: this.excelData.results[i].ReceitaLíquidaR$,
-                    comissao_escritorio_p: this.excelData.results[i].ComissãoEscritório,
-                    comissao_escritorio_r: this.excelData.results[i].ComissãoEscritórioR$,
-                    status: '0',
-                    mensagem: 'Novo',
-                   // imposto: this.excelData.results[i].Imposto,
-                   // comissao_liquida: this.excelData.results[i].Comissãoliquida,
-                    id_comissionamento: this.resp.id
-                }
-                try {
-                    axios.post(process.env.VUE_APP_ROOT_API + '/comissionamento_item', newImport)
-                        .then(response => {})
-                        .catch(error => {
-                            this.leadsError.push(error.response.config.data)
-                            // console.log('Erro do Axios ', error.response.config.data)
-                        })
->>>>>>> 51afed569bb8756a8c8252112d52d1ccabb50647
 
                         } catch (error) {
                             // console.log('Erro Try', error)
