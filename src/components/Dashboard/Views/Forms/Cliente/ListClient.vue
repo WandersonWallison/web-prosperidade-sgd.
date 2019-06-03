@@ -36,11 +36,13 @@
                     </el-table-column>
                     <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
+                            <!--
                             <el-tooltip class="item" effect="dark" content="Aporte" placement="top">
                                 <p-button type="info" size="sm" icon @click="handleAdd(props.$index, props.row)">
                                     <i class="fas fa-donate"></i>
                                 </p-button>
                             </el-tooltip>
+                            -->
                             <el-tooltip class="item" effect="dark" content="Detalhar" placement="top">
                                 <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
                                     <i class="fa fa-search"></i>
@@ -167,13 +169,13 @@ export default {
             pagination: {
                 perPage: 5,
                 currentPage: 1,
-                perPageOptions: [5, 10, 25, 50],
+                perPageOptions: [5, 10, 25, 50, 100],
                 total: 0
             },
             searchQuery: '',
             newRow: '',
             cliente: null,
-            propsToSearch: ['nome', 'email', 'telefone'],
+            propsToSearch: ['nome','id_xp', 'email', 'telefone'],
             tableColumns: [{
                     prop: 'nome',
                     label: 'Nome',
@@ -199,7 +201,7 @@ export default {
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}&limit=2500').then(response => {
             this.tableData = response.data
         })
     },
@@ -230,7 +232,7 @@ export default {
                     this.results = response.data
                     axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', `Cliente ${row.nome} excluída com sucesso!`, 'success')
+                        swal('Bom trabalho!', `Cliente ${row.nome} excluído com sucesso!`, 'success')
                         this.$router.push('/forms/ClientList')
                     })
                 })

@@ -1,9 +1,9 @@
 const state = {
   data() {
     return {
-      title: 'wellington teste',
-      auto: 'wellington chato',
-      lint: '@letosantos'
+      title: 'Prosperidade',
+      auto: 'Prosperidade',
+      lint: '@prosp'
     }
   }
 }

@@ -58,7 +58,7 @@
                     <label>Estado</label>
                     <fg-input :error="getError('estado')" v-validate="modelValidations.estado">
                         <el-select class="select-default" v-model="model.estado" name="estado" placeholder="Selecione...">
-                            <el-option class="select-default" v-for="item in optionsStade" :key="item.value" :label="item.label" :value="item.value">
+                            <el-option class="select-default" v-for="item in optionsStade" :key="item.valeu" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
                     </fg-input>

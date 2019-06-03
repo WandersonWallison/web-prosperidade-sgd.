@@ -38,18 +38,20 @@
                     </el-table-column>
                     <el-table-column :min-width="110" :formatter="dateFormat" prop="data_registro" label="Data Registro">
                     </el-table-column>
-                    <el-table-column :min-width="80" fixed="right" class-name="td-actions" label="Ações">
+                    <el-table-column :min-width="55" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
                             <el-tooltip class="item" effect="dark" content="Editar" placement="top">
                                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                     <i class="fa fa-edit"></i>
                                 </p-button>
                             </el-tooltip>
+                            <!--
                             <el-tooltip class="item" effect="dark" content="Excluir" placement="top">
                                 <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
                                     <i class="fa fa-trash-o"></i>
                                 </p-button>
                             </el-tooltip>
+                            -->
                         </template>
                     </el-table-column>
                 </el-table>
@@ -196,10 +198,11 @@ export default {
             this.$router.push('/forms/MovementForm')
         },
         handleEdit(index, row) {
-            window.localStorage.setItem('empresa', row.id)
-            this.$router.push('/forms/companyEdit')
+            window.localStorage.setItem('movimentacao', row.id)
+            this.$router.push('/forms/MovementFormEdit')
         },
         handleDelete(index, row) {
+          /*
             let empresa = {
                 ativo: false
             }
@@ -217,6 +220,7 @@ export default {
                     alert(error.response)
                     console.log(error.response.data)
                 })
+          */
         }
     }
 }
