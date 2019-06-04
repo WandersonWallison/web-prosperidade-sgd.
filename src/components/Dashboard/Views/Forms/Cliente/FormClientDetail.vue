@@ -148,7 +148,7 @@ export default {
                 masked: false /* doesn't work with directive */
             },
             model: this.cliente,
-            modelEndereco: this.cliente.endereco[0],
+            modelEndereco: (this.cliente.endereco[0])?this.cliente.endereco[0]:'',
             dataOperadores: [],
             dataAssessores: [],
             dataCliente: [],
