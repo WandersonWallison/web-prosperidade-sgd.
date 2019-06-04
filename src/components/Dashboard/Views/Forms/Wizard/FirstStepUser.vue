@@ -1,36 +1,60 @@
 <template>
 <div>
     <h5 class="info-text"> Cadastro de Usuário</h5>
-    <div class="row justify-content-center">
-        <div class="col-12 col-sm-10 mt-3">
-            <fg-input name="firstName" placeholder="Nome" v-model="model.firstName" v-validate="modelValidations.firstName" :error="getError('firstName')" addon-left-icon="nc-icon nc-single-02">
-            </fg-input>
-            <fg-input type="email" name="email" placeholder="E-mail" v-model="model.email" v-validate="modelValidations.email" :error="getError('email')" addon-left-icon="nc-icon nc-email-85">
-            </fg-input>
-            <fg-input name="senha" type="password" placeholder="Senha" v-model="model.senha" v-validate="modelValidations.senha" :error="getError('senha')" addon-left-icon="nc-icon nc-key-25">
-            </fg-input>
-            <fg-input name="cvm" placeholder="cvm" v-model="model.cvm" v-validate="modelValidations.cvm" :error="getError('cvm')" addon-left-icon="nc-icon nc-hat-3">
-            </fg-input>
-            <fg-input name="cpf" placeholder="cpf" v-model="model.cpf" v-validate="modelValidations.cpf" :error="getError('cpf')" v-mask="'###.###.###-##'" addon-left-icon="nc-icon nc-badge">
-            </fg-input>
-            <fg-input name="cnh" placeholder="cnh" v-model="model.cnh" v-validate="modelValidations.cnh" :error="getError('cnh')" v-mask="'##############'" addon-left-icon="nc-icon nc-badge">
-            </fg-input>
-            <fg-input name="rg" placeholder="rg" v-model="model.rg" v-validate="modelValidations.rg" :error="getError('rg')" v-mask="'#########'" addon-left-icon="nc-icon nc-badge">
-            </fg-input>
-            <fg-input name="telefone" placeholder="telefone" v-model="model.telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-mask="'(##) ####-####'" addon-left-icon="nc-icon nc-headphones">
-            </fg-input>
-            <fg-input name="celular" placeholder="celular" v-model="model.celular" v-validate="modelValidations.celular" :error="getError('celular')" v-mask="'(##) #####-####'" addon-left-icon="nc-icon nc-headphones">
-            </fg-input>
-            <div class="form-group">
-                <div class="block">
-                    <el-date-picker v-model="value1" type="date" placeholder="Data Nascimento">
-                    </el-date-picker>
+    <div class="row justify-content-left">
+        <div class="form-group col-md-6">
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>Dados</span>
                 </div>
-            </div>
-            <el-select no-data-text="Sem Informações" class="select-default" v-model="model.tipo" name="tipo_user" placeholder="Tipos de Usuario">
-                <el-option class="select-default" v-for="item in options" :key="item.id" :label="item.descricao" :value="item.id">
-                </el-option>
-            </el-select>
+                <fg-input name="firstName" placeholder="Nome" v-model="model.firstName" v-validate="modelValidations.firstName" :error="getError('firstName')" addon-left-icon="nc-icon nc-single-02">
+                </fg-input>
+                <fg-input type="email" name="email" placeholder="E-mail" v-model="model.email" v-validate="modelValidations.email" :error="getError('email')" addon-left-icon="nc-icon nc-email-85">
+                </fg-input>
+                <fg-input name="senha" type="password" placeholder="Senha" v-model="model.senha" v-validate="modelValidations.senha" :error="getError('senha')" addon-left-icon="nc-icon nc-key-25">
+                </fg-input>
+
+                <fg-input name="telefone" placeholder="telefone" v-model="model.telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-mask="'(##) ####-####'" addon-left-icon="nc-icon nc-headphones">
+                </fg-input>
+                <fg-input name="celular" placeholder="celular" v-model="model.celular" v-validate="modelValidations.celular" :error="getError('celular')" v-mask="'(##) #####-####'" addon-left-icon="nc-icon nc-headphones">
+                </fg-input>
+                <div class="block">
+                    <fg-input v-validate="modelValidations.datePicker" :error="getError('datePicker')">
+                        <el-date-picker v-model="model.datePicker" format="dd/MM/yyyy" type="date" placeholder="Data Nascimento">
+                        </el-date-picker>
+                    </fg-input>
+                </div>
+            </el-card>
+        </div>
+        <div class="form-group col-md-6">
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>Documentação</span>
+                </div>
+                <fg-input name="cvm" placeholder="cvm" v-model="model.cvm" v-validate="modelValidations.cvm" :error="getError('cvm')" addon-left-icon="nc-icon nc-hat-3">
+                </fg-input>
+                <fg-input name="cpf" placeholder="cpf" v-model="model.cpf" v-validate="modelValidations.cpf" :error="getError('cpf')" v-mask="'###.###.###-##'" addon-left-icon="nc-icon nc-badge">
+                </fg-input>
+                <fg-input name="cnh" placeholder="cnh" v-model="model.cnh" v-validate="modelValidations.cnh" :error="getError('cnh')" v-mask="'##############'" addon-left-icon="nc-icon nc-badge">
+                </fg-input>
+                <fg-input name="rg" placeholder="rg" v-model="model.rg" v-validate="modelValidations.rg" :error="getError('rg')" v-mask="'#########'" addon-left-icon="nc-icon nc-badge">
+                </fg-input>
+                <br>
+                <fg-input :error="getError('tipo')">
+                    <el-select no-data-text="Sem Informações" v-validate="modelValidations.tipo" class="select-default" v-model="model.tipo" name="tipo" placeholder="Tipos de Usuario">
+                        <el-option class="select-default" v-for="item in options" :key="item.id" :label="item.descricao" :value="item.id">
+                        </el-option>
+                    </el-select>
+                </fg-input>
+                <br>
+                <fg-input :error="getError('escritorio')">
+                    <el-select no-data-text="Sem Informações" class="select-default" v-validate="modelValidations.escritorio" v-model="model.escritorio" name="escritorio" placeholder="Escritorio">
+                        <el-option class="select-default" v-for="item in optionsEscritorio" :key="item.id" :label="item.nome" :value="item.id">
+                        </el-option>
+                    </el-select>
+                </fg-input>
+
+            </el-card>
         </div>
     </div>
 </div>
@@ -97,6 +121,7 @@ export default {
                 telefone: '',
                 celular: '',
                 datePicker: '',
+                escritorio: '',
                 imageUrl: 'static/img/default-avatar.png'
             },
             modelValidations: {
@@ -105,7 +130,7 @@ export default {
                     min: 5
                 },
                 senha: {
-                    required: true
+                    required: () => 'Senha é uma campo obrigatorio'
                 },
                 cpf: {
                     required: true
@@ -125,9 +150,16 @@ export default {
                 email: {
                     required: true,
                     email: true
+                },
+                escritorio: {
+                    required: true
+                },
+                tipo: {
+                    required: true
                 }
             },
             options: [],
+            optionsEscritorio: []
         }
     },
     directives: {
@@ -137,6 +169,10 @@ export default {
         axios.get(process.env.VUE_APP_ROOT_API + '/grupo').then(response => {
             this.options = response.data
         })
+        axios.get(process.env.VUE_APP_ROOT_API + '/escritorio').then(response => {
+            this.optionsEscritorio = response.data
+        })
+
     },
     methods: {
         handlePreview(file) {

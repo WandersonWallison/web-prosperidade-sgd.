@@ -163,7 +163,7 @@ export default {
     },
     methods: {
         handleRegister(index, row) {
-            this.$router.push('/forms/MovementForm')
+            this.$router.push('/forms/company')
         },
         handleEdit(index, row) {
             window.localStorage.setItem('empresa', row.id)
