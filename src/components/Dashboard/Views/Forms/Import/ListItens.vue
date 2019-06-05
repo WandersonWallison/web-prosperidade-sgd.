@@ -129,7 +129,7 @@ export default {
             pagination: {
                 perPage: 25,
                 currentPage: 1,
-                perPageOptions: [25, 50, 100, 150],
+                perPageOptions: [5, 10, 25, 50, 100, 150],
                 total: 0
             },
             results: [],
@@ -159,7 +159,7 @@ export default {
         }
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento_item?where={"ativo": 1,"id_comissionamento":'+window.localStorage.getItem('comissionamento')+'}&limit=10000').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento_item?where={"ativo": 1,"id_comissionamento":'+window.localStorage.getItem('comissionamento')+'}&limit=1000').then(response => {
             this.tableData = response.data
         })
         window.localStorage.removeItem("comissionamento")

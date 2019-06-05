@@ -136,6 +136,7 @@ import {
 } from 'element-ui'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
 import users from './users'
+import { color } from 'd3';
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Select)
@@ -216,6 +217,7 @@ export default {
                 header: null,
                 results: null
             },
+            fullscreenLoading: false,
             userAtual: null,
             erroUsuarios: [],
             arquivo: null,
@@ -426,6 +428,16 @@ export default {
         isExcel(file) {
             return /\.(xlsx|xls|csv)$/.test(file.name)
         },
+        separar(base, max) {
+            var res = [];
+
+            for (var i = 0; i < base.length; i = i + (max)) {
+                res.push(base.slice(i, (i + max)));
+            }
+            res[res.length - 1].push(base[0]);
+            return res;
+        },
+
         importarLeads() {
             let newItem = {
                 data_ref: this.model.data_ref,
@@ -438,25 +450,49 @@ export default {
                 .then(response => {
                     this.resp = response.data
                     // this.excelData.id = response.data.id
-                    let newImport ={
-                        itens: this.excelData.results,
-                        id: this.resp.id
-                    }
+                    var grupos = this.separar(this.excelData.results, 1000)
+                    console.log(grupos.length)
+                    for (let a = 0; a < grupos.length; a++) {
+                        let newImport = {
+                            itens: grupos[a],
+                            id: this.resp.id
+                        }
+                        axios.post(process.env.VUE_APP_ROOT_API + '/insert_arquivo', newImport)
+                            .then(response => {})
+                            .catch(error => {
+                                //this.leadsError.push(error.response.config.data)
+                                // console.log('Erro do Axios ', error.response.config.data)
+                            })
+                        setTimeout(function () {
+                            console.log("feito");
+                        }, 60000)
 
-                    axios.post(process.env.VUE_APP_ROOT_API + '/insert_arquivo', newImport)
+                    }
+                    /*axios.post(process.env.VUE_APP_ROOT_API + '/insert_arquivo', newImport)
                         .then(response => {})
                         .catch(error => {
                             //this.leadsError.push(error.response.config.data)
                             // console.log('Erro do Axios ', error.response.config.data)
                         })
-
-                    this.loading = false
-                    this.arquivo = ''
+*/
+                    // this.loading = false
                     this.atualilarLista()
-                    // alert('Importação realizada com sucesso !!!')
-                    swal('Bom trabalho!', 'Importação realizada com sucesso!', 'success')
-
+                    this.openFullScreen()
                 })
+            this.arquivo = ''
+            // alert('Importação realizada com sucesso !!!')
+            // swal('Bom trabalho!', 'Importação realizada com sucesso!', 'success')
+        },
+        openFullScreen() {
+            const loading = this.$loading({
+                lock: true,
+                text: 'Importando Arquivo',
+                spinner: 'el-icon-loading',
+                background: 'rgba(0, 0, 0, 0.7)'
+            });
+            setTimeout(() => {
+                loading.close();
+            }, 1200000);
         },
         maskFone: function (v) {
             if (v) {
@@ -531,7 +567,7 @@ export default {
 
 .el-table .td-actions {
     button.btn {
-        margin-right: 5px;
+        margin-right: 5px; 
     }
 }
 </style>

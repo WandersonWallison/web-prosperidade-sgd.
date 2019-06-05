@@ -21,6 +21,6 @@
   }
 
   .el-loading-mask {
-    background: transparent !important;
+    /*background: transparent !important;*/
   }
 </style>
