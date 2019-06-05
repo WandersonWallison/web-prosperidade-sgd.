@@ -65,6 +65,11 @@
             </div>
         </div>
     </div>
+    <md-dialog :md-active.sync="showUpdate">
+        <div>
+            <MovementEdit :selected="selected"></MovementEdit>
+        </div>
+    </md-dialog>
 </div>
 </template>
 
@@ -83,10 +88,18 @@ import {
 } from 'v-money'
 import moment from 'moment'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
+import MovementEdit from './FormMovementEdit'
+import { type } from 'os'
 export default {
     name: 'ListMovement',
+    props: {
+        selected: {
+            type: Object
+        }
+    },
     components: {
         PPagination,
+        MovementEdit,
         Money
     },
     computed: {
@@ -135,6 +148,7 @@ export default {
     },
     data() {
         return {
+            showUpdate: false,
             pagination: {
                 perPage: 5,
                 currentPage: 1,
@@ -198,29 +212,31 @@ export default {
             this.$router.push('/forms/MovementForm')
         },
         handleEdit(index, row) {
+            this.showUpdate = true
+            this.selected = row
             window.localStorage.setItem('movimentacao', row.id)
-            this.$router.push('/forms/MovementFormEdit')
+            //this.$router.push('/forms/MovementFormEdit')
         },
         handleDelete(index, row) {
-          /*
-            let empresa = {
-                ativo: false
-            }
-            axios.put(process.env.VUE_APP_ROOT_API + '/empresa/' + row.id, empresa)
-                .then(response => {
-                    this.results = response.data
-                    axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
-                        this.tableData = response.data
-                        swal('Bom trabalho!', `Empresa ${row.nome} excluída com sucesso!`, 'success')
-                        this.$router.push('/forms/companyList')
-                    })
-                    //this.$router.push('/forms/companyList')
-                })
-                .catch(error => {
-                    alert(error.response)
-                    console.log(error.response.data)
-                })
-          */
+            /*
+              let empresa = {
+                  ativo: false
+              }
+              axios.put(process.env.VUE_APP_ROOT_API + '/empresa/' + row.id, empresa)
+                  .then(response => {
+                      this.results = response.data
+                      axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
+                          this.tableData = response.data
+                          swal('Bom trabalho!', `Empresa ${row.nome} excluída com sucesso!`, 'success')
+                          this.$router.push('/forms/companyList')
+                      })
+                      //this.$router.push('/forms/companyList')
+                  })
+                  .catch(error => {
+                      alert(error.response)
+                      console.log(error.response.data)
+                  })
+            */
         }
     }
 }
