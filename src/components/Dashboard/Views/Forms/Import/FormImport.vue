@@ -465,7 +465,7 @@ export default {
                             })
                         setTimeout(function () {
                             console.log("feito");
-                        }, 60000)
+                        }, 600000)
 
                     }
                     /*axios.post(process.env.VUE_APP_ROOT_API + '/insert_arquivo', newImport)
@@ -492,7 +492,7 @@ export default {
             });
             setTimeout(() => {
                 loading.close();
-            }, 1200000);
+            }, 120000);
         },
         maskFone: function (v) {
             if (v) {

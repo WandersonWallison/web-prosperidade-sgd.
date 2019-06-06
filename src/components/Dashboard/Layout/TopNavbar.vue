@@ -52,7 +52,7 @@
           </a>
           <a class="dropdown-item" href="#">Meu Perfil</a>
           <a class="dropdown-item" href="#">Alterar Senha</a>
-          <a class="dropdown-item" href="/login">Sair</a>
+          <a class="dropdown-item" @click="logout">Sair</a>
         </drop-down>
         <!--<li class="nav-item">
           <a class="nav-link btn-rotate" href="#pablo">
@@ -68,6 +68,7 @@
 </template>
 <script>
   import { Navbar, NavbarToggleButton } from 'src/components/UIComponents'
+import { win32 } from 'path';
 
   export default {
     components: {
@@ -81,6 +82,10 @@
       }
     },
     methods: {
+      logout (){
+        window.localStorage.clear()
+        this.$router.push('/login')
+      },
       capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1)
       },

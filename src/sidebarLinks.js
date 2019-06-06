@@ -92,12 +92,12 @@ export default [
   */
 ]
 },
-{
+/*{
   name: 'Sair',
   icon: 'nc-icon nc-simple-remove',
   path: '/login'
 },
-/*
+
   {
     name: 'Pages',
     icon: 'nc-icon nc-book-bookmark',
