@@ -37,11 +37,9 @@ import {
 export default {
     components: {},
     name: 'AlterarPassword',
-    props: ['selected'],
     mixins: [state],
     data() {
         return {
-            selected: [],
             model: {
                 senha: '',
                 confirmacao: ''
@@ -90,7 +88,7 @@ export default {
                         })
 
                 } else {
-                  swal('Senhas não conferem!', 'Verifique os campos digitados!', 'error')
+                    swal('Senhas não conferem!', 'Verifique os campos digitados!', 'error')
                 }
             }
 

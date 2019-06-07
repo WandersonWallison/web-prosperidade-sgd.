@@ -60,9 +60,6 @@
         </ul>
         <md-dialog class="dialog" title="Detalhamento" :md-active.sync="dialogFormVisibleDetail">
             <senha/>
-            <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogFormVisibleDetail = false">Cancelar</el-button>
-            </span>
         </md-dialog>
     </template>
 </navbar>
