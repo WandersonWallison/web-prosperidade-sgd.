@@ -152,7 +152,7 @@ export default {
         }
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/link?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/link?where={"ativo": 1}&limit=200').then(response => {
             this.tableData = response.data
         })
     },
