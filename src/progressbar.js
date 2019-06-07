@@ -19,7 +19,7 @@ export default function initProgress(router) {
   router.beforeEach((to, from, next) => {
     // console.log(to.path)
     var links = JSON.parse(window.localStorage.getItem('grupo'))
-    // console.log(links)
+    console.log(links)
 
     // regra de validação de users
     if (links == null){
