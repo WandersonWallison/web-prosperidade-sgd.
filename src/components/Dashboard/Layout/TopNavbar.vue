@@ -1,22 +1,22 @@
 <template>
-  <navbar v-model="showNavbar">
+<navbar v-model="showNavbar">
     <div class="navbar-wrapper">
-      <div class="navbar-minimize">
-        <button id="minimizeSidebar" class="btn btn-icon btn-round" @click="minimizeSidebar">
+        <div class="navbar-minimize">
+            <button id="minimizeSidebar" class="btn btn-icon btn-round" @click="minimizeSidebar">
           <i class="nc-icon nc-minimal-right text-center visible-on-sidebar-mini"></i>
           <i class="nc-icon nc-minimal-left text-center visible-on-sidebar-regular"></i>
         </button>
-      </div>
-      <div class="navbar-toggle">
-        <navbar-toggle-button @click.native="toggleSidebar">
+        </div>
+        <div class="navbar-toggle">
+            <navbar-toggle-button @click.native="toggleSidebar">
 
-        </navbar-toggle-button>
-      </div>
-      <a class="navbar-brand" href="#"><!--<img slot="header"  width="36" height="36" src="static\img\favicon_n.png" alt="...">-->Prosperidade Investimentos</a>
+            </navbar-toggle-button>
+        </div>
+        <a class="navbar-brand" href="#"><!--<img slot="header"  width="36" height="36" src="static\img\favicon_n.png" alt="...">-->Prosperidade Investimentos</a>
     </div>
 
     <template slot="navbar-menu">
-      <!--<form>
+        <!--<form>
         <div class="input-group no-border">
           <input type="text" value="" class="form-control" placeholder="Search...">
           <div class="input-group-append">
@@ -26,20 +26,15 @@
           </div>
         </div>
       </form>-->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link btn-magnify" href="#">
-            <i class="nc-icon nc-chat-33"></i>
-            <p>
-              <span class="d-lg-none d-md-block">Stats</span>
-            </p>
-          </a>
-        </li>
-        <drop-down icon="nc-icon nc-single-02" tag="li"
-                   position="right"
-                   direction="none"
-                   class="nav-item btn-rotate dropdown">
-          <a slot="title"
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link btn-magnify" href="#">
+                  <i class="nc-icon nc-chat-33"></i>
+                  <p><span class="d-lg-none d-md-block">Stats</span></p>
+                </a>
+            </li>
+            <drop-down icon="nc-icon nc-single-02" tag="li" position="right" direction="none" class="nav-item btn-rotate dropdown">
+                <a slot="title"
              slot-scope="{isOpen}"
              class="nav-link dropdown-toggle"
              data-toggle="dropdown"
@@ -50,11 +45,11 @@
               <span class="d-lg-none d-md-block">Some Actions</span>
             </p>
           </a>
-          <a class="dropdown-item" href="#">Meu Perfil</a>
-          <a class="dropdown-item" href="#">Alterar Senha</a>
-          <a class="dropdown-item" @click="logout">Sair</a>
-        </drop-down>
-        <!--<li class="nav-item">
+                <!-- <a class="dropdown-item" href="#">Meu Perfil</a> -->
+                <a class="dropdown-item" href="#" @click="dialogFormVisibleDetail = true">Alterar Senha</a>
+                <a class="dropdown-item" href="#" @click="logout">Sair</a>
+            </drop-down>
+            <!--<li class="nav-item">
           <a class="nav-link btn-rotate" href="#pablo">
             <i class="nc-icon nc-simple-remove"></i>
             <p>
@@ -62,55 +57,86 @@
             </p>
           </a>
         </li>-->
-      </ul>
+        </ul>
+        <md-dialog class="dialog" title="Detalhamento" :md-active.sync="dialogFormVisibleDetail">
+            <senha/>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisibleDetail = false">Cancelar</el-button>
+            </span>
+        </md-dialog>
     </template>
-  </navbar>
+</navbar>
 </template>
-<script>
-  import { Navbar, NavbarToggleButton } from 'src/components/UIComponents'
-import { win32 } from 'path';
 
-  export default {
+<script>
+import {
+    Navbar,
+    NavbarToggleButton
+} from 'src/components/UIComponents'
+import {
+    win32
+} from 'path'
+import senha from '../Views/Forms/Usuario/AlterPassword.vue'
+
+export default {
     components: {
-      Navbar,
-      NavbarToggleButton
+        Navbar,
+        NavbarToggleButton,
+        senha
+
     },
     data() {
-      return {
-        activeNotifications: false,
-        showNavbar: false
-      }
+        return {
+            dialogFormVisibleDetail: false,
+            form: {
+                name: '',
+                region: '',
+                date1: '',
+                date2: '',
+                delivery: false,
+                type: [],
+                resource: '',
+                desc: ''
+            },
+            formLabelWidth: '120px',
+            activeNotifications: false,
+            showNavbar: false
+        }
     },
     methods: {
-      logout (){
-        window.localStorage.clear()
-        this.$router.push('/login')
-      },
-      capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1)
-      },
-      toggleNotificationDropDown() {
-        this.activeNotifications = !this.activeNotifications
-      },
-      closeDropDown() {
-        this.activeNotifications = false
-      },
-      toggleSidebar() {
-        this.$sidebar.displaySidebar(!this.$sidebar.showSidebar)
-      },
-      hideSidebar() {
-        this.$sidebar.displaySidebar(false)
-      },
-      minimizeSidebar() {
-        this.$sidebar.toggleMinimize()
-      },
-      toggleNavbar() {
-        this.showNavbar = !this.showNavbar;
-      }
+        logout() {
+            window.localStorage.clear()
+            this.$router.push('/login')
+        },
+        alteraSenha() {
+            alert('teste')
+            this.dialogTableVisible = true
+        },
+        capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1)
+        },
+        toggleNotificationDropDown() {
+            this.activeNotifications = !this.activeNotifications
+        },
+        closeDropDown() {
+            this.activeNotifications = false
+        },
+        toggleSidebar() {
+            this.$sidebar.displaySidebar(!this.$sidebar.showSidebar)
+        },
+        hideSidebar() {
+            this.$sidebar.displaySidebar(false)
+        },
+        minimizeSidebar() {
+            this.$sidebar.toggleMinimize()
+        },
+        toggleNavbar() {
+            this.showNavbar = !this.showNavbar;
+        }
     }
-  }
-
+}
 </script>
+
 <style>
 
 </style>

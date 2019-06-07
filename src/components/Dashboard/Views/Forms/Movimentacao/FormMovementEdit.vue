@@ -126,7 +126,7 @@ export default {
                     this.$router.push('/forms/MovementList')
                 })
                 .catch(error => {
-                    swal('Algo de errado!', 'Verifique os campos do cadastro de cliente!', 'error')
+                    swal('Algo de errado!', 'Verifique os campos da alteração da movimentação!', 'error')
                     console.log(error.response.data)
                 })
         }
