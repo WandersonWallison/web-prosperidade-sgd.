@@ -58,7 +58,7 @@
           </a>
         </li>-->
         </ul>
-        <md-dialog class="dialog" title="Detalhamento" :md-active.sync="dialogFormVisibleDetail">
+        <md-dialog title="Detalhamento" :md-active.sync="dialogFormVisibleDetail">
             <senha/>
         </md-dialog>
     </template>

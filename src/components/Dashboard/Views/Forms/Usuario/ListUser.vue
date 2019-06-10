@@ -34,11 +34,16 @@
                 <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
                     </el-table-column>
-                    <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
+                    <el-table-column :min-width="100" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
                             <el-tooltip class="item" effect="dark" content="Detalhar" placement="top">
                                 <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
                                     <i class="fa fa-search"></i>
+                                </p-button>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="Alterar Senha" placement="top">
+                                <p-button type="error" size="sm" icon @click="handleAlterPassword(props.$index, props.row)">
+                                    <i class="fas fa-user-lock"></i>
                                 </p-button>
                             </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="Editar" placement="top">
@@ -64,6 +69,9 @@
             </div>
         </div>
     </div>
+    <md-dialog :md-active.sync="dialogFormVisibleDetail">
+        <senha :selected="selected" />
+    </md-dialog>
     <md-dialog :md-active.sync="showDetails">
         <div class="div">
             <user-details :selected="selected"></user-details>
@@ -91,18 +99,22 @@ import PPagination from 'src/components/UIComponents/Pagination.vue'
 import PSwitch from 'src/components/UIComponents/Switch.vue'
 import UserEdit from './FormUserEdit'
 import UserDetails from './FormUserDetails.vue'
+import senha from './AlterPassword'
 Vue.use(Table)
 Vue.use(TableColumn)
 export default {
     name: 'ListUser',
     props: {
-        selected: []
+        selected: {
+          type: Object
+        }
     },
     components: {
         PPagination,
         PSwitch,
         UserEdit,
-        UserDetails
+        UserDetails,
+        senha
     },
     computed: {
         pagedData() {
@@ -150,8 +162,10 @@ export default {
     },
     data() {
         return {
+            mutableList: this.selected,
             showDetails: false,
             showUpdate: false,
+            dialogFormVisibleDetail: false,
             pagination: {
                 perPage: 5,
                 currentPage: 1,
@@ -163,12 +177,12 @@ export default {
             tableColumns: [{
                     prop: 'username',
                     label: 'Nome',
-                    minWidth: 150
+                    minWidth: 100
                 },
                 {
                     prop: 'id_grupo.descricao',
                     label: 'Grupo',
-                    minWidth: 90
+                    minWidth: 80
                 },
                 {
                     prop: 'email',
@@ -178,7 +192,7 @@ export default {
                 {
                     prop: 'telefone',
                     label: 'Telefone',
-                    minWidth: 80
+                    minWidth: 70
                 }
             ],
             tableData: []
@@ -192,6 +206,10 @@ export default {
     methods: {
         handleDetails(index, row) {
             this.showDetails = true
+            this.selected = row
+        },
+        handleAlterPassword(index, row) {
+            this.dialogFormVisibleDetail = true
             this.selected = row
         },
         handleRegister(index, row) {

@@ -37,7 +37,7 @@ import {
 export default {
     components: {},
     name: 'AlterarPassword',
-    mixins: [state],
+    props: ['selected'],
     data() {
         return {
             model: {
@@ -65,16 +65,26 @@ export default {
             })
         },
         salvar() {
+            const authUser = JSON.parse(window.localStorage.getItem("usuario"))
+            let idUsuario = ''
+
+            idUsuario = authUser.id
+            // console.log('usuario do local: ', idUsuario)
+
+            if (this.selected) {
+                idUsuario = this.selected.id
+                // console.log('usuario do listar: ', idUsuario)
+            }
 
             if (this.model.senha !== '' || this.model.confirmacao !== '') {
 
                 if ((this.model.senha === this.model.confirmacao)) {
-                    const authUser = JSON.parse(window.localStorage.getItem("usuario"))
+                    // const authUser = JSON.parse(window.localStorage.getItem("usuario"))
                     let user = {
                         password: this.model.senha,
                         id_responsavel: authUser.id
                     }
-                    axios.put(process.env.VUE_APP_ROOT_API + '/user/' + authUser.id, user)
+                    axios.put(process.env.VUE_APP_ROOT_API + '/user/' + idUsuario, user)
                         .then(response => {
                             this.results = response.data
                             this.model.senha = ''
