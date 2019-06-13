@@ -167,9 +167,9 @@ export default {
             showUpdate: false,
             dialogFormVisibleDetail: false,
             pagination: {
-                perPage: 5,
+                perPage: 10,
                 currentPage: 1,
-                perPageOptions: [5, 10, 25, 50],
+                perPageOptions: [10, 25, 50, 75],
                 total: 0
             },
             searchQuery: '',

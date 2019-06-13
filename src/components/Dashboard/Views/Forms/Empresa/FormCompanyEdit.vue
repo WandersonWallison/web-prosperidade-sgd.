@@ -18,10 +18,16 @@
                 <fg-input type="text" v-mask="'##.###.###/####-##'" name="cnpj" v-validate="modelValidations.cnpj" :error="getError('cnpj')" v-model="model.cnpj">
                 </fg-input>
                 <label>Telefone</label>
-                <fg-input type="text" v-mask="'(##)#####-####'" name="telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-model="model.telefone">
+                <fg-input type="text" v-mask="'(##)####-####'" name="telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-model="model.telefone">
+                </fg-input>
+                <label>Celular</label>
+                <fg-input type="text" v-mask="'(##)#####-####'" name="celular" v-validate="modelValidations.celular" :error="getError('celular')" v-model="model.celular">
                 </fg-input>
                 <label>E-mail</label>
                 <fg-input type="email" name="email" v-validate="modelValidations.email" :error="getError('email')" v-model="model.email">
+                </fg-input>
+                <label>Site</label>
+                <fg-input type="text" name="site" v-validate="modelValidations.site" :error="getError('site')" v-model="model.site">
                 </fg-input>
             </div>
             <div class="form-group">
@@ -80,7 +86,9 @@ export default {
                 razao_social: '',
                 cnpj: '',
                 telefone: '',
+                celular: '',
                 email: '',
+                site: '',
                 // Endereço --------------
                 cep: '',
                 logradouro: '',
@@ -107,9 +115,15 @@ export default {
                 telefone: {
                     required: true
                 },
+                celular: {
+                    required: true
+                },
                 email: {
                     required: true,
                     email: true
+                },
+                site: {
+                    required: false
                 },
                 tipoAddress: {
                     required: true
@@ -255,8 +269,9 @@ export default {
             this.model.razao_social = this.companyEdit.razao_social
             this.model.cnpj = this.companyEdit.cnpj
             this.model.telefone = this.companyEdit.telefone
+            this.model.celular = this.companyEdit.celular
             this.model.email = this.companyEdit.email
-            this.model.nome = this.companyEdit.nome
+            this.model.site = this.companyEdit.site
 
             if (this.companyEdit.endereco.length > 0) {
                 this.model.cep = this.companyEdit.endereco[0].cep
@@ -319,7 +334,9 @@ export default {
                 nome: this.model.nome,
                 razao_social: this.model.razao_social,
                 telefone: this.model.telefone,
+                celular: this.model.celular,
                 email: this.model.email,
+                site: this.model.site,
                 cnpj: this.model.cnpj,
                 id_responsavel: authUser.id
             }

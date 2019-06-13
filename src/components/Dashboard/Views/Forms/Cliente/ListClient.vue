@@ -42,12 +42,12 @@
                                     <i class="fas fa-donate"></i>
                                 </p-button>
                             </el-tooltip>
-                            -->
+                            
                             <el-tooltip class="item" effect="dark" content="Detalhar" placement="top">
                                 <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
                                     <i class="fa fa-search"></i>
                                 </p-button>
-                            </el-tooltip>
+                            </el-tooltip>-->
                             <el-tooltip class="item" effect="dark" content="Editar" placement="top">
                                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                     <i class="fa fa-edit"></i>
@@ -167,9 +167,9 @@ export default {
                 valorLinha: ''
             },
             pagination: {
-                perPage: 5,
+                perPage: 10,
                 currentPage: 1,
-                perPageOptions: [5, 10, 25, 50, 100],
+                perPageOptions: [10, 25, 50, 75],
                 total: 0
             },
             searchQuery: '',

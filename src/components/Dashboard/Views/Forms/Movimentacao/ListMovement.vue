@@ -150,9 +150,9 @@ export default {
         return {
             showUpdate: false,
             pagination: {
-                perPage: 5,
+                perPage: 10,
                 currentPage: 1,
-                perPageOptions: [5, 10, 25, 50],
+                perPageOptions: [10, 25, 50, 75],
                 total: 0
             },
             money: {
@@ -164,7 +164,7 @@ export default {
                 masked: false
             },
             searchQuery: '',
-            propsToSearch: ['nome', 'valor', 'observacao'],
+            propsToSearch: ['nome', 'descricao', 'observacao'],
             tableColumns: [{
                     prop: 'id_cliente.nome',
                     label: 'Cliente',
