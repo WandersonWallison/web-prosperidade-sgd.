@@ -166,7 +166,7 @@ export default {
         mask
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/grupo').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/grupo?where={"ativo": 1}').then(response => {
             this.options = response.data
         })
         axios.get(process.env.VUE_APP_ROOT_API + '/escritorio').then(response => {
