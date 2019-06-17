@@ -110,27 +110,28 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['username', 'cpf' ,'email', 'telefone'],
+            propsToSearch: ['id_xp', 'username','email'],//, 'telefone'],
             tableColumns: [{
+                    prop: 'id_xp',
+                    label: 'XP',
+                    minWidth: 80
+                },
+                {
                     prop: 'username',
                     label: 'Nome',
                     minWidth: 200
                 },
-                {
-                    prop: 'cpf',
-                    label: 'CPF',
-                    minWidth: 150
-                },
+                
                 {
                     prop: 'email',
                     label: 'Email',
                     minWidth: 150
-                },
-                {
-                    prop: 'telefone',
-                    label: 'Telefone',
-                    minWidth: 100
-                }
+                }//,
+                //{
+                //    prop: 'telefone',
+                //    label: 'Telefone',
+                //    minWidth: 100
+                //}
             ],
             tableData: []
         }
