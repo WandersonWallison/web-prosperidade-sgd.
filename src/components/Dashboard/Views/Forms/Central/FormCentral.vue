@@ -35,9 +35,15 @@
                 <label>Telefone</label>
                 <fg-input type="text" v-mask="'(##)####-####'" name="telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-model="model.telefone">
                 </fg-input>
+                <!--<label>Celular</label>
+                <fg-input type="text" v-mask="'(##)#####-####'" name="celular" v-validate="modelValidations.celular" :error="getError('celular')" v-model="model.celular">
+                </fg-input>-->
                 <label>E-mail</label>
                 <fg-input type="email" name="email" v-validate="modelValidations.email" :error="getError('email')" v-model="model.email">
                 </fg-input>
+                <!--<label>Site</label>
+                <fg-input type="text" name="site" v-validate="modelValidations.site" :error="getError('site')" v-model="model.site">
+                </fg-input>-->
             </div>
             <div class="form-group">
                 <label>CEP</label>
@@ -88,7 +94,9 @@ export default {
                 nome: '',
                 cnpj: '',
                 telefone: '',
+                //celular: '',
                 email: '',
+                //site: '',
                 cep: '',
                 logradouro: '',
                 numero: '',
@@ -114,10 +122,16 @@ export default {
                 telefone: {
                     required: true
                 },
+                //celular: {
+                //    required: true
+                //},
                 email: {
                     required: true,
                     email: true
                 },
+                //site: {
+                //    required: false
+                //},
                 cep: {
                     required: true
                 },
@@ -308,7 +322,9 @@ export default {
                 nome: this.model.nome,
                 razao_social: this.model.razao_social,
                 telefone: this.model.telefone,
+                //celular: this.model.celular,
                 email: this.model.email,
+                //site: this.model.site,
                 cnpj: this.model.cnpj,
                 id_tipo_central: this.model.tipo_central,
                 id_empresa: this.model.empresa,

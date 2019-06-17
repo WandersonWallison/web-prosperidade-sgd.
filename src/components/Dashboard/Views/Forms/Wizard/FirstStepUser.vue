@@ -16,7 +16,7 @@
 
                 <fg-input name="telefone" placeholder="telefone" v-model="model.telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-mask="'(##) ####-####'" addon-left-icon="nc-icon nc-headphones">
                 </fg-input>
-                <fg-input name="celular" placeholder="celular" v-model="model.celular" v-validate="modelValidations.celular" :error="getError('celular')" v-mask="'(##) #####-####'" addon-left-icon="nc-icon nc-headphones">
+                <fg-input name="celular" placeholder="celular" v-model="model.celular" v-validate="modelValidations.celular" :error="getError('celular')" v-mask="'(##) #####-####'" addon-left-icon="nc-icon nc-mobile">
                 </fg-input>
                 <div class="block">
                     <fg-input v-validate="modelValidations.datePicker" :error="getError('datePicker')">
@@ -166,7 +166,7 @@ export default {
         mask
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/grupo').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/grupo?where={"ativo": 1}').then(response => {
             this.options = response.data
         })
         axios.get(process.env.VUE_APP_ROOT_API + '/escritorio').then(response => {
