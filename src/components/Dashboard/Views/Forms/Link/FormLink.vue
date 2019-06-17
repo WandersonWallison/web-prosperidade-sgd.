@@ -46,7 +46,9 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
-import {mask} from 'vue-the-mask'
+import {
+    mask
+} from 'vue-the-mask'
 export default {
     name: 'FormLink',
     data() {
@@ -82,7 +84,9 @@ export default {
             this.optionsStade = response.data
         })
     },
-    directives: {mask},
+    directives: {
+        mask
+    },
     methods: {
         getError(fieldName) {
             return this.errors.first(fieldName)
@@ -93,17 +97,19 @@ export default {
             })
         },
         salvar() {
+            const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let link = {
                 descricao: this.model.descricao,
                 link: this.model.link,
                 id_tipo_link: this.model.id_tipo_link,
-                imagem: this.model.imagem
+                imagem: this.model.imagem,
+                id_responsavel: authUser.id
             }
             axios.post(process.env.VUE_APP_ROOT_API + '/link', link)
                 .then(response => {
                     this.results = response.data
                     swal('Bom trabalho!', 'Empresa Cadastrada com sucesso!', 'success')
-                            this.$router.push('/forms/LinkList')
+                    this.$router.push('/forms/LinkList')
                 })
                 .catch(error => {
                     swal('Algo de errado!', 'Verifique os campos do cadastros!', 'error')

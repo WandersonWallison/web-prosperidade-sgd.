@@ -67,6 +67,7 @@ export default {
             const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let tipoLink = {
                 descricao: this.model.descricao,
+                id_responsavel: authUser.id
             }
             axios.put(process.env.VUE_APP_ROOT_API + '/tipo_link/' + this.tipoLinkEdit.id, tipoLink)
                 .then(response => {

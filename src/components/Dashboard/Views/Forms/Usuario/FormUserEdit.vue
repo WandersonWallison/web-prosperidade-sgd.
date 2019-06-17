@@ -83,7 +83,9 @@
 
 <script>
 import axios from 'axios'
-import {mask} from 'vue-the-mask'
+import {
+    mask
+} from 'vue-the-mask'
 import {
     Select,
     Option
@@ -213,9 +215,12 @@ export default {
             ]
         }
     },
-    directives: {mask},
+    directives: {
+        mask
+    },
     methods: {
         updateProfile() {
+            const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let userEdit = {
                 username: this.user.firstName,
                 email: this.user.email,
@@ -226,7 +231,8 @@ export default {
                 data_nascimento: this.user.datePicker,
                 telefone: this.user.telefone,
                 celular: this.user.celular,
-                id_grupo: this.user.tipo
+                id_grupo: this.user.tipo,
+                id_responsavel: authUser.id
             }
             let endereco = {
                 logradouro: this.user.endereco[0].logradouro,

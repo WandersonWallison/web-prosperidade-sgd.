@@ -71,10 +71,11 @@ export default {
             })
         },
         salvar() {
-
+            const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let Grupo = {
                 descricao: this.model.nome,
-                links: this.selects.multiple
+                links: this.selects.multiple,
+                id_responsavel: authUser.id
             }
             axios.post(process.env.VUE_APP_ROOT_API + '/grupo', Grupo)
                 .then(response => {

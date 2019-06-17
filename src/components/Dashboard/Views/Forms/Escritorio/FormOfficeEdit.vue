@@ -340,7 +340,7 @@ export default {
                 })
         },
         salvar() {
-
+            const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let escritorio = {
                 nome: this.model.nome,
                 razao_social: this.model.nome,
@@ -348,7 +348,8 @@ export default {
                 email: this.model.email,
                 cnpj: this.model.cnpj,
                 centrais: this.selectCentrais,
-                iss: this.model.iss
+                iss: this.model.iss,
+                id_responsavel: authUser.id
             }
             let endereco = {
                 logradouro: this.model.logradouro,

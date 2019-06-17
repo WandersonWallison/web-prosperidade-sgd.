@@ -300,6 +300,7 @@ export default {
                 })
         },
         salvar() {
+            const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             this.model.iss = this.model.iss.replace('$','')
             console.log('ISS:',this.model.iss)
             let escritorio = {
@@ -309,7 +310,8 @@ export default {
                 email: this.model.email,
                 cnpj: this.model.cnpj,
                 centrais: this.selectCentrais,
-                iss: this.model.iss
+                iss: this.model.iss,
+                id_responsavel: authUser.id
             }
             let endereco = {
                 logradouro: this.model.logradouro,

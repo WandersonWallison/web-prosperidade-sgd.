@@ -100,11 +100,13 @@ export default {
             })
         },
         salvar() {
+            const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let link = {
                 descricao: this.model.descricao,
                 link: this.model.link,
                 id_tipo_link: this.model.id_tipo_link,
-                imagem: this.model.imagem
+                imagem: this.model.imagem,
+                id_responsavel: authUser.id
             }
             // axios.put(process.env.VUE_APP_ROOT_API + '/grupo/' + this.groupEdit.id, Grupo)
             axios.put(process.env.VUE_APP_ROOT_API + '/link/' + this.id_link, link)

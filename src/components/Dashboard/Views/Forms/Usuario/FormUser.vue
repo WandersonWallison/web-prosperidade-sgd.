@@ -72,6 +72,7 @@ export default {
             }
         },
         wizardComplete() {
+            const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let user = {
                 username: this.wizardModel.firstName,
                 email: this.wizardModel.email,
@@ -85,7 +86,8 @@ export default {
                 id_grupo: this.wizardModel.tipo,
                 id_comissionamento_faixa: 1,
                 id_escritorio: this.wizardModel.escritorio,
-                cvn: this.wizardModel.cvn
+                cvn: this.wizardModel.cvn,
+                id_responsavel: authUser.id
             }
             let endereco = {
                 logradouro: this.wizardModel.logradouro,

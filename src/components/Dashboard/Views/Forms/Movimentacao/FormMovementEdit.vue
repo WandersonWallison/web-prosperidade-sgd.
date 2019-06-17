@@ -169,6 +169,8 @@ export default {
             this.model.observacao = this.movimentacaoEdit.observacao
             this.model.data_registro = this.movimentacaoEdit.data_registro
             this.model.statusAtual = this.movimentacaoEdit.id_situacao_movimento.descricao
+
+            window.localStorage.removeItem("movimentacao")
         })
     },
     methods: {

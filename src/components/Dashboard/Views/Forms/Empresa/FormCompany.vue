@@ -63,7 +63,7 @@
             </div>
         </div>
         <div class="card-footer text-right">
- 
+
             <p-button type="info" @click.prevent="validate">Salvar</p-button>
          </div>
     </form>
@@ -296,6 +296,7 @@ export default {
                 })
         },
         salvar() {
+            const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let empresa = {
                 nome: this.model.nome,
                 razao_social: this.model.razao_social,
@@ -303,7 +304,8 @@ export default {
                 celular: this.model.celular,
                 email: this.model.email,
                 site: this.model.site,
-                cnpj: this.model.cnpj
+                cnpj: this.model.cnpj,
+                id_responsavel: authUser.id
             }
             let endereco = {
                 logradouro: this.model.logradouro,
