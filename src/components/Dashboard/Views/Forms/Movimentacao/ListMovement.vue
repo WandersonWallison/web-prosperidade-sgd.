@@ -212,10 +212,13 @@ export default {
             this.$router.push('/forms/MovementForm')
         },
         handleEdit(index, row) {
-            this.showUpdate = true
-            this.selected = row
+
             window.localStorage.setItem('movimentacao', row.id)
-            //this.$router.push('/forms/MovementFormEdit')
+            this.$router.push('/forms/MovementFormEdit')
+            // this.showUpdate = true
+            // this.selected = row
+            // window.localStorage.setItem('movimentacao', row.id)
+            // this.$router.push('/forms/MovementFormEdit')
         },
         handleDelete(index, row) {
             /*
