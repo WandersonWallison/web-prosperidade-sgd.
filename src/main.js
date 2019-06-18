@@ -3,7 +3,7 @@ import './pollyfills'
 import VueRouter from 'vue-router'
 import VueRouterPrefetch from 'vue-router-prefetch'
 import VueNotify from 'vue-notifyjs'
-import VeeValidate from 'vee-validate'
+import VeeValidate, { Validator } from 'vee-validate'
 import lang from 'element-ui/lib/locale/lang/en'
 import locale from 'element-ui/lib/locale'
 import Element from 'element-ui/lib'
@@ -13,6 +13,7 @@ import VueAxios from 'vue-axios'
 import Vuetify from 'vuetify'
 import VueMaterial from 'vue-material'
 import VueMoment from 'vue-moment'
+import pt from 'vee-validate/dist/locale/pt_BR'
 
 // Plugins
 import GlobalComponents from './globalComponents'
@@ -32,6 +33,7 @@ import 'vue-material/dist/vue-material.min.css'
 import sidebarLinks from './sidebarLinks'
 import './registerServiceWorker'
 
+Validator.localize('pt',pt)
 // import Axios from 'vue-axios'
 
 // plugin setup
@@ -49,6 +51,7 @@ Vue.use(Element)
 Vue.use(VueMoment)
 locale.use(lang)
 
+// VeeValidate.locale('pt_BR');
 
 // configure router
 const router = new VueRouter({

@@ -27,24 +27,34 @@
         </div>
       </form>-->
         <ul class="navbar-nav">
+            <!--
             <li class="nav-item">
                 <a class="nav-link btn-magnify" href="#">
                   <i class="nc-icon nc-chat-33"></i>
                   <p><span class="d-lg-none d-md-block">Stats</span></p>
                 </a>
             </li>
+            -->
+
             <drop-down icon="nc-icon nc-single-02" tag="li" position="right" direction="none" class="nav-item btn-rotate dropdown">
-                <a slot="title"
-             slot-scope="{isOpen}"
-             class="nav-link dropdown-toggle"
-             data-toggle="dropdown"
-             aria-haspopup="true"
-             :aria-expanded="isOpen">
-            <i class="nc-icon nc-single-02"></i>
-            <p>
-              <span class="d-lg-none d-md-block">Some Actions</span>
-            </p>
-          </a>
+                <a slot="title" slot-scope="{isOpen}" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" :aria-expanded="isOpen">
+                <el-badge :value="12" class="item">
+               <i class="nc-icon nc-chat-33"></i>
+                 </el-badge>
+                <p>
+                  <span class="d-lg-none d-md-block">Some Actions</span>
+                </p>
+              </a>
+                <a><task/> </a>
+            </drop-down>
+
+            <drop-down icon="nc-icon nc-single-02" tag="li" position="right" direction="none" class="nav-item btn-rotate dropdown">
+                <a slot="title" slot-scope="{isOpen}" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" :aria-expanded="isOpen">
+                <i class="nc-icon nc-single-02"></i>
+                <p>
+                  <span class="d-lg-none d-md-block">Some Actions</span>
+                </p>
+              </a>
                 <!-- <a class="dropdown-item" href="#">Meu Perfil</a> -->
                 <a class="dropdown-item" href="#" @click="dialogFormVisibleDetail = true">Alterar Senha</a>
                 <a class="dropdown-item" href="#" @click="logout">Sair</a>
@@ -59,7 +69,7 @@
         </li>-->
         </ul>
         <md-dialog title="Detalhamento" :md-active.sync="dialogFormVisibleDetail">
-            <senha/>
+            <senha />
         </md-dialog>
     </template>
 </navbar>
@@ -74,13 +84,14 @@ import {
     win32
 } from 'path'
 import senha from '../Views/Forms/Usuario/AlterPassword.vue'
+import task from '../Views/Dashboard/Widgets/TaskList'
 
 export default {
     components: {
         Navbar,
         NavbarToggleButton,
-        senha
-
+        senha,
+        task
     },
     data() {
         return {

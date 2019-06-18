@@ -9,6 +9,7 @@ import User from 'src/components/Dashboard/Views/Pages/UserProfile.vue'
 import TimeLine from 'src/components/Dashboard/Views/Pages/TimeLinePage.vue'
 import Login from 'src/components/Dashboard/Views/Pages/Login.vue'
 import Register from 'src/components/Dashboard/Views/Pages/Register.vue'
+import NewPassword from 'src/components/Dashboard/Views/Pages/NewPassword.vue'
 import Lock from 'src/components/Dashboard/Views/Pages/Lock.vue'
 // Components pages
 import Buttons from 'src/components/Dashboard/Views/Components/Buttons.vue'
@@ -408,6 +409,11 @@ let registerPage = {
   name: 'Register',
   component: Register
 }
+let newPasswordPage = {
+  path: '/newPassword',
+  name: 'NewPassword',
+  component: NewPassword
+}
 let lockPage = {
   path: '/lock',
   name: 'Lock',
@@ -438,6 +444,7 @@ const routes = [
   pagesMenu,
   loginPage,
   registerPage,
+  newPasswordPage,
   lockPage,
   {
     path: '/admin',
