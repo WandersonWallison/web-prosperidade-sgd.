@@ -173,7 +173,7 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['username', 'email', 'telefone'],
+            propsToSearch: ['username', 'email'],//, 'telefone'],
             tableColumns: [{
                     prop: 'username',
                     label: 'Nome',
@@ -188,12 +188,12 @@ export default {
                     prop: 'email',
                     label: 'E-mail',
                     minWidth: 100
-                },
-                {
-                    prop: 'telefone',
-                    label: 'Telefone',
-                    minWidth: 70
-                }
+                }//,
+                //{
+                //    prop: 'telefone',
+                //    label: 'Telefone',
+                //    minWidth: 70
+                //}
             ],
             tableData: []
         }

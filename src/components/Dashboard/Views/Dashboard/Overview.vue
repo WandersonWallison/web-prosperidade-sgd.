@@ -173,10 +173,10 @@
 
     <div class="row">
       <div class="col-md-6">
-        <task-list></task-list>
+        <!--<task-list></task-list>-->
       </div>
       <div class="col-md-6">
-        <chart-card :chart-data="activityChart.data"
+        <!--<chart-card :chart-data="activityChart.data"
                     :chart-height="300"
                     chart-id="activity-bar-chart"
                     chart-type="Bar">
@@ -194,12 +194,12 @@
               <i class="fa fa-check"></i> Data information certified
             </div>
           </template>
-        </chart-card>
+        </chart-card>-->
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-3 col-sm-6">
+      <!--<div class="col-lg-3 col-sm-6">
         <circle-chart-card :percentage="70"
                            chart-id="email-statistics-chart"
                            title="Email Statistics"
@@ -268,7 +268,7 @@
             </div>
           </template>
         </circle-chart-card>
-      </div>
+      </div>-->
     </div>
 
   </div>
@@ -304,8 +304,8 @@
           {
             type: 'warning',
             icon: 'nc-icon nc-globe',
-            title: 'Centrais',
-            value: '5',
+            title: 'Clientes',
+            value: '504',
             footerText: 'Atualizado agora',
             footerIcon: 'nc-icon nc-refresh-69'
           },
@@ -313,7 +313,7 @@
             type: 'success',
             icon: 'nc-icon nc-money-coins',
             title: 'Investimento',
-            value: 'R$ 1,345',
+            value: 'R$ 1.456.345',
             footerText: 'Hoje',
             footerIcon: 'nc-icon nc-calendar-60'
           },
@@ -321,7 +321,7 @@
             type: 'danger',
             icon: 'nc-icon nc-vector',
             title: 'Escritorios',
-            value: '23',
+            value: '09',
             footerText: 'Hoje',
             footerIcon: 'nc-icon nc-bell-55'
           },
@@ -329,7 +329,7 @@
             type: 'info',
             icon: 'nc-icon nc-favourite-28',
             title: 'Assessores',
-            value: '67',
+            value: '54',
             footerText: 'Atualizado agora',
             footerIcon: 'nc-icon nc-refresh-69'
           }

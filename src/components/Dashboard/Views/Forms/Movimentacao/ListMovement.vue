@@ -168,12 +168,12 @@ export default {
             tableColumns: [{
                     prop: 'id_cliente.nome',
                     label: 'Cliente',
-                    minWidth: 100
+                    minWidth: 150
                 },
                 {
                     prop: 'id_situacao_movimento.descricao',
                     label: 'Situação',
-                    minWidth: 150
+                    minWidth: 90
                 },
                 {
                     prop: 'observacao',
