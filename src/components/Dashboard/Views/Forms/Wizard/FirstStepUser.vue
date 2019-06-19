@@ -23,6 +23,13 @@
                         <el-date-picker v-model="model.datePicker" format="dd/MM/yyyy" type="date" placeholder="Data Nascimento">
                         </el-date-picker>
                     </fg-input>
+                    <br>
+                    <fg-input :error="getError('comissionamneto')">
+                    <el-select no-data-text="Sem Informações" v-validate="modelValidations.comissionamento" class="select-default" v-model="model.comissionamento" name="Comissionamento" placeholder="Comissionamento">
+                        <el-option class="select-default" v-for="item in optionsComissionamento" :key="item.id" :label="item.descricao" :value="item.id">
+                        </el-option>
+                    </el-select>
+                </fg-input>
                 </div>
             </el-card>
         </div>
@@ -122,7 +129,8 @@ export default {
                 celular: '',
                 datePicker: '',
                 escritorio: '',
-                imageUrl: 'static/img/default-avatar.png'
+                imageUrl: 'static/img/default-avatar.png',
+                comissionamento: ''
             },
             modelValidations: {
                 firstName: {
@@ -156,10 +164,14 @@ export default {
                 },
                 tipo: {
                     required: true
+                },
+                comissionamento:{
+                    required: true
                 }
             },
             options: [],
-            optionsEscritorio: []
+            optionsEscritorio: [],
+            optionsComissionamento: []
         }
     },
     directives: {
@@ -171,6 +183,9 @@ export default {
         })
         axios.get(process.env.VUE_APP_ROOT_API + '/escritorio').then(response => {
             this.optionsEscritorio = response.data
+        })
+         axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento_faixa').then(response => {
+            this.optionsComissionamento = response.data
         })
 
     },

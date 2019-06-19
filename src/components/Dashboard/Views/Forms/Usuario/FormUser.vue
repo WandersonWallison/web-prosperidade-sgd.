@@ -84,7 +84,7 @@ export default {
                 telefone: this.wizardModel.telefone,
                 celular: this.wizardModel.celular,
                 id_grupo: this.wizardModel.tipo,
-                id_comissionamento_faixa: 1,
+                id_comissionamento_faixa: this.wizardModel.comissionamento,
                 id_escritorio: this.wizardModel.escritorio,
                 cvn: this.wizardModel.cvn,
                 id_responsavel: authUser.id
