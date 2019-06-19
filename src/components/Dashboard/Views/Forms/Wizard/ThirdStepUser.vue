@@ -24,7 +24,6 @@
     <div class="col-sm-3">
       <fg-input label="Numero"
                 name="numero"
-                v-mask="'########'"
                 v-model="model.numero"
                 :error="getError('numero')"
                 v-validate="modelValidations.numero">

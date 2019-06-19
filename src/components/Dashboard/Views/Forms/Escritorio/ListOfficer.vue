@@ -34,7 +34,7 @@
                 <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
                     </el-table-column>
-                    <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
+                    <el-table-column :min-width="70" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
                             <el-tooltip class="item" effect="dark" content="Editar" placement="top">
                                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
@@ -162,7 +162,7 @@ export default {
         }
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/escritorio?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/escritorio?where={"ativo": 1}&sort=nome').then(response => {
             this.tableData = response.data
         })
     },

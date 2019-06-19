@@ -77,6 +77,7 @@ export default {
                     let isIncluded = false
                     for (let key of this.propsToSearch) {
                         let rowValue = row[key].toString()
+                        rowValue = rowValue.text-uppercase()
                         if (rowValue.includes && rowValue.includes(this.searchQuery)) {
                             isIncluded = true
                         }

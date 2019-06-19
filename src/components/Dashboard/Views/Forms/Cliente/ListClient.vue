@@ -34,7 +34,7 @@
                 <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
                     </el-table-column>
-                    <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
+                    <el-table-column :min-width="50" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
                             <!--
                             <el-tooltip class="item" effect="dark" content="Aporte" placement="top">
@@ -42,7 +42,7 @@
                                     <i class="fas fa-donate"></i>
                                 </p-button>
                             </el-tooltip>
-                            
+
                             <el-tooltip class="item" effect="dark" content="Detalhar" placement="top">
                                 <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
                                     <i class="fa fa-search"></i>
@@ -132,6 +132,7 @@ export default {
                 .filter((row) => {
                     let isIncluded = false
                     for (let key of this.propsToSearch) {
+                        row[key] = '' + row[key]
                         let rowValue = row[key].toString()
                         if (rowValue.includes && rowValue.includes(this.searchQuery)) {
                             isIncluded = true

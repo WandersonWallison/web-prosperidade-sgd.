@@ -91,8 +91,30 @@ export default {
         },
         validarLogin(login) {
 
+            let s = new SMTPClient({
+                    host: 'smtp.hostinger.com.br',
+                    port: 587
+                })
+                (async function () {
+                    await s.connect();
+                    await s.greet({
+                        hostname: 'smtp.hostinger.com.br'
+                    }); // runs EHLO command or HELO as a fallback
+                    await s.authPlain({
+                        username: 'suporte@vivasolucoes.online',
+                        password: 'xpto@123'
+                    }); // authenticates a user
+                    await s.mail({
+                        from: 'suporte@vivasolucoes.online'
+                    }); // runs MAIL FROM command
+                    await s.rcpt({
+                        to: 'wellington.m.santos@gmail.com'
+                    }); // runs RCPT TO command (run this multiple times to add more recii)
+                    await s.data('mail source'); // runs DATA command and streams email source
+                    await s.quit(); // runs QUIT command
+                })().catch(console.error)
+
             // TODO - Criação do envio de e-mail para esqueceu senha
-            /*
             axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"email":"' + login + '"}').then((result) => {
                 this.retorno = result.data
                 // this.retorno.message == 'Username not found' ? this.retorno.message = 'Usuário não encontrado' : this.retorno.message = 'Senha incorreta'
@@ -113,7 +135,7 @@ export default {
                       }).then(
                           message => swal(this.retorno.message, '', 'sucess')
                       )
-
+                      */
                 }
 
             }).catch((err) => {
@@ -121,30 +143,6 @@ export default {
                 this.retorno = err
                 //this.$router.push('/')
             })
-            */
-
-            let s = new SMTPClient({
-                host: 'smtp.hostinger.com.br',
-                port: 587
-            })
-
-            s.connect();
-            s.greet({
-                hostname: 'smtp.hostinger.com.br'
-            }); // runs EHLO command or HELO as a fallback
-            s.authPlain({
-                username: 'suporte@vivasolucoes.online',
-                password: 'xpto@123'
-            }); // authenticates a user
-            s.mail({
-                from: 'suporte@vivasolucoes.online'
-            }); // runs MAIL FROM command
-            s.rcpt({
-                to: 'wellington.m.santos@gmail.com'
-            }); // runs RCPT TO command (run this multiple times to add more recii)
-            s.data('mail source'); // runs DATA command and streams email source
-            s.quit(); // runs QUIT command
-
         }
 
     },

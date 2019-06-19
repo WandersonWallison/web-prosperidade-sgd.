@@ -50,8 +50,16 @@ export default {
             return this.errors.first(fieldName)
         },
         validate() {
+            /*
             this.$validator.validateAll().then(isValid => {
                 this.$emit('on-submit', this.salvar(), isValid)
+            }) */
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    this.$emit('on-submit', this.salvar(), isValid)
+                    return
+                }
+                swal('Corrija-os erros no formulario!', '', 'error')
             })
         },
         salvar() {

@@ -32,13 +32,13 @@
             </div>
             <div class="form-group">
                 <label>CEP</label>
-                <fg-input type="text"  v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
+                <fg-input type="text" v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
                 </fg-input>
                 <label>Logradouro</label>
                 <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
                 </fg-input>
                 <label>Número</label>
-                <fg-input type="text" v-mask="'#####'" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
+                <fg-input type="text" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
                 </fg-input>
                 <label>Bairro</label>
                 <fg-input type="text" name="bairro" v-validate="modelValidations.bairro" :error="getError('bairro')" v-model="model.bairro">
@@ -65,7 +65,7 @@
         <div class="card-footer text-right">
 
             <p-button type="info" @click.prevent="validate">Salvar</p-button>
-         </div>
+        </div>
     </form>
 
 </div>
@@ -74,7 +74,9 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
-import {mask} from 'vue-the-mask'
+import {
+    mask
+} from 'vue-the-mask'
 export default {
     name: 'FormCompany',
     data() {
@@ -255,14 +257,24 @@ export default {
             ]
         }
     },
-    directives: {mask},
+    directives: {
+        mask
+    },
     methods: {
         getError(fieldName) {
             return this.errors.first(fieldName)
         },
         validate() {
+            /*
             this.$validator.validateAll().then(isValid => {
                 this.$emit('on-submit', this.salvar(), isValid)
+            }) */
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    this.$emit('on-submit', this.salvar(), isValid)
+                    return
+                }
+                swal('Corrija-os erros no formulario!', '', 'error')
             })
         },
         buscarEndereco() {

@@ -44,7 +44,7 @@
                 <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
                 </fg-input>
                 <label>Número</label>
-                <fg-input type="text" v-mask="'#####'" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
+                <fg-input type="text" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
                 </fg-input>
                 <label>Bairro</label>
                 <fg-input type="text" name="bairro" v-validate="modelValidations.bairro" :error="getError('bairro')" v-model="model.bairro">
@@ -265,8 +265,17 @@ export default {
             return this.errors.first(fieldName)
         },
         validate() {
+          /*
             this.$validator.validateAll().then(isValid => {
                 this.$emit('on-submit', this.salvar(), isValid)
+            })
+          */
+           this.$validator.validateAll().then((result) => {
+                if (result) {
+                    this.$emit('on-submit', this.salvar(), isValid)
+                    return
+                }
+                swal('Corrija-os erros no formulario!', '', 'error')
             })
         },
         buscarEndereco() {

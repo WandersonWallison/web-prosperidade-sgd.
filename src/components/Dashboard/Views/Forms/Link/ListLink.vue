@@ -131,7 +131,7 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['descricao', 'link'],
+            propsToSearch: ['descricao', 'link','id_tipo_link.descricao'],
             tableColumns: [{
                     prop: 'descricao',
                     label: 'Nome',

@@ -64,19 +64,18 @@
                         </div>
                     </div>
                     <label>Valor movimentado</label>
-                    <fg-input type="text" v-money="money" name="valor" v-model="model.valor">
+                    <fg-input type="text" v-money="money" name="valor"  v-validate="modelValidations.valor" :error="getError('valor')" v-model="model.valor">
                     </fg-input>
                     <label>Observação</label>
-                    <fg-input type="text"  name="observacao" v-model="model.observacao">
+                    <fg-input type="text" name="observacao" v-model="model.observacao">
                     </fg-input>
                     <label>Status</label>
                     <fg-input>
-                        <el-select no-data-text="Sem informações" class="select-default" v-model="model.status" name="cliente" placeholder="Selecione...">
+                        <el-select no-data-text="Sem informações"  v-validate="modelValidations.status" :error="getError('status')" class="select-default" v-model="model.status" name="cliente" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in this.dataSituacao" :key="item.id" :label="item.descricao" :value="item.id">
                             </el-option>
                         </el-select>
                     </fg-input>
-
                 </el-card>
             </div>
         </div>
@@ -165,8 +164,17 @@ export default {
             return this.errors.first(fieldName)
         },
         validate() {
-            this.$validator.validateAll().then(isValid => {
-                this.$emit('on-submit', this.salvar(), isValid)
+            /*
+              this.$validator.validateAll().then(isValid => {
+                  this.$emit('on-submit', this.salvar(), isValid)
+              })
+            */
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    this.$emit('on-submit', this.salvar(), isValid)
+                    return
+                }
+                swal('Corrija-os erros no formulario!', '', 'error')
             })
         },
         retiraMascara(campo) {
@@ -181,7 +189,7 @@ export default {
             let movimentacao = {
 
                 id_cliente: this.model.cliente[0],
-                data_registro: moment(this.model.data_registro,"DD/MM/YYYY"),
+                data_registro: moment(this.model.data_registro, "DD/MM/YYYY"),
                 id_situacao_movimento: this.model.status,
                 valor: this.retiraMascara(this.model.valor),
                 observacao: this.model.observacao,

@@ -114,23 +114,23 @@ export default {
             tableColumns: [{
                     prop: 'id_xp',
                     label: 'XP',
-                    minWidth: 80
+                    minWidth: 50
                 },
                 {
                     prop: 'username',
                     label: 'Nome',
-                    minWidth: 100
+                    minWidth: 120
                 },
-                
+
                 {
                     prop: 'email',
                     label: 'Email',
-                    minWidth: 150
+                    minWidth: 130
                 },
                 {
                     prop: 'id_comissionamento_faixa.descricao',
                     label: 'Faixa de Comissionamento',
-                    minWidth: 100
+                    minWidth: 130
                 }
             ],
             tableData: []

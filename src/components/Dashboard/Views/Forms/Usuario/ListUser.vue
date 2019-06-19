@@ -135,6 +135,7 @@ export default {
                 .filter((row) => {
                     let isIncluded = false
                     for (let key of this.propsToSearch) {
+                        row[key] = '' + row[key]
                         let rowValue = row[key].toString()
                         if (rowValue.includes && rowValue.includes(this.searchQuery)) {
                             isIncluded = true
@@ -173,7 +174,8 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['username', 'email'],//, 'telefone'],
+            newRow: '',
+            propsToSearch: ['username', 'id_grupo.descricao' , 'email'],//, 'telefone'],
             tableColumns: [{
                     prop: 'username',
                     label: 'Nome',
@@ -199,7 +201,7 @@ export default {
         }
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1}&sort=username').then(response => {
             this.tableData = response.data
         })
     },
