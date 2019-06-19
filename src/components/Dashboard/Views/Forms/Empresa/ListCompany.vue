@@ -137,11 +137,6 @@ export default {
                     label: 'Nome',
                     minWidth: 150
                 },
-                //{
-                 //   prop: 'razao_social',
-                   // label: 'Razão Social',
-                 //   minWidth: 150
-                //},
                 {
                     prop: 'email',
                     label: 'E-mail',
@@ -157,7 +152,7 @@ export default {
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}&sort=nome').then(response => {
             this.tableData = response.data
         })
     },
@@ -181,7 +176,6 @@ export default {
                         swal('Bom trabalho!', `Empresa ${row.nome} excluída com sucesso!`, 'success')
                         this.$router.push('/forms/companyList')
                     })
-                    //this.$router.push('/forms/companyList')
                 })
                 .catch(error => {
                     alert(error.response)
