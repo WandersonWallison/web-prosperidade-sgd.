@@ -53,7 +53,7 @@ import {
 import axios from 'axios'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
 export default {
-    name: 'ListOperator',
+    name: 'ListAssessor',
     components: {
         PPagination
     },
@@ -110,7 +110,7 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['id_xp', 'username','email'],//, 'telefone'],
+            propsToSearch: ['id_xp', 'username','email','id_comissionamento_faixa.descricao'],
             tableColumns: [{
                     prop: 'id_xp',
                     label: 'XP',
@@ -119,25 +119,25 @@ export default {
                 {
                     prop: 'username',
                     label: 'Nome',
-                    minWidth: 200
+                    minWidth: 100
                 },
                 
                 {
                     prop: 'email',
                     label: 'Email',
                     minWidth: 150
-                }//,
-                //{
-                //    prop: 'telefone',
-                //    label: 'Telefone',
-                //    minWidth: 100
-                //}
+                },
+                {
+                    prop: 'id_comissionamento_faixa.descricao',
+                    label: 'Faixa de Comissionamento',
+                    minWidth: 100
+                }
             ],
             tableData: []
         }
     },
    mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}&sort=username').then(response => {
             this.tableData = response.data
         })
     }
