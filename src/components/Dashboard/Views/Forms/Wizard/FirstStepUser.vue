@@ -7,16 +7,16 @@
                 <div slot="header" class="clearfix">
                     <span>Dados</span>
                 </div>
-                <fg-input name="firstName" placeholder="Nome" v-model="model.firstName" v-validate="modelValidations.firstName" :error="getError('firstName')" addon-left-icon="nc-icon nc-single-02">
+                <fg-input name="firstName" placeholder="Nome" v-model="model.firstName" v-validate="modelValidations.firstName" :error="getError('firstName')">
                 </fg-input>
-                <fg-input type="email" name="email" placeholder="E-mail" v-model="model.email" v-validate="modelValidations.email" :error="getError('email')" addon-left-icon="nc-icon nc-email-85">
+                <fg-input type="email" name="email" placeholder="E-mail" v-model="model.email" v-validate="modelValidations.email" :error="getError('email')">
                 </fg-input>
-                <fg-input name="senha" type="password" placeholder="Senha" v-model="model.senha" v-validate="modelValidations.senha" :error="getError('senha')" addon-left-icon="nc-icon nc-key-25">
+                <fg-input name="senha" type="password" placeholder="Senha" v-model="model.senha" v-validate="modelValidations.senha" :error="getError('senha')">
                 </fg-input>
 
-                <fg-input name="telefone" placeholder="telefone" v-model="model.telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-mask="'(##) ####-####'" addon-left-icon="nc-icon nc-headphones">
+                <fg-input name="telefone" placeholder="telefone" v-model="model.telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-mask="'(##) ####-####'">
                 </fg-input>
-                <fg-input name="celular" placeholder="celular" v-model="model.celular" v-validate="modelValidations.celular" :error="getError('celular')" v-mask="'(##) #####-####'" addon-left-icon="nc-icon nc-mobile">
+                <fg-input name="celular" placeholder="celular" v-model="model.celular" v-validate="modelValidations.celular" :error="getError('celular')" v-mask="'(##) #####-####'">
                 </fg-input>
                 <div class="block">
                     <fg-input v-validate="modelValidations.datePicker" :error="getError('datePicker')">
@@ -31,13 +31,13 @@
                 <div slot="header" class="clearfix">
                     <span>Documentação</span>
                 </div>
-                <fg-input name="cvm" placeholder="cvm" v-model="model.cvm" v-validate="modelValidations.cvm" :error="getError('cvm')" addon-left-icon="nc-icon nc-hat-3">
+                <fg-input name="cvm" placeholder="cvm" v-model="model.cvm" v-validate="modelValidations.cvm" :error="getError('cvm')">
                 </fg-input>
-                <fg-input name="cpf" placeholder="cpf" v-model="model.cpf" v-validate="modelValidations.cpf" :error="getError('cpf')" v-mask="'###.###.###-##'" addon-left-icon="nc-icon nc-badge">
+                <fg-input name="cpf" placeholder="cpf" v-model="model.cpf" v-validate="modelValidations.cpf" :error="getError('cpf')" v-mask="'###.###.###-##'">
                 </fg-input>
-                <fg-input name="cnh" placeholder="cnh" v-model="model.cnh" v-validate="modelValidations.cnh" :error="getError('cnh')" v-mask="'##############'" addon-left-icon="nc-icon nc-badge">
+                <fg-input name="cnh" placeholder="cnh" v-model="model.cnh" v-validate="modelValidations.cnh" :error="getError('cnh')" v-mask="'##############'">
                 </fg-input>
-                <fg-input name="rg" placeholder="rg" v-model="model.rg" v-validate="modelValidations.rg" :error="getError('rg')" v-mask="'#########'" addon-left-icon="nc-icon nc-badge">
+                <fg-input name="rg" placeholder="rg" v-model="model.rg" v-validate="modelValidations.rg" :error="getError('rg')" v-mask="'#########'">
                 </fg-input>
                 <br>
                 <fg-input :error="getError('tipo')">

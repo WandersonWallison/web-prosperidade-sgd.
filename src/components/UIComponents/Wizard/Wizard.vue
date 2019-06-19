@@ -125,12 +125,12 @@
       },
       prevButtonText: {
         type: String,
-        default: 'Previous',
+        default: 'Anterior',
         description: 'Previous button text'
       },
       nextButtonText: {
         type: String,
-        default: 'Next',
+        default: 'Próximo',
         description: 'Next button text'
       },
       finishButtonText: {
