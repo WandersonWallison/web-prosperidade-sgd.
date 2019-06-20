@@ -46,7 +46,9 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
-import {mask} from 'vue-the-mask'
+import {
+    mask
+} from 'vue-the-mask'
 export default {
     name: 'FormLinkEdit',
     data() {
@@ -82,22 +84,26 @@ export default {
         axios.get(process.env.VUE_APP_ROOT_API + '/link/' + window.localStorage.getItem("link")).then(response => {
             this.model = response.data
             this.id_link = response.data.id
-            this.model.id_tipo_link  = this.model.id_tipo_link.id
+            this.model.id_tipo_link = this.model.id_tipo_link.id
             window.localStorage.removeItem("link")
         })
         axios.get(process.env.VUE_APP_ROOT_API + '/tipo_link?where={"ativo": 1}').then(response => {
             this.optionsStade = response.data
         })
     },
-    directives: {mask},
+    directives: {
+        mask
+    },
     methods: {
         getError(fieldName) {
             return this.errors.first(fieldName)
         },
         validate() {
-            this.$validator.validateAll().then(isValid => {
+            if (result) {
                 this.$emit('on-submit', this.salvar(), isValid)
-            })
+                return
+            }
+            swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
         },
         salvar() {
             const authUser = JSON.parse(window.localStorage.getItem('usuario'))
@@ -113,7 +119,7 @@ export default {
                 .then(response => {
                     this.results = response.data
                     swal('Bom trabalho!', 'Link Editado com sucesso!', 'success')
-                            this.$router.push('/forms/LinkList')
+                    this.$router.push('/forms/LinkList')
                 })
                 .catch(error => {
                     swal('Algo de errado!', 'Verifique os campos do cadastros!', 'error')
