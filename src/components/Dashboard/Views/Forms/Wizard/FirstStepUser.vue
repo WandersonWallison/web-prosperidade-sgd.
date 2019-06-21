@@ -24,7 +24,7 @@
                         </el-date-picker>
                     </fg-input>
                     <br>
-                    <fg-input :error="getError('comissionamneto')">
+                    <fg-input :error="getError('comissionamento')">
                     <el-select no-data-text="Sem Informações" v-validate="modelValidations.comissionamento" class="select-default" v-model="model.comissionamento" name="Comissionamento" placeholder="Comissionamento">
                         <el-option class="select-default" v-for="item in optionsComissionamento" :key="item.id" :label="item.descricao" :value="item.id">
                         </el-option>
@@ -54,13 +54,20 @@
                     </el-select>
                 </fg-input>
                 <br>
-                <fg-input :error="getError('escritorio')">
-                    <el-select no-data-text="Sem Informações" class="select-default" v-validate="modelValidations.escritorio" v-model="model.escritorio" name="escritorio" placeholder="Escritorio">
+                <fg-input :error="getError('empresa')" v-if="model.tipo != 3">
+                    <el-select no-data-text="Sem Informações" class="select-default" v-validate="modelValidations.empresa" v-model="model.empresa" name="empresa" placeholder="Empresa">
+                        <el-option class="select-default" v-for="item in optionsEmpresa" :key="item.id" :label="item.nome" :value="item.id">
+                        </el-option>
+                    </el-select>
+                </fg-input>
+                <br>
+                <fg-input :error="getError('escritorio')" v-if="model.tipo == 3">
+                    <el-select no-data-text="Sem Informações" class="select-default" v-validate="modelValidations.empresa" v-model="model.escritorio" name="escritorio" placeholder="Escritorio">
                         <el-option class="select-default" v-for="item in optionsEscritorio" :key="item.id" :label="item.nome" :value="item.id">
                         </el-option>
                     </el-select>
                 </fg-input>
-
+                
             </el-card>
         </div>
     </div>
@@ -83,6 +90,7 @@ import {
 import {
     mask
 } from 'vue-the-mask'
+import { truncate } from 'fs';
 export default {
     components: {
         [DatePicker.name]: DatePicker,
@@ -129,6 +137,7 @@ export default {
                 celular: '',
                 datePicker: '',
                 escritorio: '',
+                empresa: '',
                 imageUrl: 'static/img/default-avatar.png',
                 comissionamento: ''
             },
@@ -159,9 +168,6 @@ export default {
                     required: true,
                     email: true
                 },
-                escritorio: {
-                    required: true
-                },
                 tipo: {
                     required: true
                 },
@@ -170,6 +176,7 @@ export default {
                 }
             },
             options: [],
+            optionsEmpresa: [],
             optionsEscritorio: [],
             optionsComissionamento: []
         }
@@ -181,10 +188,13 @@ export default {
         axios.get(process.env.VUE_APP_ROOT_API + '/grupo?where={"ativo": 1}').then(response => {
             this.options = response.data
         })
-        axios.get(process.env.VUE_APP_ROOT_API + '/escritorio').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
+            this.optionsEmpresa = response.data
+        })
+        axios.get(process.env.VUE_APP_ROOT_API + '/escritorio?where={"ativo": 1}').then(response => {
             this.optionsEscritorio = response.data
         })
-         axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento_faixa').then(response => {
+         axios.get(process.env.VUE_APP_ROOT_API + '/comissionamento_faixa?where={"ativo": 1}').then(response => {
             this.optionsComissionamento = response.data
         })
 

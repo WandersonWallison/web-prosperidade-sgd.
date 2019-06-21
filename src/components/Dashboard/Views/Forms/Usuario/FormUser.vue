@@ -86,6 +86,7 @@ export default {
                 id_grupo: this.wizardModel.tipo,
                 id_comissionamento_faixa: this.wizardModel.comissionamento,
                 id_escritorio: this.wizardModel.escritorio,
+                id_empresa: this.wizardModel.empresa,
                 cvn: this.wizardModel.cvn,
                 id_responsavel: authUser.id
             }
