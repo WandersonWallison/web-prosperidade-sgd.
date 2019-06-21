@@ -1,7 +1,7 @@
 <template>
   <card>
     <template slot="header">
-      <h4 class="card-title">Mensagens</h4>
+      <h4 class="card-title">Mensagens2</h4>
       <p class="category">Backend development</p>
     </template>
     <div class="table-full-width table-tasks">

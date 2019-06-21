@@ -34,7 +34,7 @@
                 <fg-input type="email" name="email" v-validate="modelValidations.email" :error="getError('email')" v-model="model.email"></fg-input>
                 <!--<label>Site</label>
                 <fg-input type="text" name="site" v-validate="modelValidations.site" :error="getError('site')" v-model="model.site"></fg-input>-->
-                
+
             </div>
             <div class="form-group">
                 <label>CEP</label>
@@ -297,8 +297,12 @@ export default {
             return this.errors.first(fieldName)
         },
         validate() {
-            this.$validator.validateAll().then(isValid => {
-                this.$emit("on-submit", this.salvar(), isValid)
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    this.$emit('on-submit', this.salvar(), result)
+                    return
+                }
+                swal('Por favor verificar os dados solicitados no formulario!','', 'info')
             })
         },
         buscarEndereco() {

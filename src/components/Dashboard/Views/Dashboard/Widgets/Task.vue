@@ -28,6 +28,7 @@
   import { Tooltip } from 'element-ui'
 
   export default {
+    name:'Comentarios',
     components: {
       [Tooltip.name]: Tooltip
     },
