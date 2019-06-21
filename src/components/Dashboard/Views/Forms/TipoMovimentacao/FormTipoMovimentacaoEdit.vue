@@ -67,9 +67,11 @@ export default {
             return this.errors.first(fieldName)
         },
         validate() {
-            this.$validator.validateAll().then(isValid => {
+            if (result) {
                 this.$emit('on-submit', this.salvar(), isValid)
-            })
+                return
+            }
+            swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
         },
         salvar() {
             const authUser = JSON.parse(window.localStorage.getItem('usuario'))

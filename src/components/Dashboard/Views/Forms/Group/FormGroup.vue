@@ -54,7 +54,7 @@ export default {
         }
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/link?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/link?limit=200&where={"ativo":1}').then(response => {
             this.selects.links = response.data
         })
     },

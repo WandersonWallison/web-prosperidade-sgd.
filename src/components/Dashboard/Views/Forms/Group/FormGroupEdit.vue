@@ -16,7 +16,7 @@
         <div class="card-body">
             <div class="form-group">
                 <label>Links</label>
-                <el-select multiple class="select-primary" collapse-tags v-model="groupLinks" placeholder="Multiple Select">
+                <el-select multiple no-data-text="Sem Informações" class="select-primary" collapse-tags v-model="groupLinks" placeholder="Multiple Select">
                     <el-option v-for="option in selects.links" class="select-primary" :value="option.id" :label="option.link" :key="option.id">
                     </el-option>
                 </el-select>
@@ -70,7 +70,7 @@ export default {
         })
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/link?where={"ativo": 1}?limit=200').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/link?limit=200&where={"ativo":1}').then(response => {
             this.selects.links = response.data
         })
     },

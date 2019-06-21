@@ -66,7 +66,7 @@ export default {
                     this.$emit('on-submit', this.salvar(), isValid)
                     return
                 }
-                swal('Corrija-os erros no formulario!', '', 'error')
+                swal('Por favor verificar os dados solicitados no formulario!','', 'info')
             })
         },
         salvar() {
