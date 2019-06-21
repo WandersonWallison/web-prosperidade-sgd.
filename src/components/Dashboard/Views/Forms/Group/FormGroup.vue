@@ -71,9 +71,9 @@ export default {
                 this.$emit('on-submit', this.salvar(), isValid)
             })
             */
-            this.$validator.validateAll().then((result) => {
+           this.$validator.validateAll().then((result) => {
                 if (result) {
-                    this.$emit('on-submit', this.salvar(), isValid)
+                    this.$emit('on-submit', this.salvar(), result)
                     return
                 }
                 swal('Por favor verificar os dados solicitados no formulario!','', 'info')
