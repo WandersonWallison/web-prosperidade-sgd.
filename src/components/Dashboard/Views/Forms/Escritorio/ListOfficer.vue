@@ -135,7 +135,7 @@ export default {
             tableColumns: [{
                     prop: 'nome',
                     label: 'Nome',
-                    minWidth: 170
+                    minWidth: 120
                 },
                 //{
                 //    prop: 'cnpj',
@@ -150,7 +150,7 @@ export default {
                 {
                     prop: 'email',
                     label: 'E-mail',
-                    minWidth: 120
+                    minWidth: 150
                 },
                 {
                     prop: 'iss',
