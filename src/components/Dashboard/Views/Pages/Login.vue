@@ -92,7 +92,7 @@ export default {
                         swal(this.valorLogin.message, '', 'warning')
                     } else {
                         window.localStorage.setItem('usuario', JSON.stringify(this.valorLogin.user))
-                        axios.get(process.env.VUE_APP_ROOT_API + '/grupo/' + this.valorLogin.user.id_grupo + '//link?limit=200&where={"ativo":1}')
+                        axios.get(process.env.VUE_APP_ROOT_API + '/grupo/' + this.valorLogin.user.id_grupo + '/link?limit=200&where={"ativo":1}')
                             .then((result) => {
                                 window.localStorage.setItem('links', JSON.stringify(result.data))
                             })
