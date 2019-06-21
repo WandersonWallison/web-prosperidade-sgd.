@@ -271,7 +271,7 @@ export default {
             }) */
             this.$validator.validateAll().then((result) => {
                 if (result) {
-                    this.$emit('on-submit', this.salvar(), isValid)
+                    this.$emit('on-submit', this.salvar(), result)
                     return
                 }
                 swal('Por favor verificar os dados solicitados no formulario!','', 'info')
@@ -282,8 +282,8 @@ export default {
             this.model.logradouro = ''
             this.model.cidade = ''
             this.model.estado = ''
-
-            axios.get('https://api.postmon.com.br/v1/cep/' + this.model.cep)
+          try {
+              axios.get('https://api.postmon.com.br/v1/cep/' + this.model.cep)
                 .then(response => {
                     this.endereco = response.data
                     if (this.endereco.cidade) {
@@ -303,9 +303,15 @@ export default {
                     }
                 })
                 .catch(error => {
-                    // alert('Erro no cadastro do Endereço')
+                    alert('Cep não encontrado, por favor verificar!')
                     console.log(error.response.data)
+                    return
                 })
+
+          } catch (erro) {
+              console.log('erro'+ erro)
+          }
+
         },
         salvar() {
             const authUser = JSON.parse(window.localStorage.getItem('usuario'))
@@ -337,7 +343,7 @@ export default {
                         .then(response => {
                             this.resultAdress = response.data
                             swal('Bom trabalho!', 'Empresa Cadastrada com sucesso!', 'success')
-                            this.$router.push('/forms/companyList')
+                            this.$router.push('/forms/CompanyList')
                         })
                         .catch(error => {
                             swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')

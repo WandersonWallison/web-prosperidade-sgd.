@@ -43,12 +43,12 @@ import AppFooter from './Layout/AppFooter'
 import swal from 'sweetalert2'
 import axios from 'axios'
 const dictionary = {
-  en: {
-    attributes: {
-      email: 'E-mail invalido',
-      passaword: 'Senha invalida'
+    en: {
+        attributes: {
+            email: 'E-mail invalido',
+            passaword: 'Senha invalida'
+        }
     }
-  }
 }
 export default {
     name: 'Login',
@@ -75,10 +75,10 @@ export default {
         validate() {
             this.$validator.validateAll().then((result) => {
                 if (result) {
-                    this.$emit('on-submit', this.login(), isValid)
+                    this.$emit('on-submit', this.login())
                     return
                 }
-                swal('Por favor verificar os dados solicitados no formulario!','', 'info')
+                swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
             })
         },
         login() {
@@ -92,7 +92,7 @@ export default {
                         swal(this.valorLogin.message, '', 'warning')
                     } else {
                         window.localStorage.setItem('usuario', JSON.stringify(this.valorLogin.user))
-                        axios.get(process.env.VUE_APP_ROOT_API + '/grupo/' + this.valorLogin.user.id_grupo + '/link?limit=200&where={"ativo":1}')
+                        axios.get(process.env.VUE_APP_ROOT_API + '/grupo/' + this.valorLogin.user.id_grupo + '/links?limit=200&where={"ativo":1}')
                             .then((result) => {
                                 window.localStorage.setItem('links', JSON.stringify(result.data))
                             })

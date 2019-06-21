@@ -59,14 +59,16 @@ export default {
     },
     created() {
         axios.get(process.env.VUE_APP_ROOT_API + '/grupo/' + window.localStorage.getItem("grupo")).then(response => {
-            this.groupEdit = response.data
-            this.model = this.groupEdit
-
-            for (let index = 0; index < this.groupEdit.links.length; index++) {
-                this.groupLinks.push(this.groupEdit.links[index].id)
-            }
-            this.selectLinks = this.groupLinks
-            window.localStorage.removeItem("grupo")
+            this.model = response.data
+            axios.get(process.env.VUE_APP_ROOT_API + '/grupo/' + window.localStorage.getItem("grupo") + '/links?limit=200').then(response => {
+                this.groupEdit = response.data
+                console.log('tamanho: ', this.groupEdit.length)
+                for (let index = 0; index < this.groupEdit.length; index++) {
+                    this.groupLinks.push(this.groupEdit[index].id)
+                }
+                this.selectLinks = this.groupLinks
+                window.localStorage.removeItem("grupo")
+            })
         })
     },
     mounted() {
