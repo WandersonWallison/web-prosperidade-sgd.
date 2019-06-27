@@ -37,6 +37,14 @@
                 v-validate="modelValidations.bairro">
       </fg-input>
     </div>
+    <div class="col-sm-11">
+      <fg-input label="Complemento"
+                name="complemento"
+                v-model="model.complemento"
+                :error="getError('complemento')"
+                v-validate="modelValidations.complemento">
+      </fg-input>
+    </div>
     <div class="col-sm-6">
       <fg-input label="Cidade"
                 name="cidade"
@@ -76,6 +84,7 @@
         model: {
           cep: '',
           logradouro: '',
+          complemento: '',
           cidade: '',
           bairro: '',
           country: ''
@@ -194,6 +203,9 @@
             required: true
           },
           logradouro: {
+            required: true
+          },
+          complemento: {
             required: true
           },
           cidade: {

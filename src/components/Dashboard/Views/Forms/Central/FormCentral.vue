@@ -52,6 +52,9 @@
                 <label>Logradouro</label>
                 <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
                 </fg-input>
+                <label>Complemento</label>
+                <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
+                </fg-input>
                 <label>Número</label>
                 <fg-input type="text" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
                 </fg-input>
@@ -99,6 +102,7 @@ export default {
                 //site: '',
                 cep: '',
                 logradouro: '',
+                complemento: '',
                 numero: '',
                 bairro: '',
                 cidade: '',
@@ -107,7 +111,7 @@ export default {
                 empresa: ''
             },
             tipoCentral: [],
-            empresa:[],
+            empresa: [],
             enderecoBuscado: [],
             modelValidations: {
                 nome: {
@@ -140,6 +144,9 @@ export default {
                 },
                 numero: {
                     required: true
+                },
+                complemento: {
+                   required: true
                 },
                 bairro: {
                     required: true
@@ -292,7 +299,7 @@ export default {
                     this.$emit('on-submit', this.salvar(), result)
                     return
                 }
-                swal('Por favor verificar os dados solicitados no formulario!','', 'info')
+                swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
             })
         },
         buscarEndereco() {
@@ -342,6 +349,7 @@ export default {
             }
             let endereco = {
                 logradouro: this.model.logradouro,
+                complemento: this.model.complemento,
                 cep: this.model.cep,
                 uf: this.model.estado,
                 bairro: this.model.bairro,

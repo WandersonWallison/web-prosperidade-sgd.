@@ -93,6 +93,7 @@ export default {
             let endereco = {
                 logradouro: this.wizardModel.logradouro,
                 cep: this.wizardModel.cep,
+                complemento: this.wizardModel.complemento,
                 bairro: this.wizardModel.bairro,
                 cidade: this.wizardModel.cidade,
                 uf: this.wizardModel.country,

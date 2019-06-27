@@ -13,7 +13,6 @@
                 </fg-input>
                 <fg-input name="senha" type="password" placeholder="Senha" v-model="model.senha" v-validate="modelValidations.senha" :error="getError('senha')">
                 </fg-input>
-
                 <fg-input name="telefone" placeholder="telefone" v-model="model.telefone" v-validate="modelValidations.telefone" :error="getError('telefone')" v-mask="'(##) ####-####'">
                 </fg-input>
                 <fg-input name="celular" placeholder="celular" v-model="model.celular" v-validate="modelValidations.celular" :error="getError('celular')" v-mask="'(##) #####-####'">
@@ -67,7 +66,7 @@
                         </el-option>
                     </el-select>
                 </fg-input>
-                
+
             </el-card>
         </div>
     </div>

@@ -49,6 +49,9 @@
                     <label>Número</label>
                     <fg-input type="text" v-mask="'######'" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
                     </fg-input>
+                    <label>Complemento</label>
+                    <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
+                    </fg-input>
                     <label>Bairro</label>
                     <fg-input type="text" name="bairro" v-validate="modelValidations.bairro" :error="getError('bairro')" v-model="model.bairro">
                     </fg-input>
@@ -163,6 +166,7 @@ export default {
                 // Endereço --------------
                 cep: '',
                 logradouro: '',
+                complemento: '',
                 numero: '',
                 bairro: '',
                 cidade: '',
@@ -205,6 +209,9 @@ export default {
                     required: true
                 },
                 logradouro: {
+                    required: true
+                },
+                complemento: {
                     required: true
                 },
                 numero: {
@@ -373,6 +380,7 @@ export default {
                 this.model.cep = this.dataCliente.endereco[0].cep
                 this.model.logradouro = this.dataCliente.endereco[0].logradouro
                 this.model.numero = this.dataCliente.endereco[0].numero
+                this.model.complemento = this.dataCliente.endereco[0].complemento
                 this.model.bairro = this.dataCliente.endereco[0].bairro
                 this.model.cidade = this.dataCliente.endereco[0].cidade
                 this.model.estado = this.dataCliente.endereco[0].uf
@@ -457,6 +465,7 @@ export default {
             }
             let endereco = {
                 logradouro: this.model.logradouro,
+                complemento: this.model.complemento,
                 cep: this.model.cep,
                 uf: this.model.estado,
                 bairro: this.model.bairro,

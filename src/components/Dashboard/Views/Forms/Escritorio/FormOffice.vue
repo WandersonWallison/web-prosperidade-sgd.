@@ -46,6 +46,9 @@
                 <label>Número</label>
                 <fg-input type="text" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
                 </fg-input>
+                <label>Complemento</label>
+                <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
+                </fg-input>
                 <label>Bairro</label>
                 <fg-input type="text" name="bairro" v-validate="modelValidations.bairro" :error="getError('bairro')" v-model="model.bairro">
                 </fg-input>
@@ -89,6 +92,7 @@ export default {
                 email: '',
                 cep: '',
                 logradouro: '',
+                complemento: '',
                 numero: '',
                 bairro: '',
                 cidade: '',
@@ -120,6 +124,9 @@ export default {
                     required: true
                 },
                 logradouro: {
+                    required: true
+                },
+                complemento: {
                     required: true
                 },
                 numero: {

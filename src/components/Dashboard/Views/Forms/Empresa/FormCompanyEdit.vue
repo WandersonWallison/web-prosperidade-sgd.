@@ -40,6 +40,9 @@
                 <label>Número</label>
                 <fg-input type="text" v-mask="'#####'" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
                 </fg-input>
+                <label>Complemento</label>
+                <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
+                </fg-input>
                 <label>Bairro</label>
                 <fg-input type="text" name="bairro" v-validate="modelValidations.bairro" :error="getError('bairro')" v-model="model.bairro">
                 </fg-input>
@@ -92,6 +95,7 @@ export default {
                 // Endereço --------------
                 cep: '',
                 logradouro: '',
+                complemento: '',
                 numero: '',
                 bairro: '',
                 cidade: '',
@@ -132,6 +136,9 @@ export default {
                     required: true
                 },
                 numero: {
+                    required: true
+                },
+                complemento: {
                     required: true
                 },
                 bairro: {
@@ -276,6 +283,7 @@ export default {
             if (this.companyEdit.endereco.length > 0) {
                 this.model.cep = this.companyEdit.endereco[0].cep
                 this.model.logradouro = this.companyEdit.endereco[0].logradouro
+                this.model.complemento = this.companyEdit.endereco[0].complemento
                 this.model.numero = this.companyEdit.endereco[0].numero
                 this.model.bairro = this.companyEdit.endereco[0].bairro
                 this.model.cidade = this.companyEdit.endereco[0].cidade
@@ -294,7 +302,7 @@ export default {
                     this.$emit('on-submit', this.salvar(), result)
                     return
                 }
-                swal('Por favor verificar os dados solicitados no formulario!','', 'info')
+                swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
             })
         },
         buscarEndereco() {
@@ -346,6 +354,7 @@ export default {
             }
             let endereco = {
                 logradouro: this.model.logradouro,
+                complemento: this.model.complemento,
                 cep: this.model.cep,
                 uf: this.model.estado,
                 bairro: this.model.bairro,

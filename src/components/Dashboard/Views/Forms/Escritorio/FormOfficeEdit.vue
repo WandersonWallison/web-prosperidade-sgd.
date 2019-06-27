@@ -46,6 +46,9 @@
                 <label>Número</label>
                 <fg-input type="text" v-mask="'#####'" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
                 </fg-input>
+                <label>Complemento</label>
+                <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
+                </fg-input>
                 <label>Bairro</label>
                 <fg-input type="text" name="bairro" v-validate="modelValidations.bairro" :error="getError('bairro')" v-model="model.bairro">
                 </fg-input>
@@ -61,12 +64,6 @@
                         </el-select>
                     </fg-input>
                 </div>
-                <!--
-                <label>Complemento</label>
-                <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
-                </fg-input>
-                -->
-
             </div>
         </div>
         <div class="card-footer text-right">
@@ -99,6 +96,7 @@ export default {
                 // Endereço --------------
                 cep: '',
                 logradouro: '',
+                complemento: '',
                 numero: '',
                 bairro: '',
                 cidade: '',
@@ -132,6 +130,9 @@ export default {
                 logradouro: {
                     required: true
                 },
+                complemento: {
+                    required: true
+                },
                 numero: {
                     required: true
                 },
@@ -148,10 +149,10 @@ export default {
                     required: true
                 },
                 iss: {
-                  required: true
+                    required: true
                 },
                 central: {
-                  required: true
+                    required: true
                 }
             },
             optionsStade: [{
@@ -282,6 +283,7 @@ export default {
             if (this.officeEdit.endereco.length > 0) {
                 this.model.cep = this.officeEdit.endereco[0].cep
                 this.model.logradouro = this.officeEdit.endereco[0].logradouro
+                this.model.complemento = this.officeEdit.endereco[0].complemento
                 this.model.numero = this.officeEdit.endereco[0].numero
                 this.model.bairro = this.officeEdit.endereco[0].bairro
                 this.model.cidade = this.officeEdit.endereco[0].cidade
@@ -300,12 +302,12 @@ export default {
             return this.errors.first(fieldName)
         },
         validate() {
-           this.$validator.validateAll().then((result) => {
+            this.$validator.validateAll().then((result) => {
                 if (result) {
                     this.$emit('on-submit', this.salvar(), result)
                     return
                 }
-                swal('Por favor verificar os dados solicitados no formulario!','', 'info')
+                swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
             })
         },
         buscarEndereco() {
@@ -357,6 +359,7 @@ export default {
             }
             let endereco = {
                 logradouro: this.model.logradouro,
+                complemento: this.model.complemento,
                 cep: this.model.cep,
                 uf: this.model.estado,
                 bairro: this.model.bairro,

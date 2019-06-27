@@ -42,6 +42,9 @@
                 <label>Logradouro</label>
                 <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro"></fg-input>
                 <label>Número</label>
+                <label>Complemento</label>
+                <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
+                </fg-input>
                 <fg-input type="text" v-mask="'#####'" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero"></fg-input>
                 <label>Bairro</label>
                 <fg-input type="text" name="bairro" v-validate="modelValidations.bairro" :error="getError('bairro')" v-model="model.bairro"></fg-input>
@@ -83,6 +86,7 @@ export default {
                 //site: '',
                 cep: '',
                 logradouro: '',
+                complemento: '',
                 numero: '',
                 bairro: '',
                 cidade: '',
@@ -108,19 +112,22 @@ export default {
                     required: true
                 },
                 //celular: {
-               //     required: true
-               // },
+                //     required: true
+                // },
                 email: {
                     required: true,
                     email: true
                 },
                 //site: {
-               //     required: false
-               // },
+                //     required: false
+                // },
                 cep: {
                     required: true
                 },
                 logradouro: {
+                    required: true
+                },
+                complemento: {
                     required: true
                 },
                 numero: {
@@ -277,6 +284,7 @@ export default {
                 if (this.CentralEdit.endereco.length > 0) {
                     this.model.cep = this.CentralEdit.endereco[0].cep
                     this.model.logradouro = this.CentralEdit.endereco[0].logradouro
+                    this.model.complemento = this.CentralEdit.endereco[0].complemento
                     this.model.numero = this.CentralEdit.endereco[0].numero
                     this.model.bairro = this.CentralEdit.endereco[0].bairro
                     this.model.cidade = this.CentralEdit.endereco[0].cidade
@@ -302,7 +310,7 @@ export default {
                     this.$emit('on-submit', this.salvar(), result)
                     return
                 }
-                swal('Por favor verificar os dados solicitados no formulario!','', 'info')
+                swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
             })
         },
         buscarEndereco() {
@@ -352,6 +360,7 @@ export default {
             }
             let endereco = {
                 logradouro: this.model.logradouro,
+                complemento: this.model.complemento,
                 cep: this.model.cep,
                 uf: this.model.estado,
                 bairro: this.model.bairro,
