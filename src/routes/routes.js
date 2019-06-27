@@ -85,6 +85,7 @@ const VectorMaps = () => import(/* webpackChunkName: "maps" */ 'src/components/D
 import Calendar from 'src/components/Dashboard/Views/Calendar/CalendarRoute.vue'
 // Charts
 const Charts = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Charts.vue')
+
 let componentsMenu = {
   path: '/components',
   component: DashboardLayout,

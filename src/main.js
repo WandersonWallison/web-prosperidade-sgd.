@@ -65,7 +65,6 @@ const router = new VueRouter({
     }
   }
 })
-
 initProgress(router);
 
 /* eslint-disable no-new */

@@ -16,29 +16,32 @@ function tryInitProgress() {
   }, progressShowDelay);
 }
 export default function initProgress(router) {
+
   router.beforeEach((to, from, next) => {
-    // console.log(to.path)
-    var links = JSON.parse(window.localStorage.getItem('links'))
+
+    let links = JSON.parse(window.localStorage.getItem('links'))
     //console.log(links)
 
     // regra de validação de users
-    if (links == null){
+    if (to.path === '/login'){
       return next()
-    }else{
-
-      for (let index = 0; index < links.length; index++) {
-        if (to.path === links[index].link){
-          ValidaLink = true
-          tryInitProgress()
-          return next()
-       }  
+    } else {
+      console.log(links)
+      if (links){
+        for (let index = 0; index < links.length; index++) {
+          if (to.path === links[index].link){
+            ValidaLink = true
+            tryInitProgress()
+            return next()
+         }
+        }
+      } else {
+        if(ValidaLink){
+          swal('Você não tem permissão', '','warning')
+        }
       }
-          if(ValidaLink){
-            swal('Você não tem permissão', '','warning')
-          }
-      
-    }   
-  });
+    }
+  })
 
   router.afterEach(() => {
     // Complete the animation of the route progress bar.
