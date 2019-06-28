@@ -135,8 +135,8 @@ export default {
                 telefone: '',
                 celular: '',
                 datePicker: '',
-                escritorio:'',
-                empresa: '',
+                escritorio: null,
+                empresa: null,
                 imageUrl: 'static/img/default-avatar.png',
                 comissionamento: ''
             },
