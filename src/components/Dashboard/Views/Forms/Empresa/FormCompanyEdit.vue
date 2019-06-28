@@ -38,7 +38,7 @@
                 <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
                 </fg-input>
                 <label>Número</label>
-                <fg-input type="text" v-mask="'#####'" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
+                <fg-input type="text" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
                 </fg-input>
                 <label>Complemento</label>
                 <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
