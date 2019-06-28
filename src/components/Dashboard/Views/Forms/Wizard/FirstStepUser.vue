@@ -61,7 +61,7 @@
                 </fg-input>
                 <br>
                 <fg-input :error="getError('escritorio')" v-if="model.tipo == 3">
-                    <el-select no-data-text="Sem Informações" class="select-default" v-validate="modelValidations.empresa" v-model="model.escritorio" name="escritorio" placeholder="Escritorio">
+                    <el-select no-data-text="Sem Informações" class="select-default" v-validate="modelValidations.escritorio" v-model="model.escritorio" name="escritorio" placeholder="Escritorio">
                         <el-option class="select-default" v-for="item in optionsEscritorio" :key="item.id" :label="item.nome" :value="item.id">
                         </el-option>
                     </el-select>
@@ -135,7 +135,7 @@ export default {
                 telefone: '',
                 celular: '',
                 datePicker: '',
-                escritorio: '',
+                escritorio:'',
                 empresa: '',
                 imageUrl: 'static/img/default-avatar.png',
                 comissionamento: ''

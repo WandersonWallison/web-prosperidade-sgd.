@@ -374,7 +374,7 @@ export default {
                             .then(response => {
                                 this.resultAdress = response.data
                                 swal('Bom trabalho!', 'Empresa Atualizada com sucesso!', 'success')
-                                this.$router.push('/forms/companyList')
+                                this.$router.push('/forms/CompanyList')
                             })
                             .catch(error => {
                                 swal('Algo de errado!', 'Verifique os campos do endereço no cadastro!', 'error')
@@ -386,7 +386,7 @@ export default {
                             .then(response => {
                                 this.resultAdress = response.data
                                 swal('Bom trabalho!', 'Empresa Atualizada com sucesso!', 'success')
-                                this.$router.push('/forms/companyList')
+                                this.$router.push('/forms/CompanyList')
                             })
                             .catch(error => {
                                 swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')

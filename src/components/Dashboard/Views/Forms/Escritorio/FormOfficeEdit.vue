@@ -377,7 +377,7 @@ export default {
                         .then(response => {
                             this.resultAdress = response.data
                             swal('Bom trabalho!', 'Escritório Atualizado com sucesso!', 'success')
-                            this.$router.push('/forms/officeList')
+                            this.$router.push('/forms/OfficeList')
                         })
                         .catch(error => {
                             swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
