@@ -100,6 +100,11 @@ export default {
                 numero: this.wizardModel.numero,
                 id_user: ''
             }
+            if (user.id_grupo == 3){
+                user.id_empresa = null
+            }else{
+                user.id_escritorio = null
+            }
             axios.post(process.env.VUE_APP_ROOT_API + '/user', user)
                 .then(response => {
                     this.results = response.data
