@@ -52,11 +52,11 @@
                 <label>Logradouro</label>
                 <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
                 </fg-input>
-                <label>Complemento</label>
-                <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
-                </fg-input>
                 <label>Número</label>
                 <fg-input type="text" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
+                </fg-input>
+                <label>Complemento</label>
+                <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
                 </fg-input>
                 <label>Bairro</label>
                 <fg-input type="text" name="bairro" v-validate="modelValidations.bairro" :error="getError('bairro')" v-model="model.bairro">
@@ -299,7 +299,7 @@ export default {
                     this.$emit('on-submit', this.salvar(), result)
                     return
                 }
-                swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
+                swal('Por favor verificar os dados solicitados no formulário!', '', 'info')
             })
         },
         buscarEndereco() {

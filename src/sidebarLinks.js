@@ -12,16 +12,16 @@ export default [
     path: '/forms/CompanyList'
   },
   {
-    name: 'Operador',
-    path: '/forms/OperatorList'
-  },
-  {
     name: 'Central',
     path: '/forms/CentralList'
   },
   {
     name: 'Escritorio',
     path: '/forms/OfficeList'
+  },
+  {
+    name: 'Operador',
+    path: '/forms/OperatorList'
   },
   {
     name: 'Assessor',
