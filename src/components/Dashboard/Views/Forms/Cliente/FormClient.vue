@@ -12,7 +12,7 @@
             <div class="form-group col-md-6">
                 <el-card class="box-card">
                     <div class="form-group col-md-10">
-                        <el-switch v-model="model.value1" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Pessoa Jurídica" inactive-text="Pessoa Física">
+                        <el-switch v-model="model.tipo_pessoa"  name="tipo_pessoa" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Pessoa Jurídica" inactive-text="Pessoa Física">
                         </el-switch>
                     </div>
                     <div slot="header" class="clearfix">
@@ -34,14 +34,23 @@
                         <span>Endereço</span>
                     </div>
                     <label>Tipo Endereço</label>
+                    <div class="form-group col-md-10">
+                        <fg-input :error="getError('tipo_endereco')" v-validate="modelValidations.tipo_endereco">
+                            <el-switch v-model="model.tipo_endereco" name="tipo_endereco" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Comercial" inactive-text="Residencial">
+                            </el-switch>
+                        </fg-input>
+                    </div>
+                    <!--
+                    <label>Tipo Endereço</label>
                     <fg-input :error="getError('tipo')" v-validate="modelValidations.tipo">
-                        <el-select class="select-default" v-model="model.tipo" name="estado" placeholder="Selecione...">
+                        <el-select class="select-default" v-model="model.tipo" v-validate="modelValidations.tipo" name="tipo" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in optionsTipo" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
                     </fg-input>
+                    -->
                     <label>CEP</label>
-                    <fg-input type="text" v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
+                    <fg-input type="text" v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('cep')" @change="buscarEndereco($event)" v-model="model.cep">
                     </fg-input>
                     <label>Logradouro</label>
                     <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
@@ -59,14 +68,13 @@
                     <fg-input type="text" name="cidade" v-validate="modelValidations.cidade" :error="getError('cidade')" v-model="model.cidade">
                     </fg-input>
                     <label>Estado</label>
-                    <fg-input :error="getError('estado')" v-validate="modelValidations.estado">
-                        <el-select class="select-default" v-model="model.estado" name="estado" placeholder="Selecione...">
+                    <fg-input :error="getError('estado')">
+                        <el-select class="select-default" v-validate="modelValidations.estado" v-model="model.estado" name="estado" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in optionsStade" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
                     </fg-input>
                 </el-card>
-
             </div>
             <div class="form-group col-md-6">
                 <el-card class="box-card">
@@ -79,6 +87,7 @@
                     <label>Numero XP</label>
                     <fg-input type="text" name="numero_xp" v-validate="modelValidations.numero_xp" :error="getError('numero_xp')" v-model="model.numero_xp">
                     </fg-input>
+                    <!--
                     <label>Operador</label>
                     <fg-input :error="getError('operador')" v-validate="modelValidations.operador">
                         <el-select no-data-text="Sem informações" class="select-default" v-model="model.operador" name="operador" placeholder="Selecione...">
@@ -86,9 +95,10 @@
                             </el-option>
                         </el-select>
                     </fg-input>
+                    -->
                     <label>Assessor</label>
-                    <fg-input :error="getError('assessor')" v-validate="modelValidations.assessor">
-                        <el-select no-data-text="Sem informações" class="select-default" v-model="model.assessor" name="assessor" placeholder="Selecione...">
+                    <fg-input :error="getError('assessor')">
+                        <el-select no-data-text="Sem informações" class="select-default" v-validate="modelValidations.assessor" v-model="model.assessor" name="assessor" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in this.dataAssessores" :key="item.id" :label="item.username" :value="item.id">
                             </el-option>
                         </el-select>
@@ -101,7 +111,7 @@
                     </fg-input>
                 </el-card>
                 <br>
-                <div name="fisica" v-if="!this.model.value1">
+                <div name="fisica" v-if="!this.model.tipo_pessoa">
                     <el-card class="box-card">
                         <div slot="header" class="clearfix">
                             <span>Pessoa Física</span>
@@ -114,7 +124,7 @@
                         </fg-input>
                     </el-card>
                 </div>
-                <div name="juridica" v-if="this.model.value1">
+                <div name="juridica" v-if="this.model.tipo_pessoa">
                     <el-card class="box-card">
                         <div slot="header" class="clearfix">
                             <span>Pessoa Jurídica</span>
@@ -181,14 +191,14 @@ export default {
                 bairro: '',
                 cidade: '',
                 estado: '',
-                value1: false,
+                tipo_endereco: false,
+                tipo_pessoa: false,
                 habilitado_bovespa: true,
                 tipo: '',
                 operador: '',
                 assessor: ''
-
             },
-            dataOperadores: [],
+            // dataOperadores: [],
             dataAssessores: [],
             endereco: [],
             results: [],
@@ -213,13 +223,10 @@ export default {
                 potencial_investimento: {
                     required: true
                 },
-                tipoAddress: {
-                    required: true
+                tipo_endereco: {
+                  required: true
                 },
                 logradouro: {
-                    required: true
-                },
-                complemento: {
                     required: true
                 },
                 numero: {
@@ -228,6 +235,7 @@ export default {
                 bairro: {
                     required: true
                 },
+
                 cidade: {
                     required: true
                 },
@@ -237,12 +245,10 @@ export default {
                 estado: {
                     required: true
                 },
-                operador: {
-                    required: true
-                },
                 assessor: {
                     required: true
                 }
+
             },
             optionsTipo: [{
                     value: 'Comercial',
@@ -362,16 +368,20 @@ export default {
                     label: 'Tocantins'
                 }
             ]
+
         }
+
     },
     directives: {
         mask,
         money: VMoney
     },
     mounted() {
+        /*
         axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}').then(response => {
             this.dataOperadores = response.data
         })
+        */
         axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}').then(response => {
             this.dataAssessores = response.data
         })
@@ -383,19 +393,23 @@ export default {
         validate() {
             /*
             this.$validator.validateAll().then(isValid => {
+                console.log('isValid ',isValid)
                 this.$emit('on-submit', this.salvar(), isValid)
             })
             */
+
             this.$validator.validateAll().then((result) => {
+                console.log('Antes de ', result)
                 this.$validator.validateAll().then((result) => {
+                    console.log('RESULT ', result)
                     if (result) {
                         this.$emit('on-submit', this.salvar(), result)
                         return
+                    } else {
+                        swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
                     }
-                    swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
                 })
             })
-
         },
         buscarEndereco() {
             this.model.bairro = ''
@@ -458,7 +472,7 @@ export default {
                 rg: this.model.rg,
                 habilitado_bovespa: this.model.habilitado_bovespa,
                 id_responsavel: authUser.id,
-                id_operador: this.model.operador,
+                // id_operador: this.model.operador,
                 id_assessor: this.model.assessor
 
             }

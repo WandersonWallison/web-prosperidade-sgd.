@@ -79,7 +79,6 @@
             <p-button type="info" @click.prevent="validate">Salvar</p-button>
         </div>
     </form>
-
 </div>
 </template>
 
@@ -159,7 +158,11 @@ export default {
                 },
                 empresa: {
                     required: true
+                },
+                tipo_central: {
+                    required: true
                 }
+
             },
             optionsStade: [{
                     value: 'AC',
