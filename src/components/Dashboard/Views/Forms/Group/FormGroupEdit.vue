@@ -62,7 +62,6 @@ export default {
             this.model = response.data
             axios.get(process.env.VUE_APP_ROOT_API + '/grupo/' + window.localStorage.getItem("grupo") + '/links?limit=200').then(response => {
                 this.groupEdit = response.data
-                console.log('tamanho: ', this.groupEdit.length)
                 for (let index = 0; index < this.groupEdit.length; index++) {
                     this.groupLinks.push(this.groupEdit[index].id)
                 }
@@ -93,7 +92,6 @@ export default {
             })
         },
         salvar() {
-            console.log("grupo edit",this.groupEdit)
             const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let Grupo = {
                 descricao: this.model.descricao,
