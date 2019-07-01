@@ -25,7 +25,7 @@
     </div>-->
                 <span>{{this.arquivo}}</span>
                 <div class="loading-overlay2" v-if="loading">
-                    <md-progress-spinner md-mode='indeterminate' md-diameter=50 :md-stroke='4'></md-progress-spinner>
+                    <md-progress-spinner :md-stroke='4'></md-progress-spinner>
                 </div>
                 <div>
                     <md-content>

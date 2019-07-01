@@ -349,7 +349,7 @@ export default {
             const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let escritorio = {
                 nome: this.model.nome,
-                razao_social: this.model.nome,
+                razao_social: this.model.razao_social,
                 telefone: this.model.telefone,
                 email: this.model.email,
                 cnpj: this.model.cnpj,
@@ -371,7 +371,7 @@ export default {
             axios.put(process.env.VUE_APP_ROOT_API + '/escritorio/' + this.officeEdit.id, escritorio)
                 .then(response => {
                     this.results = response.data
-                    endereco.id_empresa = response.data.id
+                    endereco.id_escritorio = response.data.id
                     // Cadastro de Endereço
                     axios.put(process.env.VUE_APP_ROOT_API + '/endereco/' + this.officeEdit.endereco[0].id, endereco)
                         .then(response => {
