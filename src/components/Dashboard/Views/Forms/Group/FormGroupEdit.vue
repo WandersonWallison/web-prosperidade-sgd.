@@ -93,13 +93,14 @@ export default {
             })
         },
         salvar() {
+            console.log("grupo edit",this.groupEdit)
             const authUser = JSON.parse(window.localStorage.getItem('usuario'))
             let Grupo = {
                 descricao: this.model.descricao,
                 id_responsavel: authUser.id,
                 links: this.groupLinks
             }
-            axios.put(process.env.VUE_APP_ROOT_API + '/grupo/' + this.groupEdit.id, Grupo)
+            axios.put(process.env.VUE_APP_ROOT_API + '/grupo/' + this.model.id, Grupo)
                 .then(response => {
                     this.results = response.data
                     swal('Bom trabalho!', 'Grupo Alterado com sucesso!', 'success')
