@@ -12,7 +12,7 @@
             <div class="form-group col-md-6">
                 <el-card class="box-card">
                     <div class="form-group col-md-10">
-                        <el-switch v-model="model.value1" name="value1" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Pessoa Jurídica" inactive-text="Pessoa Física">
+                        <el-switch v-model="model.tipo_pessoa" name="tipo_pessoa" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Pessoa Jurídica" inactive-text="Pessoa Física">
                         </el-switch>
                     </div>
                     <div slot="header" class="clearfix">
@@ -102,7 +102,7 @@
                     </fg-input>
                 </el-card>
                 <br>
-                <div name="fisica" v-if="!this.model.value1">
+                <div name="fisica" v-if="!this.model.tipo_pessoa">
                     <el-card class="box-card">
                         <div slot="header" class="clearfix">
                             <span>Pessoa Física</span>
@@ -115,7 +115,7 @@
                         </fg-input>
                     </el-card>
                 </div>
-                <div name="juridica" v-if="this.model.value1">
+                <div name="juridica" v-if="this.model.tipo_pessoa">
                     <el-card class="box-card">
                         <div slot="header" class="clearfix">
                             <span>Pessoa Jurídica</span>
@@ -182,7 +182,7 @@ export default {
                 bairro: '',
                 cidade: '',
                 estado: '',
-                value1: '',
+                tipo_pessoa: '',
                 habilitado_bovespa: false,
                 tipo_endereco: '',
                 operador: '',
@@ -381,7 +381,7 @@ export default {
             this.model.habilitado_bovespa = this.dataCliente.habilitado_bovespa
             this.model.rg = this.dataCliente.rg
             this.model.razao_social = this.dataCliente.razao_social
-            this.model.value1 = this.dataCliente.tipo_pessoa
+            this.model.tipo_pessoa = this.dataCliente.tipo_pessoa
 
             if (this.dataCliente.endereco.length > 0) {
                 this.model.cep = this.dataCliente.endereco[0].cep
@@ -392,7 +392,7 @@ export default {
                 this.model.cidade = this.dataCliente.endereco[0].cidade
                 this.model.estado = this.dataCliente.endereco[0].uf
                 this.model.tipo_endereco = this.dataCliente.endereco[0].tipo
-                
+
             }
             window.localStorage.removeItem("cliente")
         })
@@ -468,8 +468,8 @@ export default {
                 habilitado_bovespa: this.model.habilitado_bovespa,
                 id_responsavel: authUser.id,
                 id_operador: this.model.operador,
+                tipo_pessoa: this.model.tipo_pessoa,
                 id_assessor: this.model.assessor
-
             }
             let endereco = {
                 logradouro: this.model.logradouro,

@@ -470,6 +470,7 @@ export default {
                 rg: this.model.rg,
                 habilitado_bovespa: this.model.habilitado_bovespa,
                 id_responsavel: authUser.id,
+                tipo_pessoa: this.model.tipo_pessoa,
                 // id_operador: this.model.operador,
                 id_assessor: this.model.assessor
 
