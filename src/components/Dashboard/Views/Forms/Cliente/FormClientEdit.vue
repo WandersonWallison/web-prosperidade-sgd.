@@ -35,10 +35,10 @@
                     </div>
                     <label>Tipo Endereço</label>
                     <div class="form-group col-md-10">
-                        <fg-input :error="getError('tipo_endereco')" v-validate="modelValidations.tipo_endereco">
-                            <el-switch v-model="model.tipo_endereco" name="tipo_endereco" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Comercial" inactive-text="Residencial">
-                            </el-switch>
-                        </fg-input>
+                        <v-radio-group v-model="model.tipo_endereco" row>
+                            <v-radio label="Residencial" value="Residencial"></v-radio>
+                            <v-radio label="Comercial" value="Comercial"></v-radio>
+                        </v-radio-group>
                     </div>
                     <label>CEP</label>
                     <fg-input type="text" v-mask="'#####-###'" data-vv-name="cep" v-validate="modelValidations.cep" :error="getError('cep')" @change="buscarEndereco($event)" v-model="model.cep">
@@ -182,8 +182,8 @@ export default {
                 bairro: '',
                 cidade: '',
                 estado: '',
-                value1: false,
-                habilitado_bovespa: true,
+                value1: '',
+                habilitado_bovespa: false,
                 tipo_endereco: '',
                 operador: '',
                 assessor: ''
@@ -198,59 +198,49 @@ export default {
             resultAdress: [],
             modelValidations: {
                 nome: {
-                  required: true
+                    required: true
                 },
                 telefone: {
-                  required: true
+                    required: true
                 },
                 email: {
-                  required: true,
-                  email: true
+                    required: true,
+                    email: true
                 },
                 id_xp: {
-                  required: true
+                    required: true
                 },
                 investimento_inicial: {
-                  required: true
+                    required: true
                 },
                 potencial_investimento: {
-                  required: true
+                    required: true
                 },
 
                 logradouro: {
-                  required: true
+                    required: true
                 },
                 complemento: {
-                  required: true
+                    required: true
                 },
 
                 numero: {
-                  required: true
+                    required: true
                 },
                 bairro: {
-                  required: true
+                    required: true
                 },
                 cidade: {
-                  required: true
+                    required: true
                 },
                 cep: {
-                  required: true
+                    required: true
                 },
                 estado: {
-                  required: true
+                    required: true
                 }
-
 
             },
-            optionsTipo: [{
-                    value: 'Comercial',
-                    label: 'Comercial'
-                },
-                {
-                    value: 'Residencial',
-                    label: 'Residencial'
-                }
-            ],
             optionsStade: [{
                     value: 'AC',
                     label: 'Acre'
@@ -377,11 +367,21 @@ export default {
 
         axios.get(process.env.VUE_APP_ROOT_API + '/cliente/' + window.localStorage.getItem("cliente")).then(response => {
             this.dataCliente = response.data
-            this.model = response.data
-            this.model.assessor = this.model.id_assessor.id
-            this.model.operador = this.model.id_operador
+            // this.model = response.data
+            this.model.nome = this.dataCliente.nome
+            this.model.telefone = this.dataCliente.telefone
+            this.model.email = this.dataCliente.email
+            this.model.assessor = this.dataCliente.id_assessor.id
+            this.model.operador = this.dataCliente.id_operador
             this.model.cpf = this.dataCliente.cpf_cnpj
             this.model.cnpj = this.dataCliente.cpf_cnpj
+            this.model.potencial_investimento = this.dataCliente.potencial_investimento
+            this.model.investimento_inicial = this.dataCliente.investimento_inicial
+            this.model.id_xp = this.dataCliente.id_xp
+            this.model.habilitado_bovespa = this.dataCliente.habilitado_bovespa
+            this.model.rg = this.dataCliente.rg
+            this.model.razao_social = this.dataCliente.razao_social
+            this.model.value1 = this.dataCliente.tipo_pessoa
 
             if (this.dataCliente.endereco.length > 0) {
                 this.model.cep = this.dataCliente.endereco[0].cep
@@ -391,7 +391,8 @@ export default {
                 this.model.bairro = this.dataCliente.endereco[0].bairro
                 this.model.cidade = this.dataCliente.endereco[0].cidade
                 this.model.estado = this.dataCliente.endereco[0].uf
-                // this.model.tipo_endereco = this.dataCliente[0].tipo
+                this.model.tipo_endereco = this.dataCliente.endereco[0].tipo
+                
             }
             window.localStorage.removeItem("cliente")
         })
