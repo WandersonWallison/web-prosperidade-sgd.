@@ -23,7 +23,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <fg-input class="input-sm" placeholder="Pesquisar" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
+                    <fg-input class="input-sm" placeholder="Pesquisar" v-model="searchQuery">
                     </fg-input>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                             </p-button>
                         </template>
                     </el-table-column>
-                </el-table> 
+                </el-table>
             </div>
             <div class="col-sm-6 pagination-info">
                 <p class="category">Mostrando {{from + 1}} de {{to}} de {{total}} Entradas</p>
@@ -179,7 +179,7 @@ export default {
             tmp = tmp.toFixed(2).replace(".",",")
             tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
             return 'R$ '+ tmp
-        },  
+        },
         handleDetails(index, row) {
             // this.showDetails = true
             // this.selected = row
@@ -205,7 +205,7 @@ export default {
                                   this.tableData = response.data
                             })
                             //this.$router.push("/forms/CentralList");
-                            //this.atualilarLista()                            
+                            //this.atualilarLista()
                         })
                 .catch(error => {
                     alert(error.response);

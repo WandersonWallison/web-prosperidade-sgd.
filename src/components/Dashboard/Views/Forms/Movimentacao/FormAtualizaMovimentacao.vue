@@ -18,18 +18,36 @@
                 </div>
             </div>
             <!-- ***************************************************  -->
+            <!--
             <div class="col-sm-6">
                 <el-select class="select-default" v-model="pagination.perPage" placeholder="Per page">
                     <el-option class="select-default" v-for="item in pagination.perPageOptions" :key="item" :label="item" :value="item">
                     </el-option>
                 </el-select>
             </div>
+            -->
             <div class="col-sm-12 mt-2">
-                <v-data-table v-model="selected" :headers="headers" :items="desserts" :pagination.sync="pagination" select-all item-key="name" class="elevation-1">
+
+                <v-data-table
+                    v-model="selected"
+                    :headers="headers"
+                    :items="desserts"
+                    :pagination.sync="pagination"
+                    select-all
+                    item-key="name"
+                    class="elevation-1">
+
                     <template v-slot:headers="props">
+                      <!-- Header -->
                         <tr>
                             <th>
-                                <v-checkbox :input-value="props.all" :indeterminate="props.indeterminate" primary hide-details @click.stop="toggleAll"></v-checkbox>
+                                <v-checkbox
+                                    :input-value="props.all"
+                                    :indeterminate="props.indeterminate"
+                                    primary
+                                    hide-details
+                                    @click.stop="toggleAll">
+                                  </v-checkbox>
                             </th>
                             <th v-for="header in props.headers" :key="header.text" :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']" @click="changeSort(header.value)">
                                 <v-icon small>arrow_upward</v-icon>
@@ -37,10 +55,15 @@
                             </th>
                         </tr>
                     </template>
+                    <!--  Tabela  -->
                     <template v-slot:items="props">
                         <tr :active="props.selected" @click="props.selected = !props.selected">
                             <td>
-                                <v-checkbox :input-value="props.selected" primary hide-details></v-checkbox>
+                                <v-checkbox
+                                  :input-value="props.selected"
+                                  primary
+                                  hide-details>
+                                </v-checkbox>
                             </td>
                             <td>{{ props.item.id }}</td>
                             <td class="text-xs-left">{{ props.item.id_cliente.nome }}</td>
@@ -50,6 +73,7 @@
                             <td class="text-xs-right">{{ props.item.observacao }}</td>
                         </tr>
                     </template>
+                    <!-- Fim Tabela -->
                 </v-data-table>
             </div>
             <!--
@@ -61,6 +85,7 @@
                 </p-pagination>
             </div>
             -->
+
         </div>
     </div>
     <md-dialog :md-active.sync="showUpdate">
