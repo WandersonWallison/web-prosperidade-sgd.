@@ -36,8 +36,10 @@
                     <label>Tipo Endereço</label>
                     <div class="form-group col-md-10">
                         <fg-input :error="getError('tipo_endereco')" v-validate="modelValidations.tipo_endereco">
-                            <el-switch v-model="model.tipo_endereco" name="tipo_endereco" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Comercial" inactive-text="Residencial">
-                            </el-switch>
+                            <v-radio-group v-model="model.tipo_endereco" row>
+                            <v-radio label="Residencial" value="Residencial"></v-radio>
+                            <v-radio label="Comercial" value="Comercial"></v-radio>
+                        </v-radio-group>
                         </fg-input>
                     </div>
                     <!--
@@ -191,7 +193,7 @@ export default {
                 bairro: '',
                 cidade: '',
                 estado: '',
-                tipo_endereco: false,
+                tipo_endereco: 'Residencial',
                 tipo_pessoa: false,
                 habilitado_bovespa: true,
                 tipo: '',
