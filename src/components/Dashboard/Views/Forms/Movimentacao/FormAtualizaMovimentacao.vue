@@ -4,7 +4,7 @@
     <div class="col-md-12 card">
         <div class="card-body row">
             <!-- ***************************************************  -->
-            <div class="col-sm-6">
+            <div class="col-sm-9">
                 <div class="card-body text-left">
                     <div>
                         <h5 class="card-title">Atualizações de Movimentações</h5>
@@ -12,9 +12,9 @@
                 </div>
             </div>
             <!-- ------------------------- -->
-            <div class="col-sm-6">
+            <div class="col-sm-2">
                 <div class="pull-right">
-                    <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
+                    <p-button type="primary" @click="handleRegister()">Atualizar Movimentações</p-button>
                 </div>
             </div>
             <!-- ***************************************************  -->
@@ -24,44 +24,35 @@
                     </el-option>
                 </el-select>
             </div>
-            <div class="col-sm-6">
-                <div class="pull-right">
-                    <fg-input class="input-sm" placeholder="Pesquisar" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
-                    </fg-input>
-                </div>
-            </div>
             <div class="col-sm-12 mt-2">
-                <el-table empty-text="Sem Informações" class="table-striped" :data="queriedData" border style="width: 100%">
-                    <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
-                    </el-table-column>
-                    <el-table-column :min-width="80" :formatter="formatPrice" prop="valor" label="Valor">
-                    </el-table-column>
-                    <el-table-column :min-width="110" :formatter="dateFormat" prop="data_registro" label="Data Registro">
-                    </el-table-column>
-                    <el-table-column :min-width="55" fixed="right" class-name="td-actions" label="Ações">
-                        <template>
-                          <el-checkbox v-model="checked">Option</el-checkbox>
-                        </template>
-                        <!--<template slot-scope="props">
-
-                            <el-tooltip class="item" effect="dark" content="Editar" placement="top">
-                                <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
-                                    <i class="fa fa-edit"></i>
-                                </p-button>
-                            </el-tooltip>
-
-
-
-                            <el-tooltip class="item" effect="dark" content="Excluir" placement="top">
-                                <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
-                                    <i class="fa fa-trash-o"></i>
-                                </p-button>
-                            </el-tooltip>
-
-                        </template>  -->
-                    </el-table-column>
-                </el-table>
+                <v-data-table v-model="selected" :headers="headers" :items="desserts" :pagination.sync="pagination" select-all item-key="name" class="elevation-1">
+                    <template v-slot:headers="props">
+                        <tr>
+                            <th>
+                                <v-checkbox :input-value="props.all" :indeterminate="props.indeterminate" primary hide-details @click.stop="toggleAll"></v-checkbox>
+                            </th>
+                            <th v-for="header in props.headers" :key="header.text" :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']" @click="changeSort(header.value)">
+                                <v-icon small>arrow_upward</v-icon>
+                                {{ header.text }}
+                            </th>
+                        </tr>
+                    </template>
+                    <template v-slot:items="props">
+                        <tr :active="props.selected" @click="props.selected = !props.selected">
+                            <td>
+                                <v-checkbox :input-value="props.selected" primary hide-details></v-checkbox>
+                            </td>
+                            <td>{{ props.item.id }}</td>
+                            <td class="text-xs-left">{{ props.item.id_cliente.nome }}</td>
+                            <td class="text-xs-right">{{ props.item.id_situacao_movimento.descricao}}</td>
+                            <td class="text-xs-right">{{ props.item.valor | formatarMoeda }}</td>
+                            <td class="text-xs-right">{{ props.item.dthr_registro | maskData }}</td>
+                            <td class="text-xs-right">{{ props.item.observacao }}</td>
+                        </tr>
+                    </template>
+                </v-data-table>
             </div>
+            <!--
             <div class="col-sm-6 pagination-info">
                 <p class="category">Mostrando {{from + 1}} de {{to}} de {{total}} Entradas</p>
             </div>
@@ -69,6 +60,7 @@
                 <p-pagination class="pull-right" v-model="pagination.currentPage" :per-page="pagination.perPage" :total="pagination.total">
                 </p-pagination>
             </div>
+            -->
         </div>
     </div>
     <md-dialog :md-active.sync="showUpdate">
@@ -93,13 +85,19 @@ import {
     Money
 } from 'v-money'
 import moment from 'moment'
+import {
+    mask
+} from 'vue-the-mask'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
 import MovementEdit from './FormMovementEdit'
 import {
     type
 } from 'os'
 export default {
-    name: 'ListMovement',
+    name: 'FormAtualizaMovimentacao',
+    directives: {
+        mask
+    },
     props: {
         selected: {
             type: Object
@@ -156,7 +154,38 @@ export default {
     },
     data() {
         return {
-            checked: false,
+            pagination: {
+                sortBy: 'id'
+            },
+            selected: [],
+            headers: [{
+                    text: 'CÓDIGO',
+                    align: 'left',
+                    value: 'id'
+                },
+                {
+                    text: 'CLIENTE',
+                    align: 'left',
+                    value: 'id_cliente.nom'
+                },
+                {
+                    text: 'SITUAÇÃO',
+                    value: 'calories'
+                },
+                {
+                    text: 'VALOR',
+                    value: 'valor'
+                },
+                {
+                    text: 'DATA REGISTRO',
+                    value: 'protein'
+                },
+                {
+                    text: 'OBSERVAÇÃO',
+                    value: 'observacao'
+                }
+            ],
+            desserts: [],
             showUpdate: false,
             pagination: {
                 perPage: 10,
@@ -173,8 +202,13 @@ export default {
                 masked: false
             },
             searchQuery: '',
-            propsToSearch: ['nome', 'descricao', 'observacao'],
+            propsToSearch: ['id', 'nome', 'descricao', 'observacao'],
             tableColumns: [{
+                    prop: 'id',
+                    label: 'Código',
+                    minWidth: 80
+                },
+                {
                     prop: 'id_cliente.nome',
                     label: 'Cliente',
                     minWidth: 150
@@ -193,63 +227,96 @@ export default {
             tableData: []
         }
     },
+    filters: {
+        maskData: function (v) {
+            v = moment(v).format('DD/MM/YYYY')
+            return v
+        },
+        formatarMoeda: function (valor) {
+
+            valor = valor + '00'
+            valor = parseInt(valor.replace(/[\D]+/g, ''))
+            valor = valor + ''
+            valor = valor.replace(/([0-9]{2})$/g, ",$1")
+
+            if (valor.length > 6) {
+                valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
+            }
+            return 'R$ ' + valor
+        }
+    },
     created() {
         axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}').then(response => {
-            this.tableData = response.data
+            this.desserts = response.data
         })
     },
     methods: {
-        dateFormat(row, column) {
-            var date = row[column.property];
-            if (date == undefined) {
-                return "";
+        toggleAll() {
+            if (this.selected.length) this.selected = []
+            else this.selected = this.desserts.slice()
+        },
+        changeSort(column) {
+            if (this.pagination.sortBy === column) {
+                this.pagination.descending = !this.pagination.descending
+            } else {
+                this.pagination.sortBy = column
+                this.pagination.descending = false
             }
-            return moment(date).format("DD/MM/YYYY")
-        },
-        formatPrice(value) {
-
-            var tmp = value.valor
-            if (tmp == null || tmp == "") {
-                tmp = 0, 0
-            }
-            tmp = tmp.toFixed(2).replace(".", ",")
-            tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
-            return 'R$ ' + tmp
-
-        },
-        handleRegister(index, row) {
-            this.$router.push('/forms/MovementForm')
-        },
-        handleEdit(index, row) {
-
-            window.localStorage.setItem('movimentacao', row.id)
-            this.$router.push('/forms/MovementFormEdit')
-            // this.showUpdate = true
-            // this.selected = row
-            // window.localStorage.setItem('movimentacao', row.id)
-            // this.$router.push('/forms/MovementFormEdit')
-        },
-        handleDelete(index, row) {
-            /*
-              let empresa = {
-                  ativo: false
-              }
-              axios.put(process.env.VUE_APP_ROOT_API + '/empresa/' + row.id, empresa)
-                  .then(response => {
-                      this.results = response.data
-                      axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
-                          this.tableData = response.data
-                          swal('Bom trabalho!', `Empresa ${row.nome} excluída com sucesso!`, 'success')
-                          this.$router.push('/forms/companyList')
-                      })
-                      //this.$router.push('/forms/companyList')
-                  })
-                  .catch(error => {
-                      alert(error.response)
-                      console.log(error.response.data)
-                  })
-            */
         }
+    },
+    dateFormat(row, column) {
+        var date = row[column.property];
+        if (date == undefined) {
+            return "";
+        }
+        return moment(date).format("DD/MM/YYYY")
+    },
+    formatPrice(value) {
+
+        var tmp = value.valor
+        if (tmp == null || tmp == "") {
+            tmp = 0, 0
+        }
+        tmp = tmp.toFixed(2).replace(".", ",")
+        tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
+        return 'R$ ' + tmp
+
+    },
+    handleRegister(index, row) {
+        this.$router.push('/forms/MovementForm')
+    },
+    handleMoviment(index, row) {
+        this.$router.push('/forms/MovementFormAtualizacao')
+    },
+    handleEdit(index, row) {
+
+        window.localStorage.setItem('movimentacao', row.id)
+        this.$router.push('/forms/MovementFormEdit')
+        // this.showUpdate = true
+        // this.selected = row
+        // window.localStorage.setItem('movimentacao', row.id)
+        // this.$router.push('/forms/MovementFormEdit')
+    },
+    handleDelete(index, row) {
+        /*
+          let empresa = {
+              ativo: false
+          }
+          axios.put(process.env.VUE_APP_ROOT_API + '/empresa/' + row.id, empresa)
+              .then(response => {
+                  this.results = response.data
+                  axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
+                      this.tableData = response.data
+                      swal('Bom trabalho!', `Empresa ${row.nome} excluída com sucesso!`, 'success')
+                      this.$router.push('/forms/companyList')
+                  })
+                  //this.$router.push('/forms/companyList')
+              })
+              .catch(error => {
+                  alert(error.response)
+                  console.log(error.response.data)
+              })
+        */
     }
 }
 </script>
