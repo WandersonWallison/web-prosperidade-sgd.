@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label>CEP</label>
-                <fg-input type="text" v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
+                <fg-input type="text" v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('cep')" @change="buscarEndereco($event)" v-model="model.cep">
                 </fg-input>
                 <label>Logradouro</label>
                 <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
@@ -58,7 +58,7 @@
                 <div class="col-lg-6">
                     <label>Estado</label>
                     <fg-input :error="getError('estado')">
-                        <el-select class="select-default" v-model="model.estado" name="tipo_user" v-validate="modelValidations.estado" placeholder="Selecione...">
+                        <el-select class="select-default" v-model="model.estado" name="estado" v-validate="modelValidations.estado" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in optionsStade" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
@@ -273,13 +273,19 @@ export default {
 
         axios.get(process.env.VUE_APP_ROOT_API + '/escritorio/' + window.localStorage.getItem("escritorio")).then(response => {
             this.officeEdit = response.data
-            this.model = this.officeEdit
+            this.model.nome = this.officeEdit.nome
+            this.model.razao_social = this.officeEdit.razao_social
+            this.model.cnpj = this.officeEdit.cnpj
+            this.model.telefone = this.officeEdit.telefone
+            this.model.celular = this.officeEdit.celular
+            this.model.email = this.officeEdit.email
+            this.model.iss = this.officeEdit.iss
 
             for (let index = 0; index < this.officeEdit.centrais.length; index++) {
                 this.centralEscritorio.push(this.officeEdit.centrais[index].id)
             }
             this.selectCentrais = this.centralEscritorio
-
+            
             if (this.officeEdit.endereco.length > 0) {
                 this.model.cep = this.officeEdit.endereco[0].cep
                 this.model.logradouro = this.officeEdit.endereco[0].logradouro
