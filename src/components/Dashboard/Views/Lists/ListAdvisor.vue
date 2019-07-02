@@ -20,7 +20,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <fg-input class="input-sm" placeholder="Pesquisar" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
+                    <fg-input class="input-sm" placeholder="Pesquisar por xp,nome e e-mail" v-model="searchQuery" addon-right-icon="nc-icon nc-zoom-split">
                     </fg-input>
                 </div>
             </div>
@@ -110,7 +110,7 @@ export default {
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['id_xp', 'username','email','id_comissionamento_faixa.descricao'],
+            propsToSearch: ['id_xp', 'username','email'],
             tableColumns: [{
                     prop: 'id_xp',
                     label: 'XP',
