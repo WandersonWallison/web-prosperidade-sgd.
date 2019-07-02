@@ -34,39 +34,38 @@
                         <span>Endereço</span>
                     </div>
                     <label>Tipo Endereço</label>
-                    <fg-input :error="getError('tipo')" v-validate="modelValidations.tipo">
-                        <el-select class="select-default" v-model="model.tipo" name="estado" placeholder="Selecione...">
-                            <el-option class="select-default" v-for="item in optionsTipo" :key="item.id" :label="item.label" :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </fg-input>
+                    <div class="form-group col-md-10">
+                        <fg-input :error="getError('tipo_endereco')" v-validate="modelValidations.tipo_endereco">
+                            <el-switch v-model="model.tipo_endereco" name="tipo_endereco" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Comercial" inactive-text="Residencial">
+                            </el-switch>
+                        </fg-input>
+                    </div>
                     <label>CEP</label>
-                    <fg-input type="text" v-mask="'#####-###'" name="cep" v-validate="modelValidations.cep" :error="getError('numero')" @change="buscarEndereco($event)" v-model="model.cep">
+                    <fg-input type="text" v-mask="'#####-###'" data-vv-name="cep" v-validate="modelValidations.cep" :error="getError('cep')" @change="buscarEndereco($event)" v-model="model.cep">
                     </fg-input>
                     <label>Logradouro</label>
-                    <fg-input type="text" name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
+                    <fg-input type="text" data-vv-name="logradouro" v-validate="modelValidations.logradouro" :error="getError('logradouro')" v-model="model.logradouro">
                     </fg-input>
                     <label>Número</label>
-                    <fg-input type="text" name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
+                    <fg-input type="text" data-vv-name="numero" v-validate="modelValidations.numero" :error="getError('numero')" v-model="model.numero">
                     </fg-input>
                     <label>Complemento</label>
-                    <fg-input type="text" name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
+                    <fg-input type="text" data-vv-name="complemento" v-validate="modelValidations.complemento" :error="getError('complemento')" v-model="model.complemento">
                     </fg-input>
                     <label>Bairro</label>
-                    <fg-input type="text" name="bairro" v-validate="modelValidations.bairro" :error="getError('bairro')" v-model="model.bairro">
+                    <fg-input type="text" data-vv-name="bairro" v-validate="modelValidations.bairro" :error="getError('bairro')" v-model="model.bairro">
                     </fg-input>
                     <label>Cidade</label>
-                    <fg-input type="text" name="cidade" v-validate="modelValidations.cidade" :error="getError('cidade')" v-model="model.cidade">
+                    <fg-input type="text" data-vv-name="cidade" v-validate="modelValidations.cidade" :error="getError('cidade')" v-model="model.cidade">
                     </fg-input>
                     <label>Estado</label>
-                    <fg-input :error="getError('estado')" v-validate="modelValidations.estado">
-                        <el-select class="select-default" v-model="model.estado" name="estado" placeholder="Selecione...">
-                            <el-option class="select-default" v-for="item in optionsStade" :key="item.valeu" :label="item.label" :value="item.value">
+                    <fg-input :error="getError('estado')">
+                        <el-select class="select-default" v-validate="modelValidations.estado" v-model="model.estado" data-vv-name="estado" placeholder="Selecione...">
+                            <el-option class="select-default" v-for="item in optionsStade" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
                     </fg-input>
                 </el-card>
-
             </div>
             <div class="form-group col-md-6">
                 <el-card class="box-card">
@@ -79,6 +78,7 @@
                     <label>Numero XP</label>
                     <fg-input type="text" name="id_xp" v-validate="modelValidations.id_xp" :error="getError('id_xp')" v-model="model.id_xp">
                     </fg-input>
+                    <!--
                     <label>Operador</label>
                     <fg-input :error="getError('operador')" v-validate="modelValidations.operador">
                         <el-select no-data-text="Sem informações" class="select-default" v-model="model.operador" name="operador" placeholder="Selecione...">
@@ -86,6 +86,7 @@
                             </el-option>
                         </el-select>
                     </fg-input>
+                    -->
                     <label>Assessor</label>
                     <fg-input :error="getError('assessor')" v-validate="modelValidations.assessor">
                         <el-select no-data-text="Sem informações" class="select-default" v-model="model.assessor" name="assessor" placeholder="Selecione...">
@@ -94,10 +95,10 @@
                         </el-select>
                     </fg-input>
                     <label>Investimento Inicial</label>
-                    <fg-input type="text" v-mask="'########,##'" name="investimento_inicial" v-validate="modelValidations.investimento_inicial" :error="getError('investimento_inicial')" v-model="model.investimento_inicial">
+                    <fg-input type="text" name="investimento_inicial" v-validate="modelValidations.investimento_inicial" :error="getError('investimento_inicial')" v-model="model.investimento_inicial">
                     </fg-input>
                     <label>Potencial de Investimento</label>
-                    <fg-input type="text" v-mask="'########,##'" name="potencial_investimento" v-validate="modelValidations.potencial_investimento" :error="getError('potencial_investimento')" v-model="model.potencial_investimento">
+                    <fg-input type="text" name="potencial_investimento" v-validate="modelValidations.potencial_investimento" :error="getError('potencial_investimento')" v-model="model.potencial_investimento">
                     </fg-input>
                 </el-card>
                 <br>
@@ -141,12 +142,22 @@
 import axios from 'axios'
 import swal from 'sweetalert2'
 import {
+    VMoney
+} from 'v-money'
+import {
     mask
 } from 'vue-the-mask'
 export default {
     name: 'FormClientEdit',
     data() {
         return {
+            money: {
+                decimal: ',',
+                thousands: '.',
+                prefix: 'R$ ',
+                precision: 2,
+                masked: true /* doesn't work with directive */
+            },
             model: {
                 // cliente --------------
                 nome: '',
@@ -173,7 +184,7 @@ export default {
                 estado: '',
                 value1: false,
                 habilitado_bovespa: true,
-                tipo: '',
+                tipo_endereco: '',
                 operador: '',
                 assessor: ''
 
@@ -187,54 +198,49 @@ export default {
             resultAdress: [],
             modelValidations: {
                 nome: {
-                    required: true
+                  required: true
                 },
                 telefone: {
-                    required: true
+                  required: true
                 },
                 email: {
-                    required: true,
-                    email: true
+                  required: true,
+                  email: true
                 },
                 id_xp: {
-                    required: true
+                  required: true
                 },
                 investimento_inicial: {
-                    required: true
+                  required: true
                 },
                 potencial_investimento: {
-                    required: true
+                  required: true
                 },
-                tipoAddress: {
-                    required: true
-                },
+
                 logradouro: {
-                    required: true
+                  required: true
                 },
                 complemento: {
-                    required: true
+                  required: true
                 },
+
                 numero: {
-                    required: true
+                  required: true
                 },
                 bairro: {
-                    required: true
+                  required: true
                 },
                 cidade: {
-                    required: true
+                  required: true
                 },
                 cep: {
-                    required: true
+                  required: true
                 },
                 estado: {
-                    required: true
-                },
-                operador: {
-                    required: true
-                },
-                assessor: {
-                    required: true
+                  required: true
                 }
+
+
             },
             optionsTipo: [{
                     value: 'Comercial',
@@ -357,9 +363,10 @@ export default {
         }
     },
     directives: {
-        mask
+        mask,
+        money: VMoney
     },
-    mounted() {
+    created() {
 
         axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}').then(response => {
             this.dataOperadores = response.data
@@ -384,7 +391,7 @@ export default {
                 this.model.bairro = this.dataCliente.endereco[0].bairro
                 this.model.cidade = this.dataCliente.endereco[0].cidade
                 this.model.estado = this.dataCliente.endereco[0].uf
-                this.model.tipo = this.dataCliente[0].tipo
+                // this.model.tipo_endereco = this.dataCliente[0].tipo
             }
             window.localStorage.removeItem("cliente")
         })
@@ -399,7 +406,7 @@ export default {
                     this.$emit('on-submit', this.salvar(), result)
                     return
                 }
-                swal('Por favor verificar os dados solicitados no formulario!','', 'info')
+                swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
             })
         },
         buscarEndereco() {
@@ -471,7 +478,7 @@ export default {
                 bairro: this.model.bairro,
                 cidade: this.model.cidade,
                 numero: this.model.numero,
-                tipo: this.model.tipo
+                tipo: this.model.tipo_endereco
             }
             // -----------------------------------------------------------
             axios.put(process.env.VUE_APP_ROOT_API + '/cliente/' + this.dataCliente.id, cliente)

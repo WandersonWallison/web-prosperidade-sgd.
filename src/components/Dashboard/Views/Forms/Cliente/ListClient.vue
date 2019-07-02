@@ -211,8 +211,8 @@ export default {
             this.$router.push('/forms/ClientForm')
         },
         handleEdit(index, row) {
-            window.localStorage.setItem('cliente', row.id)
-            this.$router.push('/forms/ClientFormEdit')
+          window.localStorage.setItem('cliente', row.id)
+          this.$router.push('/forms/ClientFormEdit')
         },
         handleDetails(index, row) {
             this.cliente = row

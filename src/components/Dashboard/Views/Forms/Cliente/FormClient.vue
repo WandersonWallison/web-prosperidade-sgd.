@@ -223,9 +223,6 @@ export default {
                 potencial_investimento: {
                     required: true
                 },
-                tipo_endereco: {
-                  required: true
-                },
                 logradouro: {
                     required: true
                 },
@@ -235,7 +232,6 @@ export default {
                 bairro: {
                     required: true
                 },
-
                 cidade: {
                     required: true
                 },
@@ -248,8 +244,8 @@ export default {
                 assessor: {
                     required: true
                 }
-
             },
+            /*
             optionsTipo: [{
                     value: 'Comercial',
                     label: 'Comercial'
@@ -258,7 +254,7 @@ export default {
                     value: 'Residencial',
                     label: 'Residencial'
                 }
-            ],
+            ], */
             optionsStade: [{
                     value: 'AC',
                     label: 'Acre'
@@ -484,7 +480,7 @@ export default {
                 bairro: this.model.bairro,
                 cidade: this.model.cidade,
                 numero: this.model.numero,
-                tipo: this.model.tipo
+                tipo: this.model.tipo_endereco
             }
             axios.post(process.env.VUE_APP_ROOT_API + '/cliente', cliente)
                 .then(response => {

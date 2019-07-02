@@ -4,20 +4,15 @@
     <div class="col-md-12 card">
         <div class="card-body row">
             <!-- ***************************************************  -->
-            <div class="col-sm-9">
+            <div class="col-sm-6">
                 <div class="card-body text-left">
                     <div>
-                        <h5 class="card-title">Movimentações</h5>
+                        <h5 class="card-title">Atualizações de Movimentações</h5>
                     </div>
                 </div>
             </div>
             <!-- ------------------------- -->
-            <div class="col-sm-1">
-                <div class="pull-right">
-                    <p-button type="primary" @click="handleMoviment()">Atualizações</p-button>
-                </div>
-            </div>
-            <div class="col-sm-2">
+            <div class="col-sm-6">
                 <div class="pull-right">
                     <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
                 </div>
@@ -44,20 +39,26 @@
                     <el-table-column :min-width="110" :formatter="dateFormat" prop="data_registro" label="Data Registro">
                     </el-table-column>
                     <el-table-column :min-width="55" fixed="right" class-name="td-actions" label="Ações">
-                        <template slot-scope="props">
+                        <template>
+                          <el-checkbox v-model="checked">Option</el-checkbox>
+                        </template>
+                        <!--<template slot-scope="props">
+
                             <el-tooltip class="item" effect="dark" content="Editar" placement="top">
                                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                     <i class="fa fa-edit"></i>
                                 </p-button>
                             </el-tooltip>
-                            <!--
+
+
+
                             <el-tooltip class="item" effect="dark" content="Excluir" placement="top">
                                 <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
                                     <i class="fa fa-trash-o"></i>
                                 </p-button>
                             </el-tooltip>
-                            -->
-                        </template>
+
+                        </template>  -->
                     </el-table-column>
                 </el-table>
             </div>
@@ -94,7 +95,9 @@ import {
 import moment from 'moment'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
 import MovementEdit from './FormMovementEdit'
-import { type } from 'os'
+import {
+    type
+} from 'os'
 export default {
     name: 'ListMovement',
     props: {
@@ -153,6 +156,7 @@ export default {
     },
     data() {
         return {
+            checked: false,
             showUpdate: false,
             pagination: {
                 perPage: 10,
@@ -169,14 +173,8 @@ export default {
                 masked: false
             },
             searchQuery: '',
-            propsToSearch: ['id','nome', 'descricao', 'observacao'],
-            tableColumns: [
-                {
-                    prop: 'id',
-                    label: 'Código',
-                    minWidth: 80
-                },
-                {
+            propsToSearch: ['nome', 'descricao', 'observacao'],
+            tableColumns: [{
                     prop: 'id_cliente.nome',
                     label: 'Cliente',
                     minWidth: 150
@@ -221,9 +219,6 @@ export default {
         },
         handleRegister(index, row) {
             this.$router.push('/forms/MovementForm')
-        },
-        handleMoviment(index, row) {
-            this.$router.push('/forms/MovementFormAtualizacao')
         },
         handleEdit(index, row) {
 

@@ -213,7 +213,7 @@ export default {
                 id_responsavel: authUser.id
             }
             // console.log('valor Tela2 : ',movimentacao.valor)
-            axios.put(process.env.VUE_APP_ROOT_API + '/movimentacao/' + this.movimentacao.id, movimentacao)
+            axios.put(process.env.VUE_APP_ROOT_API + '/movimentacao/' + this.movimentacaoEdit.id, movimentacao)
                 .then(response => {
                     this.results = response.data
                     swal('Bom trabalho!', 'Movimentação Alterada com sucesso!', 'success')
