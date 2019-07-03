@@ -43,6 +43,10 @@ export default [
   children: [{
     name: 'Movimentações',
     path: '/forms/MovementList'
+  },
+  {
+    name: 'Atualização de Movimentações',
+    path: '/forms/MovementFormAtualizacao'
   }]
 },
 {

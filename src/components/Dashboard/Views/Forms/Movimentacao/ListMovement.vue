@@ -11,13 +11,14 @@
                     </div>
                 </div>
             </div>
-            <!-- ------------------------- -->
+            <!-- -------------------------
             <div class="col-sm-1">
                 <div class="pull-right">
                     <p-button type="primary" @click="handleMoviment()">Atualizações</p-button>
                 </div>
             </div>
-            <div class="col-sm-2">
+            -->
+            <div class="col-sm-3">
                 <div class="pull-right">
                     <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
                 </div>
