@@ -35,10 +35,8 @@
                     </div>
                     <label>Tipo Endereço</label>
                     <div class="form-group col-md-10">
-                        <v-radio-group v-model="model.tipo_endereco" row>
-                            <v-radio label="Residencial" value="Residencial"></v-radio>
-                            <v-radio label="Comercial" value="Comercial"></v-radio>
-                        </v-radio-group>
+                        <el-radio v-model="model.tipo_endereco" label="Residencial">Residencial</el-radio>
+                        <el-radio v-model="model.tipo_endereco" label="Comercial">Comercial</el-radio>
                     </div>
                     <label>CEP</label>
                     <fg-input type="text" v-mask="'#####-###'" data-vv-name="cep" v-validate="modelValidations.cep" :error="getError('cep')" @change="buscarEndereco($event)" v-model="model.cep">
