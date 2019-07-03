@@ -175,7 +175,7 @@ export default {
                 {
                     prop: 'id',
                     label: 'Código',
-                    minWidth: 80
+                    minWidth: 70
                 },
                 {
                     prop: 'id_cliente.nome',
