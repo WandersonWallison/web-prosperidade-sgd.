@@ -12,7 +12,7 @@
             <div class="form-group col-md-6">
                 <el-card class="box-card">
                     <div class="form-group col-md-10">
-                        <el-switch v-model="model.tipo_pessoa"  name="tipo_pessoa" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Pessoa Jurídica" inactive-text="Pessoa Física">
+                        <el-switch v-model="model.tipo_pessoa" name="tipo_pessoa" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Pessoa Jurídica" inactive-text="Pessoa Física">
                         </el-switch>
                     </div>
                     <div slot="header" class="clearfix">
@@ -36,10 +36,8 @@
                     <label>Tipo Endereço</label>
                     <div class="form-group col-md-10">
                         <fg-input :error="getError('tipo_endereco')" v-validate="modelValidations.tipo_endereco">
-                            <v-radio-group v-model="model.tipo_endereco" row>
-                            <v-radio label="Residencial" value="Residencial"></v-radio>
-                            <v-radio label="Comercial" value="Comercial"></v-radio>
-                        </v-radio-group>
+                            <el-radio v-model="model.tipo_endereco" label="Residencial">Residencial</el-radio>
+                            <el-radio v-model="model.tipo_endereco" label="Comercial">Comercial</el-radio>
                         </fg-input>
                     </div>
                     <!--
