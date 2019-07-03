@@ -136,14 +136,14 @@ export default {
                         swal("Algo de errado!", "Verifique os campos!", "error")
                         console.log(error.response.data)
                     })
-                    this.atualizaMovimentacao()
             }
+            this.atualizaMovimentacao()
         },
         atualizaMovimentacao() {
             axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}').then(response => {
                 this.tableData = response.data
                 swal('Bom trabalho!', 'A(s) Movimentações foram alterada(s) com sucesso!', 'success')
-                this.$router.push('/forms/MovementFormAtualizacao')
+                this.$router.push('/forms/MovementList')
             })
         }
     }
