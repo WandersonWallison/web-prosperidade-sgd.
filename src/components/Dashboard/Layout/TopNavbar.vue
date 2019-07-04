@@ -36,18 +36,21 @@
             </li>
             -->
 
+            <!--  TODO - Icone de mensagens de contato entre os funcionarios
             <drop-down icon="nc-icon nc-single-02" tag="li" position="right" direction="none" class="nav-item btn-rotate dropdown">
                 <a slot="title" slot-scope="{isOpen}" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" :aria-expanded="isOpen">
-                <el-badge :value="12" class="item">
-               <i class="nc-icon nc-chat-33"></i>
-                 </el-badge>
-                <p>
-                  <span class="d-lg-none d-md-block">Some Actions</span>
-                </p>
-              </a>
-                <a><task/> </a>
+                  <el-badge :value="12" class="item">
+                    <i class="nc-icon nc-chat-33"></i>
+                  </el-badge>
+                  <p>
+                    <span class="d-lg-none d-md-block">Some Actions</span>
+                  </p>
+                </a>
+                <a>
+                  <task/>
+                </a>
             </drop-down>
-
+            -->
             <drop-down icon="nc-icon nc-single-02" tag="li" position="right" direction="none" class="nav-item btn-rotate dropdown">
                 <a slot="title" slot-scope="{isOpen}" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" :aria-expanded="isOpen">
                 <i class="nc-icon nc-single-02"></i>
@@ -68,7 +71,7 @@
           </a>
         </li>-->
         </ul>
-        <md-dialog title="Detalhamento" :md-active.sync="dialogFormVisibleDetail">
+        <md-dialog :md-active.sync="dialogFormVisibleDetail">
             <senha />
         </md-dialog>
     </template>
@@ -144,7 +147,6 @@ export default {
     }
 }
 </script>
-
 <style>
 
 </style>

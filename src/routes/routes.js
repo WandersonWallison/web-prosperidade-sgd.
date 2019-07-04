@@ -45,6 +45,8 @@ const AdvisorList = () => import(/* webpackChunkName: "forms" */ 'src/components
 const MovementList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Movimentacao/ListMovement.vue')
 const MovementFormAtualizacao = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Movimentacao/FormAtualizaMovimentacao.vue')
 const MovementFormEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Movimentacao/FormMovementEdit.vue')
+const MovementFormAporteCliente = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Movimentacao/FormMovementAporteCliente.vue')
+const MovementFormBoletaCliente = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Movimentacao/FormMovementBoletaCliente.vue')
 const MovementForm = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Movimentacao/FormMovement.vue')
 const ComissionList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListComission.vue')
 
@@ -243,6 +245,16 @@ let formsMenu = {
       path: 'MovementList',
       name: 'List Movement',
       component: MovementList
+    },
+    {
+      path: 'MovementFormAporteCliente',
+      name: 'Aporte Cliente Movement',
+      component: MovementFormAporteCliente
+    },
+    {
+      path: 'MovementFormBoletaCliente',
+      name: 'Boleta Cliente Movement',
+      component: MovementFormBoletaCliente
     },
     {
       path: 'MovementFormAtualizacao',

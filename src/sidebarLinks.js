@@ -45,10 +45,21 @@ export default [
     path: '/forms/MovementList'
   },
   {
+    name: 'Aporte Cliente',
+    path: '/forms/MovementFormAporteCliente'
+  },
+  {
+    name: 'Boleta Cliente',
+    path: '/forms/MovementFormBoletaCliente'
+  },
+  /*
+  {
     name: 'Atualização de Movimentações',
     path: '/forms/MovementFormAtualizacao'
-  }]
+  } */
+  ]
 },
+/*
 {
   name: 'Integração',
   icon: 'nc-icon nc-cloud-upload-94',
@@ -59,6 +70,7 @@ export default [
     }
   ]
 },
+*/
 {
   name: 'Administração',
   icon: 'nc-icon nc-badge',

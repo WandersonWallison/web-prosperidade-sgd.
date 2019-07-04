@@ -24,7 +24,7 @@
                 </fg-input>
             </div>
         </div>
-        <div class="card-body row">
+        <div>
             <el-table ref="multipleTable" no-data-text="Sem Informações" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="55">
                 </el-table-column>
@@ -48,17 +48,16 @@
                 </el-table-column>
             </el-table>
         </div>
-        <div class="col-sm-6 pagination-info">
-            <p class="category">Mostrando {{from + 1}} de {{to}} de {{total}} Entradas</p>
+        <div class="col-sm-12">
+            <div class=" col-sm-4 pagination-info">
+                <p class="category">Mostrando {{from + 1}} de {{to}} de {{total}} Entradas</p>
+            </div>
+            <div class=" col-sm-17">
+                <p-pagination class="pull-right" v-model="pagination.currentPage" :per-page="pagination.perPage" :total="pagination.total">
+                </p-pagination>
+            </div>
         </div>
-        <div class="col-sm-6">
-            <p-pagination class="pull-right" v-model="pagination.currentPage" :per-page="pagination.perPage" :total="pagination.total">
-            </p-pagination>
-        </div>
-    </div>
-    <div class="text-xs-center">
-        <el-pagination background layout="prev, pager, next" :total=this.qtd>
-        </el-pagination>
+
     </div>
     <md-dialog :md-active.sync="showUpdate">
         <div>
@@ -83,8 +82,19 @@ import {
 } from 'v-money'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
 import moment from 'moment'
+import MovementEdit from './FormMovementEdit'
 export default {
     name: 'FormAtualizaMovimentacao2',
+    props: {
+        selected: {
+            type: Object
+        }
+    },
+    components: {
+        PPagination,
+        MovementEdit,
+        Money
+    },
     computed: {
         pagedData() {
             return this.tableData.slice(this.from, this.to)
@@ -131,7 +141,8 @@ export default {
     },
     data() {
         return {
-             pagination: {
+            showUpdate: false,
+            pagination: {
                 perPage: 10,
                 currentPage: 1,
                 perPageOptions: [10, 25, 50, 75],
@@ -218,6 +229,7 @@ export default {
     }
 }
 </script>
+
 <style lang="scss">
 .el-table .td-actions {
     button.btn {
