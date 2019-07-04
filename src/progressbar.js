@@ -37,7 +37,7 @@ export default function initProgress(router) {
         }
       } else {
         if(ValidaLink){
-          swal('Você não tem permissão', '','warning')
+          // swal('Você não tem permissão', '','warning')
         }
       }
     }
