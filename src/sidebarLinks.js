@@ -1,6 +1,6 @@
 export default [
   {
-    name: 'Dashboard',
+    name: 'Home',
     icon: 'nc-icon nc-chart-pie-36',
     path: '/admin/overview'
   },
@@ -56,7 +56,8 @@ export default [
   {
     name: 'Atualização de Movimentações',
     path: '/forms/MovementFormAtualizacao'
-  } */
+  }
+  */
   ]
 },
 /*

@@ -1,7 +1,9 @@
 <template>
   <div>
     <!--Stats cards-->
+
     <div class="row">
+      <!--
       <div class="col-lg-3 col-md-6 col-sm-6" v-for="stats in statsCards">
         <stats-card :type="stats.type"
                     :icon="stats.icon"
@@ -13,8 +15,12 @@
           </div>
         </stats-card>
       </div>
+      -->
     </div>
+
     <div class="row">
+      <img src="static/img/background/escolhas-prosperidade-img-2.jpg">
+      <!--
       <div class="col-lg-4 col-sm-6">
         <chart-card :chart-data="activeUsersChart.data"
                     chart-id="activity-chart"
@@ -59,10 +65,13 @@
           </p-button>
         </chart-card>
       </div>
+      -->
     </div>
 
     <div class="row">
+      <!--
         <div class="col-lg-12">
+
           <div class="card">
             <div class="card-header">
               <h4 class="card-title">Global Sales by Top Locations</h4>
@@ -169,6 +178,7 @@
             </div>
           </div>
         </div>
+        -->
     </div>
 
     <div class="row">
@@ -199,7 +209,8 @@
     </div>
 
     <div class="row">
-      <!--<div class="col-lg-3 col-sm-6">
+      <div class="col-lg-3 col-sm-6">
+        <!--
         <circle-chart-card :percentage="70"
                            chart-id="email-statistics-chart"
                            title="Email Statistics"
@@ -215,9 +226,11 @@
             </div>
           </template>
         </circle-chart-card>
+
       </div>
 
       <div class="col-lg-3 col-sm-6">
+
         <circle-chart-card :percentage="34"
                            chart-id="new-visitors-chart"
                            title="New Visitators"
@@ -251,6 +264,7 @@
             </div>
           </template>
         </circle-chart-card>
+
       </div>
 
       <div class="col-lg-3 col-sm-6">
@@ -268,9 +282,9 @@
             </div>
           </template>
         </circle-chart-card>
-      </div>-->
+        -->
+      </div>
     </div>
-
   </div>
 </template>
 <script>
