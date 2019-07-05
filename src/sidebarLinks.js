@@ -1,7 +1,7 @@
 export default [
   {
     name: 'Home',
-    icon: 'nc-icon nc-chart-pie-36',
+    icon: 'nc-icon nc-app',
     path: '/admin/overview'
   },
  {
