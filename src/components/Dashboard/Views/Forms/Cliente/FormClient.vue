@@ -84,10 +84,19 @@
                     <div>
                         <el-checkbox v-model="model.habilitado_bovespa">Habilitado bovespa</el-checkbox>
                     </div>
+                    <div>
+                        <el-checkbox v-model="model.termo_push">Termo Push</el-checkbox>
+                    </div>
                     <label>Numero XP</label>
                     <fg-input type="text" name="numero_xp" v-validate="modelValidations.numero_xp" :error="getError('numero_xp')" v-model="model.numero_xp">
                     </fg-input>
-                    <!--
+                    <label>Situação Tributária</label>
+                    <fg-input :error="getError('situacao_tributaria')" v-validate="modelValidations.situacao_tributaria">
+                        <el-select no-data-text="Sem informações" class="select-default" v-model="model.situacao_tributaria" name="situacao_tributaria" placeholder="Selecione...">
+                            <el-option class="select-default" v-for="item in this.dataSituacao_tributaria" :key="item.id" :label="item.descricao" :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </fg-input>
                     <label>Operador</label>
                     <fg-input :error="getError('operador')" v-validate="modelValidations.operador">
                         <el-select no-data-text="Sem informações" class="select-default" v-model="model.operador" name="operador" placeholder="Selecione...">
@@ -95,7 +104,7 @@
                             </el-option>
                         </el-select>
                     </fg-input>
-                    -->
+                    
                     <label>Assessor</label>
                     <fg-input :error="getError('assessor')">
                         <el-select no-data-text="Sem informações" class="select-default" v-validate="modelValidations.assessor" v-model="model.assessor" name="assessor" placeholder="Selecione...">
@@ -163,7 +172,7 @@ export default {
             money: {
                 decimal: ',',
                 thousands: '.',
-                prefix: 'R$ ',
+                //prefix: 'R$ ',
                 precision: 2,
                 masked: false /* doesn't work with directive */
             },
@@ -181,8 +190,8 @@ export default {
                 rg: '',
                 cpf: '',
                 // Jurídica --------------
-                razao_social: '',
-                cnpj: '',
+                //razao_social: '',
+                //cnpj: '',
                 // Endereço --------------
                 cep: '',
                 logradouro: '',
@@ -193,12 +202,14 @@ export default {
                 estado: '',
                 tipo_endereco: 'Residencial',
                 tipo_pessoa: false,
-                habilitado_bovespa: true,
+                habilitado_bovespa: false,
+                termo_push: false,
                 tipo: '',
                 operador: '',
                 assessor: ''
             },
-            // dataOperadores: [],
+            dataOperadores: [],
+            dataSituacao_tributaria: [],
             dataAssessores: [],
             endereco: [],
             results: [],
@@ -373,13 +384,17 @@ export default {
         money: VMoney
     },
     mounted() {
-        /*
-        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}').then(response => {
+        
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}&sort=username').then(response => {
             this.dataOperadores = response.data
         })
-        */
-        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}').then(response => {
+        
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}&sort=username').then(response => {
             this.dataAssessores = response.data
+        })
+
+        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_tributaria?where={"ativo": 1}').then(response => {
+            this.dataSituacao_tributaria = response.data
         })
     },
     methods: {
@@ -467,9 +482,11 @@ export default {
                 razao_social: this.model.razao_social,
                 rg: this.model.rg,
                 habilitado_bovespa: this.model.habilitado_bovespa,
+                termo_push: this.model.termo_push,
                 id_responsavel: authUser.id,
                 tipo_pessoa: this.model.tipo_pessoa,
-                // id_operador: this.model.operador,
+                id_operador: this.model.operador,
+                id_tipo_solucao_tributaria: this.model.situacao_tributaria,
                 id_assessor: this.model.assessor
 
             }

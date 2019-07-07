@@ -202,7 +202,7 @@ export default {
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}&limit=1000').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}&sort=nome&limit=1000').then(response => {
             this.tableData = response.data
         })
     },

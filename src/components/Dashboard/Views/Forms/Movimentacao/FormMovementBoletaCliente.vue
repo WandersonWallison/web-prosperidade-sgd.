@@ -61,7 +61,7 @@
             <div class="form-group col-md-6">
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
-                        <span>Aporte</span>
+                        <span>Boleta</span>
                     </div>
                     <div class="block">
                         <div class="form-group">

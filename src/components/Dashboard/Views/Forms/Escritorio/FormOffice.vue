@@ -10,8 +10,14 @@
             <div class="form-group">
                 <div class="col-lg-6">
                     <label>Central</label>
-                    <fg-input :error="getError('central')">
+                    <!--<fg-input :error="getError('central')">
                         <el-select no-data-text="Sem Informações" class="select-default" v-model="selectCentrais" name="central" v-validate="modelValidations.central" placeholder="Selecione...">
+                            <el-option class="select-default" v-for="item in centralOffice" :key="item.value" :label="item.nome" :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </fg-input>-->
+                    <fg-input :error="getError('central')">
+                        <el-select multiple class="select-default" v-model="selectCentrais" name="central" v-validate="modelValidations.central" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in centralOffice" :key="item.value" :label="item.nome" :value="item.id">
                             </el-option>
                         </el-select>
@@ -263,7 +269,7 @@ export default {
         mask
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/central?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/central?where={"ativo": 1}&sort=nome').then(response => {
             this.centralOffice = response.data
         })
     },

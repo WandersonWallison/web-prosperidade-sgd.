@@ -73,10 +73,19 @@
                     <div>
                         <el-checkbox name="habilitado_bovespa" v-model="model.habilitado_bovespa">Habilitado bovespa</el-checkbox>
                     </div>
+                    <div>
+                        <el-checkbox name="termo_push" v-model="model.termo_push">Termo Push</el-checkbox>
+                    </div>
                     <label>Numero XP</label>
                     <fg-input type="text" name="id_xp" v-validate="modelValidations.id_xp" :error="getError('id_xp')" v-model="model.id_xp">
                     </fg-input>
-                    <!--
+                    <label>Situação Tributária</label>
+                    <fg-input :error="getError('situacao_tributaria')" v-validate="modelValidations.situacao_tributaria">
+                        <el-select no-data-text="Sem informações" class="select-default" v-model="model.situacao_tributaria" name="situacao_tributaria" placeholder="Selecione...">
+                            <el-option class="select-default" v-for="item in this.dataSituacao_tributaria" :key="item.id" :label="item.descricao" :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </fg-input>
                     <label>Operador</label>
                     <fg-input :error="getError('operador')" v-validate="modelValidations.operador">
                         <el-select no-data-text="Sem informações" class="select-default" v-model="model.operador" name="operador" placeholder="Selecione...">
@@ -84,7 +93,7 @@
                             </el-option>
                         </el-select>
                     </fg-input>
-                    -->
+                    
                     <label>Assessor</label>
                     <fg-input :error="getError('assessor')" v-validate="modelValidations.assessor">
                         <el-select no-data-text="Sem informações" class="select-default" v-model="model.assessor" name="assessor" placeholder="Selecione...">
@@ -95,7 +104,7 @@
                     <label>Investimento Inicial</label>
                     <fg-input type="text" name="investimento_inicial" v-validate="modelValidations.investimento_inicial" :error="getError('investimento_inicial')" v-model="model.investimento_inicial">
                     </fg-input>
-                    <label>Potencial de Investimento</label>
+                     <label>Potencial de Investimento</label>
                     <fg-input type="text" name="potencial_investimento" v-validate="modelValidations.potencial_investimento" :error="getError('potencial_investimento')" v-model="model.potencial_investimento">
                     </fg-input>
                 </el-card>
@@ -103,7 +112,7 @@
                 <div name="fisica" v-if="!this.model.tipo_pessoa">
                     <el-card class="box-card">
                         <div slot="header" class="clearfix">
-                            <span>Pessoa Física</span>
+                         <span>Pessoa Física</span>
                         </div>
                         <label>RG</label>
                         <fg-input type="text" v-mask="'###############'" name="rg" v-validate="modelValidations.rg" :error="getError('rg')" v-model="model.rg">
@@ -152,7 +161,7 @@ export default {
             money: {
                 decimal: ',',
                 thousands: '.',
-                prefix: 'R$ ',
+                //prefix: 'R$ ',
                 precision: 2,
                 masked: true /* doesn't work with directive */
             },
@@ -170,8 +179,8 @@ export default {
                 rg: '',
                 cpf: '',
                 // Jurídica --------------
-                razao_social: '',
-                cnpj: '',
+                //razao_social: '',
+                //cnpj: '',
                 // Endereço --------------
                 cep: '',
                 logradouro: '',
@@ -182,12 +191,15 @@ export default {
                 estado: '',
                 tipo_pessoa: '',
                 habilitado_bovespa: false,
+                termo_push: false,
                 tipo_endereco: '',
                 operador: '',
+                situacao_tributaria: '',
                 assessor: ''
 
             },
             dataOperadores: [],
+            dataSituacao_Tributaria: [],
             dataAssessores: [],
             dataCliente: [],
             endereco: [],
@@ -356,11 +368,15 @@ export default {
     },
     created() {
 
-        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}&sort=username').then(response => {
             this.dataOperadores = response.data
         })
-        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}&sort=username').then(response => {
             this.dataAssessores = response.data
+        })
+
+        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_tributaria?where={"ativo": 1}').then(response => {
+            this.dataSituacao_tributaria = response.data
         })
 
         axios.get(process.env.VUE_APP_ROOT_API + '/cliente/' + window.localStorage.getItem("cliente")).then(response => {
@@ -371,12 +387,14 @@ export default {
             this.model.email = this.dataCliente.email
             this.model.assessor = this.dataCliente.id_assessor.id
             this.model.operador = this.dataCliente.id_operador
+            this.model.situacao_tributaria = this.dataCliente.id_tipo_solucao_tributaria
             this.model.cpf = this.dataCliente.cpf_cnpj
             this.model.cnpj = this.dataCliente.cpf_cnpj
             this.model.potencial_investimento = this.dataCliente.potencial_investimento
             this.model.investimento_inicial = this.dataCliente.investimento_inicial
             this.model.id_xp = this.dataCliente.id_xp
             this.model.habilitado_bovespa = this.dataCliente.habilitado_bovespa
+            this.model.termo_push = this.dataCliente.termo_push
             this.model.rg = this.dataCliente.rg
             this.model.razao_social = this.dataCliente.razao_social
             this.model.tipo_pessoa = this.dataCliente.tipo_pessoa
@@ -461,11 +479,13 @@ export default {
                 cpf_cnpj: documento,
                 potencial_investimento: this.model.potencial_investimento,
                 investimento_inicial: this.model.investimento_inicial,
-                razao_social: this.model.razao_social,
+                //razao_social: this.model.razao_social,
                 rg: this.model.rg,
                 habilitado_bovespa: this.model.habilitado_bovespa,
+                termo_push:this.model.termo_push,
                 id_responsavel: authUser.id,
                 id_operador: this.model.operador,
+                id_tipo_solucao_tributaria: this.model.situacao_tributaria,
                 tipo_pessoa: this.model.tipo_pessoa,
                 id_assessor: this.model.assessor
             }

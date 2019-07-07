@@ -3,7 +3,7 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Editar de Escritório
+                Editar Escritório
             </h4>
         </div>
         <div class="card-body">
@@ -299,7 +299,7 @@ export default {
         })
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/central?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/central?where={"ativo": 1}&sort=nome').then(response => {
             this.centralOffice = response.data
         })
     },
