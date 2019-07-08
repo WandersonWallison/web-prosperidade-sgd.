@@ -165,15 +165,10 @@ export default {
         },
         formatarMoeda: function (valor) {
 
-            valor = valor + '00'
-            valor = parseInt(valor.replace(/[\D]+/g, ''))
-            valor = valor + ''
-            valor = valor.replace(/([0-9]{2})$/g, ",$1")
+            var numero = valor.toFixed(2).split('.')
+            numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
+            return numero.join(',')
 
-            if (valor.length > 6) {
-                valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
-            }
-            return 'R$ ' + valor
         }
     },
     created() {

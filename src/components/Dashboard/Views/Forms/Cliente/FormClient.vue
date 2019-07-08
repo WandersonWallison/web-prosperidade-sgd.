@@ -12,7 +12,7 @@
             <div class="form-group col-md-6">
                 <el-card class="box-card">
                     <div class="form-group col-md-10">
-                        <el-switch v-model="model.tipo_pessoa" name="tipo_pessoa" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Pessoa Jurídica" inactive-text="Pessoa Física">
+                        <el-switch v-model="model.tipo_pessoa" data-vv-name=" tipo_pessoa " data-vv-as=" Confirmação de tipo de pessoa " name="tipo_pessoa" active-color="#20B2AA" inactive-color="#00BFFF" active-text="Pessoa Jurídica" inactive-text="Pessoa Física">
                         </el-switch>
                     </div>
                     <div slot="header" class="clearfix">
@@ -29,15 +29,15 @@
                     </fg-input>
                 </el-card>
                 <br>
-                <el-card class="box-card">
+                <el-card class="box-card" name="edereco">
                     <div slot="header" class="clearfix">
                         <span>Endereço</span>
                     </div>
                     <label>Tipo Endereço</label>
                     <div class="form-group col-md-10">
                         <fg-input :error="getError('tipo_endereco')" v-validate="modelValidations.tipo_endereco">
-                            <el-radio v-model="model.tipo_endereco" label="Residencial">Residencial</el-radio>
-                            <el-radio v-model="model.tipo_endereco" label="Comercial">Comercial</el-radio>
+                            <el-radio v-model="model.tipo_endereco" name="tipo_endereco" label="Residencial">Residencial</el-radio>
+                            <el-radio v-model="model.tipo_endereco" name="tipo_endereco" label="Comercial">Comercial</el-radio>
                         </fg-input>
                     </div>
                     <!--
@@ -82,31 +82,31 @@
                         <span>Dados Conta</span>
                     </div>
                     <div>
-                        <el-checkbox v-model="model.habilitado_bovespa">Habilitado bovespa</el-checkbox>
+                        <el-checkbox name="habilitado_bovespa" v-model="model.habilitado_bovespa">Habilitado bovespa</el-checkbox>
                     </div>
                     <div>
-                        <el-checkbox v-model="model.termo_push">Termo Push</el-checkbox>
+                        <el-checkbox name="termo_push" v-model="model.termo_push">Termo Push</el-checkbox>
                     </div>
                     <label>Numero XP</label>
                     <fg-input type="text" name="numero_xp" v-validate="modelValidations.numero_xp" :error="getError('numero_xp')" v-model="model.numero_xp">
                     </fg-input>
                     <label>Situação Tributária</label>
-                    <fg-input :error="getError('situacao_tributaria')" v-validate="modelValidations.situacao_tributaria">
+                    <fg-input :error="getError('situacao_tributaria')" v-validate="modelValidations.situacao_tributaria" name="situacao_tributaria">
                         <el-select no-data-text="Sem informações" class="select-default" v-model="model.situacao_tributaria" name="situacao_tributaria" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in this.dataSituacao_tributaria" :key="item.id" :label="item.descricao" :value="item.id">
                             </el-option>
                         </el-select>
                     </fg-input>
                     <label>Operador</label>
-                    <fg-input :error="getError('operador')" v-validate="modelValidations.operador">
+                    <fg-input :error="getError('operador')" v-validate="modelValidations.operador" name="operador">
                         <el-select no-data-text="Sem informações" class="select-default" v-model="model.operador" name="operador" placeholder="Selecione...">
-                            <el-option class="select-default" v-for="item in this.dataOperadores" :key="item.id" :label="item.username" :value="item.id">
+                            <el-option class="select-default" v-for="item in this.dataOperadores" :key="item.id" name="operador" :label="item.username" :value="item.id">
                             </el-option>
                         </el-select>
                     </fg-input>
-                    
+
                     <label>Assessor</label>
-                    <fg-input :error="getError('assessor')">
+                    <fg-input :error="getError('assessor')" name="assessor">
                         <el-select no-data-text="Sem informações" class="select-default" v-validate="modelValidations.assessor" v-model="model.assessor" name="assessor" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in this.dataAssessores" :key="item.id" :label="item.username" :value="item.id">
                             </el-option>
@@ -121,7 +121,7 @@
                 </el-card>
                 <br>
                 <div name="fisica" v-if="!this.model.tipo_pessoa">
-                    <el-card class="box-card">
+                    <el-card class="box-card" name="fisica">
                         <div slot="header" class="clearfix">
                             <span>Pessoa Física</span>
                         </div>
@@ -134,7 +134,7 @@
                     </el-card>
                 </div>
                 <div name="juridica" v-if="this.model.tipo_pessoa">
-                    <el-card class="box-card">
+                    <el-card class="box-card" name="juridica">
                         <div slot="header" class="clearfix">
                             <span>Pessoa Jurídica</span>
                         </div>
@@ -384,11 +384,11 @@ export default {
         money: VMoney
     },
     mounted() {
-        
+
         axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}&sort=username').then(response => {
             this.dataOperadores = response.data
         })
-        
+
         axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}&sort=username').then(response => {
             this.dataAssessores = response.data
         })
@@ -408,7 +408,6 @@ export default {
                 this.$emit('on-submit', this.salvar(), isValid)
             })
             */
-
             this.$validator.validateAll().then((result) => {
                 console.log('Antes de ', result)
                 this.$validator.validateAll().then((result) => {
