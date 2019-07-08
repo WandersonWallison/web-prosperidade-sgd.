@@ -199,7 +199,7 @@ export default {
 
             },
             dataOperadores: [],
-            dataSituacao_Tributaria: [],
+            dataSituacao_tributaria: [],
             dataAssessores: [],
             dataCliente: [],
             endereco: [],
