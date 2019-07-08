@@ -81,7 +81,7 @@
                     </fg-input>
                     <!--  SITUAÇÃO TRIBUTARIA  -->
                     <label>Situação Tributária</label>
-                    <fg-input :error="getError('situacao_tributaria')" v-validate="modelValidations.situacao_tributaria">
+                    <fg-input :error="getError('situacao_tributaria')" v-validate="modelValidations.situacao_tributaria" name="situacao_tributaria">
                         <el-select no-data-text="Sem informações" class="select-default" v-model="model.situacao_tributaria" name="situacao_tributaria" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in this.dataSituacao_tributaria" :key="item.id" :label="item.descricao" :value="item.id">
                             </el-option>
@@ -89,7 +89,7 @@
                     </fg-input>
                     <!--  OPERADOR  -->
                     <label>Operador</label>
-                    <fg-input :error="getError('operador')" v-validate="modelValidations.operador">
+                    <fg-input :error="getError('operador')" v-validate="modelValidations.operador" name="operador">
                         <el-select no-data-text="Sem informações" class="select-default" v-model="model.operador" name="operador" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in this.dataOperadores" :key="item.id" :label="item.username" :value="item.id">
                             </el-option>
@@ -97,7 +97,7 @@
                     </fg-input>
                     <!--  ASSESSOR  -->
                     <label>Assessor</label>
-                    <fg-input :error="getError('assessor')" v-validate="modelValidations.assessor">
+                    <fg-input :error="getError('assessor')" v-validate="modelValidations.assessor" name="assessor">
                         <el-select no-data-text="Sem informações" class="select-default" v-model="model.assessor" name="assessor" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in this.dataAssessores" :key="item.id" :label="item.username" :value="item.id">
                             </el-option>
@@ -116,8 +116,8 @@
                         <div slot="header" class="clearfix">
                             <span>Pessoa Física</span>
                         </div>
-                        <label>RG</label>
-                        <fg-input type="text" v-mask="'###############'" name="rg" v-validate="modelValidations.rg" :error="getError('rg')" v-model="model.rg">
+                        <label>Indetificação</label>
+                        <fg-input type="text" name="rg" v-validate="modelValidations.rg" :error="getError('rg')" v-model="model.rg">
                         </fg-input>
                         <label>CPF</label>
                         <fg-input type="text" v-mask="'###.###.###-##'" name="cpf" v-validate="modelValidations.cpf" :error="getError('cpf')" v-model="model.cpf">
@@ -374,7 +374,6 @@ export default {
         axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}&sort=username').then(response => {
             this.dataAssessores = response.data
         })
-
         axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_tributaria?where={"ativo": 1}').then(response => {
             this.dataSituacao_tributaria = response.data
         })
@@ -387,7 +386,7 @@ export default {
             this.model.email = this.dataCliente.email
             this.model.assessor = this.dataCliente.id_assessor.id
             this.model.operador = this.dataCliente.id_operador
-            this.model.situacao_tributaria = this.dataCliente.id_tipo_solucao_tributaria
+            this.model.situacao_tributaria = this.dataCliente.id_tipo_solucao_tributaria.id
             this.model.cpf = this.dataCliente.cpf_cnpj
             this.model.cnpj = this.dataCliente.cpf_cnpj
             this.model.potencial_investimento = this.formatarMoeda(this.dataCliente.potencial_investimento)
@@ -427,11 +426,23 @@ export default {
             })
         },
         formatarMoeda: function (valor) {
+            // console.log('valor 1 - ', valor)
 
             var numero = valor.toFixed(2).split('.')
+            //console.log('valor 2 - ', numero)
             numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
+            // console.log('valor 3 - ', numero[0])
             return numero.join(',')
+        },
+        retiraMascara(campo) {
 
+          for (let index = 0; index < campo.length; index++) {
+            campo = campo.replace('.', '') // Remove tudo o que não é dígito
+          }
+            campo = campo.replace('R$', '')
+            campo = campo.replace(',', '.') // Remove tudo o que não é dígito
+            campo = campo.trim()
+            return campo
         },
         buscarEndereco() {
             this.model.bairro = ''
@@ -475,7 +486,6 @@ export default {
             } else {
                 documento = ''
             }
-
             let cliente = {
 
                 id_xp: this.model.id_xp,
@@ -484,8 +494,8 @@ export default {
                 telefone: this.model.telefone,
                 email: this.model.email,
                 cpf_cnpj: documento,
-                potencial_investimento: this.model.potencial_investimento,
-                investimento_inicial: this.model.investimento_inicial,
+                potencial_investimento: this.retiraMascara(this.model.potencial_investimento),
+                investimento_inicial: this.retiraMascara(this.model.investimento_inicial),
                 //razao_social: this.model.razao_social,
                 rg: this.model.rg,
                 habilitado_bovespa: this.model.habilitado_bovespa,
@@ -506,8 +516,10 @@ export default {
                 numero: this.model.numero,
                 tipo: this.model.tipo_endereco
             }
+            // console.log('cliente' , cliente)
+            // console.log('Endereço ' , endereco)
 
-            console.log('cliente' , cliente)
+
             // -----------------------------------------------------------
             axios.put(process.env.VUE_APP_ROOT_API + '/cliente/' + this.dataCliente.id, cliente)
                 .then(response => {
@@ -539,11 +551,14 @@ export default {
                                 console.log(error.response.data)
                             })
                     }
-
                 })
                 .catch(error => {
-                    swal('Algo de errado!', 'Verifique os campos da empresa no cadastro!', 'error')
-                    console.log(error.response)
+                    let erro_name
+                    if(error.response.data.code == 'E_UNIQUE') {
+                       erro_name = 'Cliente já cadastrado com o mesmo NUMERO XP'
+                    }
+                    swal('Algo de errado!', 'Verifique os campos do cadastro de cliente! - '+ erro_name,'error')
+
                 })
         }
     }

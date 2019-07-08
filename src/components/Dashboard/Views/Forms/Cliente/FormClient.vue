@@ -125,8 +125,8 @@
                         <div slot="header" class="clearfix">
                             <span>Pessoa Física</span>
                         </div>
-                        <label>RG</label>
-                        <fg-input type="text" v-mask="'###############'" name="rg" v-validate="modelValidations.rg" :error="getError('rg')" v-model="model.rg">
+                        <label>Identificação</label>
+                        <fg-input type="text" name="rg" v-validate="modelValidations.rg" :error="getError('rg')" v-model="model.rg">
                         </fg-input>
                         <label>CPF</label>
                         <fg-input type="text" v-mask="'###.###.###-##'" name="cpf" v-validate="modelValidations.cpf" :error="getError('cpf')" v-model="model.cpf">
@@ -409,9 +409,7 @@ export default {
             })
             */
             this.$validator.validateAll().then((result) => {
-                console.log('Antes de ', result)
                 this.$validator.validateAll().then((result) => {
-                    console.log('RESULT ', result)
                     if (result) {
                         this.$emit('on-submit', this.salvar(), result)
                         return
@@ -458,7 +456,6 @@ export default {
         salvar() {
 
             const authUser = JSON.parse(window.localStorage.getItem("usuario"))
-
             let documento
             if (this.model.cnpj) {
                 documento = this.model.cnpj
@@ -516,7 +513,12 @@ export default {
                         })
                 })
                 .catch(error => {
-                    swal('Algo de errado!', 'Verifique os campos do cadastro de cliente!', 'error')
+                    let erro_name
+                    console.log('eRRO 1 - ',error.response.data)
+                    if(error.response.data.code == 'E_UNIQUE') {
+                       erro_name = 'Cliente já cadastrado com o mesmo NUMERO XP'
+                    }
+                    swal('Algo de errado!', 'Verifique os campos do cadastro de cliente! - '+ erro_name,'error')
                     console.log(error.response.data)
                 })
         }
