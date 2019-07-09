@@ -87,7 +87,8 @@ export default {
                 id_comissionamento_faixa: this.wizardModel.comissionamento,
                 id_escritorio: this.wizardModel.escritorio,
                 id_empresa: this.wizardModel.empresa,
-                cvn: this.wizardModel.cvn,
+                cvm: this.wizardModel.cvm,
+                id_xp: this.wizardModel.id_xp,
                 id_responsavel: authUser.id
             }
             let endereco = {
@@ -116,9 +117,13 @@ export default {
                         })
                 })
                 .catch(error => {
-                    // alert(error.response.data)
-                    swal('Algo de errado!', 'Email invalido!', 'error')
-                    console.log(error.response.data)
+                    let erro_name
+                    if(error.response.data.attrNames[0] == 'email') {
+                       erro_name = 'E-mail já cadastrado.'
+                    }else{
+                        erro_name = 'Código XP já cadastrado'
+                    }
+                    swal('Algo de errado!', 'Verifique os campos do cadastro de usuário! - '+ erro_name,'error')
                 })
         }
         //swal('Good job!', 'You clicked the finish button!', 'success')

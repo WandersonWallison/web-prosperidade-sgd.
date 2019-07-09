@@ -39,6 +39,10 @@
                 </div>
                 <fg-input name="cvm" placeholder="cvm" v-model="model.cvm" v-validate="modelValidations.cvm" :error="getError('cvm')">
                 </fg-input>
+                <div v-if="model.tipo == 3">
+                <fg-input name="id_xp" placeholder="código XP" v-model="model.id_xp">
+                </fg-input>
+                </div>
                 <fg-input name="cpf" placeholder="cpf" v-model="model.cpf" v-validate="modelValidations.cpf" :error="getError('cpf')" v-mask="'###.###.###-##'">
                 </fg-input>
                 <fg-input name="cnh" placeholder="cnh" v-model="model.cnh" v-validate="modelValidations.cnh" :error="getError('cnh')" v-mask="'##############'">
@@ -128,6 +132,7 @@ export default {
                 email: '',
                 senha: '',
                 cvm: '',
+                id_xp: null,
                 cpf: '',
                 cnh: '',
                 rg: '',
