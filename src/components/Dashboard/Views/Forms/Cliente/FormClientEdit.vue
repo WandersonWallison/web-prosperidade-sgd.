@@ -116,8 +116,8 @@
                         <div slot="header" class="clearfix">
                             <span>Pessoa Física</span>
                         </div>
-                        <label>Indetificação</label>
-                        <fg-input type="text" name="rg" v-validate="modelValidations.rg" :error="getError('rg')" v-model="model.rg">
+                        <label>RG</label>
+                        <fg-input type="text" name="rg" v-mask="'###########'" v-validate="modelValidations.rg" :error="getError('rg')" v-model="model.rg">
                         </fg-input>
                         <label>CPF</label>
                         <fg-input type="text" v-mask="'###.###.###-##'" name="cpf" v-validate="modelValidations.cpf" :error="getError('cpf')" v-model="model.cpf">
@@ -129,9 +129,11 @@
                         <div slot="header" class="clearfix">
                             <span>Pessoa Jurídica</span>
                         </div>
-                        <label>Razão Social</label>
-                        <fg-input type="text" name="razao_social" v-validate="modelValidations.razao_social" :error="getError('razao_social')" v-model="model.razao_social">
-                        </fg-input>
+                        <div>
+                          <label>Razão Social</label>
+                          <fg-input type="text" name="razao_social" v-validate="modelValidations.razao_social" :error="getError('razao_social')" v-model="model.razao_social">
+                          </fg-input>
+                        </div>
                         <label>CNPJ</label>
                         <fg-input type="text" v-mask="'##.###.###/####-##'" name="cnpj" v-validate="modelValidations.cnpj" :error="getError('cnpj')" v-model="model.cnpj">
                         </fg-input>

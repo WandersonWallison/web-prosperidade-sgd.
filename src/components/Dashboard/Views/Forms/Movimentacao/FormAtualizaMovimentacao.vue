@@ -24,8 +24,8 @@
                 </fg-input>
             </div>
         </div>
-        <div>
-            <el-table ref="multipleTable" no-data-text="Sem Informações" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
+        <div class="col-sm-14 mt-2">
+            <el-table ref="multipleTable" empty-text="Sem Informações" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="55">
                 </el-table-column>
                 <el-table-column label="CÓDIGO" width="90">
@@ -47,17 +47,14 @@
                     <template slot-scope="scope">{{ scope.row.observacao }}</template>
                 </el-table-column>
             </el-table>
-        </div>
-        <div class="col-sm-12">
-            <div class=" col-sm-4 pagination-info">
+            <div class="col-sm-14 pagination-info">
                 <p class="category">Mostrando {{from + 1}} de {{to}} de {{total}} Entradas</p>
             </div>
-            <div class=" col-sm-17">
+            <div class="col-sm-14">
                 <p-pagination class="pull-right" v-model="pagination.currentPage" :per-page="pagination.perPage" :total="pagination.total">
                 </p-pagination>
             </div>
         </div>
-
     </div>
     <md-dialog :md-active.sync="showUpdate">
         <div>

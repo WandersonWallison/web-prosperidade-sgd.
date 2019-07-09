@@ -218,7 +218,6 @@ export default {
             tmp = tmp.toFixed(2).replace(".", ",")
             tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
             return 'R$ ' + tmp
-
         },
         handleRegister(index, row) {
             this.$router.push('/forms/MovementForm')

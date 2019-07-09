@@ -8,7 +8,7 @@
         </div>
         <div class="card-body row justify-content-center">
 
-            <br/>
+            <br />
             <div class="form-group col-md-6">
                 <el-card class="box-card">
                     <div class="form-group col-md-10">
@@ -125,8 +125,8 @@
                         <div slot="header" class="clearfix">
                             <span>Pessoa Física</span>
                         </div>
-                        <label>Identificação</label>
-                        <fg-input type="text" name="rg" v-validate="modelValidations.rg" :error="getError('rg')" v-model="model.rg">
+                        <label>RG</label>
+                        <fg-input type="text" name="rg" v-mask="'###########'" v-validate="modelValidations.rg" :error="getError('rg')" v-model="model.rg">
                         </fg-input>
                         <label>CPF</label>
                         <fg-input type="text" v-mask="'###.###.###-##'" name="cpf" v-validate="modelValidations.cpf" :error="getError('cpf')" v-model="model.cpf">
@@ -138,9 +138,11 @@
                         <div slot="header" class="clearfix">
                             <span>Pessoa Jurídica</span>
                         </div>
-                        <label>Razão Social</label>
-                        <fg-input type="text" name="razao_social" v-validate="modelValidations.razao_social" :error="getError('razao_social')" v-model="model.razao_social">
-                        </fg-input>
+                        <div>
+                            <label>Razão Social</label>
+                            <fg-input type="text" name="razao_social" v-validate="modelValidations.razao_social" :error="getError('razao_social')" v-model="model.razao_social">
+                            </fg-input>
+                        </div>
                         <label>CNPJ</label>
                         <fg-input type="text" v-mask="'##.###.###/####-##'" name="cnpj" v-validate="modelValidations.cnpj" :error="getError('cnpj')" v-model="model.cnpj">
                         </fg-input>
@@ -514,11 +516,11 @@ export default {
                 })
                 .catch(error => {
                     let erro_name
-                    console.log('eRRO 1 - ',error.response.data)
-                    if(error.response.data.code == 'E_UNIQUE') {
-                       erro_name = 'Cliente já cadastrado com o mesmo NUMERO XP'
+                    console.log('eRRO 1 - ', error.response.data)
+                    if (error.response.data.code == 'E_UNIQUE') {
+                        erro_name = 'Cliente já cadastrado com o mesmo NUMERO XP'
                     }
-                    swal('Algo de errado!', 'Verifique os campos do cadastro de cliente! - '+ erro_name,'error')
+                    swal('Algo de errado!', 'Verifique os campos do cadastro de cliente! - ' + erro_name, 'error')
                     console.log(error.response.data)
                 })
         }

@@ -148,7 +148,7 @@ export default {
         }
     },
    mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}&sort=username').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}&sort=username&limit=2000').then(response => {
             this.tableData = response.data
         })
     }
