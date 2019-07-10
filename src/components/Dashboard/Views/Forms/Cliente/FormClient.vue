@@ -174,7 +174,7 @@ export default {
             money: {
                 decimal: ',',
                 thousands: '.',
-                //prefix: 'R$ ',
+                prefix: 'R$ ',
                 precision: 2,
                 masked: false /* doesn't work with directive */
             },
