@@ -4,6 +4,7 @@ import { isRegExp } from 'util';
 const progressShowDelay = 100;
 let routeResolved = false;
 let ValidaLink = false
+let links = JSON.parse(window.localStorage.getItem('links'))
 /**
  * Initializes NProgress after a specified delay only if the route was not resolved yet.
  */
@@ -19,11 +20,9 @@ export default function initProgress(router) {
 
   router.beforeEach((to, from, next) => {
 
-    let links = JSON.parse(window.localStorage.getItem('links'))
-    // console.log(links)
-
     // regra de validação de users
-    if (to.path === '/login'){
+    console.log(links)
+    if (to.path === '/login'){      
       return next()
     } else {
       // console.log(links)
@@ -35,10 +34,9 @@ export default function initProgress(router) {
             return next()
          }
         }
-      } else {
+      } 
         if(ValidaLink){
-          // swal('Você não tem permissão', '','warning')
-        }
+          swal('Você não tem permissão', '','warning')
       }
     }
   })
