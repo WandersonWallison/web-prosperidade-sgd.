@@ -427,14 +427,15 @@ export default {
                 swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
             })
         },
-        formatarMoeda: function (valor) {
-            // console.log('valor 1 - ', valor)
+        formatarMoeda(valor) {
 
+            //console.log('valor 1 - ', valor)
             var numero = valor.toFixed(2).split('.')
-            //console.log('valor 2 - ', numero)
+           //  console.log('valor 2 - ', numero)
             numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
             // console.log('valor 3 - ', numero[0])
             return numero.join(',')
+
         },
         retiraMascara(campo) {
 
