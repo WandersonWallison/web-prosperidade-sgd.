@@ -71,12 +71,12 @@ export default {
         },
         salvar() {
             const authUser = JSON.parse(window.localStorage.getItem('usuario'))
-            let tipoCentral = {
+            let tipoMovimentacao = {
                 descricao: this.model.descricao,
                 sigla: this.model.sigla,
                 id_responsavel: authUser.id
             }
-            axios.post(process.env.VUE_APP_ROOT_API + '/tipo_central', tipoCentral)
+            axios.post(process.env.VUE_APP_ROOT_API + '/tipo_movimentacao', tipoMovimentacao)
                 .then(response => {
                     this.results = response.data
                     swal('Bom trabalho!', 'Tipo de Movimentação Cadastrado com sucesso!', 'success')

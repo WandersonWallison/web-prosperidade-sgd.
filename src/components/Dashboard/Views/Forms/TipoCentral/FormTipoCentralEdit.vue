@@ -3,7 +3,7 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Editar de Tipo de Movimentação
+                Editar Tipo de Central
             </h4>
         </div>
         <div class="card-body">
@@ -38,7 +38,7 @@ export default {
                 descricao: '',
                 sigla: ''
             },
-            tipoMovimentacaoEdit: {},
+            tipoCentralEdit: {},
             modelValidations: {
                 descricao: {
                     required: true
@@ -54,11 +54,11 @@ export default {
     },
     created() {
 
-        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_movimentacao/' + window.localStorage.getItem("tipo_movimentacao")).then(response => {
-            this.tipoMovimentacaoEdit = response.data
-            this.model.descricao = this.tipoMovimentacaoEdit.descricao
-            this.model.sigla = this.tipoMovimentacaoEdit.sigla
-            window.localStorage.removeItem("tipo_movimentacao")
+        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_central/' + window.localStorage.getItem("tipo_central")).then(response => {
+            this.tipoCentralEdit = response.data
+            this.model.descricao = this.tipoCentralEdit.descricao
+            this.model.sigla = this.tipoCentralEdit.sigla
+            window.localStorage.removeItem("tipo_central")
 
         })
     },
@@ -77,16 +77,16 @@ export default {
         },
         salvar() {
             const authUser = JSON.parse(window.localStorage.getItem('usuario'))
-            let tipoMovimentacao = {
+            let tipoCentral = {
                 descricao: this.model.descricao,
                 sigla: this.model.sigla,
                 id_responsavel: authUser.id
             }
-            axios.put(process.env.VUE_APP_ROOT_API + '/tipo_movimentacao/' + this.tipoMovimentacaoEdit.id, tipoMovimentacao)
+            axios.put(process.env.VUE_APP_ROOT_API + '/tipo_central/' + this.tipoCentralEdit.id, tipoCentral)
                 .then(response => {
                     this.results = response.data
-                    swal('Bom trabalho!', 'Tipo de Movimentação Alterado com sucesso!', 'success')
-                    this.$router.push('/forms/TipoMovimentacaoList')
+                    swal('Bom trabalho!', 'Tipo de Central Alterado com sucesso!', 'success')
+                    this.$router.push('/forms/TipoCentralList')
                 })
                 .catch(error => {
                     swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
