@@ -210,6 +210,7 @@ export default {
                 operador: '',
                 assessor: ''
             },
+            id_cliente: '',
             dataOperadores: [],
             dataSituacao_tributaria: [],
             dataAssessores: [],
@@ -508,16 +509,38 @@ export default {
                 .then(response => {
                     this.results = response.data
                     endereco.id_cliente = response.data.id
+                    this.id_cliente = response.data.id
                     // Cadastro de Endereço o cliente será referenciado no campo de id_user da tabela de endereço
                     axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
                         .then(response => {
                             this.resultAdress = response.data
-                            swal('Bom trabalho!', 'Cliente Cadastrado com sucesso!', 'success')
-                            this.$router.push('/forms/ClientList')
+
+                                // ------------ Cadastro da Movimentação  ------------------------------------
+                                let movimentacao = {
+                                  id_cliente: this.id_cliente,
+                                  data_registro: moment(now(), "DD/MM/YYYY"),
+                                  id_situacao_movimento: 1,
+                                  id_tipo_movimentacao: 1,
+                                  valor: this.retiraMascara(this.model.investimento_inicial),
+                                  observacao: 'Primeiro Aporte',
+                                  id_responsavel: authUser.id
+                                }
+                                console.log('movimentacao', movimentacao)
+                                axios.post(process.env.VUE_APP_ROOT_API + '/movimentacao', movimentacao)
+                                  .then(response => {
+                                      this.results = response.data
+                                      swal('Bom trabalho!', 'Cliente Cadastrado com sucesso!', 'success')
+                                      this.$router.push('/forms/ClientList')
+                                  })
+                                  .catch(error => {
+                                      swal('Algo de errado!', 'Aporte inicial não cadastrado! \nPor favor cadastrar aporte manualmente', 'error')
+                                      console.log(error.response.data)
+                                  })
+                                // ------------ Fim Cadastro da Movimentação ---------------------------------
                         })
                         .catch(error => {
                             swal('Algo de errado!', 'Verifique os campos do endereço de cadastro!', 'error')
-                            console.log(error.response.data)
+                            console.log(error)
                         })
                 })
                 .catch(error => {

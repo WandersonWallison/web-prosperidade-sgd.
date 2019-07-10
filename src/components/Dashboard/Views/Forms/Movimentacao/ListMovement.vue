@@ -32,7 +32,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <fg-input class="input-sm" placeholder="Pesquisar" v-model="searchQuery">
+                    <fg-input class="input-sm" placeholder="Pesquisar por Código" v-model="searchQuery">
                     </fg-input>
                 </div>
             </div>
@@ -170,7 +170,7 @@ export default {
                 masked: false
             },
             searchQuery: '',
-            propsToSearch: ['id','observacao','id_cliente.nome'],
+            propsToSearch: ['id','observacao'],
             tableColumns: [
                 {
                     prop: 'id',
