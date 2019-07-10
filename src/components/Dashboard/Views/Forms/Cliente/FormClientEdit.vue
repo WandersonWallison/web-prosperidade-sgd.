@@ -103,11 +103,20 @@
                             </el-option>
                         </el-select>
                     </fg-input>
+                    <div class="form-group col-md-6">
+
+                    </div>
+                    <label>Investimento Inicial Atual</label>
+                    <fg-input type="text" :disabled="true" v-model="model.investimento_inicial_atual">
+                    </fg-input>
+                     <label>Potencial de Investimento Atual</label>
+                    <fg-input type="text" :disabled="true" v-model="model.potencial_investimento_atual">
+                    </fg-input>
                     <label>Investimento Inicial</label>
-                    <fg-input type="text" name="investimento_inicial" v-validate="modelValidations.investimento_inicial" :error="getError('investimento_inicial')" v-model="model.investimento_inicial">
+                    <fg-input type="text" v-money="money" name="investimento_inicial" v-validate="modelValidations.investimento_inicial" :error="getError('investimento_inicial')" v-model="model.investimento_inicial">
                     </fg-input>
                     <label>Potencial de Investimento</label>
-                    <fg-input type="text" name="potencial_investimento" v-validate="modelValidations.potencial_investimento" :error="getError('potencial_investimento')" v-model="model.potencial_investimento">
+                    <fg-input type="text" v-money="money" name="potencial_investimento" v-validate="modelValidations.potencial_investimento" :error="getError('potencial_investimento')" v-model="model.potencial_investimento">
                     </fg-input>
                 </el-card>
                 <br>
@@ -165,7 +174,7 @@ export default {
             money: {
                 decimal: ',',
                 thousands: '.',
-                //prefix: 'R$ ',
+                prefix: 'R$ ',
                 precision: 2,
                 masked: true /* doesn't work with directive */
             },
@@ -177,6 +186,8 @@ export default {
                 id_xp: '',
                 investimento_inicial: '',
                 potencial_investimento: '',
+                investimento_inicial_atual: '',
+                potencial_investimento_atual: '',
                 // Física ----------------
                 rg: '',
                 cpf: '',
@@ -391,8 +402,8 @@ export default {
             this.model.situacao_tributaria = this.dataCliente.id_tipo_solucao_tributaria.id
             this.model.cpf = this.dataCliente.cpf_cnpj
             this.model.cnpj = this.dataCliente.cpf_cnpj
-            this.model.potencial_investimento = this.formatarMoeda(this.dataCliente.potencial_investimento)
-            this.model.investimento_inicial = this.formatarMoeda(this.dataCliente.investimento_inicial)
+            this.model.potencial_investimento_atual = this.formatarMoeda(this.dataCliente.potencial_investimento)
+            this.model.investimento_inicial_atual = this.formatarMoeda(this.dataCliente.investimento_inicial)
             this.model.id_xp = this.dataCliente.id_xp
             this.model.habilitado_bovespa = this.dataCliente.habilitado_bovespa
             this.model.termo_push = this.dataCliente.termo_push
