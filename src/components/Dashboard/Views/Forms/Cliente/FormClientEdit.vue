@@ -112,9 +112,11 @@
                      <label>Potencial de Investimento Atual</label>
                     <fg-input type="text" :disabled="true" v-model="model.potencial_investimento_atual">
                     </fg-input>
+                    <!--
                     <label>Investimento Inicial</label>
                     <fg-input type="text" v-money="money" name="investimento_inicial" v-validate="modelValidations.investimento_inicial" :error="getError('investimento_inicial')" v-model="model.investimento_inicial">
                     </fg-input>
+                    -->
                     <label>Potencial de Investimento</label>
                     <fg-input type="text" v-money="money" name="potencial_investimento" v-validate="modelValidations.potencial_investimento" :error="getError('potencial_investimento')" v-model="model.potencial_investimento">
                     </fg-input>
@@ -233,13 +235,6 @@ export default {
                 id_xp: {
                     required: true
                 },
-                investimento_inicial: {
-                    required: true
-                },
-                potencial_investimento: {
-                    required: true
-                },
-
                 logradouro: {
                     required: true
                 },
@@ -500,6 +495,7 @@ export default {
             } else {
                 documento = ''
             }
+
             let cliente = {
 
                 id_xp: this.model.id_xp,
@@ -508,8 +504,8 @@ export default {
                 telefone: this.model.telefone,
                 email: this.model.email,
                 cpf_cnpj: documento,
-                potencial_investimento: this.retiraMascara(this.model.potencial_investimento),
-                investimento_inicial: this.retiraMascara(this.model.investimento_inicial),
+                potencial_investimento: this.retiraMascara(this.model.potencial_investimento === 'R$ 0,00'? this.model.potencial_investimento = this.model.potencial_investimento_atual : this.model.potencial_investimento),
+               // investimento_inicial: this.retiraMascara(this.model.investimento_inicial === 'R$ 0,00'? this.model.investimento_inicial = this.model.investimento_inicial_atual : this.model.investimento_inicial),
                 rg: this.model.rg,
                 habilitado_bovespa: this.model.habilitado_bovespa,
                 termo_push: this.model.termo_push,
@@ -529,9 +525,6 @@ export default {
                 numero: this.model.numero,
                 tipo: this.model.tipo_endereco
             }
-            // console.log('cliente' , cliente)
-            // console.log('Endereço ' , endereco)
-
 
             // -----------------------------------------------------------
             axios.put(process.env.VUE_APP_ROOT_API + '/cliente/' + this.dataCliente.id, cliente)

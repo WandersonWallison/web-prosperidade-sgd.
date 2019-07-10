@@ -161,6 +161,7 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
+import moment from 'moment'
 import {
     VMoney
 } from 'v-money'
@@ -174,7 +175,7 @@ export default {
             money: {
                 decimal: ',',
                 thousands: '.',
-                //prefix: 'R$ ',
+                prefix: 'R$ ',
                 precision: 2,
                 masked: false /* doesn't work with directive */
             },
@@ -210,6 +211,7 @@ export default {
                 operador: '',
                 assessor: ''
             },
+            id_cliente: '',
             dataOperadores: [],
             dataSituacao_tributaria: [],
             dataAssessores: [],
@@ -387,6 +389,7 @@ export default {
     },
     mounted() {
 
+
         axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}&sort=username&limit=2000').then(response => {
             this.dataOperadores = response.data
         })
@@ -508,16 +511,37 @@ export default {
                 .then(response => {
                     this.results = response.data
                     endereco.id_cliente = response.data.id
+                    this.id_cliente = response.data.id
                     // Cadastro de Endereço o cliente será referenciado no campo de id_user da tabela de endereço
                     axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
                         .then(response => {
                             this.resultAdress = response.data
-                            swal('Bom trabalho!', 'Cliente Cadastrado com sucesso!', 'success')
-                            this.$router.push('/forms/ClientList')
+
+                                // ------------ Cadastro da Movimentação  ------------------------------------
+                                let movimentacao = {
+                                  id_cliente: this.id_cliente,
+                                  data_registro: moment().format("YYYY/MM/DD"),
+                                  id_situacao_movimento: 1,
+                                  id_tipo_movimentacao: 1,
+                                  valor: this.retiraMascara(this.model.investimento_inicial),
+                                  observacao: 'Primeiro Aporte',
+                                  id_responsavel: authUser.id
+                                }
+                                axios.post(process.env.VUE_APP_ROOT_API + '/movimentacao', movimentacao)
+                                  .then(response => {
+                                      this.results = response.data
+                                      swal('Bom trabalho!', 'Cliente Cadastrado com sucesso!', 'success')
+                                      this.$router.push('/forms/ClientList')
+                                  })
+                                  .catch(error => {
+                                      swal('Algo de errado!', 'Aporte inicial não cadastrado! \nPor favor cadastrar aporte manualmente', 'error')
+                                      console.log(error.response.data)
+                                  })
+                                // ------------ Fim Cadastro da Movimentação ---------------------------------
                         })
                         .catch(error => {
                             swal('Algo de errado!', 'Verifique os campos do endereço de cadastro!', 'error')
-                            console.log(error.response.data)
+                            console.log(error)
                         })
                 })
                 .catch(error => {
