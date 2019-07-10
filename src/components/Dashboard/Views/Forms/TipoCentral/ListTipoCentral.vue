@@ -7,7 +7,7 @@
             <div class="col-sm-6">
                 <div class="card-body text-left">
                     <div>
-                        <h5 class="card-title">Tipos de Movimentações </h5>
+                        <h5 class="card-title">Tipos de Centrais </h5>
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@ import {
 import axios from 'axios'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
 export default {
-    name: 'ListTipoMovimentacao',
+    name: 'ListTipoCentral',
     components: {
         PPagination
     },
@@ -147,30 +147,30 @@ export default {
         }
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_movimentacao?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_central?where={"ativo": 1}').then(response => {
             this.tableData = response.data
         })
     },
     methods: {
         handleRegister() {
-            this.$router.push('/forms/TipoMovimentacaoForms')
+            this.$router.push('/forms/TipoCentralForms')
         },
         handleEdit(index, row) {
-            window.localStorage.setItem('tipo_movimentacao', row.id)
-            this.$router.push('/forms/TipoMovimentacaoEdit')
+            window.localStorage.setItem('tipo_central', row.id)
+            this.$router.push('/forms/TipoCentralEdit')
         },
         handleDelete(index, row) {
 
-            let Tipomovimentacao = {
+            let Tipocentral = {
                 ativo: false
             }
-            axios.put(process.env.VUE_APP_ROOT_API + '/tipo_movimentacao/' + row.id, Tipomovimentacao)
+            axios.put(process.env.VUE_APP_ROOT_API + '/tipo_central/' + row.id, Tipocentral)
                 .then(response => {
                     this.results = response.data
-                    axios.get(process.env.VUE_APP_ROOT_API + '/tipo_movimentacao?where={"ativo": 1}').then(response => {
+                    axios.get(process.env.VUE_APP_ROOT_API + '/tipo_central?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', `Registro ${row.descricao} excluído com sucesso!`, 'success')
-                        this.$router.push('/forms/TipoMovimentacaoList')
+                        swal('Bom trabalho!', `Tipo de Central ${row.descricao} excluído com sucesso!`, 'success')
+                        this.$router.push('/forms/TipoCentralList')
                     })
                 })
                 .catch(error => {

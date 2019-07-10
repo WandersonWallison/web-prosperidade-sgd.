@@ -36,6 +36,10 @@ const TipoMovimentacaoForms = () => import(/* webpackChunkName: "forms" */ 'src/
 const TipoMovimentacaoEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoMovimentacao/FormTipoMovimentacaoEdit.vue')
 const TipoMovimentacaoList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoMovimentacao/ListTipoMovimentacao.vue')
 
+const TipoCentralForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoCentral/FormTipoCentral.vue')
+const TipoCentralEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoCentral/FormTipoCentralEdit.vue')
+const TipoCentralList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoCentral/ListTipoCentral.vue')
+
 const CentralForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/FormCentral.vue')
 const CentralEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/FormCentralEdit.vue')
 const CentralList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Central/ListCentral.vue')
@@ -210,6 +214,22 @@ let formsMenu = {
       path: 'TipoMovimentacaoEdit',
       name: 'Edit Tipo Movimentacao',
       component: TipoMovimentacaoEdit
+    },
+    //Tipo de Central
+    {
+      path: 'TipoCentralForms',
+      name: 'Form Tipo Central',
+      component: TipoCentralForms
+    },
+    {
+      path: 'TipoCentralList',
+      name: 'List Tipo Central',
+      component: TipoCentralList
+    },
+    {
+      path: 'TipoCentralEdit',
+      name: 'Edit Tipo Central',
+      component: TipoCentralEdit
     },
     {
       path: 'OperatorList',

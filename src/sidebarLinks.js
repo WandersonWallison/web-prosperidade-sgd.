@@ -97,6 +97,10 @@ export default [
     name: 'Tipo Movimentação',
     path: '/forms/TipoMovimentacaoList'
   },
+  {
+    name: 'Tipo de Central',
+    path: '/forms/TipoCentralList'
+  },
  /* {
     name: 'Controle de Usuários',
     path: '/forms/UserControlList'
