@@ -370,10 +370,10 @@ export default {
     },
     created() {
 
-        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}&sort=username').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}&sort=username&limit=2000').then(response => {
             this.dataOperadores = response.data
         })
-        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}&sort=username').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}&sort=username&limit=2000').then(response => {
             this.dataAssessores = response.data
         })
         axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_tributaria?where={"ativo": 1}').then(response => {
@@ -429,9 +429,9 @@ export default {
         },
         formatarMoeda(valor) {
 
-            //console.log('valor 1 - ', valor)
+            // console.log('valor 1 - ', valor)
             var numero = valor.toFixed(2).split('.')
-           //  console.log('valor 2 - ', numero)
+            // console.log('valor 2 - ', numero)
             numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
             // console.log('valor 3 - ', numero[0])
             return numero.join(',')
@@ -499,7 +499,6 @@ export default {
                 cpf_cnpj: documento,
                 potencial_investimento: this.retiraMascara(this.model.potencial_investimento),
                 investimento_inicial: this.retiraMascara(this.model.investimento_inicial),
-                //razao_social: this.model.razao_social,
                 rg: this.model.rg,
                 habilitado_bovespa: this.model.habilitado_bovespa,
                 termo_push: this.model.termo_push,
