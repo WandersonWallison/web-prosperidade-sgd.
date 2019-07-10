@@ -161,6 +161,7 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
+import moment from 'moment'
 import {
     VMoney
 } from 'v-money'
@@ -388,6 +389,7 @@ export default {
     },
     mounted() {
 
+
         axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}&sort=username&limit=2000').then(response => {
             this.dataOperadores = response.data
         })
@@ -518,14 +520,13 @@ export default {
                                 // ------------ Cadastro da Movimentação  ------------------------------------
                                 let movimentacao = {
                                   id_cliente: this.id_cliente,
-                                  data_registro: moment(now(), "DD/MM/YYYY"),
+                                  data_registro: moment().format("YYYY/MM/DD"),
                                   id_situacao_movimento: 1,
                                   id_tipo_movimentacao: 1,
                                   valor: this.retiraMascara(this.model.investimento_inicial),
                                   observacao: 'Primeiro Aporte',
                                   id_responsavel: authUser.id
                                 }
-                                console.log('movimentacao', movimentacao)
                                 axios.post(process.env.VUE_APP_ROOT_API + '/movimentacao', movimentacao)
                                   .then(response => {
                                       this.results = response.data
