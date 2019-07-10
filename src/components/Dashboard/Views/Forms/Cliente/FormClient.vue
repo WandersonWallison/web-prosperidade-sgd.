@@ -452,7 +452,13 @@ export default {
                 })
         },
         retiraMascara(campo) {
-            campo = campo.replace(/\D/g, '') // Remove tudo o que não é dígito
+
+          for (let index = 0; index < campo.length; index++) {
+            campo = campo.replace('.', '') // Remove tudo o que não é dígito
+          }
+            campo = campo.replace('R$', '')
+            campo = campo.replace(',', '.') // Remove tudo o que não é dígito
+            campo = campo.trim()
             return campo
         },
         salvar() {

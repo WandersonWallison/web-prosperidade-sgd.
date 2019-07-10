@@ -170,7 +170,7 @@ export default {
                 masked: false
             },
             searchQuery: '',
-            propsToSearch: ['id','nome', 'descricao', 'observacao'],
+            propsToSearch: ['id','observacao','id_cliente.nome'],
             tableColumns: [
                 {
                     prop: 'id',
