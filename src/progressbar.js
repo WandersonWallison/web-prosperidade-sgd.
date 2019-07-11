@@ -21,8 +21,7 @@ export default function initProgress(router) {
   router.beforeEach((to, from, next) => {
 
     // regra de validação de users
-    console.log(links)
-    if (to.path === '/login'){      
+    if (to.path === '/login'){
       return next()
     } else {
       // console.log(links)
@@ -34,7 +33,7 @@ export default function initProgress(router) {
             return next()
          }
         }
-      } 
+      }
         if(ValidaLink){
           swal('Você não tem permissão', '','warning')
       }

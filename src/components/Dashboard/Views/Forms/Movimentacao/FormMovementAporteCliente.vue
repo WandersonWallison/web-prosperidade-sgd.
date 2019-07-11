@@ -8,18 +8,26 @@
         </div>
         <div class="card-body row justify-content-center">
 
-            <br/>
+            <br />
             <div class="form-group col-md-12">
-              <el-card class="box-card">
-                <label>Clientes</label>
-                <fg-input>
-                    <el-select no-data-text="Sem informações" class="select-default" v-model="model.cliente" name="cliente" placeholder="Selecione...">
-                        <el-option class="select-default" v-for="item in this.dataCliente" :key="item.id" :label="item.nome" :value="[item.id,item.id_xp,item.nome,item.telefone,item.email,item.id_assessor.username,item.id_assessor.telefone,item.id_assessor.cpf]">
-                        </el-option>
-                    </el-select>
-                </fg-input>
-              </el-card>
+
+                <el-card class="box-card">
+                    <div class="form-group col-md-10">
+                        <el-switch v-model="model.tipo_movimentacao" data-vv-name=" tipo_movimentacao " data-vv-as=" Confirmação de tipo de pessoa " name="tipo_movimentacao" active-color="#ff0000" inactive-color="#00BFFF" active-text="Retirada" inactive-text="Aporte">
+                        </el-switch>
+                    </div>
+                    <div>
+                        <label>Clientes</label>
+                        <fg-input>
+                            <el-select no-data-text="Sem informações" class="select-default" v-model="model.cliente" name="cliente" placeholder="Selecione...">
+                                <el-option class="select-default" v-for="item in this.dataCliente" :key="item.id" :label="item.nome" :value="[item.id,item.id_xp,item.nome,item.telefone,item.email,item.investimento_inicial]">
+                                </el-option>
+                            </el-select>
+                        </fg-input>
+                    </div>
+                </el-card>
             </div>
+
             <div class="form-group col-md-6">
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
@@ -37,31 +45,28 @@
                     <label>E-mail</label>
                     <fg-input type="email" name="email" disabled v-model="model.cliente[4]">
                     </fg-input>
-                </el-card>
-
-            </div>
-            <!--
-            <div class="form-group col-md-4">
-                <el-card class="box-card">
-                    <div slot="header" class="clearfix">
-                        <span>Assessor</span>
-                    </div>
-                    <label>Nome</label>
-                    <fg-input type="text" name="nome_assessor" disabled v-model="model.cliente[5]">
-                    </fg-input>
-                    <label>Telefone</label>
-                    <fg-input type="text" name="telefone" disabled v-model="model.cliente[6]">
-                    </fg-input>
-                    <label>CPF</label>
-                    <fg-input type="text" name="cpf" disabled v-model="model.cliente[7]">
+                    <label>Aporte Inicial</label>
+                    <fg-input type="text" name="investimento_inicial" disabled v-model="model.cliente[5]">
                     </fg-input>
                 </el-card>
             </div>
-            -->
             <div class="form-group col-md-6">
                 <el-card class="box-card">
-                    <div slot="header" class="clearfix">
+                    <div v-if="!this.model.tipo_movimentacao" slot="header" class="clearfix">
                         <span>Aporte</span>
+                    </div>
+                    <div v-if="this.model.tipo_movimentacao" slot="header" class="clearfix">
+                        <span>Retirada</span>
+                    </div>
+                    <div v-if="!this.model.tipo_movimentacao">
+                        <label>Status</label>
+                        <fg-input type="text" name="status" disabled v-model="model.status[0].descricao">
+                        </fg-input>
+                    </div>
+                    <div v-if="this.model.tipo_movimentacao">
+                        <label>Status</label>
+                        <fg-input type="text" name="status" disabled v-model="model.status[2].descricao">
+                        </fg-input>
                     </div>
                     <div class="block">
                         <div class="form-group">
@@ -76,15 +81,6 @@
                     <label>Observação</label>
                     <fg-input type="text" name="observacao" v-model="model.observacao">
                     </fg-input>
-                    <!--
-                    <label>Status</label>
-                    <fg-input>
-                        <el-select no-data-text="Sem informações" v-validate="modelValidations.status" :error="getError('status')" class="select-default" v-model="model.status" name="cliente" placeholder="Selecione...">
-                            <el-option class="select-default" v-for="item in this.dataSituacao" :key="item.id" :label="item.descricao" :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </fg-input>
-                    -->
                 </el-card>
             </div>
         </div>
@@ -113,11 +109,12 @@ export default {
     components: {
         [DatePicker.name]: DatePicker
     },
-    name: 'FormMovimentacao',
+    name: 'FormMovimentacaoAporteCliente',
     mixins: [state],
     data() {
         return {
             datePicker: '',
+            valor_cliente: '',
             selected: [],
             money: {
                 decimal: ',',
@@ -155,6 +152,13 @@ export default {
             }
         }
     },
+    filters: {
+        formatarMoeda: function (v) {
+            var numero = v.toFixed(2).split('.')
+            numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
+            return numero.join(',')
+        }
+    },
     directives: {
         mask,
         money: VMoney
@@ -164,8 +168,8 @@ export default {
         axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}').then(response => {
             this.dataCliente = response.data
         })
-        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_movimento?where={"ativo": 1}').then(response => {
-            this.dataSituacao = response.data
+        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_movimentacao?where={"ativo": 1}').then(response => {
+            this.model.status = response.data
         })
     },
     methods: {
@@ -186,6 +190,12 @@ export default {
                 swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
             })
         },
+        formatarMoeda(valor) {
+            // valor_cliente
+            var numero = valor.toFixed(2).split('.')
+            numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
+            return numero.join(',')
+        },
         retiraMascara(campo) {
             campo = campo.replace('.', '') // Remove tudo o que não é dígito
             campo = campo.replace(',', '.') // Remove tudo o que não é dígito
@@ -201,6 +211,8 @@ export default {
                 data_registro: moment(this.model.data_registro, "DD/MM/YYYY"),
                 // id_situacao_movimento: this.model.status,
                 id_situacao_movimento: 1,
+                // TODO -- verirficar
+                ID_SITUACAO_MOVIMENTACAO: 1,
                 valor: this.retiraMascara(this.model.valor),
                 observacao: this.model.observacao,
                 id_responsavel: authUser.id
