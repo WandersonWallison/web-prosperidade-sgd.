@@ -3,7 +3,7 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Cadastro de Tipo de Link
+                Editar de Tipo de Situação de Movimento
             </h4>
         </div>
         <div class="card-body">
@@ -17,6 +17,7 @@
             <p-button type="info" @click.prevent="validate">Salvar</p-button>
         </div>
     </form>
+
 </div>
 </template>
 
@@ -27,34 +28,38 @@ import {
     mask
 } from 'vue-the-mask'
 export default {
-    name: 'FormTipoLink',
+    name: 'FormTipoSituacaoMovimento',
     data() {
         return {
             model: {
                 descricao: ''
             },
-            results: [],
-            resultAdress: [],
+            tipoSituacaoMovimentoEdit: {},
             modelValidations: {
                 descricao: {
                     required: true
                 }
-            },
+            }
         }
     },
     directives: {
         mask
+    },
+    created() {
+
+        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_movimento/' + window.localStorage.getItem("tipo_situacao_movimento")).then(response => {
+            this.tipoSituacaoMovimentoEdit = response.data
+            this.model.descricao = this.tipoSituacaoMovimentoEdit.descricao
+            window.localStorage.removeItem("tipo_situacao_movimento")
+
+        })
     },
     methods: {
         getError(fieldName) {
             return this.errors.first(fieldName)
         },
         validate() {
-            /*
-            this.$validator.validateAll().then(isValid => {
-                this.$emit('on-submit', this.salvar(), isValid)
-            }) */
-           this.$validator.validateAll().then((result) => {
+            this.$validator.validateAll().then((result) => {
                 if (result) {
                     this.$emit('on-submit', this.salvar(), result)
                     return
@@ -64,22 +69,23 @@ export default {
         },
         salvar() {
             const authUser = JSON.parse(window.localStorage.getItem('usuario'))
-            let link = {
+            let tipoSituacaoMovimento = {
                 descricao: this.model.descricao,
                 id_responsavel: authUser.id
             }
-            axios.post(process.env.VUE_APP_ROOT_API + '/tipo_link', link)
+            axios.put(process.env.VUE_APP_ROOT_API + '/tipo_situacao_movimento/' + this.tipoSituacaoMovimentoEdit.id, tipoSituacaoMovimento)
                 .then(response => {
                     this.results = response.data
-                    swal('Bom trabalho!', 'Tipo link Cadastrado com sucesso!', 'success')
-                    this.$router.push('/forms/TipoLinkList')
+                    swal('Bom trabalho!', 'Tipo de Situacao de Movimento Alterado com sucesso!', 'success')
+                    this.$router.push('/forms/TipoSituacaoMovimentoList')
                 })
                 .catch(error => {
-                    swal('Algo de errado!', 'Verifique os campos do cadastros!', 'error')
-                    console.log(error.response.data)
+                    swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
+                    console.log(error.response)
                 })
         }
-    }
+    },
+
 }
 </script>
 

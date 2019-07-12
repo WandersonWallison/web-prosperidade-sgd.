@@ -36,6 +36,15 @@ const TipoMovimentacaoForms = () => import(/* webpackChunkName: "forms" */ 'src/
 const TipoMovimentacaoEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoMovimentacao/FormTipoMovimentacaoEdit.vue')
 const TipoMovimentacaoList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoMovimentacao/ListTipoMovimentacao.vue')
 
+const TipoSituacaoMovimentoForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoSituacaoMovimento/FormTipoSituacaoMovimento.vue')
+const TipoSituacaoMovimentoEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoSituacaoMovimento/FormTipoSituacaoMovimentoEdit.vue')
+const TipoSituacaoMovimentoList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoSituacaoMovimento/ListTipoSituacaoMovimento.vue')
+
+const TipoSituacaoTributariaForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoSituacaoTributaria/FormTipoSituacaoTributaria.vue')
+const TipoSituacaoTributariaEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoSituacaoTributaria/FormTipoSituacaoTributariaEdit.vue')
+const TipoSituacaoTributariaList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoSituacaoTributaria/ListTipoSituacaoTributaria.vue')
+
+
 const TipoCentralForms = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoCentral/FormTipoCentral.vue')
 const TipoCentralEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoCentral/FormTipoCentralEdit.vue')
 const TipoCentralList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/TipoCentral/ListTipoCentral.vue')
@@ -215,7 +224,39 @@ let formsMenu = {
       name: 'Edit Tipo Movimentacao',
       component: TipoMovimentacaoEdit
     },
-    //Tipo de Central
+    //Tipo Situacao Movimento
+    {
+      path: 'TipoSituacaoMovimentoForms',
+      name: 'Form Tipo Situacao Movimento',
+      component: TipoSituacaoMovimentoForms
+    },
+    {
+      path: 'TipoSituacaoMovimentoList',
+      name: 'List Tipo Situacao Movimento',
+      component: TipoSituacaoMovimentoList
+    },
+    {
+      path: 'TipoSituacaoMovimentoEdit',
+      name: 'Edit Tipo Situacao Movimento',
+      component: TipoSituacaoMovimentoEdit
+    },
+    //Tipo Situacao Tributaria
+    {
+      path: 'TipoSituacaoTributariaForms',
+      name: 'Form Tipo SituacaoTributaria',
+      component: TipoSituacaoTributariaForms
+    },
+    {
+      path: 'TipoSituacaoTributariaList',
+      name: 'List Tipo Situacao Tributaria',
+      component: TipoSituacaoTributariaList
+    },
+    {
+      path: 'TipoSituacaoTributariaEdit',
+      name: 'Edit Tipo Situacao Tributaria',
+      component: TipoSituacaoTributariaEdit
+    },
+      //Tipo de Central
     {
       path: 'TipoCentralForms',
       name: 'Form Tipo Central',

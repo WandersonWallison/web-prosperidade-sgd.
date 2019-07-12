@@ -73,34 +73,28 @@ export default [
 },
 */
 {
-  name: 'Administração',
-  icon: 'nc-icon nc-badge',
+  name: 'Auxiliares',
+  icon: 'nc-icon nc-box',
   collapsed: true,
   children: [
-  {
-    name: 'Usuário',
-    path: '/forms/UserList'
-  },
-  {
-    name: 'Grupo',
-    path: '/forms/GroupList'
-  },
-  {
-    name: 'Link',
-    path: '/forms/LinkList'
-  },
-  {
-    name: 'Tipo Link',
-    path: '/forms/TipoLinkList'
-  },
-  {
-    name: 'Tipo Movimentação',
+    {
+      name: 'Situações De Movimento',
+      path: '/forms/TipoSituacaoMovimentoList'
+    },
+    {
+      name: 'Situações Tributaria',
+      path: '/forms/TipoSituacaoTributariaList'
+    },
+     {
+      name: 'Tipos De Central',
+      path: '/forms/TipoCentralList'
+    },
+    {
+    name: 'Tipos De Movimentação',
     path: '/forms/TipoMovimentacaoList'
   },
-  {
-    name: 'Tipo de Central',
-    path: '/forms/TipoCentralList'
-  },
+
+
  /* {
     name: 'Controle de Usuários',
     path: '/forms/UserControlList'
@@ -113,6 +107,29 @@ export default [
   */
 ]
 },
+{
+  name: 'Controle de Acesso',
+  icon: 'nc-icon nc-badge',
+  collapsed: true,
+  children: [
+    {
+      name: 'Tipo De Link',
+      path: '/forms/TipoLinkList'
+    },
+    {
+      name: 'Link',
+      path: '/forms/LinkList'
+    },
+    {
+      name: 'Grupo',
+      path: '/forms/GroupList'
+    },
+    {
+      name: 'Usuário',
+      path: '/forms/UserList'
+    },
+ ]
+}
 /*{
   name: 'Sair',
   icon: 'nc-icon nc-simple-remove',

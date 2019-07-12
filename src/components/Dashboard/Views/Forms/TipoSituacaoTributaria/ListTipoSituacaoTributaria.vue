@@ -7,7 +7,7 @@
             <div class="col-sm-6">
                 <div class="card-body text-left">
                     <div>
-                        <h5 class="card-title">Links</h5>
+                        <h5 class="card-title">Tipos de Situações Tributária </h5>
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@ import {
 import axios from 'axios'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
 export default {
-    name: 'ListLink',
+    name: 'ListTipoSituacaoTributaria',
     components: {
         PPagination
     },
@@ -127,62 +127,49 @@ export default {
             pagination: {
                 perPage: 10,
                 currentPage: 1,
-                perPageOptions: [10, 25, 50,75],
+                perPageOptions: [10, 25, 50, 75],
                 total: 0
             },
             searchQuery: '',
-            propsToSearch: ['descricao', 'link'],
+            propsToSearch: ['descricao'],
             tableColumns: [{
                     prop: 'descricao',
                     label: 'Nome',
-                    minWidth: 150
-                },
-                {
-                    prop: 'link',
-                    label: 'Link',
-                    minWidth: 150
+                    minWidth: 250
                 }
             ],
             tableData: []
         }
     },
     mounted() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/link?where={"ativo": 1}&limit=200').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_tributaria?where={"ativo": 1}').then(response => {
             this.tableData = response.data
         })
     },
     methods: {
-        handleDetails(index, row) {
-            // window.localStorage.setItem('link', row.id)
-            // this.$router.push('/forms/LinkFormsEdit')
-            // this.showDetails = true
-            // this.selected = row
-        },
         handleRegister() {
-            this.$router.push('/forms/LinkForms')
+            this.$router.push('/forms/TipoSituacaoTributariaForms')
         },
         handleEdit(index, row) {
-            window.localStorage.setItem('link', row.id)
-            this.$router.push('/forms/LinkFormsEdit')
-            //this.showUpdate = true
-            //this.selected = row
+            window.localStorage.setItem('tipo_situacao_tributaria', row.id)
+            this.$router.push('/forms/TipoSituacaoTributariaEdit')
         },
         handleDelete(index, row) {
 
-            let link = {
+            let TiposituacaoTributaria = {
                 ativo: false
             }
-            axios.put(process.env.VUE_APP_ROOT_API + '/link/' + row.id, link)
+            axios.put(process.env.VUE_APP_ROOT_API + '/tipo_situacao_tributaria/' + row.id, TiposituacaoTributaria)
                 .then(response => {
                     this.results = response.data
-                    axios.get(process.env.VUE_APP_ROOT_API + '/link?where={"ativo": 1}').then(response => {
+                    axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_tributaria?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', `Link ${row.descricao} deletado com sucesso!`, 'success')
-                        // this.$router.push('/forms/UserList')
+                        swal('Bom trabalho!', `Registro ${row.descricao} excluído com sucesso!`, 'success')
+                        this.$router.push('/forms/TipoSituacaoTributariaList')
                     })
                 })
                 .catch(error => {
-                    swal('Algo de errado!', 'Verifique os campos!', 'error')
+                    swal('Algo de errado!', 'Verifique o registro selecionado!', 'error')
                     console.log(error.response.data)
                 })
         }

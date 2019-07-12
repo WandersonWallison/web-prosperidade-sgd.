@@ -55,7 +55,7 @@
                 <a slot="title" slot-scope="{isOpen}" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" :aria-expanded="isOpen">
                 <i class="nc-icon nc-single-02"></i>
                 <p>
-                  <span class="d-lg-none d-md-block">Some Actions</span>
+                  <span class="d-lg-none d-md-block"></span>
                 </p>
               </a>
                 <!-- <a class="dropdown-item" href="#">Meu Perfil</a> -->

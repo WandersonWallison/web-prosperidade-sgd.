@@ -164,7 +164,7 @@ export default {
                     this.results = response.data
                     axios.get(process.env.VUE_APP_ROOT_API + '/tipo_link?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', `Link ${row.descricao} Excluído com sucesso!`, 'success')
+                        swal('Bom trabalho!', `Tipo de Link ${row.descricao} Excluído com sucesso!`, 'success')
                         // this.$router.push('/forms/UserList')
                     })
                 })
