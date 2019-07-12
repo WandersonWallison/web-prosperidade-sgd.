@@ -18,11 +18,11 @@
                 </div>
             </div>
             -->
-            <div class="col-sm-3">
+            <!--<div class="col-sm-3">
                 <div class="pull-right">
                     <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
                 </div>
-            </div>
+            </div>-->
             <!-- ***************************************************  -->
             <div class="col-sm-6">
                 <el-select class="select-default" v-model="pagination.perPage" placeholder="Per page">
@@ -219,9 +219,9 @@ export default {
             tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
             return 'R$ ' + tmp
         },
-        handleRegister(index, row) {
-            this.$router.push('/forms/MovementForm')
-        },
+        //handleRegister(index, row) {
+          //  this.$router.push('/forms/MovementForm')
+        //},
         handleMoviment(index, row) {
             this.$router.push('/forms/MovementFormAtualizacao')
         },

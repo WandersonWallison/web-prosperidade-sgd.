@@ -20,7 +20,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <fg-input class="input-sm" placeholder="Pesquisar por xp,nome e e-mail" v-model="searchQuery">
+                    <fg-input class="input-sm" placeholder="Pesquisar" v-model="searchQuery">
                     </fg-input>
                 </div>
             </div>

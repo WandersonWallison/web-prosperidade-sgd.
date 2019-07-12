@@ -108,7 +108,7 @@ export default [
 ]
 },
 {
-  name: 'Controle de Acesso',
+  name: 'Administração',
   icon: 'nc-icon nc-badge',
   collapsed: true,
   children: [
