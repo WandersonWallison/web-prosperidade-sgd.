@@ -7,10 +7,8 @@
             </h4>
         </div>
         <div class="card-body row justify-content-center">
-
             <br />
-            <div class="form-group col-md-12">
-
+            <div class="form-group col-md-6">
                 <el-card class="box-card">
                     <div class="form-group col-md-10">
                         <el-switch v-model="model.tipo_movimentacao" data-vv-name=" tipo_movimentacao " data-vv-as=" Confirmação de tipo de pessoa " name="tipo_movimentacao" active-color="#ff0000" inactive-color="#00BFFF" active-text="Retirada" inactive-text="Aporte">
@@ -27,7 +25,16 @@
                     </div>
                 </el-card>
             </div>
-
+            <div class="form-group col-md-6">
+                <el-card class="box-card">
+                    <div>
+                        <label>Aporte Inicial</label>
+                        <div>
+                        <label>{{model.cliente[5]}}</label>
+                        </div>
+                    </div>
+                </el-card>
+            </div>
             <div class="form-group col-md-6">
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
@@ -45,11 +52,9 @@
                     <label>E-mail</label>
                     <fg-input type="email" name="email" disabled v-model="model.cliente[4]">
                     </fg-input>
-                    <label>Aporte Inicial</label>
-                    <fg-input type="text" name="investimento_inicial" disabled v-model="model.cliente[5]">
-                    </fg-input>
                 </el-card>
             </div>
+
             <div class="form-group col-md-6">
                 <el-card class="box-card">
                     <div v-if="!this.model.tipo_movimentacao" slot="header" class="clearfix">
@@ -191,10 +196,12 @@ export default {
             })
         },
         formatarMoeda(valor) {
+            /*
             // valor_cliente
             var numero = valor.toFixed(2).split('.')
             numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
             return numero.join(',')
+            */
         },
         retiraMascara(campo) {
             campo = campo.replace('.', '') // Remove tudo o que não é dígito
