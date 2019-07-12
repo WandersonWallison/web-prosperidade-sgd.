@@ -3,7 +3,7 @@
     <form>
         <div class="card-header">
             <h4 class="card-title">
-                Editar de Tipo de Situação de Movimento
+                Editar Tipo de Situação Tributária
             </h4>
         </div>
         <div class="card-body">
@@ -28,13 +28,13 @@ import {
     mask
 } from 'vue-the-mask'
 export default {
-    name: 'FormTipoSituacaoMovimento',
+    name: 'FormTipoSituacaoTributaria',
     data() {
         return {
             model: {
                 descricao: ''
             },
-            tipoSituacaoMovimentoEdit: {},
+            tipoSituacaoTributariaEdit: {},
             modelValidations: {
                 descricao: {
                     required: true
@@ -47,10 +47,10 @@ export default {
     },
     created() {
 
-        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_movimento/' + window.localStorage.getItem("tipo_situacao_movimento")).then(response => {
-            this.tipoSituacaoMovimentoEdit = response.data
-            this.model.descricao = this.tipoSituacaoMovimentoEdit.descricao
-            window.localStorage.removeItem("tipo_situacao_movimento")
+        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_tributaria/' + window.localStorage.getItem("tipo_situacao_tributaria")).then(response => {
+            this.tipoSituacaoTributariaEdit = response.data
+            this.model.descricao = this.tipoSituacaoTributariaEdit.descricao
+            window.localStorage.removeItem("tipo_situacao_tributaria")
 
         })
     },
@@ -69,15 +69,15 @@ export default {
         },
         salvar() {
             const authUser = JSON.parse(window.localStorage.getItem('usuario'))
-            let tipoSituacaoMovimento = {
+            let tipoSituacaoTributaria = {
                 descricao: this.model.descricao,
                 id_responsavel: authUser.id
             }
-            axios.put(process.env.VUE_APP_ROOT_API + '/tipo_situacao_movimento/' + this.tipoSituacaoMovimentoEdit.id, tipoSituacaoMovimento)
+            axios.put(process.env.VUE_APP_ROOT_API + '/tipo_situacao_tributaria/' + this.tipoSituacaoTributariaEdit.id, tipoSituacaoTributaria)
                 .then(response => {
                     this.results = response.data
-                    swal('Bom trabalho!', 'Tipo de Situacao de Movimento Alterado com sucesso!', 'success')
-                    this.$router.push('/forms/TipoSituacaoMovimentoList')
+                    swal('Bom trabalho!', 'Tipo de Situacao Tributária Alterado com sucesso!', 'success')
+                    this.$router.push('/forms/TipoSituacaoTributariaList')
                 })
                 .catch(error => {
                     swal('Algo de errado!', 'Verifique os campos do cadastro!', 'error')
