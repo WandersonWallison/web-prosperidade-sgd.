@@ -132,7 +132,7 @@ export default {
                 email: '',
                 senha: '',
                 cvm: '',
-                id_xp: null,
+                id_xp: '',
                 cpf: '',
                 cnh: '',
                 rg: '',
