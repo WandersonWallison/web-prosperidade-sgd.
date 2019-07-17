@@ -185,12 +185,17 @@ export default {
                 {
                     prop: 'id_situacao_movimento.descricao',
                     label: 'Situação',
-                    minWidth: 90
+                    minWidth: 120
                 },
                 {
                     prop: 'observacao',
                     label: 'Observação',
                     minWidth: 100
+                },
+                {
+                    prop: 'id_tipo_movimentacao.descricao',
+                    label: 'Tipo Movimentação',
+                    minWidth: 90
                 }
             ],
             tableData: []

@@ -9,13 +9,16 @@
         <div class="card-body row justify-content-center">
             <br />
             <div class="form-group col-md-6">
-                <el-card class="box-card">
+                <el-card class="box-card new-card">
+                    <div slot="header" class="clearfix">
+                        <span>Cliente</span>
+                    </div>
                     <div class="form-group col-md-10">
                         <el-switch v-model="model.tipo_movimentacao" data-vv-name=" tipo_movimentacao " data-vv-as=" Confirmação de tipo de pessoa " name="tipo_movimentacao" active-color="#ff0000" inactive-color="#00BFFF" active-text="Retirada" inactive-text="Aporte">
                         </el-switch>
                     </div>
+                    <br>
                     <div>
-                        <label>Clientes</label>
                         <fg-input>
                             <el-select no-data-text="Sem informações" class="select-default" v-model="model.cliente" name="cliente" placeholder="Selecione...">
                                 <el-option class="select-default" v-for="item in this.dataCliente" :key="item.id" :label="item.nome" :value="[item.id,item.id_xp,item.nome,item.telefone,item.email,item.investimento_inicial]">
@@ -26,11 +29,13 @@
                 </el-card>
             </div>
             <div class="form-group col-md-6">
-                <el-card class="box-card">
+                <el-card class="box-card new-card-aporte">
+                    <div slot="header" class="clearfix">
+                        <span>Aporte Inicial</span>
+                    </div>
                     <div>
-                        <label>Aporte Inicial</label>
-                        <div>
-                        <label>{{model.cliente[5]}}</label>
+                        <div class="new-label">
+                            <label >{{model.cliente[5] | formatarMoedaFilter}}</label>
                         </div>
                     </div>
                 </el-card>
@@ -54,23 +59,20 @@
                     </fg-input>
                 </el-card>
             </div>
-
+            <!-- APORTE DE CLIENTE -->
             <div class="form-group col-md-6">
                 <el-card class="box-card">
-                    <div v-if="!this.model.tipo_movimentacao" slot="header" class="clearfix">
+                    <div slot="header" class="clearfix">
                         <span>Aporte</span>
                     </div>
-                    <div v-if="this.model.tipo_movimentacao" slot="header" class="clearfix">
-                        <span>Retirada</span>
-                    </div>
-                    <div v-if="!this.model.tipo_movimentacao">
+                    <div  v-if="!this.model.tipo_movimentacao">
                         <label>Status</label>
-                        <fg-input type="text" name="status" disabled v-model="model.status[0].descricao">
+                        <fg-input type="text" name="status" disabled placeholder="Aporte Cliente">
                         </fg-input>
                     </div>
-                    <div v-if="this.model.tipo_movimentacao">
+                    <div  v-if="this.model.tipo_movimentacao">
                         <label>Status</label>
-                        <fg-input type="text" name="status" disabled v-model="model.status[2].descricao">
+                        <fg-input type="text" name="status" disabled placeholder="Retirada Aporte Cliente">
                         </fg-input>
                     </div>
                     <div class="block">
@@ -136,7 +138,8 @@ export default {
                 numero_xp: '',
                 cliente: '',
                 numero_xp: '',
-                observacao: ''
+                observacao: '',
+                tipo_movimentacao: false
             },
             disabledDates: {
                 to: new Date(Date.now() - 8640000)
@@ -158,10 +161,15 @@ export default {
         }
     },
     filters: {
-        formatarMoeda: function (v) {
-            var numero = v.toFixed(2).split('.')
-            numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
-            return numero.join(',')
+
+        // TODO - Formatação de moeda via filter
+        formatarMoedaFilter(valor) {
+
+            if (valor) {
+                var numero = valor.toFixed(2).split('.')
+                numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
+                return numero.join(',')
+            }
         }
     },
     directives: {
@@ -172,9 +180,6 @@ export default {
 
         axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}').then(response => {
             this.dataCliente = response.data
-        })
-        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_movimentacao?where={"ativo": 1}').then(response => {
-            this.model.status = response.data
         })
     },
     methods: {
@@ -195,14 +200,6 @@ export default {
                 swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
             })
         },
-        formatarMoeda(valor) {
-            /*
-            // valor_cliente
-            var numero = valor.toFixed(2).split('.')
-            numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
-            return numero.join(',')
-            */
-        },
         retiraMascara(campo) {
             campo = campo.replace('.', '') // Remove tudo o que não é dígito
             campo = campo.replace(',', '.') // Remove tudo o que não é dígito
@@ -210,16 +207,16 @@ export default {
         },
         salvar() {
 
+
             const authUser = JSON.parse(window.localStorage.getItem("usuario"))
-            // console.log('valor Tela: ',this.model.valor)
+            let situacaoMovimento = this.model.tipo_movimentacao?3:1
+
             let movimentacao = {
 
                 id_cliente: this.model.cliente[0],
                 data_registro: moment(this.model.data_registro, "DD/MM/YYYY"),
-                // id_situacao_movimento: this.model.status,
-                id_situacao_movimento: 1,
-                // TODO -- verirficar
                 ID_SITUACAO_MOVIMENTACAO: 1,
+                id_tipo_movimentacao: situacaoMovimento,
                 valor: this.retiraMascara(this.model.valor),
                 observacao: this.model.observacao,
                 id_responsavel: authUser.id
@@ -236,10 +233,24 @@ export default {
                     swal('Algo de errado!', 'Verifique os campos do cadastro de cliente!', 'error')
                     console.log(error.response.data)
                 })
+        },
+        validaRetirada() {
+
+
         }
     }
 }
 </script>
 
-<style>
+<style  lang="scss">
+.new-card {
+    padding: 26px;
+}
+.new-card-aporte {
+    padding: 63px;
+}
+.new-label {
+    font-size: x-large;
+    color-adjust: red;
+}
 </style>
