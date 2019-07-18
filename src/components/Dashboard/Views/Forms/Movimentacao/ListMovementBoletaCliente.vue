@@ -7,7 +7,7 @@
             <div class="col-sm-9">
                 <div class="card-body text-left">
                     <div>
-                        <h5 class="card-title">Movimentações (Aporte Cliente)</h5>
+                        <h5 class="card-title">Movimentações (Boleta Cliente)</h5>
                     </div>
                 </div>
             </div>
@@ -18,11 +18,11 @@
                 </div>
             </div>
             -->
-            <!--<div class="col-sm-3">
+            <div class="col-sm-3">
                 <div class="pull-right">
                     <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
                 </div>
-            </div>-->
+            </div>
             <!-- ***************************************************  -->
             <div class="col-sm-6">
                 <el-select class="select-default" v-model="pagination.perPage" placeholder="Per page">
@@ -42,22 +42,22 @@
                     </el-table-column>
                     <el-table-column :min-width="80" :formatter="formatPrice" prop="valor" label="Valor">
                     </el-table-column>
-                    <el-table-column :min-width="110" :formatter="dateFormat" prop="data_registro" label="Data Registro">
+                    <el-table-column :min-width="70" :formatter="dateFormat" prop="data_registro" label="Data Registro">
                     </el-table-column>
-                    <el-table-column :min-width="55" fixed="right" class-name="td-actions" label="Ações">
+                    <el-table-column :min-width="60" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
                             <el-tooltip class="item" effect="dark" content="Editar" placement="top">
                                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                     <i class="fa fa-edit"></i>
                                 </p-button>
                             </el-tooltip>
-                            <!--
+                            
                             <el-tooltip class="item" effect="dark" content="Excluir" placement="top">
                                 <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
                                     <i class="fa fa-trash-o"></i>
                                 </p-button>
                             </el-tooltip>
-                            -->
+                            
                         </template>
                     </el-table-column>
                 </el-table>
@@ -175,7 +175,7 @@ export default {
                 {
                     prop: 'id',
                     label: 'Código',
-                    minWidth: 70
+                    minWidth: 50
                 },
                 {
                     prop: 'id_cliente.nome',
@@ -191,12 +191,12 @@ export default {
                     prop: 'observacao',
                     label: 'Observação',
                     minWidth: 100
-                },
-                {
-                    prop: 'id_tipo_movimentacao.descricao',
-                    label: 'Tipo Movimentação',
-                    minWidth: 90
-                }
+                }//,
+                //{
+                //    prop: 'id_tipo_movimentacao.descricao',
+                //    label: 'Tipo Movimentação',
+                //    minWidth: 90
+                //}
             ],
             tableData: []
         }
@@ -224,9 +224,9 @@ export default {
             tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
             return 'R$ ' + tmp
         },
-        //handleRegister(index, row) {
-          //  this.$router.push('/forms/MovementForm')
-        //},
+        handleRegister(index, row) {
+            this.$router.push('/forms/MovementFormBoletaCliente')
+        },
         handleMoviment(index, row) {
             this.$router.push('/forms/MovementFormAtualizacao')
         },
@@ -236,6 +236,21 @@ export default {
             this.$router.push('/forms/MovementFormBoletaCliente')
         },
         handleDelete(index, row) {
+            let movimentacao = {
+                ativo: false
+            }
+            axios.put(process.env.VUE_APP_ROOT_API + '/movimentacao/' + row.id, movimentacao)
+                .then(response => {
+                    this.results = response.data
+                    axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}').then(response => {
+                        this.tableData = response.data
+                        swal('Bom trabalho!', `Movimentação (Boleta Cliente) ${row.id} Excluída com sucesso!`, 'success')
+                    })
+                })
+                .catch(error => {
+                    alert(error.response)
+                    console.log(error.response.data)
+                })
         }
     }
 }

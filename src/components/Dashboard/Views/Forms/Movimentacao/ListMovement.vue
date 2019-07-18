@@ -7,7 +7,7 @@
             <div class="col-sm-9">
                 <div class="card-body text-left">
                     <div>
-                        <h5 class="card-title">Movimentações</h5>
+                        <h5 class="card-title">MRV Fluxo de Caixa</h5>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <fg-input class="input-sm" placeholder="Pesquisar por Código" v-model="searchQuery">
+                    <fg-input class="input-sm" placeholder="Pesquisar" v-model="searchQuery">
                     </fg-input>
                 </div>
             </div>
@@ -42,22 +42,22 @@
                     </el-table-column>
                     <el-table-column :min-width="80" :formatter="formatPrice" prop="valor" label="Valor">
                     </el-table-column>
-                    <el-table-column :min-width="110" :formatter="dateFormat" prop="data_registro" label="Data Registro">
+                    <el-table-column :min-width="70" :formatter="dateFormat" prop="data_registro" label="Data Registro">
                     </el-table-column>
-                    <el-table-column :min-width="55" fixed="right" class-name="td-actions" label="Ações">
+                    <el-table-column :min-width="60" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
                             <el-tooltip class="item" effect="dark" content="Editar" placement="top">
                                 <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
                                     <i class="fa fa-edit"></i>
                                 </p-button>
                             </el-tooltip>
-                            <!--
+                            
                             <el-tooltip class="item" effect="dark" content="Excluir" placement="top">
                                 <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
                                     <i class="fa fa-trash-o"></i>
                                 </p-button>
                             </el-tooltip>
-                            -->
+                            
                         </template>
                     </el-table-column>
                 </el-table>
@@ -175,7 +175,7 @@ export default {
                 {
                     prop: 'id',
                     label: 'Código',
-                    minWidth: 70
+                    minWidth: 50
                 },
                 {
                     prop: 'id_cliente.nome',
@@ -194,7 +194,7 @@ export default {
                 },
                 {
                     prop: 'id_tipo_movimentacao.descricao',
-                    label: 'Tipo Movimentação',
+                    label: 'Movimentação',
                     minWidth: 90
                 }
             ],
@@ -240,25 +240,21 @@ export default {
             // this.$router.push('/forms/MovementFormEdit')
         },
         handleDelete(index, row) {
-            /*
-              let empresa = {
-                  ativo: false
-              }
-              axios.put(process.env.VUE_APP_ROOT_API + '/empresa/' + row.id, empresa)
-                  .then(response => {
-                      this.results = response.data
-                      axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
-                          this.tableData = response.data
-                          swal('Bom trabalho!', `Empresa ${row.nome} excluída com sucesso!`, 'success')
-                          this.$router.push('/forms/companyList')
-                      })
-                      //this.$router.push('/forms/companyList')
-                  })
-                  .catch(error => {
-                      alert(error.response)
-                      console.log(error.response.data)
-                  })
-            */
+            let movimentacao = {
+                ativo: false
+            }
+            axios.put(process.env.VUE_APP_ROOT_API + '/movimentacao/' + row.id, movimentacao)
+                .then(response => {
+                    this.results = response.data
+                    axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}').then(response => {
+                        this.tableData = response.data
+                        swal('Bom trabalho!', `Movimentação ${row.id} Excluída com sucesso!`, 'success')
+                    })
+                })
+                .catch(error => {
+                    alert(error.response)
+                    console.log(error.response.data)
+                })
         }
     }
 }
