@@ -41,16 +41,18 @@ export default [
   name: 'Movimentação',
   icon: 'nc-icon nc-money-coins',
   children: [{
-    name: 'Movimentações',
+    name: 'MRV Fluxo de Caixa',
     path: '/forms/MovementList'
   },
   {
     name: 'Aporte Cliente',
-    path: '/forms/MovementFormAporteCliente'
+    path: '/forms/MovementListAporteCliente'
+    //path: '/forms/MovementFormAporteCliente'
   },
   {
     name: 'Boleta Cliente',
-    path: '/forms/MovementFormBoletaCliente'
+    path: '/forms/MovementListBoletaCliente'
+    //path: '/forms/MovementFormBoletaCliente'
   },
   /*
   {

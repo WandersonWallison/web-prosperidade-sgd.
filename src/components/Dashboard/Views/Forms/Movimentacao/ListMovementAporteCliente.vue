@@ -3,27 +3,18 @@
 
     <div class="col-md-12 card">
         <div class="card-body row">
-            <!-- ***************************************************  -->
             <div class="col-sm-9">
                 <div class="card-body text-left">
                     <div>
-                        <h5 class="card-title">MRV Fluxo de Caixa</h5>
+                        <h5 class="card-title">Movimentações (Aporte Cliente)</h5>
                     </div>
                 </div>
             </div>
-            <!-- -------------------------
-            <div class="col-sm-1">
-                <div class="pull-right">
-                    <p-button type="primary" @click="handleMoviment()">Atualizações</p-button>
-                </div>
-            </div>
-            -->
-            <!--<div class="col-sm-3">
+            <div class="col-sm-3">
                 <div class="pull-right">
                     <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
                 </div>
-            </div>-->
-            <!-- ***************************************************  -->
+            </div>
             <div class="col-sm-6">
                 <el-select class="select-default" v-model="pagination.perPage" placeholder="Per page">
                     <el-option class="select-default" v-for="item in pagination.perPageOptions" :key="item" :label="item" :value="item">
@@ -51,13 +42,11 @@
                                     <i class="fa fa-edit"></i>
                                 </p-button>
                             </el-tooltip>
-                            
                             <el-tooltip class="item" effect="dark" content="Excluir" placement="top">
                                 <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
                                     <i class="fa fa-trash-o"></i>
                                 </p-button>
                             </el-tooltip>
-                            
                         </template>
                     </el-table-column>
                 </el-table>
@@ -97,7 +86,7 @@ import PPagination from 'src/components/UIComponents/Pagination.vue'
 import MovementEdit from './FormMovementEdit'
 import { type } from 'os'
 export default {
-    name: 'ListMovement',
+    name: 'ListMovementAporteCliente',
     props: {
         selected: {
             type: Object
@@ -191,18 +180,18 @@ export default {
                     prop: 'observacao',
                     label: 'Observação',
                     minWidth: 100
-                },
-                {
-                    prop: 'id_tipo_movimentacao.descricao',
-                    label: 'Movimentação',
-                    minWidth: 90
-                }
+                }//,
+                //{
+                //    prop: 'id_tipo_movimentacao.descricao',
+                //    label: 'Movimentação',
+                //    minWidth: 90
+                //}
             ],
             tableData: []
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1,"id_tipo_movimentacao":1}').then(response => {
             this.tableData = response.data
         })
     },
@@ -224,20 +213,15 @@ export default {
             tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
             return 'R$ ' + tmp
         },
-        //handleRegister(index, row) {
-          //  this.$router.push('/forms/MovementForm')
-        //},
+        handleRegister(index, row) {
+            this.$router.push('/forms/MovementFormAporteCliente')
+        },
         handleMoviment(index, row) {
             this.$router.push('/forms/MovementFormAtualizacao')
         },
         handleEdit(index, row) {
-
             window.localStorage.setItem('movimentacao', row.id)
             this.$router.push('/forms/MovementFormEdit')
-            // this.showUpdate = true
-            // this.selected = row
-            // window.localStorage.setItem('movimentacao', row.id)
-            // this.$router.push('/forms/MovementFormEdit')
         },
         handleDelete(index, row) {
             let movimentacao = {
@@ -248,7 +232,7 @@ export default {
                     this.results = response.data
                     axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', `Movimentação ${row.id} Excluída com sucesso!`, 'success')
+                        swal('Bom trabalho!', `Movimentação (Aporte Cliente) ${row.id} Excluída com sucesso!`, 'success')
                     })
                 })
                 .catch(error => {

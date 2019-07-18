@@ -7,7 +7,7 @@
             <div class="col-sm-9">
                 <div class="card-body text-left">
                     <div>
-                        <h5 class="card-title">MRV Fluxo de Caixa</h5>
+                        <h5 class="card-title">Movimentações (Boleta Cliente)</h5>
                     </div>
                 </div>
             </div>
@@ -18,11 +18,11 @@
                 </div>
             </div>
             -->
-            <!--<div class="col-sm-3">
+            <div class="col-sm-3">
                 <div class="pull-right">
                     <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
                 </div>
-            </div>-->
+            </div>
             <!-- ***************************************************  -->
             <div class="col-sm-6">
                 <el-select class="select-default" v-model="pagination.perPage" placeholder="Per page">
@@ -97,7 +97,7 @@ import PPagination from 'src/components/UIComponents/Pagination.vue'
 import MovementEdit from './FormMovementEdit'
 import { type } from 'os'
 export default {
-    name: 'ListMovement',
+    name: 'ListMovementBoletaCliente',
     props: {
         selected: {
             type: Object
@@ -191,18 +191,18 @@ export default {
                     prop: 'observacao',
                     label: 'Observação',
                     minWidth: 100
-                },
-                {
-                    prop: 'id_tipo_movimentacao.descricao',
-                    label: 'Movimentação',
-                    minWidth: 90
-                }
+                }//,
+                //{
+                //    prop: 'id_tipo_movimentacao.descricao',
+                //    label: 'Tipo Movimentação',
+                //    minWidth: 90
+                //}
             ],
             tableData: []
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1,"id_tipo_movimentacao":2}').then(response => {
             this.tableData = response.data
         })
     },
@@ -224,20 +224,16 @@ export default {
             tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
             return 'R$ ' + tmp
         },
-        //handleRegister(index, row) {
-          //  this.$router.push('/forms/MovementForm')
-        //},
+        handleRegister(index, row) {
+            this.$router.push('/forms/MovementFormBoletaCliente')
+        },
         handleMoviment(index, row) {
             this.$router.push('/forms/MovementFormAtualizacao')
         },
         handleEdit(index, row) {
 
             window.localStorage.setItem('movimentacao', row.id)
-            this.$router.push('/forms/MovementFormEdit')
-            // this.showUpdate = true
-            // this.selected = row
-            // window.localStorage.setItem('movimentacao', row.id)
-            // this.$router.push('/forms/MovementFormEdit')
+            this.$router.push('/forms/MovementFormBoletaCliente')
         },
         handleDelete(index, row) {
             let movimentacao = {
@@ -248,7 +244,7 @@ export default {
                     this.results = response.data
                     axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
-                        swal('Bom trabalho!', `Movimentação ${row.id} Excluída com sucesso!`, 'success')
+                        swal('Bom trabalho!', `Movimentação (Boleta Cliente) ${row.id} Excluída com sucesso!`, 'success')
                     })
                 })
                 .catch(error => {
