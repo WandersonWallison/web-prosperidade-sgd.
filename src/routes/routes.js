@@ -56,6 +56,8 @@ const CentralList = () => import(/* webpackChunkName: "forms" */ 'src/components
 const OperatorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Usuario/ListOperator.vue')
 const AdvisorList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Lists/ListAdvisor.vue')
 const MovementList = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Movimentacao/ListMovement.vue')
+const MovementListAporteCliente = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Movimentacao/ListMovementAporteCliente.vue')
+const MovementListBoletaCliente = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Movimentacao/ListMovementBoletaCliente.vue')
 const MovementFormAtualizacao = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Movimentacao/FormAtualizaMovimentacao.vue')
 const MovementFormEdit = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Movimentacao/FormMovementEdit.vue')
 const MovementFormAporteCliente = () => import(/* webpackChunkName: "forms" */ 'src/components/Dashboard/Views/Forms/Movimentacao/FormMovementAporteCliente.vue')
@@ -306,6 +308,16 @@ let formsMenu = {
       path: 'MovementList',
       name: 'List Movement',
       component: MovementList
+    },
+    {
+      path: 'MovementListAporteCliente',
+      name: 'List Movement Aporte Cliente',
+      component: MovementListAporteCliente
+    },
+    {
+      path: 'MovementListBoletaCliente',
+      name: 'List Movement Boleta Cliente',
+      component: MovementListBoletaCliente
     },
     {
       path: 'MovementFormAporteCliente',

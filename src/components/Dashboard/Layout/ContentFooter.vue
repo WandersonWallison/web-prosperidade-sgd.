@@ -14,8 +14,8 @@
             </a>
           </li>
           <li>
-            <a href="https://blog.xpi.com.br/" target="_blank">
-              Blog Xp
+            <a href="https://conteudo.xpi.com.br/" target="_blank">
+              Conteúdo Xp
             </a>
           </li>
         </ul>

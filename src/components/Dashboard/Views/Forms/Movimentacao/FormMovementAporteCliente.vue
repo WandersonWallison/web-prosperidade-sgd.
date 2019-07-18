@@ -178,7 +178,7 @@ export default {
     },
     mounted() {
 
-        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}&sort=nome&limit=10000').then(response => {
             this.dataCliente = response.data
         })
     },
@@ -215,7 +215,7 @@ export default {
 
                 id_cliente: this.model.cliente[0],
                 data_registro: moment(this.model.data_registro, "DD/MM/YYYY"),
-                ID_SITUACAO_MOVIMENTACAO: 1,
+                id_situacao_movimento: 1,
                 id_tipo_movimentacao: situacaoMovimento,
                 valor: this.retiraMascara(this.model.valor),
                 observacao: this.model.observacao,
@@ -226,7 +226,7 @@ export default {
                 .then(response => {
                     this.results = response.data
                     swal('Bom trabalho!', 'Movimentação cadastrada com sucesso!', 'success')
-                    this.$router.push('/forms/MovementList')
+                    this.$router.push('/forms/MovementListAporteCliente')
 
                 })
                 .catch(error => {

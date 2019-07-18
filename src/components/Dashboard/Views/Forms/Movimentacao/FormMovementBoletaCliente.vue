@@ -161,7 +161,7 @@ export default {
     },
     mounted() {
 
-        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}&sort=nome&limit=10000').then(response => {
             this.dataCliente = response.data
         })
         axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_movimento?where={"ativo": 1}').then(response => {
@@ -210,7 +210,7 @@ export default {
                 .then(response => {
                     this.results = response.data
                     swal('Bom trabalho!', 'Movimentação cadastrada com sucesso!', 'success')
-                    this.$router.push('/forms/MovementList')
+                    this.$router.push('/forms/MovementListBoletaCliente')
 
                 })
                 .catch(error => {
