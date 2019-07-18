@@ -236,6 +236,9 @@ export default {
         },
         validaRetirada() {
 
+             axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}').then(response => {
+            this.tipoCentral = response.data
+        })
 
         }
     }
