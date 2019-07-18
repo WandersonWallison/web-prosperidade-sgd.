@@ -94,8 +94,9 @@ export default {
                         window.localStorage.setItem('usuario', JSON.stringify(this.valorLogin.user))
                         axios.get(process.env.VUE_APP_ROOT_API + '/grupo/' + this.valorLogin.user.id_grupo + '/links?limit=200&where={"ativo":1}')
                             .then((result) => {
-                                window.localStorage.setItem('links', JSON.stringify(result.data))
+                                window.localStorage.setItem('links', JSON.stringify(result.data))                                
                             })
+                            
                         this.$router.push('/admin')
                     }
                 }).catch((err) => {

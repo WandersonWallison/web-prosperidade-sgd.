@@ -51,7 +51,6 @@ Vue.use(VueAxios, axios)
 Vue.use(Element)
 Vue.use(VueMoment)
 locale.use(lang)
-
 // VeeValidate.locale('pt_BR');
 
 // configure router
