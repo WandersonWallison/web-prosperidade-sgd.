@@ -232,7 +232,7 @@ export default {
                     id_situacao_movimento: 1,
                     id_tipo_movimentacao: situacaoMovimento,
                     valor: this.retiraMascara(this.model.valor),
-                    observacao: (this.model.observacao)?this.model.observacao:'Aporte',
+                    observacao: (this.model.observacao)?this.model.observacao:'Aporte/Retirada',
                     id_responsavel: authUser.id
                 }
                 // console.log('valor Tela2 : ',movimentacao.valor)

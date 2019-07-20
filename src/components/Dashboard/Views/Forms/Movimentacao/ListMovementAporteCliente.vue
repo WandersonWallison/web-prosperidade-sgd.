@@ -33,7 +33,7 @@
                     </el-table-column>
                     <el-table-column :min-width="80" :formatter="formatPrice" prop="valor" label="Valor">
                     </el-table-column>
-                    <el-table-column :min-width="70" :formatter="dateFormat" prop="data_registro" label="Data Registro">
+                    <el-table-column :min-width="70" :formatter="dateFormat" prop="data_registro" label="Registro">
                     </el-table-column>
                     <el-table-column :min-width="60" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
@@ -176,22 +176,22 @@ export default {
                     label: 'Situação',
                     minWidth: 120
                 },
-                {
-                    prop: 'observacao',
-                    label: 'Observação',
-                    minWidth: 100
-                }//,
                 //{
-                //    prop: 'id_tipo_movimentacao.descricao',
-                //    label: 'Movimentação',
-                //    minWidth: 90
-                //}
+                //    prop: 'observacao',
+                //    label: 'Observação',
+                //    minWidth: 100
+                //},
+                {
+                    prop: 'id_tipo_movimentacao.descricao',
+                    label: 'Movimentação',
+                    minWidth: 100
+                }
             ],
             tableData: []
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1,"id_tipo_movimentacao":1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1,"id_tipo_movimentacao":[1,3]}&limit=100000').then(response => {
             this.tableData = response.data
         })
     },
