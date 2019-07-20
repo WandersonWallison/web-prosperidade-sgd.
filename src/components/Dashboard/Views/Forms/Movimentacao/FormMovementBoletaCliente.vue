@@ -1,5 +1,5 @@
 <template>
-<div class="card col-md-10">
+<div class="card">
     <form>
         <div class="card-header">
             <h4 class="card-title">
@@ -8,17 +8,29 @@
         </div>
         <div class="card-body row justify-content-center">
 
-            <br/>
-            <div class="form-group col-md-12">
-              <el-card class="box-card">
-                <label>Clientes</label>
-                <fg-input>
-                    <el-select no-data-text="Sem informações" class="select-default" v-model="model.cliente" name="cliente" placeholder="Selecione...">
-                        <el-option class="select-default" v-for="item in this.dataCliente" :key="item.id" :label="item.nome" :value="[item.id,item.id_xp,item.nome,item.telefone,item.email,item.id_assessor.username,item.id_assessor.telefone,item.id_assessor.cpf]">
-                        </el-option>
-                    </el-select>
-                </fg-input>
-              </el-card>
+            <br />
+            <div class="form-group col-md-6">
+                <el-card class="box-card">
+                    <label>Clientes</label>
+                    <fg-input>
+                        <el-select no-data-text="Sem informações" @change="validaRetirada(model.cliente[0])" class="select-default" v-model="model.cliente" name="cliente" placeholder="Selecione...">
+                            <el-option class="select-default" v-for="item in this.dataCliente" :key="item.id" :label="item.nome" :value="[item.id,item.id_xp,item.nome,item.telefone,item.email,item.id_assessor.username,item.id_assessor.telefone,item.id_assessor.cpf]">
+                            </el-option>
+                        </el-select>
+                    </fg-input>
+                </el-card>
+            </div>
+            <div class="form-group col-md-6">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span>Saldo para Investimento</span>
+                    </div>
+                    <div>
+                        <div class="new-label">
+                            <fg-input type="text" name="nome_assessor" disabled v-model="this.valorRetirada"></fg-input>
+                        </div>
+                    </div>
+                </el-card>
             </div>
             <div class="form-group col-md-6">
                 <el-card class="box-card">
@@ -38,7 +50,6 @@
                     <fg-input type="email" name="email" disabled v-model="model.cliente[4]">
                     </fg-input>
                 </el-card>
-
             </div>
             <!--
             <div class="form-group col-md-4">
@@ -139,6 +150,8 @@ export default {
             disabledDates: {
                 to: new Date(Date.now() - 8640000)
             },
+            valor_cliente: '0,00',
+            valorRetirada: '0,00' ,
             dataCliente: [],
             dataSituacao: [],
             results: [],
@@ -152,6 +165,17 @@ export default {
                 status: {
                     required: true
                 }
+            }
+        }
+    },
+    filters: {
+        // TODO - Formatação de moeda via filter
+        formatarMoedaFilter(valor) {
+
+            if (valor) {
+                var numero = valor.toFixed(2).split('.')
+                numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
+                return numero.join(',')
             }
         }
     },
@@ -186,38 +210,67 @@ export default {
                 swal('Por favor verificar os dados solicitados no formulario!', '', 'info')
             })
         },
+        formatarMoeda(valor) {
+
+            if (valor) {
+                var numero = valor.toFixed(2).split('.')
+                numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
+                return numero.join(',')
+            }
+        },
         retiraMascara(campo) {
             campo = campo.replace('.', '') // Remove tudo o que não é dígito
             campo = campo.replace(',', '.') // Remove tudo o que não é dígito
             return campo
         },
+        validaRetirada(id) {
+            axios.get(process.env.VUE_APP_ROOT_API + '/calcula_movimentacao?user_id=' + id).then(response => {
+                this.valor_cliente = (response.data) ? response.data : '0,00'
+                this.valorRetirada = (response.data) ? this.formatarMoeda(response.data) : '0,00'
+            })
+        },
         salvar() {
 
-            const authUser = JSON.parse(window.localStorage.getItem("usuario"))
-            // console.log('valor Tela: ',this.model.valor)
-            let movimentacao = {
+            if (this.validaValorRetirada(this.retiraMascara(this.model.valor))) {
 
-                id_cliente: this.model.cliente[0],
-                data_registro: moment(this.model.data_registro, "DD/MM/YYYY"),
-                // id_situacao_movimento: this.model.status,
-                id_situacao_movimento: 2,
-                valor: this.retiraMascara(this.model.valor),
-                observacao: this.model.observacao,
-                id_responsavel: authUser.id
+                const authUser = JSON.parse(window.localStorage.getItem("usuario"))
+                // console.log('valor Tela: ',this.model.valor)
+                let movimentacao = {
+
+                    id_cliente: this.model.cliente[0],
+                    data_registro: moment(this.model.data_registro, "DD/MM/YYYY"),
+                    // id_situacao_movimento: this.model.status,
+                    id_tipo_movimentacao: 2,
+                    id_situacao_movimento: 1,
+                    valor: this.retiraMascara(this.model.valor),
+                    observacao: this.model.observacao?this.model.observacao:'Boleta',
+                    id_responsavel: authUser.id
+                }
+                // console.log('valor Tela2 : ',movimentacao.valor)
+                axios.post(process.env.VUE_APP_ROOT_API + '/movimentacao', movimentacao)
+                    .then(response => {
+                        this.results = response.data
+                        swal('Bom trabalho!', 'Movimentação cadastrada com sucesso!', 'success')
+                        this.$router.push('/forms/MovementListBoletaCliente')
+
+                    })
+                    .catch(error => {
+                        swal('Algo de errado!', 'Verifique os campos do cadastro de cliente!', 'error')
+                        console.log(error.response.data)
+                    })
+            } else {
+                swal('Valor solicitado maior que o saldo do cliente '+ this.valorRetirada, 'Cliente precisa de um aporte para realização dessa operação!', 'info')
             }
-            // console.log('valor Tela2 : ',movimentacao.valor)
-            axios.post(process.env.VUE_APP_ROOT_API + '/movimentacao', movimentacao)
-                .then(response => {
-                    this.results = response.data
-                    swal('Bom trabalho!', 'Movimentação cadastrada com sucesso!', 'success')
-                    this.$router.push('/forms/MovementListBoletaCliente')
+        },
+         validaValorRetirada(valor) {
 
-                })
-                .catch(error => {
-                    swal('Algo de errado!', 'Verifique os campos do cadastro de cliente!', 'error')
-                    console.log(error.response.data)
-                })
+            if (valor > this.valor_cliente) {
+                return false
+            }
+            return true
         }
+
+
     }
 }
 </script>

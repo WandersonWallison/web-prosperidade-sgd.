@@ -176,11 +176,16 @@ export default {
             searchQuery: '',
             newRow: '',
             cliente: null,
-            propsToSearch: ['nome','id_xp', 'email', 'telefone'],
+            propsToSearch: ['id','nome','id_xp', 'email', 'telefone'],
             tableColumns: [{
+                    prop: 'id',
+                    label: 'Código',
+                    minWidth: 43
+                },
+                {
                     prop: 'nome',
                     label: 'Nome',
-                    minWidth: 100
+                    minWidth: 120
                 },
                 {
                     prop: 'id_xp',
@@ -202,7 +207,7 @@ export default {
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}&sort=nome&limit=1000').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}&sort=nome&limit=100000').then(response => {
             this.tableData = response.data
         })
     },

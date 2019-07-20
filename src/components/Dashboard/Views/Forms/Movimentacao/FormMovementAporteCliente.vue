@@ -148,8 +148,8 @@ export default {
             disabledDates: {
                 to: new Date(Date.now() - 8640000)
             },
-            valorRetirada: '',
-            valor_cliente: '',
+            valorRetirada: 0,
+            valor_cliente: 0,
             dataCliente: [],
             results: [],
             modelValidations: {
@@ -232,7 +232,7 @@ export default {
                     id_situacao_movimento: 1,
                     id_tipo_movimentacao: situacaoMovimento,
                     valor: this.retiraMascara(this.model.valor),
-                    observacao: this.model.observacao,
+                    observacao: (this.model.observacao)?this.model.observacao:'Aporte',
                     id_responsavel: authUser.id
                 }
                 // console.log('valor Tela2 : ',movimentacao.valor)
@@ -253,8 +253,8 @@ export default {
         },
         validaRetirada(id) {
             axios.get(process.env.VUE_APP_ROOT_API + '/calcula_movimentacao?user_id=' + id).then(response => {
-                this.valor_cliente = (response.data) ? response.data : 0
-                this.valorRetirada = this.formatarMoeda(response.data)
+                this.valor_cliente = (response.data) ? response.data : '0,00'
+                this.valorRetirada = response.data ? this.formatarMoeda(response.data) : '0,00'
             })
         },
         validaValorRetirada(valor) {
