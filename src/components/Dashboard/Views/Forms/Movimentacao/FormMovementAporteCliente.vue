@@ -238,7 +238,7 @@ export default {
             if (!this.model.tipo_movimentacao) {
 
                 if (this.retiraMascara(this.model.valor) > this.model.cliente[6]) {
-                    swal('Valor solicitado é maior que o Potencial do cliente ' + this.formatarMoeda(this.model.cliente[6]), 'Verifique o campo no cadastro de cliente!', 'info')
+                    swal('Valor solicitado é maior que o Potencial do cliente é\n' + this.formatarMoeda(this.model.cliente[6]), 'Verifique o campo no cadastro de cliente!', 'info')
                 } else {
                   this.salvarDados()
                 }
@@ -248,7 +248,7 @@ export default {
                 if (this.validaValorRetirada(this.retiraMascara(this.model.valor))) {
                     this.salvarDados()
                 } else {
-                    swal('Valor solicitado maior que o saldo do cliente ' + this.valorRetirada, 'Verifique o campo no cadastro de cliente!', 'info')
+                    swal('Valor solicitado maior que o saldo do cliente \n' + this.valorRetirada, 'Verifique o campo no cadastro de cliente!', 'info')
                 }
             }
 
@@ -265,7 +265,7 @@ export default {
                 id_situacao_movimento: 1,
                 id_tipo_movimentacao: situacaoMovimento,
                 valor: this.retiraMascara(this.model.valor),
-                observacao: (this.model.observacao) ? this.model.observacao : 'Aporte',
+                observacao: (this.model.observacao) ? this.model.observacao: 'Aporte/Retirada',
                 id_responsavel: authUser.id
             }
             // console.log('valor Tela2 : ',movimentacao.valor)

@@ -42,7 +42,7 @@
                     </el-table-column>
                     <el-table-column :min-width="80" :formatter="formatPrice" prop="valor" label="Valor">
                     </el-table-column>
-                    <el-table-column :min-width="70" :formatter="dateFormat" prop="data_registro" label="Data Registro">
+                    <el-table-column :min-width="70" :formatter="dateFormat" prop="data_registro" label="Registro">
                     </el-table-column>
                     <el-table-column :min-width="60" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
@@ -202,7 +202,7 @@ export default {
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}&limit=100000').then(response => {
             this.tableData = response.data
         })
     },
