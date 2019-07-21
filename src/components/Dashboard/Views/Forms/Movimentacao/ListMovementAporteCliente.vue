@@ -190,6 +190,18 @@ export default {
             tableData: []
         }
     },
+    filters: {
+
+        // TODO - Formatação de moeda via filter
+        formatarMoedaFilter(valor) {
+
+            if (valor) {
+                var numero = valor.toFixed(2).split('.')
+                numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
+                return numero.join(',')
+            }
+        }
+    },
     created() {
         axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1,"id_tipo_movimentacao":1}').then(response => {
             this.tableData = response.data
@@ -205,13 +217,16 @@ export default {
         },
         formatPrice(value) {
 
-            var tmp = value.valor
-            if (tmp == null || tmp == "") {
-                tmp = 0, 0
+          var valor = value.valor
+            // -------------------------------------------------------
+
+             if (valor) {
+                var numero = valor.toFixed(2).split('.')
+                numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
+                return numero.join(',')
             }
-            tmp = tmp.toFixed(2).replace(".", ",")
-            tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
-            return 'R$ ' + tmp
+
+            // -------------------------------------------------------
         },
         handleRegister(index, row) {
             this.$router.push('/forms/MovementFormAporteCliente')

@@ -219,8 +219,13 @@ export default {
             }
         },
         retiraMascara(campo) {
+
+          for (let index = 0; index < campo.length; index++) {
             campo = campo.replace('.', '') // Remove tudo o que não é dígito
+          }
+            campo = campo.replace('R$', '')
             campo = campo.replace(',', '.') // Remove tudo o que não é dígito
+            campo = campo.trim()
             return campo
         },
         validaRetirada(id) {

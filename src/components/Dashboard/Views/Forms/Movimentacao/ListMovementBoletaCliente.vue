@@ -51,13 +51,13 @@
                                     <i class="fa fa-edit"></i>
                                 </p-button>
                             </el-tooltip>
-                            
+
                             <el-tooltip class="item" effect="dark" content="Excluir" placement="top">
                                 <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
                                     <i class="fa fa-trash-o"></i>
                                 </p-button>
                             </el-tooltip>
-                            
+
                         </template>
                     </el-table-column>
                 </el-table>
@@ -215,14 +215,16 @@ export default {
             return moment(date).format("DD/MM/YYYY")
         },
         formatPrice(value) {
+            var valor = value.valor
+            // -------------------------------------------------------
 
-            var tmp = value.valor
-            if (tmp == null || tmp == "") {
-                tmp = 0, 0
+             if (valor) {
+                var numero = valor.toFixed(2).split('.')
+                numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
+                return numero.join(',')
             }
-            tmp = tmp.toFixed(2).replace(".", ",")
-            tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
-            return 'R$ ' + tmp
+
+            // -------------------------------------------------------
         },
         handleRegister(index, row) {
             this.$router.push('/forms/MovementFormBoletaCliente')

@@ -21,7 +21,7 @@
                     <div>
                         <fg-input>
                             <el-select no-data-text="Sem informações" @change="validaRetirada(model.cliente[0])" class="select-default" v-model="model.cliente" name="cliente" placeholder="Selecione...">
-                                <el-option class="select-default" v-for="item in this.dataCliente" :key="item.id" :label="item.nome" :value="[item.id,item.id_xp,item.nome,item.telefone,item.email,item.investimento_inicial]">
+                                <el-option class="select-default" v-for="item in this.dataCliente" :key="item.id" :label="item.nome" :value="[item.id,item.id_xp,item.nome,item.telefone,item.email,item.investimento_inicial,item.potencial_investimento]">
                                 </el-option>
                             </el-select>
                         </fg-input>
@@ -29,13 +29,23 @@
                 </el-card>
             </div>
             <div class="form-group col-md-6">
-                <el-card class="box-card new-card-aporte">
+                <el-card class="box-card">
                     <div slot="header" class="clearfix">
                         <span>Aporte Inicial</span>
                     </div>
                     <div>
                         <div class="new-label">
                             <label>{{model.cliente[5] | formatarMoedaFilter}}</label>
+                        </div>
+                    </div>
+                </el-card>
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span>Potencial do Cliente</span>
+                    </div>
+                    <div>
+                        <div class="new-label">
+                            <label>{{model.cliente[6] | formatarMoedaFilter}}</label>
                         </div>
                     </div>
                 </el-card>
@@ -130,6 +140,7 @@ export default {
             money: {
                 decimal: ',',
                 thousands: '.',
+                prefix: 'R$ ',
                 precision: 2,
                 masked: false /* doesn't work with directive */
             },
@@ -181,7 +192,7 @@ export default {
     },
     mounted() {
 
-        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}&sort=nome&limit=10000').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}&sort=nome&limit=100000').then(response => {
             this.dataCliente = response.data
         })
 
@@ -213,43 +224,62 @@ export default {
             }
         },
         retiraMascara(campo) {
+
+          for (let index = 0; index < campo.length; index++) {
             campo = campo.replace('.', '') // Remove tudo o que não é dígito
+          }
+            campo = campo.replace('R$', '')
             campo = campo.replace(',', '.') // Remove tudo o que não é dígito
+            campo = campo.trim()
             return campo
         },
         salvar() {
 
+            if (!this.model.tipo_movimentacao) {
 
-            if (this.validaValorRetirada(this.retiraMascara(this.model.valor)) || !this.model.tipo_movimentacao) {
-
-                const authUser = JSON.parse(window.localStorage.getItem("usuario"))
-                let situacaoMovimento = this.model.tipo_movimentacao ? 3 : 1
-
-                let movimentacao = {
-
-                    id_cliente: this.model.cliente[0],
-                    data_registro: moment(this.model.data_registro, "DD/MM/YYYY"),
-                    id_situacao_movimento: 1,
-                    id_tipo_movimentacao: situacaoMovimento,
-                    valor: this.retiraMascara(this.model.valor),
-                    observacao: (this.model.observacao)?this.model.observacao:'Aporte',
-                    id_responsavel: authUser.id
+                if (this.retiraMascara(this.model.valor) > this.model.cliente[6]) {
+                    swal('Valor solicitado é maior que o Potencial do cliente ' + this.formatarMoeda(this.model.cliente[6]), 'Verifique o campo no cadastro de cliente!', 'info')
+                } else {
+                  this.salvarDados()
                 }
-                // console.log('valor Tela2 : ',movimentacao.valor)
-                axios.post(process.env.VUE_APP_ROOT_API + '/movimentacao', movimentacao)
-                    .then(response => {
-                        this.results = response.data
-                        swal('Bom trabalho!', 'Movimentação cadastrada com sucesso!', 'success')
-                        this.$router.push('/forms/MovementListAporteCliente')
 
-                    })
-                    .catch(error => {
-                        swal('Algo de errado!', 'Verifique os campos do cadastro de cliente!', 'error')
-                        console.log(error.response.data)
-                    })
             } else {
-                swal('Valor solicitado maior que o saldo do cliente '+ this.valorRetirada, 'Verifique o campo no cadastro de cliente!', 'info')
+
+                if (this.validaValorRetirada(this.retiraMascara(this.model.valor))) {
+                    this.salvarDados()
+                } else {
+                    swal('Valor solicitado maior que o saldo do cliente ' + this.valorRetirada, 'Verifique o campo no cadastro de cliente!', 'info')
+                }
             }
+
+        },
+        salvarDados() {
+
+            const authUser = JSON.parse(window.localStorage.getItem("usuario"))
+            let situacaoMovimento = this.model.tipo_movimentacao ? 3 : 1
+
+            let movimentacao = {
+
+                id_cliente: this.model.cliente[0],
+                data_registro: moment(this.model.data_registro, "DD/MM/YYYY"),
+                id_situacao_movimento: 1,
+                id_tipo_movimentacao: situacaoMovimento,
+                valor: this.retiraMascara(this.model.valor),
+                observacao: (this.model.observacao) ? this.model.observacao : 'Aporte',
+                id_responsavel: authUser.id
+            }
+            // console.log('valor Tela2 : ',movimentacao.valor)
+            axios.post(process.env.VUE_APP_ROOT_API + '/movimentacao', movimentacao)
+                .then(response => {
+                    this.results = response.data
+                    swal('Bom trabalho!', 'Movimentação cadastrada com sucesso!', 'success')
+                    this.$router.push('/forms/MovementListAporteCliente')
+
+                })
+                .catch(error => {
+                    swal('Algo de errado!', 'Verifique os campos do cadastro de cliente!', 'error')
+                    console.log(error.response.data)
+                })
         },
         validaRetirada(id) {
             axios.get(process.env.VUE_APP_ROOT_API + '/calcula_movimentacao?user_id=' + id).then(response => {
@@ -280,5 +310,8 @@ export default {
 .new-label {
     font-size: x-large;
     color-adjust: red;
+}
+.color-aporte-inicial {
+    background: lightgrey;
 }
 </style>
