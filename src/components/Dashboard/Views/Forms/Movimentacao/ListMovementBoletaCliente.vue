@@ -202,7 +202,7 @@ export default {
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1,"id_tipo_movimentacao":2}&limit=100000').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1,"id_tipo_movimentacao":2}&sort=dthr_registro DESC&limit=100000').then(response => {
             this.tableData = response.data
         })
     },
@@ -244,7 +244,7 @@ export default {
             axios.put(process.env.VUE_APP_ROOT_API + '/movimentacao/' + row.id, movimentacao)
                 .then(response => {
                     this.results = response.data
-                    axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}').then(response => {
+                    axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}&sort=dthr_registro DESC&limit=100000').then(response => {
                         this.tableData = response.data
                         swal('Bom trabalho!', `Movimentação (Boleta Cliente) ${row.id} Excluída com sucesso!`, 'success')
                     })

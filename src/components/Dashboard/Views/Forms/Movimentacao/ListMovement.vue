@@ -202,7 +202,7 @@ export default {
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}&limit=100000').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}&sort=dthr_registro DESC&limit=100000').then(response => {
             this.tableData = response.data
         })
     },
