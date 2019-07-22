@@ -43,7 +43,7 @@
                                 </p-button>
                             </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="Excluir" placement="top">
-                                <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                                <p-button type="danger" size="sm" icon @click="open(props.$index, props.row)">
                                     <i class="fa fa-trash-o"></i>
                                 </p-button>
                             </el-tooltip>
@@ -84,7 +84,9 @@ import {
 import moment from 'moment'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
 import MovementEdit from './FormMovementEdit'
-import { type } from 'os'
+import {
+    type
+} from 'os'
 export default {
     name: 'ListMovementAporteCliente',
     props: {
@@ -159,9 +161,8 @@ export default {
                 masked: false
             },
             searchQuery: '',
-            propsToSearch: ['id','observacao'],
-            tableColumns: [
-                {
+            propsToSearch: ['id', 'observacao'],
+            tableColumns: [{
                     prop: 'id',
                     label: 'Código',
                     minWidth: 50
@@ -217,10 +218,10 @@ export default {
         },
         formatPrice(value) {
 
-          var valor = value.valor
+            var valor = value.valor
             // -------------------------------------------------------
 
-             if (valor) {
+            if (valor) {
                 var numero = valor.toFixed(2).split('.')
                 numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
                 return numero.join(',')
@@ -228,6 +229,23 @@ export default {
 
             // -------------------------------------------------------
         },
+        // ------------ Confirmação de Deletar
+        open(index, row) {
+            this.$confirm('Deseja realmente excluir esse registro?', 'Atenção', {
+                confirmButtonText: 'Sim',
+                cancelButtonText: 'Não',
+                type: 'warning'
+            }).then(() => {
+                this.handleDelete(index, row)
+                // this.$message({type: 'success', message: 'Registro Excluido!!'})
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: 'Operação Cancelada'
+                })
+            });
+        },
+        // ----------------------------------
         handleRegister(index, row) {
             this.$router.push('/forms/MovementFormAporteCliente')
         },

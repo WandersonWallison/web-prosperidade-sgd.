@@ -42,7 +42,7 @@
                                 </p-button>
                             </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="Excluir" placement="top">
-                                <p-button type="danger" size="sm" icon @click="handleDelete(props.$index, props.row)">
+                                <p-button type="danger" size="sm" icon @click="open(props.$index, props.row)">
                                     <i class="fa fa-trash-o"></i>
                                 </p-button>
                             </el-tooltip>
@@ -152,6 +152,23 @@ export default {
         })
     },
     methods: {
+        // ------------ Confirmação de Deletar
+        open(index, row) {
+            this.$confirm('Deseja realmente excluir esse registro?', 'Atenção', {
+                confirmButtonText: 'Sim',
+                cancelButtonText: 'Não',
+                type: 'warning'
+            }).then(() => {
+                this.handleDelete(index, row)
+                // this.$message({type: 'success', message: 'Registro Excluido!!'})
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: 'Operação Cancelada'
+                })
+            });
+        },
+        // ----------------------------------
         handleRegister() {
             this.$router.push('/forms/TipoMovimentacaoForms')
         },
