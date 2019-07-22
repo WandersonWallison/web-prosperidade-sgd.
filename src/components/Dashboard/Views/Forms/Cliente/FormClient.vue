@@ -465,8 +465,6 @@ export default {
         },
         salvar() {
 
-            console.log('Potencial --', this.retiraMascara(this.model.potencial_investimento))
-            console.log('Investimento -- ', this.retiraMascara(this.model.investimento_inicial))
             const authUser = JSON.parse(window.localStorage.getItem("usuario"))
             let documento
             if (this.model.cnpj) {
