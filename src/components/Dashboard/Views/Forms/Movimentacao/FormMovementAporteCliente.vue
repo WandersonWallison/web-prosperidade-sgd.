@@ -76,6 +76,11 @@
                         <span>Aporte</span>
                     </div>
                     <div v-if="!this.model.tipo_movimentacao">
+                        <label>Saldo para Aporte</label>
+                        <fg-input type="text" name="saldo_movimento" disabled v-model=this.valorAporte>
+                        </fg-input>
+                    </div>
+                    <div v-if="!this.model.tipo_movimentacao">
                         <label>Status</label>
                         <fg-input type="text" name="status" disabled placeholder="Aporte Cliente">
                         </fg-input>
@@ -159,6 +164,7 @@ export default {
             disabledDates: {
                 to: new Date(Date.now() - 8640000)
             },
+            valorAporte: '0,00',
             valorRetirada: 0,
             valor_cliente: 0,
             dataCliente: [],
@@ -237,8 +243,8 @@ export default {
 
             if (!this.model.tipo_movimentacao) {
 
-                if (this.retiraMascara(this.model.valor) > this.model.cliente[6]) {
-                    swal('Valor solicitado é maior que o Potencial do cliente é\n' + this.formatarMoeda(this.model.cliente[6]), 'Verifique o campo no cadastro de cliente!', 'info')
+                if(this.validaValorAporte(this.model.valor)){
+                  swal('Valor solicitado é maior que o \nPotencial Acumulado do Cliente ' + this.valorAporte, 'Verifique o campo no cadastro de cliente!', 'info')
                 } else {
                   this.salvarDados()
                 }
@@ -286,6 +292,10 @@ export default {
                 this.valor_cliente = (response.data) ? response.data : '0,00'
                 this.valorRetirada = response.data ? this.formatarMoeda(response.data) : '0,00'
             })
+            axios.get(process.env.VUE_APP_ROOT_API + '/calcula_aporte?user_id=' + id).then(response => {
+                this.valor_cliente = (response.data) ? response.data : '0,00'
+                this.valorAporte = response.data ? this.formatarMoeda(response.data) : '0,00'
+            })
         },
         validaValorRetirada(valor) {
 
@@ -293,6 +303,15 @@ export default {
                 return false
             }
             return true
+        },
+        validaValorAporte(valor){
+
+          let v1 = this.retiraMascara(valor)
+          let v2 = this.retiraMascara(this.valorAporte)
+          if (parseInt(v1) > parseInt(v2)){
+              return true
+          }
+          return false
         }
     }
 }

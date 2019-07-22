@@ -389,7 +389,6 @@ export default {
     },
     mounted() {
 
-
         axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":2}&sort=username&limit=2000').then(response => {
             this.dataOperadores = response.data
         })
@@ -466,6 +465,8 @@ export default {
         },
         salvar() {
 
+            console.log('Potencial --', this.retiraMascara(this.model.potencial_investimento))
+            console.log('Investimento -- ', this.retiraMascara(this.model.investimento_inicial))
             const authUser = JSON.parse(window.localStorage.getItem("usuario"))
             let documento
             if (this.model.cnpj) {
@@ -507,52 +508,67 @@ export default {
                 numero: this.model.numero,
                 tipo: this.model.tipo_endereco
             }
-            axios.post(process.env.VUE_APP_ROOT_API + '/cliente', cliente)
-                .then(response => {
-                    this.results = response.data
-                    endereco.id_cliente = response.data.id
-                    this.id_cliente = response.data.id
-                    // Cadastro de Endereço o cliente será referenciado no campo de id_user da tabela de endereço
-                    axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
-                        .then(response => {
-                            this.resultAdress = response.data
+
+            if (this.validarValores(this.retiraMascara(this.model.potencial_investimento), this.retiraMascara(this.model.investimento_inicial))) {
+
+                axios.post(process.env.VUE_APP_ROOT_API + '/cliente', cliente)
+                    .then(response => {
+                        this.results = response.data
+                        endereco.id_cliente = response.data.id
+                        this.id_cliente = response.data.id
+                        // Cadastro de Endereço o cliente será referenciado no campo de id_user da tabela de endereço
+                        axios.post(process.env.VUE_APP_ROOT_API + '/endereco', endereco)
+                            .then(response => {
+                                this.resultAdress = response.data
 
                                 // ------------ Cadastro da Movimentação  ------------------------------------
                                 let movimentacao = {
-                                  id_cliente: this.id_cliente,
-                                  data_registro: moment().format("YYYY/MM/DD"),
-                                  id_situacao_movimento: 1,
-                                  id_tipo_movimentacao: 1,
-                                  valor: this.retiraMascara(this.model.investimento_inicial),
-                                  observacao: 'Primeiro Aporte',
-                                  id_responsavel: authUser.id
+                                    id_cliente: this.id_cliente,
+                                    data_registro: moment().format("YYYY/MM/DD"),
+                                    id_situacao_movimento: 1,
+                                    id_tipo_movimentacao: 1,
+                                    valor: this.retiraMascara(this.model.investimento_inicial),
+                                    observacao: 'Primeiro Aporte',
+                                    id_responsavel: authUser.id
                                 }
                                 axios.post(process.env.VUE_APP_ROOT_API + '/movimentacao', movimentacao)
-                                  .then(response => {
-                                      this.results = response.data
-                                      swal('Bom trabalho!', 'Cliente Cadastrado com sucesso!', 'success')
-                                      this.$router.push('/forms/ClientList')
-                                  })
-                                  .catch(error => {
-                                      swal('Algo de errado!', 'Aporte inicial não cadastrado! \nPor favor cadastrar aporte manualmente', 'error')
-                                      console.log(error.response.data)
-                                  })
+                                    .then(response => {
+                                        this.results = response.data
+                                        swal('Bom trabalho!', 'Cliente Cadastrado com sucesso!', 'success')
+                                        this.$router.push('/forms/ClientList')
+                                    })
+                                    .catch(error => {
+                                        swal('Algo de errado!', 'Aporte inicial não cadastrado! \nPor favor cadastrar aporte manualmente', 'error')
+                                        console.log(error.response.data)
+                                    })
                                 // ------------ Fim Cadastro da Movimentação ---------------------------------
-                        })
-                        .catch(error => {
-                            swal('Algo de errado!', 'Verifique os campos do endereço de cadastro!', 'error')
-                            console.log(error)
-                        })
-                })
-                .catch(error => {
-                    let erro_name
-                    console.log('eRRO 1 - ', error.response.data)
-                    if (error.response.data.code == 'E_UNIQUE') {
-                        erro_name = 'Cliente já cadastrado com o mesmo NUMERO XP'
-                    }
-                    swal('Algo de errado!', 'Verifique os campos do cadastro de cliente! - ' + erro_name, 'error')
-                    console.log(error.response.data)
-                })
+                            })
+                            .catch(error => {
+                                swal('Algo de errado!', 'Verifique os campos do endereço de cadastro!', 'error')
+                                console.log(error)
+                            })
+                    })
+                    .catch(error => {
+                        let erro_name
+                        console.log('eRRO 1 - ', error.response.data)
+                        if (error.response.data.code == 'E_UNIQUE') {
+                            erro_name = 'Cliente já cadastrado com o mesmo NUMERO XP'
+                        }
+                        swal('Algo de errado!', 'Verifique os campos do cadastro de cliente! - ' + erro_name, 'error')
+                        console.log(error.response.data)
+                    })
+
+            } else {
+                swal('O valor Inicial de investimento não pode ser maior que o Potencial de Investimento do Cliente', 'Verifique os campos do cadastro de cliente!', 'error')
+            }
+        },
+        validarValores(potencial, aporte) {
+
+            if (parseInt(aporte) <= parseInt(potencial)) {
+                return true
+            }
+            return false
+
         }
     }
 }
