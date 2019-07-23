@@ -261,6 +261,9 @@ export default {
         mask
     },
     mounted() {
+        const  authUser = window.localStorage.getItem('usuario')
+        const userLogado = JSON.parse(authUser)
+        this.id_user = userLogado.id
         axios
             .get(
                 process.env.VUE_APP_ROOT_API +
@@ -296,7 +299,7 @@ export default {
             this.tipoCentral = response.data
         })
 
-        axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1,"id_responsavel":'+ this.id_user +'}&sort=nome&limit=100000').then(response => {
             this.empresa = response.data
         })
     },

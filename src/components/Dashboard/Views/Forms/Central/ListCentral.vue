@@ -148,12 +148,16 @@ export default {
                     minWidth: 100
                 }
             ],
-            tableData: []
+            tableData: [],
+            id_empresa: null
         }
     },
     mounted() {
+        const  authUser = window.localStorage.getItem('usuario')
+        const userLogado = JSON.parse(authUser)
+        this.id_empresa = userLogado.id_empresa
         axios
-            .get(process.env.VUE_APP_ROOT_API + '/central?where={"ativo": 1}&sort=nome')
+            .get(process.env.VUE_APP_ROOT_API + '/central?where={"ativo": 1,"id_empresa":'+ this.id_empresa +'}&sort=nome&limit=100000')
             .then(response => {
                 this.tableData = response.data;
             });
