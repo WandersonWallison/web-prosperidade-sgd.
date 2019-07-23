@@ -20,10 +20,9 @@ export default function initProgress(router) {
   router.beforeEach((to, from, next) => {
 
     const links = JSON.parse(window.localStorage.getItem('links'));
-    //console.log(to)
 
     // regra de validação de users
-    if (to.path === '/login'){
+    if (to.path === '/login' || to.path === '/admin/overview') {
       return next()
     } else {
         //console.log(links)
@@ -35,11 +34,11 @@ export default function initProgress(router) {
             return next()
          }
         }
-      } //else {
-        // if(ValidaLink){
-          //swal('Você não tem permissão', '','warning')
-       //  }
-     // }
+      }
+      if(ValidaLink){
+         swal('Você não tem permissão', '','warning')
+      }
+
     }
   })
 
