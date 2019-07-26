@@ -19,9 +19,16 @@
                     </div>
                     <br>
                     <div>
+                        <label>Nome - Numero XP</label>
                         <fg-input>
-                            <el-select no-data-text="Sem informações" @change="validaRetirada(model.cliente[0])" class="select-default" v-model="model.cliente" name="cliente" placeholder="Selecione...">
-                                <el-option class="select-default" v-for="item in this.dataCliente" :key="item.id" :label="item.nome" :value="[item.id,item.id_xp,item.nome,item.telefone,item.email,item.investimento_inicial,item.potencial_investimento]">
+                            <el-select no-data-text="Sem informações" @change="validaRetirada(model.cliente[0])" class="select-default" 
+                            v-model="model.cliente" 
+                            name="cliente" 
+                            filterable 
+                            allow-create
+                            default-first-option 
+                            placeholder="Selecione...">
+                                <el-option class="select-default" v-for="item in this.dataCliente" :key="item.id" :label="item.nome + ' - ' + item.id_xp" :value="[item.id,item.id_xp,item.nome,item.telefone,item.email,item.investimento_inicial,item.potencial_investimento]">
                                 </el-option>
                             </el-select>
                         </fg-input>
