@@ -90,7 +90,14 @@
                     <!--  OPERADOR  -->
                     <label>Operador</label>
                     <fg-input :error="getError('operador')" v-validate="modelValidations.operador" name="operador">
-                        <el-select no-data-text="Sem informações" class="select-default" v-model="model.operador" name="operador" placeholder="Selecione...">
+                        <!--<el-select no-data-text="Sem informações" class="select-default" v-model="model.operador" name="operador" placeholder="Selecione...">-->
+                        <el-select no-data-text="Sem informações" class="select-default" 
+                            v-model="model.operador" 
+                            name="operador" 
+                            filterable 
+                            allow-create
+                            default-first-option 
+                            placeholder="Selecione...">     
                             <el-option class="select-default" v-for="item in this.dataOperadores" :key="item.id" :label="item.username" :value="item.id">
                             </el-option>
                         </el-select>
@@ -98,8 +105,16 @@
                     <!--  ASSESSOR  -->
                     <label>Assessor</label>
                     <fg-input :error="getError('assessor')" v-validate="modelValidations.assessor" name="assessor">
-                        <el-select no-data-text="Sem informações" class="select-default" v-model="model.assessor" name="assessor" placeholder="Selecione...">
-                            <el-option class="select-default" v-for="item in this.dataAssessores" :key="item.id" :label="item.username" :value="item.id">
+                        <!--<el-select no-data-text="Sem informações" class="select-default" v-model="model.assessor" name="assessor" placeholder="Selecione...">-->
+                        <el-select no-data-text="Sem informações" class="select-default"  
+                            v-model="model.assessor" 
+                            name="assessor" 
+                            filterable 
+                            allow-create
+                            default-first-option 
+                            placeholder="Selecione...">    
+                            
+                            <el-option class="select-default" v-for="item in this.dataAssessores" :key="item.id" :label="item.username + ' - ' + item.id_xp" :value="item.id">
                             </el-option>
                         </el-select>
                     </fg-input>

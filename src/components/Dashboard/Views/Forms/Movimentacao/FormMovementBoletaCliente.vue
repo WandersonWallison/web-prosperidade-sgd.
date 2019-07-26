@@ -13,11 +13,24 @@
                 <el-card class="box-card">
                     <label>Clientes</label>
                     <fg-input>
-                        <el-select no-data-text="Sem informações" @change="validaRetirada(model.cliente[0])" class="select-default" v-model="model.cliente" name="cliente" placeholder="Selecione...">
+                            <el-select no-data-text="Sem informações" @change="validaRetirada(model.cliente[0])" class="select-default" 
+                            v-model="model.cliente" 
+                            name="cliente" 
+                            filterable 
+                            allow-create
+                            default-first-option 
+                            placeholder="Selecione...">
+                                <el-option class="select-default" v-for="item in this.dataCliente" :key="item.id" :label="item.nome + ' - ' + item.id_xp" :value="[item.id,item.id_xp,item.nome,item.telefone,item.email,item.investimento_inicial,item.potencial_investimento]">
+                                </el-option>
+                            </el-select>
+                        </fg-input>
+                    <!--<fg-input>
+                        <!--<el-select no-data-text="Sem informações" @change="validaRetirada(model.cliente[0])" class="select-default" v-model="model.cliente" name="cliente" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in this.dataCliente" :key="item.id" :label="item.nome" :value="[item.id,item.id_xp,item.nome,item.telefone,item.email,item.id_assessor.username,item.id_assessor.telefone,item.id_assessor.cpf]">
                             </el-option>
                         </el-select>
-                    </fg-input>
+                        
+                    </fg-input>-->
                 </el-card>
             </div>
             <div class="form-group col-md-6">
