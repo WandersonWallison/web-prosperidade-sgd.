@@ -11,6 +11,17 @@
             </stats-card>
         </div>
     </div>
+    <!-- Agregados -->
+    <div class="row">
+        <div class="col-lg-4 col-md-12 col-sm-12" :key="stats.id" v-for="stats in statsCards">
+            <stats-card :type="stats.type" :icon="stats.icon" :small-title="stats.title" :title="stats.value">
+                <div class="stats" slot="footer">
+                    <i :class="stats.footerIcon"></i>
+                    {{stats.footerText}}
+                </div>
+            </stats-card>
+        </div>
+    </div>
     <!-- Valor x Escritorio -->
     <div class="row">
         <div class="col-md-6">
@@ -42,36 +53,6 @@
                 <template slot="footer">
                 </template>
             </chart-card>
-        </div>
-        <div class="col-md-6">
-          <!--
-            <chart-card :chart-data="emailChart" chart-type="Pie" title="Email Statistics" description="Last Campaign Performance">
-                <template slot="header">
-                    <h5 class="card-title">Email Statistics</h5>
-                    <p class="card-category">Last Campaign Performance</p>
-                </template>
-                <template slot="footer">
-                    <div class="legend">
-                        <i class="fa fa-circle text-warning"></i> Visited
-                    </div>
-                    <hr>
-                    <div class="stats">
-                        <i class="fa fa-check"></i> Campaign sent 2 days ago
-                    </div>
-                </template>
-            </chart-card>
-            -->
-        </div>
-    </div>
-    <!-- Agregados -->
-    <div class="row">
-        <div class="col-lg-4 col-md-12 col-sm-12" :key="stats.id" v-for="stats in statsCards">
-            <stats-card :type="stats.type" :icon="stats.icon" :small-title="stats.title" :title="stats.value">
-                <div class="stats" slot="footer">
-                    <i :class="stats.footerIcon"></i>
-                    {{stats.footerText}}
-                </div>
-            </stats-card>
         </div>
     </div>
 </div>
