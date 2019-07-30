@@ -4,6 +4,18 @@ export default [
     icon: 'nc-icon nc-app',
     path: '/admin/overview'
   },
+  {
+    name: 'Dashbord',
+    icon: 'nc-icon nc-chart-pie-36',
+    children: [{
+      name: 'Administrador',
+      path: '/forms/homeDashbordCentral'
+    },{
+      name: 'Operador',
+      path: '/forms/homeDashbord'
+    }]
+    // path: '/admin/overview'
+  },
  {
   name: 'Empreendimento',
   icon: 'nc-icon nc-bank',
@@ -54,12 +66,11 @@ export default [
     path: '/forms/MovementListBoletaCliente'
     //path: '/forms/MovementFormBoletaCliente'
   },
-  /*
   {
     name: 'Atualização de Movimentações',
     path: '/forms/MovementFormAtualizacao'
   }
-  */
+
   ]
 },
 /*

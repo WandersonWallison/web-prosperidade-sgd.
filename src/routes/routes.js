@@ -3,6 +3,9 @@ import DashboardLayout from '../components/Dashboard/Layout/DashboardLayout.vue'
 import NotFound from '../components/GeneralViews/NotFoundPage.vue'
 // Dashboard pages
 const Overview = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/Overview.vue')
+// dashbord home
+const homeDashbord = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/homeDashbord.vue')
+const homeDashbordCentral = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/homeDashbordCentral.vue')
 const Widgets = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/Widgets.vue')
 // Pages
 import User from 'src/components/Dashboard/Views/Pages/UserProfile.vue'
@@ -100,6 +103,7 @@ const GoogleMaps = () => import(/* webpackChunkName: "maps" */ 'src/components/D
 const FullScreenMap = () => import(/* webpackChunkName: "maps" */ 'src/components/Dashboard/Views/Maps/FullScreenMap.vue')
 const VectorMaps = () => import(/* webpackChunkName: "maps" */ 'src/components/Dashboard/Views/Maps/VectorMapsPage.vue');
 // Calendar
+
 import Calendar from 'src/components/Dashboard/Views/Calendar/CalendarRoute.vue'
 // Charts
 const Charts = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Charts.vue')
@@ -428,6 +432,16 @@ let formsMenu = {
       path: 'wizard',
       name: 'Wizard',
       component: Wizard
+    },
+    {
+      path: 'homeDashbord',
+      name: 'homeDashbord',
+      component: homeDashbord
+    },
+    {
+      path: 'homeDashbordCentral',
+      name: 'homeDashbordCentral',
+      component: homeDashbordCentral
     }
   ]
 }
