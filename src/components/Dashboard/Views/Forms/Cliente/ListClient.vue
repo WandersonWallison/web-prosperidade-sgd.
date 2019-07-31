@@ -32,7 +32,7 @@
             </div>
             <div class="col-sm-12 mt-2">
                 <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
-                    <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
+                    <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" sortable :label="column.label">
                     </el-table-column>
                     <el-table-column :min-width="50" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
@@ -180,7 +180,7 @@ export default {
             tableColumns: [{
                     prop: 'id',
                     label: 'Código',
-                    minWidth: 43
+                    minWidth: 60
                 },
                 {
                     prop: 'nome',
@@ -190,7 +190,7 @@ export default {
                 {
                     prop: 'id_xp',
                     label: 'Numero XP',
-                    minWidth: 60
+                    minWidth: 80
                 },
                 {
                     prop: 'email',
