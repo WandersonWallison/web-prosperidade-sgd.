@@ -89,7 +89,7 @@ const tooltipOptions = {
     tooltipCaretSize: 8,
     tooltipCornerRadius: 6,
     tooltipXOffset: 10,
-  }
+}
 
 export default {
     name: 'homeDasbord',
@@ -120,7 +120,7 @@ export default {
             qtdCliente: 0,
             activityChart: [],
             activityChartAssessor: [],
-            activityChartOffice:[],
+            activityChartOffice: [],
             statsCards: [],
             statsCotacao: [],
             teste: [],
@@ -142,25 +142,25 @@ export default {
 
             this.graficoValorEscritorio = response.data
             for (let index = 0; index < this.graficoValorEscritorio.length; index++) {
-              this.graficoValorEscritorioLabel.push(this.graficoValorEscritorio[index].nome)
+                this.graficoValorEscritorioLabel.push(this.graficoValorEscritorio[index].nome)
             }
             for (let index = 0; index < this.graficoValorEscritorio.length; index++) {
-              this.graficoValorEscritorioValor.push(this.graficoValorEscritorio[index].valor)
+                this.graficoValorEscritorioValor.push(this.graficoValorEscritorio[index].valor)
             }
-            this.formarGraficoPie(this.graficoValorEscritorioLabel,this.graficoValorEscritorioValor)
+            this.formarGraficoPie(this.graficoValorEscritorioLabel, this.graficoValorEscritorioValor)
         })
         // Grafico de valores por Assessores
-         axios.get(process.env.VUE_APP_ROOT_API + '/grafico_assessor').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/grafico_assessor').then(response => {
             this.graficoAssessor = response.data
             for (let index = 0; index < this.graficoAssessor.length; index++) {
-              this.graficoAssessorLabel.push(this.graficoAssessor[index].assessor)
+                this.graficoAssessorLabel.push(this.graficoAssessor[index].assessor)
             }
             for (let index = 0; index < this.graficoAssessor.length; index++) {
-              this.graficoAssessorValor.push(this.graficoAssessor[index].valor)
+                this.graficoAssessorValor.push(this.graficoAssessor[index].valor)
             }
-            this.formarGraficoAssessor(this.graficoAssessorLabel,this.graficoAssessorValor)
+            this.formarGraficoAssessor(this.graficoAssessorLabel, this.graficoAssessorValor)
 
-         })
+        })
 
         axios.get(process.env.VUE_APP_ROOT_API + '/cliente/?where={"ativo":1}').then(response => {
             this.qtdCliente = response.data.length
@@ -182,6 +182,7 @@ export default {
                             type: 'success',
                             icon: 'nc-icon nc-money-coins',
                             title: 'VALOR DE BOLETAS EFETIVADAS',
+                            class: 'fonte-valor',
                             value: this.formatarMoeda(this.valorBoletaEfetivada), //'R$ 1.456.345',
                             footerText: 'Hoje',
                             footerIcon: 'nc-icon nc-calendar-60'
@@ -308,7 +309,7 @@ export default {
                 }
             }
         },
-        formarGraficoPie(label,valor) {
+        formarGraficoPie(label, valor) {
 
             this.activityChartOffice = {
                 data: {
@@ -325,7 +326,7 @@ export default {
                 }
             }
         },
-        formarGraficoAssessor(label,valor) {
+        formarGraficoAssessor(label, valor) {
 
             this.activityChartAssessor = {
                 data: {
@@ -342,12 +343,22 @@ export default {
                 }
             }
         },
-        formatarMoeda(valor) {
+        formatarMoeda(valor1) {
+
+            var valor = valor1
 
             if (valor) {
-                var numero = valor.toFixed(2).split('.')
-                numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.')
-                return numero.join(',')
+
+                valor = valor + ''
+                valor = parseInt(valor.replace(/[\D]+/g, ''))
+                valor = valor + ''
+                valor = valor.replace(/([0-9]{2})$/g, ",$1")
+                valor = "R$ " + valor.split(/(?=(?:...)*$)/).join('.')
+                if (valor.length > 6) {
+                    valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
+                    valor = valor.replace('.,', ',')
+                }
+                return valor
             }
             return '0,00'
         },
@@ -365,5 +376,7 @@ export default {
 </script>
 
 <style>
-
+.fonte-valor {
+    font-size: 70%
+}
 </style>
