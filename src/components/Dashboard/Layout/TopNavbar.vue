@@ -12,7 +12,7 @@
 
             </navbar-toggle-button>
         </div>
-        <a class="navbar-brand" href="#"><!--<img slot="header"  width="36" height="36" src="static\img\favicon_n.png" alt="...">-->Prosperidade Investimentos</a>
+        <a class="navbar-brand" >Prosperidade Investimentos - {{ this.usuario.username}}</a>
     </div>
 
     <template slot="navbar-menu">
@@ -99,6 +99,7 @@ export default {
     data() {
         return {
             dialogFormVisibleDetail: false,
+            usuario: '',
             form: {
                 name: '',
                 region: '',
@@ -113,6 +114,10 @@ export default {
             activeNotifications: false,
             showNavbar: false
         }
+    },
+    mounted() {
+        this.usuario = JSON.parse(window.localStorage.getItem('usuario'))
+
     },
     methods: {
         logout() {
