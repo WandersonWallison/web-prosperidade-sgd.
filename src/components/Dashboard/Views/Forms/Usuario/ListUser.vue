@@ -34,7 +34,16 @@
                 <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" sortable :label="column.label">
                     </el-table-column>
-                    <el-table-column :min-width="100" fixed="right" class-name="td-actions" label="Ações">
+                    <el-table-column prop="id_grupo.descricao" label="Grupo" :min-width="60" 
+                    :filters="[{ text: 'ADMINISTRADOR', value: 'ADMINISTRADOR' }, 
+                               { text: 'ASSESSOR', value: 'ASSESSOR' },
+                               { text: 'OPERADOR', value: 'OPERADOR' },
+                               { text: 'CENTRAL', value: 'CENTRAL' }]" 
+                    sortable 
+                    :filter-method="filterTag" 
+                    filter-placement="bottom-end">
+                    </el-table-column>
+                    <el-table-column :min-width="60" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
                             <el-tooltip class="item" effect="dark" content="Detalhar" placement="top">
                                 <p-button type="error" size="sm" icon @click="handleDetails(props.$index, props.row)">
@@ -106,7 +115,7 @@ export default {
     name: 'ListUser',
     props: {
         selected: {
-          type: Object
+            type: Object
         }
     },
     components: {
@@ -175,22 +184,22 @@ export default {
             },
             searchQuery: '',
             newRow: '',
-            propsToSearch: ['username', 'id_grupo.descricao' , 'email'],//, 'telefone'],
+            propsToSearch: ['username', 'email'], //, 'telefone'],
             tableColumns: [{
                     prop: 'username',
                     label: 'Nome',
                     minWidth: 100
                 },
-                {
+               /* {
                     prop: 'id_grupo.descricao',
                     label: 'Grupo',
                     minWidth: 80
-                },
+                },*/
                 {
                     prop: 'email',
                     label: 'E-mail',
                     minWidth: 100
-                }//,
+                } //,
                 //{
                 //    prop: 'telefone',
                 //    label: 'Telefone',
@@ -221,6 +230,9 @@ export default {
                     message: 'Operação Cancelada'
                 })
             });
+        },
+        filterTag(value, row) {
+        return row.id_grupo.descricao === value;
         },
         // ----------------------------------
         handleDetails(index, row) {
