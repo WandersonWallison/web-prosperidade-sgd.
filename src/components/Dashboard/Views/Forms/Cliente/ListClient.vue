@@ -176,7 +176,7 @@ export default {
             searchQuery: '',
             newRow: '',
             cliente: null,
-            propsToSearch: ['id','nome','id_xp', 'email', 'telefone'],
+            propsToSearch: ['id','nome','id_xp', 'email', 'nome_assessor','nome_escritorio'],
             tableColumns: [{
                     prop: 'id',
                     label: 'Código',
@@ -198,8 +198,13 @@ export default {
                     minWidth: 100
                 },
                 {
-                    prop: 'telefone',
-                    label: 'Telefone',
+                    prop: 'nome_assessor',
+                    label: 'Assessor',
+                    minWidth: 80
+                },
+                {
+                    prop: 'nome_escritorio',
+                    label: 'Escritório',
                     minWidth: 80
                 }
             ],
@@ -207,7 +212,7 @@ export default {
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}&sort=nome&limit=100000').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/vw_cliente_sintetico?where={"ativo": 1}&sort=nome&limit=100000').then(response => {
             this.tableData = response.data
         })
     },
@@ -253,7 +258,7 @@ export default {
             axios.put(process.env.VUE_APP_ROOT_API + '/cliente/' + row.id, empresa)
                 .then(response => {
                     this.results = response.data
-                    axios.get(process.env.VUE_APP_ROOT_API + '/cliente?where={"ativo": 1}').then(response => {
+                    axios.get(process.env.VUE_APP_ROOT_API + '/vw_cliente_sintetico?where={"ativo": 1}').then(response => {
                         this.tableData = response.data
                         swal('Bom trabalho!', `Cliente ${row.nome} excluído com sucesso!`, 'success')
                         this.$router.push('/forms/ClientList')
