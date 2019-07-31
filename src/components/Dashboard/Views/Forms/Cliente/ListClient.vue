@@ -176,7 +176,7 @@ export default {
             searchQuery: '',
             newRow: '',
             cliente: null,
-            propsToSearch: ['id','nome','id_xp', 'email', 'nome_assessor','nome_escritorio'],
+            propsToSearch: ['id','nome','id_xp', 'nome_assessor','nome_escritorio'],
             tableColumns: [{
                     prop: 'id',
                     label: 'Código',
@@ -192,11 +192,11 @@ export default {
                     label: 'Numero XP',
                     minWidth: 80
                 },
-                {
-                    prop: 'email',
-                    label: 'E-mail',
-                    minWidth: 100
-                },
+                //{
+                //    prop: 'email',
+                //    label: 'E-mail',
+                //    minWidth: 100
+                //},
                 {
                     prop: 'nome_assessor',
                     label: 'Assessor',
@@ -205,7 +205,7 @@ export default {
                 {
                     prop: 'nome_escritorio',
                     label: 'Escritório',
-                    minWidth: 80
+                    minWidth: 60
                 }
             ],
             tableData: []

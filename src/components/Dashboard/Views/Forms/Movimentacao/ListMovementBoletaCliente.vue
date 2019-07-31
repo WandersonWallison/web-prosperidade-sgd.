@@ -38,7 +38,7 @@
             </div>
             <div class="col-sm-12 mt-2">
                 <el-table empty-text="Sem Informações" class="table-striped" :data="queriedData" border style="width: 100%">
-                    <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" :label="column.label">
+                    <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" sortable :label="column.label">
                     </el-table-column>
                     <el-table-column :min-width="80" :formatter="formatPrice" prop="valor" label="Valor">
                     </el-table-column>
@@ -175,7 +175,7 @@ export default {
                 {
                     prop: 'id',
                     label: 'Código',
-                    minWidth: 50
+                    minWidth: 55
                 },
                 {
                     prop: 'id_cliente.nome',
@@ -250,9 +250,8 @@ export default {
             this.$router.push('/forms/MovementFormAtualizacao')
         },
         handleEdit(index, row) {
-
             window.localStorage.setItem('movimentacao', row.id)
-            this.$router.push('/forms/MovementFormBoletaCliente')
+            this.$router.push('/forms/MovementFormEdit')
         },
         handleDelete(index, row) {
             let movimentacao = {
