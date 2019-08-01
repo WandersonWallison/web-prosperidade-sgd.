@@ -65,6 +65,7 @@
 <script>
 import Vue from 'vue'
 import swal from 'sweetalert2'
+import mixinPadrao from '../../../../../mixins/mixinPadrao'
 import {
     Table,
     TableColumn,
@@ -75,6 +76,7 @@ import axios from 'axios'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
 export default {
     name: 'ListCompany',
+    mixins: [mixinPadrao],
     components: {
         PPagination
     },
@@ -165,6 +167,7 @@ export default {
     methods: {
 
       open(index, row) {
+          if (this.validaRota('/forms/centralDelete')) {
             this.$confirm('Deseja realmente excluir esse registro?', 'Atenção', {
                 confirmButtonText: 'Sim',
                 cancelButtonText: 'Não',
@@ -178,6 +181,9 @@ export default {
                     message: 'Operação Cancelada'
                 })
             });
+            } else {
+                swal('Você não tem permissão!', '', 'info')
+            }
         },
         handleRegister() {
             this.$router.push("/forms/CentralForms");

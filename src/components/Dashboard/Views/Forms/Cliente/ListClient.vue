@@ -103,8 +103,10 @@ import axios from 'axios'
 import swal from 'sweetalert2'
 import clienteDetails from './FormClientDetail.vue'
 import PPagination from 'src/components/UIComponents/Pagination.vue'
+import mixinPadrao from '../../../../../mixins/mixinPadrao'
 export default {
     name: 'ListClient',
+    mixins: [mixinPadrao],
     components: {
         PPagination,
         clienteDetails
@@ -219,6 +221,7 @@ export default {
     methods: {
         // ------------ Confirmação de Deletar
         open(index, row) {
+            if (this.validaRota('/forms/clienteDelete')) {
             this.$confirm('Deseja realmente excluir esse registro?', 'Atenção', {
                 confirmButtonText: 'Sim',
                 cancelButtonText: 'Não',
@@ -232,6 +235,9 @@ export default {
                     message: 'Operação Cancelada'
                 })
             });
+            } else {
+                swal('Você não tem permissão!', '', 'info')
+            }
         },
         // ----------------------------------
         handleRegister() {
