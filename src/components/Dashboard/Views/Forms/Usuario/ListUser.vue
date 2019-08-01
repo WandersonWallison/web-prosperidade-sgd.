@@ -34,14 +34,10 @@
                 <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" sortable :label="column.label">
                     </el-table-column>
-                    <el-table-column prop="id_grupo.descricao" label="Grupo" :min-width="60" 
-                    :filters="[{ text: 'ADMINISTRADOR', value: 'ADMINISTRADOR' }, 
+                    <el-table-column prop="id_grupo.descricao" label="Grupo" :min-width="60" :filters="[{ text: 'ADMINISTRADOR', value: 'ADMINISTRADOR' }, 
                                { text: 'ASSESSOR', value: 'ASSESSOR' },
                                { text: 'OPERADOR', value: 'OPERADOR' },
-                               { text: 'CENTRAL', value: 'CENTRAL' }]" 
-                    sortable 
-                    :filter-method="filterTag" 
-                    filter-placement="bottom-end">
+                               { text: 'CENTRAL', value: 'CENTRAL' }]" sortable :filter-method="filterTag" filter-placement="bottom-end">
                     </el-table-column>
                     <el-table-column :min-width="60" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
@@ -109,10 +105,12 @@ import PSwitch from 'src/components/UIComponents/Switch.vue'
 import UserEdit from './FormUserEdit'
 import UserDetails from './FormUserDetails.vue'
 import senha from './AlterPassword'
+import mixinPadrao from '../../../../../mixins/mixinPadrao'
 Vue.use(Table)
 Vue.use(TableColumn)
 export default {
     name: 'ListUser',
+    mixins: [mixinPadrao],
     props: {
         selected: {
             type: Object
@@ -190,11 +188,11 @@ export default {
                     label: 'Nome',
                     minWidth: 100
                 },
-               /* {
-                    prop: 'id_grupo.descricao',
-                    label: 'Grupo',
-                    minWidth: 80
-                },*/
+                /* {
+                     prop: 'id_grupo.descricao',
+                     label: 'Grupo',
+                     minWidth: 80
+                 },*/
                 {
                     prop: 'email',
                     label: 'E-mail',
@@ -232,7 +230,7 @@ export default {
             });
         },
         filterTag(value, row) {
-        return row.id_grupo.descricao === value;
+            return row.id_grupo.descricao === value;
         },
         // ----------------------------------
         handleDetails(index, row) {
@@ -253,28 +251,35 @@ export default {
             // alert(`Your want to edit ${row.name}`)
         },
         handleDelete(index, row) {
-            let user = {
-                ativo: false
-                /*razao_social: this.model.nome,
-                site: this.form.site,
-                telefone: this.form.telefone,
-                email: this.form.email,
-                cnpj: this.form.cnpj*/
-            }
-            axios.put(process.env.VUE_APP_ROOT_API + '/user/' + row.id, user)
-                .then(response => {
-                    this.results = response.data
-                    axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1}').then(response => {
-                        this.tableData = response.data
-                        swal('Bom trabalho!', `Usuario ${row.username} deletado com sucesso!`, 'success')
-                        // this.$router.push('/forms/UserList')
+            if (this.validaRota('/forms/CentralDelete')) {
+                let user = {
+                    ativo: false
+                    /*razao_social: this.model.nome,
+                    site: this.form.site,
+                    telefone: this.form.telefone,
+                    email: this.form.email,
+                    cnpj: this.form.cnpj*/
+                }
+                axios.put(process.env.VUE_APP_ROOT_API + '/user/' + row.id, user)
+                    .then(response => {
+                        this.results = response.data
+                        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1}').then(response => {
+                            this.tableData = response.data
+                            swal('Bom trabalho!', `Usuario ${row.username} deletado com sucesso!`, 'success')
+                            // this.$router.push('/forms/UserList')
+                        })
                     })
-                })
-                .catch(error => {
-                    alert(error.response)
-                    console.log(error.response.data)
-                })
+                    .catch(error => {
+                        alert(error.response)
+                        console.log(error.response.data)
+                    })
+            }else{
+                 swal('Você não tem permissão!', '', 'info')
+            }
+           
+
         }
+
     }
 }
 </script>
