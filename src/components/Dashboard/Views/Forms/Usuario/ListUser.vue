@@ -251,7 +251,7 @@ export default {
             // alert(`Your want to edit ${row.name}`)
         },
         handleDelete(index, row) {
-            if (this.validaRota('/forms/CentralDelete')) {
+            if (this.validaRota('/forms/userDelete')) {
                 let user = {
                     ativo: false
                     /*razao_social: this.model.nome,
