@@ -215,19 +215,23 @@ export default {
     methods: {
         // ------------ Confirmação de Deletar
         open(index, row) {
-            this.$confirm('Deseja realmente excluir esse registro?', 'Atenção', {
-                confirmButtonText: 'Sim',
-                cancelButtonText: 'Não',
-                type: 'warning'
-            }).then(() => {
-                this.handleDelete(index, row)
-                // this.$message({type: 'success', message: 'Registro Excluido!!'})
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: 'Operação Cancelada'
-                })
-            });
+            if (this.validaRota('/forms/userDelete')) {
+                this.$confirm('Deseja realmente excluir esse registro?', 'Atenção', {
+                    confirmButtonText: 'Sim',
+                    cancelButtonText: 'Não',
+                    type: 'warning'
+                }).then(() => {
+                    this.handleDelete(index, row)
+                    // this.$message({type: 'success', message: 'Registro Excluido!!'})
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: 'Operação Cancelada'
+                    })
+                });
+            } else {
+                swal('Você não tem permissão!', '', 'info')
+            }
         },
         filterTag(value, row) {
             return row.id_grupo.descricao === value;
@@ -251,7 +255,7 @@ export default {
             // alert(`Your want to edit ${row.name}`)
         },
         handleDelete(index, row) {
-            if (this.validaRota('/forms/userDelete')) {
+            
                 let user = {
                     ativo: false
                     /*razao_social: this.model.nome,
@@ -273,11 +277,6 @@ export default {
                         alert(error.response)
                         console.log(error.response.data)
                     })
-            }else{
-                 swal('Você não tem permissão!', '', 'info')
-            }
-           
-
         }
 
     }
