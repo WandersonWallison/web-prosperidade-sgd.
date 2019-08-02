@@ -14,6 +14,7 @@ import Vuetify from 'vuetify'
 import VueMaterial from 'vue-material'
 import VueMoment from 'vue-moment'
 import pt from 'vee-validate/dist/locale/pt_BR'
+import VueGoogleCharts from 'vue-google-charts'
 
 // Plugins
 import GlobalComponents from './globalComponents'
@@ -51,6 +52,7 @@ Vue.use(VueAxios, axios)
 Vue.use(Element)
 Vue.use(VueMoment)
 locale.use(lang)
+Vue.use(VueGoogleCharts)
 // VeeValidate.locale('pt_BR');
 
 // configure router

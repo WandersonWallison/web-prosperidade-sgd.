@@ -125,8 +125,6 @@ export default {
             statsCotacao: [],
             teste: [],
             tipo_situacao: [],
-            tipo_situacaoLabel: [],
-            tipo_situacaoValor: [],
             cotacao: [],
             statsGeral: []
         }
@@ -135,16 +133,9 @@ export default {
 
         const authUser = JSON.parse(window.localStorage.getItem("usuario"))
 
-        /**
-         * @description: Retorna todos os somatorios dos status_movimentacao por valor de moviemento
-         */
-        axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total_movimentacao').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_movimento?where={"ativo": 1}').then(response => {
             this.tipo_situacao = response.data
-            for (let index = 0; index < this.tipo_situacao.length; index++) {
-              this.tipo_situacaoLabel.push(this.tipo_situacao[index].descricao)
-              this.tipo_situacaoValor.push(this.tipo_situacao[index].valor_movimentacao)
-            }
-            this.carregaGraficoStatusXValor(this.tipo_situacaoLabel,this.tipo_situacaoValor)
+            this.carregaGrafico(authUser.id)
         })
         // Gráfico de valores por escritorios
         axios.get(process.env.VUE_APP_ROOT_API + '/grafico_valor_escritorio').then(response => {
@@ -152,6 +143,8 @@ export default {
             this.graficoValorEscritorio = response.data
             for (let index = 0; index < this.graficoValorEscritorio.length; index++) {
                 this.graficoValorEscritorioLabel.push(this.graficoValorEscritorio[index].nome)
+            }
+            for (let index = 0; index < this.graficoValorEscritorio.length; index++) {
                 this.graficoValorEscritorioValor.push(this.graficoValorEscritorio[index].valor)
             }
             this.formarGraficoPie(this.graficoValorEscritorioLabel, this.graficoValorEscritorioValor)
@@ -161,15 +154,18 @@ export default {
             this.graficoAssessor = response.data
             for (let index = 0; index < this.graficoAssessor.length; index++) {
                 this.graficoAssessorLabel.push(this.graficoAssessor[index].assessor)
+            }
+            for (let index = 0; index < this.graficoAssessor.length; index++) {
                 this.graficoAssessorValor.push(this.graficoAssessor[index].valor)
             }
             this.formarGraficoAssessor(this.graficoAssessorLabel, this.graficoAssessorValor)
+
         })
 
         axios.get(process.env.VUE_APP_ROOT_API + '/cliente/?where={"ativo":1}&limit=2000000').then(response => {
             this.qtdCliente = response.data.length
 
-            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total?id_situacao_movimentacao=' + 7).then(response => {
+            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total_movimentacao?id_situacao_movimentacao=' + 7).then(response => {
                 this.valorBoletaEfetivada = response.data
 
                 axios.get(process.env.VUE_APP_ROOT_API + '/limite_movimentacao').then(response => {
@@ -205,6 +201,53 @@ export default {
             })
 
         })
+        /*
+        axios.get(process.env.VUE_APP_ROOT_API + '/limite_movimentacao').then(response => {
+            this.valorInvestimento = this.formatarMoeda(response.data)
+            this.statsGeral = [{
+                    type: 'warning',
+                    icon: 'nc-icon nc-globe',
+                    title: 'VALOR EM BOLSA MRV PROSPERIDADE',
+                    value: this.valorInvestimento,
+                    footerText: 'Atualizado agora',
+                    footerIcon: 'nc-icon nc-refresh-69'
+                },
+                {
+                    type: 'success',
+                    icon: 'nc-icon nc-money-coins',
+                    title: 'VALOR DE BOLETAS EFETIVADAS',
+                    value: this.formatarMoeda(this.valorBoletaEfetivada), //'R$ 1.456.345',
+                    footerText: 'Hoje',
+                    footerIcon: 'nc-icon nc-calendar-60'
+                },
+                {
+                    type: 'danger',
+                    icon: 'nc-icon nc-single-02',
+                    title: 'QTD CLIENTES CADASTRADOS',
+                    value: this.qtdCliente.toString(),
+                    footerText: 'Hoje',
+                    footerIcon: 'nc-icon nc-bell-55'
+                },
+                {
+                    type: 'success',
+                    icon: 'nc-icon nc-money-coins',
+                    title: 'VALOR DE BOLETAS EFETIVADAS',
+                    value: this.formatarMoeda(this.valorBoletaEfetivada), //'R$ 1.456.345',
+                    footerText: 'Hoje',
+                    footerIcon: 'nc-icon nc-calendar-60'
+                },
+                {
+                    type: 'danger',
+                    icon: 'nc-icon nc-single-02',
+                    title: 'QTD CLIENTES CADASTRADOS',
+                    value: this.qtdCliente.toString(),
+                    footerText: 'Hoje',
+                    footerIcon: 'nc-icon nc-bell-55'
+                }
+            ]
+        })
+        */
+
         axios.get('https://economia.awesomeapi.com.br/all/USD-BRL,EUR-BRL,BTC-BRL').then(response => {
 
             this.cotacao = response.data
@@ -238,13 +281,23 @@ export default {
     },
 
     methods: {
+        carregaGrafico(usuario) {
+            for (let index = 0; index < this.tipo_situacao.length; index++) {
+                // TODO - status da Situação Movimentação
+                this.status.push(this.tipo_situacao[index].descricao.toString())
+                // TODO -> DASHBORD -  Metodo que monta o grafico de barra
+                axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total_movimentacao?user_id=' + usuario + '&id_situacao_movimentacao=' + this.tipo_situacao[index].id).then(response => {
+                    this.valorStatus.push(this.formatarMoedaNumber(response.data))
+                    this.formarGrafico(this.status, this.valorStatus)
+                })
+            }
+        },
 
-        // Monta grafico VALOR vs. STATUS
-        carregaGraficoStatusXValor(label,valor) {
+        formarGrafico(rotulo, valor) {
 
             this.activityChart = {
                 data: {
-                    labels: label,
+                    labels: rotulo,
                     datasets: [{
                         label: "Acumulado ",
                         borderColor: '#4682B4',
@@ -258,6 +311,7 @@ export default {
             }
         },
         formarGraficoPie(label, valor) {
+
             this.activityChartOffice = {
                 data: {
                     labels: label,
@@ -274,6 +328,7 @@ export default {
             }
         },
         formarGraficoAssessor(label, valor) {
+
             this.activityChartAssessor = {
                 data: {
                     labels: label,
@@ -299,6 +354,27 @@ export default {
             return '0,00'
         },
 
+        /*
+        formatarMoeda(valor1) {
+
+            var valor = valor1
+
+            if (valor) {
+
+                valor = valor + ''
+                valor = parseInt(valor.replace(/[\D]+/g, ''))
+                valor = valor + ''
+                valor = valor.replace(/([0-9]{2})$/g, ",$1")
+                valor = "R$ " + valor.split(/(?=(?:...)*$)/).join('.')
+                if (valor.length > 6) {
+                    valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2")
+                    valor = valor.replace('.,', ',')
+                }
+                return valor
+            }
+            return '0,00'
+        },
+        */
         formatarMoedaNumber(valor) {
 
             if (valor) {
