@@ -2,7 +2,7 @@
 <div>
     <!-- Cotação do Dólar, Euro, Criptomoeda   -->
     <el-row :gutter="12">
-        <el-col :span="6">
+        <el-col :span="8">
             <el-card shadow="always">
                 <div>
                     <img class="img-tamanho" src="https://img.icons8.com/color/48/000000/us-dollar--v2.png">
@@ -18,7 +18,7 @@
                 </div>
             </el-card>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="5">
             <el-card shadow="always">
                 <div>
                     <img class="img-tamanho" src="https://img.icons8.com/ultraviolet/40/000000/euro-pound-exchange.png">
@@ -26,8 +26,7 @@
                 </div>
             </el-card>
         </el-col>
-        <el-col :span="6">
-
+        <el-col :span="5">
             <el-card shadow="always">
                 <div>
                     <img class="img-tamanho" src="https://img.icons8.com/color/50/000000/bitcoin.png">
@@ -52,6 +51,60 @@
 
     <!-- Agregados -->
     <div class="row">
+        <div class="col-lg-4 col-md-10 col-sm-10">
+            <stats-card>
+                <div type="success" class="icon-big text-center icon-warning" slot="header">
+                    <i class="ti-server"></i>
+                    <img src="https://img.icons8.com/color/48/000000/cash-.png">
+                </div>
+                <div class="numbers" slot="content">
+                    <p class="fonte-quadros">VALOR EM BOLSA MRV PROSPERIDADE</p>
+                    {{this.valorInvestimento}}
+                </div>
+                <div class="stats" slot="footer">
+                    <i class="ti-reload"></i> Hoje
+                </div>
+            </stats-card>
+            <stats-card>
+                <div class="icon-big text-center icon-warning" slot="header">
+                    <i class="ti-server"></i>
+                    <img src="https://img.icons8.com/dusk/48/000000/bank-building.png">
+                </div>
+                <div class="numbers" slot="content">
+                    <p class="fonte-quadros">VALOR DE BOLETAS EFETIVADAS</p>
+                    {{this.valorBoletaEfetivada}}
+                </div>
+                <div class="stats" slot="footer">
+                    <i class="ti-reload"></i> Hoje
+                </div>
+            </stats-card>
+            <stats-card>
+                <div class="icon-big text-center icon-warning" slot="header">
+                    <i class="ti-server"></i>
+                    <img src="https://img.icons8.com/officel/48/000000/checked-user-male.png">
+                </div>
+                <div class="numbers" slot="content">
+                    <p class="fonte-quadros">QTD CLIENTES CADASTRADOS</p>
+                    {{this.qtdCliente.toString()}}
+                </div>
+                <div class="stats" slot="footer">
+                    <i class="ti-reload"></i> Hoje
+                </div>
+            </stats-card>
+
+        </div>
+        <div class=" col-lg-8 col-md-8">
+            <chart-card :chart-data="activityChart.data" :chart-height="150" chart-id="activity-bar-chart" chart-type="Bar">
+                <template slot="header">
+                    <h4 class="card-title">VALOR vs. STATUS</h4>
+                </template>
+                <template slot="footer">
+                </template>
+            </chart-card>
+        </div>
+    </div>
+    <!--
+    <div class="row">
         <div class="col-lg-4 col-md-12 col-sm-12" :key="stats.id" v-for="stats in statsCards">
             <stats-card :type="stats.type" :icon="stats.icon" :small-title="stats.title" :title="stats.value">
                 <div class="stats" slot="footer">
@@ -60,7 +113,7 @@
                 </div>
             </stats-card>
         </div>
-    </div>
+    </div> -->
     <!-- Valor x Escritorio -->
     <div class="row">
         <div class="col-md-6">
@@ -82,7 +135,9 @@
             </chart-card>
         </div>
     </div>
+
     <!-- Valor x Status -->
+    <!--
     <div class="row">
         <div class="col-md-6">
             <chart-card :chart-data="activityChart.data" :chart-height="150" chart-id="activity-bar-chart" chart-type="Bar">
@@ -94,11 +149,15 @@
             </chart-card>
         </div>
     </div>
+    -->
 </div>
 </template>
 
 <script>
 import axios from 'axios'
+/*import {
+    Card
+} from 'src/components/UIComponents/Cards/Card.vue' */
 import CircleChartCard from 'src/components/UIComponents/Cards/CircleChartCard.vue'
 import ChartCard from 'src/components/UIComponents/Cards/ChartCard'
 import StatsCard from 'src/components/UIComponents/Cards/StatsCard'
@@ -157,8 +216,8 @@ export default {
             showMenu: true,
             status: [],
             valorStatus: [],
-            valorBoletaEfetivada: [],
-            qtdCliente: 0,
+            valorBoletaEfetivada: '',
+            qtdCliente: '',
             activityChart: [],
             activityChartAssessor: [],
             activityChartOffice: [],
@@ -182,89 +241,122 @@ export default {
             // Cotação BitCoin
             cotacaoBITNome: '',
             cotacaoBITValor: '',
-            statsGeral: [],
-            emailChart: []
+            usuario:''
         }
     },
     mounted() {
 
         const authUser = JSON.parse(window.localStorage.getItem("usuario"))
+
+        // console.log('Grupo ', authUser.id_grupo)
+        if(authUser.id_grupo !== 1 ){
+          this.usuario = '&user_id='+ authUser.id
+        }
+        // this.usuario = '&user_id='+ 12
         this.carregaCotacaoDia()
-        /**
-         * @description: Retorna todos os somatorios dos status_movimentacao por valor de moviemento
-         */
-        axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total_movimentacao').then(response => {
-            this.tipo_situacao = response.data
-            for (let index = 0; index < this.tipo_situacao.length; index++) {
-                this.tipo_situacaoLabel.push(this.tipo_situacao[index].descricao)
-                this.tipo_situacaoValor.push(this.tipo_situacao[index].valor_movimentacao)
-            }
-            this.carregaGraficoStatusXValor(this.tipo_situacaoLabel, this.tipo_situacaoValor)
-        })
-        // Gráfico de valores por escritorios
-        axios.get(process.env.VUE_APP_ROOT_API + '/grafico_valor_escritorio').then(response => {
-
-            this.graficoValorEscritorio = response.data
-            for (let index = 0; index < this.graficoValorEscritorio.length; index++) {
-                this.graficoValorEscritorioLabel.push(this.graficoValorEscritorio[index].nome)
-                this.graficoValorEscritorioValor.push(this.graficoValorEscritorio[index].valor)
-            }
-            this.formarGraficoPie(this.graficoValorEscritorioLabel, this.graficoValorEscritorioValor)
-        })
-        // Grafico de valores por Assessores
-        axios.get(process.env.VUE_APP_ROOT_API + '/grafico_assessor').then(response => {
-            this.graficoAssessor = response.data
-            for (let index = 0; index < this.graficoAssessor.length; index++) {
-                this.graficoAssessorLabel.push(this.graficoAssessor[index].assessor)
-                this.graficoAssessorValor.push(this.graficoAssessor[index].valor)
-            }
-            this.formarGraficoAssessor(this.graficoAssessorLabel, this.graficoAssessorValor)
-        })
-        axios.get(process.env.VUE_APP_ROOT_API + '/cliente/?where={"ativo":1}&limit=2000000').then(response => {
-            this.qtdCliente = response.data.length
-
-            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total?id_situacao_movimentacao=' + 7).then(response => {
-                this.valorBoletaEfetivada = response.data
-
-                axios.get(process.env.VUE_APP_ROOT_API + '/limite_movimentacao').then(response => {
-                    this.valorInvestimento = this.formatarMoeda(response.data)
-
-                    this.statsCards = [{
-                            type: 'warning',
-                            icon: 'nc-icon nc-globe',
-                            title: 'VALOR EM BOLSA MRV PROSPERIDADE',
-                            value: this.valorInvestimento,
-                            footerText: 'Atualizado agora',
-                            footerIcon: 'nc-icon nc-refresh-69'
-                        },
-                        {
-                            type: 'success',
-                            icon: 'nc-icon nc-money-coins',
-                            title: 'VALOR DE BOLETAS EFETIVADAS',
-                            class: 'fonte-valor',
-                            value: this.formatarMoeda(this.valorBoletaEfetivada), //'R$ 1.456.345',
-                            footerText: 'Hoje',
-                            footerIcon: 'nc-icon nc-calendar-60'
-                        },
-                        {
-                            type: 'danger',
-                            icon: 'nc-icon nc-single-02',
-                            title: 'QTD CLIENTES CADASTRADOS',
-                            value: this.qtdCliente.toString(),
-                            footerText: 'Hoje',
-                            footerIcon: 'nc-icon nc-bell-55'
-                        }
-                    ]
-
-                })
-
-            })
-
-        })
+        this.retorna_total_movimentacao() // Retorna o Total das Movimentações
+        this.grafico_valor_escritorio() // Grafico Valor x Escritorio
+        this.grafico_assessor()
+        this.limite_movimentacao()
+        this.retorna_total(this.usuario)
+        this.quantidade_clientes()
 
     },
 
     methods: {
+        quantidade_clientes() {
+            axios.get(process.env.VUE_APP_ROOT_API + '/cliente/?where={"ativo":1}&limit=2000000').then(response => {
+                this.qtdCliente = response.data.length
+            })
+        },
+        retorna_total(usuario) {
+            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total?id_situacao_movimentacao=7').then(response => {
+                this.valorBoletaEfetivada = this.formatarMoeda(response.data)
+            })
+
+        },
+        limite_movimentacao(usuario) {
+            // axios.get(process.env.VUE_APP_ROOT_API + '/limite_movimentacao'+ usuario).then(response => {
+            axios.get(process.env.VUE_APP_ROOT_API + '/limite_movimentacao').then(response => {
+                this.valorInvestimento = this.formatarMoeda(response.data)
+            })
+        },
+        grafico_assessor(usuario) {
+            // Grafico de valores por Assessores
+            axios.get(process.env.VUE_APP_ROOT_API + '/grafico_assessor').then(response => {
+                this.graficoAssessor = response.data
+                for (let index = 0; index < this.graficoAssessor.length; index++) {
+                    this.graficoAssessorLabel.push(this.graficoAssessor[index].assessor)
+                    this.graficoAssessorValor.push(this.graficoAssessor[index].valor)
+                }
+
+                this.activityChartAssessor = {
+                    data: {
+                        labels: this.graficoAssessorLabel,
+                        datasets: [{
+                            label: "Acumulado ",
+                            borderColor: '#4682B4',
+                            fill: true,
+                            backgroundColor: '#4682B4',
+                            hoverBorderColor: '#fcc468',
+                            borderWidth: 2,
+                            data: this.graficoAssessorValor
+                        }]
+                    }
+                }
+            })
+        },
+        grafico_valor_escritorio() {
+            // Gráfico de valores por escritorios
+            axios.get(process.env.VUE_APP_ROOT_API + '/grafico_valor_escritorio').then(response => {
+
+                this.graficoValorEscritorio = response.data
+                for (let index = 0; index < this.graficoValorEscritorio.length; index++) {
+                    this.graficoValorEscritorioLabel.push(this.graficoValorEscritorio[index].nome)
+                    this.graficoValorEscritorioValor.push(this.graficoValorEscritorio[index].valor)
+                }
+                this.activityChartOffice = {
+                    data: {
+                        labels: this.graficoValorEscritorioLabel,
+                        datasets: [{
+                            label: "Acumulado ",
+                            borderColor: '#4682B4',
+                            fill: true,
+                            backgroundColor: '#4682B4',
+                            hoverBorderColor: '#fcc468',
+                            borderWidth: 2,
+                            data: this.graficoValorEscritorioValor
+                        }]
+                    }
+                }
+            })
+        },
+        retorna_total_movimentacao() {
+            /**
+             * @description: Retorna todos os somatorios dos status_movimentacao por valor de moviemento
+             */
+            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total_movimentacao').then(response => {
+                this.tipo_situacao = response.data
+                for (let index = 0; index < this.tipo_situacao.length; index++) {
+                    this.tipo_situacaoLabel.push(this.tipo_situacao[index].descricao)
+                    this.tipo_situacaoValor.push(this.tipo_situacao[index].valor_movimentacao)
+                }
+                this.activityChart = {
+                    data: {
+                        labels: this.tipo_situacaoLabel,
+                        datasets: [{
+                            label: "Acumulado ",
+                            borderColor: '#4682B4',
+                            fill: true,
+                            backgroundColor: '#4682B4',
+                            hoverBorderColor: '#fcc468',
+                            borderWidth: 2,
+                            data: this.tipo_situacaoValor
+                        }]
+                    }
+                }
+            })
+        },
         carregaCotacaoDia() {
 
             axios.get('https://economia.awesomeapi.com.br/all/USD-BRL,USDT-BRL,EUR-BRL,BTC-BRL').then(response => {
@@ -278,56 +370,6 @@ export default {
                 this.cotacaoEURNome = this.cotacao.EUR.name
                 this.cotacaoEURValor = this.cotacao.EUR.ask
             })
-        },
-
-        // Monta grafico VALOR vs. STATUS
-        carregaGraficoStatusXValor(label, valor) {
-            this.activityChart = {
-                    data: {
-                        labels: label,
-                        datasets: [{
-                            label: "Acumulado ",
-                            borderColor: '#4682B4',
-                            fill: true,
-                            backgroundColor: '#4682B4',
-                            hoverBorderColor: '#fcc468',
-                            borderWidth: 2,
-                            data: valor
-                        }]
-                    }
-                }
-        },
-        formarGraficoPie(label, valor) {
-            this.activityChartOffice = {
-                data: {
-                    labels: label,
-                    datasets: [{
-                        label: "Acumulado ",
-                        borderColor: '#4682B4',
-                        fill: true,
-                        backgroundColor: '#4682B4',
-                        hoverBorderColor: '#fcc468',
-                        borderWidth: 2,
-                        data: valor
-                    }]
-                }
-            }
-        },
-        formarGraficoAssessor(label, valor) {
-            this.activityChartAssessor = {
-                data: {
-                    labels: label,
-                    datasets: [{
-                        label: "Acumulado ",
-                        borderColor: '#4682B4',
-                        fill: true,
-                        backgroundColor: '#4682B4',
-                        hoverBorderColor: '#fcc468',
-                        borderWidth: 2,
-                        data: valor
-                    }]
-                }
-            }
         },
         formatarMoeda(valor) {
             // console.log('valor', valor)
@@ -359,5 +401,10 @@ export default {
 .img-tamanho {
     width: 40px;
     height: 40px;
+}
+
+.fonte-quadros {
+    font-size: initial;
+    color: darkgray;
 }
 </style>
