@@ -214,9 +214,19 @@ export default {
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_ROOT_API + '/vw_cliente_sintetico?where={"ativo": 1}&sort=nome&limit=100000').then(response => {
+        const  authUser = window.localStorage.getItem('usuario')
+        const userLogado = JSON.parse(authUser)        
+        this.id_user = userLogado.id
+        if(userLogado.id_grupo === 1){
+            axios.get(process.env.VUE_APP_ROOT_API + '/vw_cliente_sintetico').then(response => {
+            this.tableData = response.data
+             })
+        }else{
+            axios.get(process.env.VUE_APP_ROOT_API + '/vw_cliente_sintetico?user_id='+userLogado.id).then(response => {
             this.tableData = response.data
         })
+    }
+        
     },
     methods: {
         // ------------ Confirmação de Deletar
