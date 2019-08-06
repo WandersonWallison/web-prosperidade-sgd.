@@ -1,43 +1,5 @@
 <template>
 <div>
-    <!-- Cotação do Dólar, Euro, Criptomoeda   -->
-    <el-row :gutter="12">
-        <el-col :span="8">
-            <el-card shadow="always">
-                <div>
-                    <img class="img-tamanho" src="https://img.icons8.com/color/48/000000/us-dollar--v2.png">
-                    {{this.cotacaoUSDNome}} - {{this.cotacaoUSDValor}}
-                </div>
-            </el-card>
-        </el-col>
-        <el-col :span="6">
-            <el-card shadow="always">
-                <div>
-                    <img class="img-tamanho" src="https://img.icons8.com/ultraviolet/40/000000/us-dollar.png">
-                    {{this.cotacaoUSDTNome}} - {{this.cotacaoUSDTValor}}
-                </div>
-            </el-card>
-        </el-col>
-        <el-col :span="5">
-            <el-card shadow="always">
-                <div>
-                    <img class="img-tamanho" src="https://img.icons8.com/ultraviolet/40/000000/euro-pound-exchange.png">
-                    {{this.cotacaoEURNome}} - {{this.cotacaoEURValor}}
-                </div>
-            </el-card>
-        </el-col>
-        <el-col :span="5">
-            <el-card shadow="always">
-                <div>
-                    <img class="img-tamanho" src="https://img.icons8.com/color/50/000000/bitcoin.png">
-                    {{this.cotacaoBITNome}} - {{this.cotacaoBITValor}}
-                </div>
-            </el-card>
-        </el-col>
-    </el-row>
-
-    <br>
-
     <div class="row">
         <div class="col-lg-4 col-md-12 col-sm-12" :key="statsCota.id" v-for="statsCota in statsCotacao">
             <stats-card :type="statsCota.type" :icon="statsCota.icon" :small-title="statsCota.title" :title="statsCota.value">
@@ -48,7 +10,6 @@
             </stats-card>
         </div>
     </div>
-
     <!-- Agregados -->
     <div class="row">
         <div class="col-lg-4 col-md-10 col-sm-10">
@@ -103,17 +64,6 @@
             </chart-card>
         </div>
     </div>
-    <!--
-    <div class="row">
-        <div class="col-lg-4 col-md-12 col-sm-12" :key="stats.id" v-for="stats in statsCards">
-            <stats-card :type="stats.type" :icon="stats.icon" :small-title="stats.title" :title="stats.value">
-                <div class="stats" slot="footer">
-                    <i :class="stats.footerIcon"></i>
-                    {{stats.footerText}}
-                </div>
-            </stats-card>
-        </div>
-    </div> -->
     <!-- Valor x Escritorio -->
     <div class="row">
         <div class="col-md-6">
@@ -135,29 +85,11 @@
             </chart-card>
         </div>
     </div>
-
-    <!-- Valor x Status -->
-    <!--
-    <div class="row">
-        <div class="col-md-6">
-            <chart-card :chart-data="activityChart.data" :chart-height="150" chart-id="activity-bar-chart" chart-type="Bar">
-                <template slot="header">
-                    <h4 class="card-title">VALOR vs. STATUS</h4>
-                </template>
-                <template slot="footer">
-                </template>
-            </chart-card>
-        </div>
-    </div>
-    -->
 </div>
 </template>
 
 <script>
 import axios from 'axios'
-/*import {
-    Card
-} from 'src/components/UIComponents/Cards/Card.vue' */
 import CircleChartCard from 'src/components/UIComponents/Cards/CircleChartCard.vue'
 import ChartCard from 'src/components/UIComponents/Cards/ChartCard'
 import StatsCard from 'src/components/UIComponents/Cards/StatsCard'
@@ -227,69 +159,51 @@ export default {
             tipo_situacao: [],
             tipo_situacaoLabel: [],
             tipo_situacaoValor: [],
-            // Contação
-            cotacao: [],
-            // cotação Dollar
-            cotacaoUSDNome: '',
-            cotacaoUSDValor: '',
-            // Cotação Dollar Turismo
-            cotacaoUSDTNome: '',
-            cotacaoUSDTValor: '',
-            // Cotação EURO
-            cotacaoEURNome: '',
-            cotacaoEURValor: '',
-            // Cotação BitCoin
-            cotacaoBITNome: '',
-            cotacaoBITValor: '',
             usuario:''
         }
     },
     mounted() {
 
         const authUser = JSON.parse(window.localStorage.getItem("usuario"))
-
-        // console.log('Grupo ', authUser.id_grupo)
         if(authUser.id_grupo !== 1 ){
-          this.usuario = '&user_id='+ authUser.id
-        }
-        // this.usuario = '&user_id='+ 12
-        this.carregaCotacaoDia()
-        this.retorna_total_movimentacao() // Retorna o Total das Movimentações
-        this.grafico_valor_escritorio() // Grafico Valor x Escritorio
-        this.grafico_assessor()
-        this.limite_movimentacao()
+          this.usuario = '?user_id='+ authUser.id
+        }this.usuario
+        //this.usuario = '?user_id=44'
+        this.retorna_total_movimentacao(this.usuario) // Retorna o Total das Movimentações
+        this.grafico_valor_escritorio(this.usuario) // Grafico Valor x Escritorio
+        this.grafico_assessor(this.usuario)
+        this.limite_movimentacao(this.usuario)
         this.retorna_total(this.usuario)
-        this.quantidade_clientes()
-
+        this.quantidade_clientes(this.usuario)
     },
 
     methods: {
-        quantidade_clientes() {
-            axios.get(process.env.VUE_APP_ROOT_API + '/cliente/?where={"ativo":1}&limit=2000000').then(response => {
-                this.qtdCliente = response.data.length
+        quantidade_clientes(usuario) {
+            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_cliente_qtd'+usuario).then(response => {
+                this.qtdCliente = response.data[0].qtd
             })
         },
         retorna_total(usuario) {
-            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total?id_situacao_movimentacao=7').then(response => {
+            if(usuario){
+              usuario = usuario.replace('?','&')
+            }
+            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total?id_situacao_movimentacao=7'+usuario).then(response => {
                 this.valorBoletaEfetivada = this.formatarMoeda(response.data)
             })
-
         },
         limite_movimentacao(usuario) {
-            // axios.get(process.env.VUE_APP_ROOT_API + '/limite_movimentacao'+ usuario).then(response => {
-            axios.get(process.env.VUE_APP_ROOT_API + '/limite_movimentacao').then(response => {
+            axios.get(process.env.VUE_APP_ROOT_API + '/limite_movimentacao'+usuario).then(response => {
                 this.valorInvestimento = this.formatarMoeda(response.data)
             })
         },
         grafico_assessor(usuario) {
             // Grafico de valores por Assessores
-            axios.get(process.env.VUE_APP_ROOT_API + '/grafico_assessor').then(response => {
+            axios.get(process.env.VUE_APP_ROOT_API + '/grafico_assessor'+usuario).then(response => {
                 this.graficoAssessor = response.data
                 for (let index = 0; index < this.graficoAssessor.length; index++) {
                     this.graficoAssessorLabel.push(this.graficoAssessor[index].assessor)
                     this.graficoAssessorValor.push(this.graficoAssessor[index].valor)
                 }
-
                 this.activityChartAssessor = {
                     data: {
                         labels: this.graficoAssessorLabel,
@@ -306,9 +220,9 @@ export default {
                 }
             })
         },
-        grafico_valor_escritorio() {
+        grafico_valor_escritorio(usuario) {
             // Gráfico de valores por escritorios
-            axios.get(process.env.VUE_APP_ROOT_API + '/grafico_valor_escritorio').then(response => {
+            axios.get(process.env.VUE_APP_ROOT_API + '/grafico_valor_escritorio'+usuario).then(response => {
 
                 this.graficoValorEscritorio = response.data
                 for (let index = 0; index < this.graficoValorEscritorio.length; index++) {
@@ -331,11 +245,11 @@ export default {
                 }
             })
         },
-        retorna_total_movimentacao() {
+        retorna_total_movimentacao(usuario) {
             /**
              * @description: Retorna todos os somatorios dos status_movimentacao por valor de moviemento
              */
-            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total_movimentacao').then(response => {
+            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total_movimentacao'+usuario).then(response => {
                 this.tipo_situacao = response.data
                 for (let index = 0; index < this.tipo_situacao.length; index++) {
                     this.tipo_situacaoLabel.push(this.tipo_situacao[index].descricao)
@@ -357,20 +271,6 @@ export default {
                 }
             })
         },
-        carregaCotacaoDia() {
-
-            axios.get('https://economia.awesomeapi.com.br/all/USD-BRL,USDT-BRL,EUR-BRL,BTC-BRL').then(response => {
-                this.cotacao = response.data
-                this.cotacaoUSDNome = this.cotacao.USD.name
-                this.cotacaoUSDValor = this.cotacao.USD.ask
-                this.cotacaoUSDTNome = this.cotacao.USDT.name
-                this.cotacaoUSDTValor = this.cotacao.USDT.ask
-                this.cotacaoBITNome = this.cotacao.BTC.name
-                this.cotacaoBITValor = this.cotacao.BTC.ask
-                this.cotacaoEURNome = this.cotacao.EUR.name
-                this.cotacaoEURValor = this.cotacao.EUR.ask
-            })
-        },
         formatarMoeda(valor) {
             // console.log('valor', valor)
             if (valor) {
@@ -387,8 +287,7 @@ export default {
                 return Math.floor(numero)
             }
             return 0.00
-        },
-
+        }
     }
 }
 </script>
