@@ -52,6 +52,19 @@
                     <i class="ti-reload"></i> Hoje
                 </div>
             </stats-card>
+            <stats-card>
+                <div class="icon-big text-center icon-warning" slot="header">
+                    <i class="ti-server"></i>
+                    <img src="https://img.icons8.com/officel/48/000000/manager.png">
+                </div>
+                <div class="numbers" slot="content">
+                    <p class="fonte-quadros">QTD ASSESSORES CADASTRADOS</p>
+                    {{this.qtdAssessor.toString()}}
+                </div>
+                <div class="stats" slot="footer">
+                    <i class="ti-reload"></i> Hoje
+                </div>
+            </stats-card>
 
         </div>
         <div class=" col-lg-8 col-md-8">
@@ -150,6 +163,7 @@ export default {
             valorStatus: [],
             valorBoletaEfetivada: '',
             qtdCliente: '',
+            qtdAssessor:'',
             activityChart: [],
             activityChartAssessor: [],
             activityChartOffice: [],
@@ -159,25 +173,38 @@ export default {
             tipo_situacao: [],
             tipo_situacaoLabel: [],
             tipo_situacaoValor: [],
-            usuario:''
+            usuario:'',
+            empresa:''
         }
     },
     mounted() {
 
         const authUser = JSON.parse(window.localStorage.getItem("usuario"))
+        console.log('Usuario - ',authUser)
+
+        this.empresa = '?empresa_id='+ authUser.id_empresa
         if(authUser.id_grupo !== 1 ){
-          this.usuario = '?user_id='+ authUser.id
-        }this.usuario
-        //this.usuario = '?user_id=44'
+          this.usuario = '&user_id='+ authUser.id
+        }
+
         this.retorna_total_movimentacao(this.usuario) // Retorna o Total das Movimentações
         this.grafico_valor_escritorio(this.usuario) // Grafico Valor x Escritorio
         this.grafico_assessor(this.usuario)
         this.limite_movimentacao(this.usuario)
         this.retorna_total(this.usuario)
         this.quantidade_clientes(this.usuario)
+        this.quantidade_assessor(this.usuario,this.empresa)
     },
 
     methods: {
+
+      // retorna_assessor_qtd?user_id=44&empresa_id=1
+
+       quantidade_assessor(usuario,empresa) {
+            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_assessor_qtd'+empresa+usuario).then(response => {
+                this.qtdAssessor = response.data[0].qtd
+            })
+        },
         quantidade_clientes(usuario) {
             axios.get(process.env.VUE_APP_ROOT_API + '/retorna_cliente_qtd'+usuario).then(response => {
                 this.qtdCliente = response.data[0].qtd
