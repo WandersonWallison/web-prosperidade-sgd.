@@ -1,6 +1,44 @@
 <template>
 <div>
     <!-- Cotação do Dólar, Euro, Criptomoeda   -->
+    <el-row :gutter="12">
+        <el-col :span="6">
+            <el-card shadow="always">
+                <div>
+                    <img class="img-tamanho" src="https://img.icons8.com/color/48/000000/us-dollar--v2.png">
+                    {{this.cotacaoUSDNome}} - {{this.cotacaoUSDValor}}
+                </div>
+            </el-card>
+        </el-col>
+        <el-col :span="6">
+            <el-card shadow="always">
+                <div>
+                    <img class="img-tamanho" src="https://img.icons8.com/ultraviolet/40/000000/us-dollar.png">
+                    {{this.cotacaoUSDTNome}} - {{this.cotacaoUSDTValor}}
+                </div>
+            </el-card>
+        </el-col>
+        <el-col :span="6">
+            <el-card shadow="always">
+                <div>
+                    <img class="img-tamanho" src="https://img.icons8.com/ultraviolet/40/000000/euro-pound-exchange.png">
+                    {{this.cotacaoEURNome}} - {{this.cotacaoEURValor}}
+                </div>
+            </el-card>
+        </el-col>
+        <el-col :span="6">
+
+            <el-card shadow="always">
+                <div>
+                    <img class="img-tamanho" src="https://img.icons8.com/color/50/000000/bitcoin.png">
+                    {{this.cotacaoBITNome}} - {{this.cotacaoBITValor}}
+                </div>
+            </el-card>
+        </el-col>
+    </el-row>
+
+    <br>
+
     <div class="row">
         <div class="col-lg-4 col-md-12 col-sm-12" :key="statsCota.id" v-for="statsCota in statsCotacao">
             <stats-card :type="statsCota.type" :icon="statsCota.icon" :small-title="statsCota.title" :title="statsCota.value">
@@ -11,6 +49,7 @@
             </stats-card>
         </div>
     </div>
+
     <!-- Agregados -->
     <div class="row">
         <div class="col-lg-4 col-md-12 col-sm-12" :key="stats.id" v-for="stats in statsCards">
@@ -45,7 +84,7 @@
     </div>
     <!-- Valor x Status -->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <chart-card :chart-data="activityChart.data" :chart-height="150" chart-id="activity-bar-chart" chart-type="Bar">
                 <template slot="header">
                     <h4 class="card-title">VALOR vs. STATUS</h4>
@@ -69,6 +108,7 @@ import {
 import moment from 'moment'
 import Loading from 'src/components/Dashboard/Layout/LoadingMainPanel.vue'
 import TaskList from './Widgets/TaskList'
+
 const WorldMap = () => ({
     component: import('./../Maps/WorldMap.vue'),
     loading: Loading,
@@ -81,7 +121,7 @@ const tooltipOptions = {
     tooltipFontStyle: "normal",
     tooltipFontColor: "#fff",
     tooltipTitleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-    tooltipTitleFontSize: 14,
+    tooltipTitleFontSize: 10,
     tooltipTitleFontStyle: "bold",
     tooltipTitleFontColor: "#fff",
     tooltipYPadding: 6,
@@ -106,6 +146,7 @@ export default {
      */
     data() {
         return {
+
             valorInvestimento: '',
             graficoValorEscritorio: [],
             graficoValorEscritorioLabel: [],
@@ -127,24 +168,38 @@ export default {
             tipo_situacao: [],
             tipo_situacaoLabel: [],
             tipo_situacaoValor: [],
+            // Contação
             cotacao: [],
-            statsGeral: []
+            // cotação Dollar
+            cotacaoUSDNome: '',
+            cotacaoUSDValor: '',
+            // Cotação Dollar Turismo
+            cotacaoUSDTNome: '',
+            cotacaoUSDTValor: '',
+            // Cotação EURO
+            cotacaoEURNome: '',
+            cotacaoEURValor: '',
+            // Cotação BitCoin
+            cotacaoBITNome: '',
+            cotacaoBITValor: '',
+            statsGeral: [],
+            emailChart: []
         }
     },
     mounted() {
 
         const authUser = JSON.parse(window.localStorage.getItem("usuario"))
-
+        this.carregaCotacaoDia()
         /**
          * @description: Retorna todos os somatorios dos status_movimentacao por valor de moviemento
          */
         axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total_movimentacao').then(response => {
             this.tipo_situacao = response.data
             for (let index = 0; index < this.tipo_situacao.length; index++) {
-              this.tipo_situacaoLabel.push(this.tipo_situacao[index].descricao)
-              this.tipo_situacaoValor.push(this.tipo_situacao[index].valor_movimentacao)
+                this.tipo_situacaoLabel.push(this.tipo_situacao[index].descricao)
+                this.tipo_situacaoValor.push(this.tipo_situacao[index].valor_movimentacao)
             }
-            this.carregaGraficoStatusXValor(this.tipo_situacaoLabel,this.tipo_situacaoValor)
+            this.carregaGraficoStatusXValor(this.tipo_situacaoLabel, this.tipo_situacaoValor)
         })
         // Gráfico de valores por escritorios
         axios.get(process.env.VUE_APP_ROOT_API + '/grafico_valor_escritorio').then(response => {
@@ -165,7 +220,6 @@ export default {
             }
             this.formarGraficoAssessor(this.graficoAssessorLabel, this.graficoAssessorValor)
         })
-
         axios.get(process.env.VUE_APP_ROOT_API + '/cliente/?where={"ativo":1}&limit=2000000').then(response => {
             this.qtdCliente = response.data.length
 
@@ -174,6 +228,7 @@ export default {
 
                 axios.get(process.env.VUE_APP_ROOT_API + '/limite_movimentacao').then(response => {
                     this.valorInvestimento = this.formatarMoeda(response.data)
+
                     this.statsCards = [{
                             type: 'warning',
                             icon: 'nc-icon nc-globe',
@@ -200,62 +255,47 @@ export default {
                             footerIcon: 'nc-icon nc-bell-55'
                         }
                     ]
+
                 })
 
             })
 
         })
-        axios.get('https://economia.awesomeapi.com.br/all/USD-BRL,EUR-BRL,BTC-BRL').then(response => {
-
-            this.cotacao = response.data
-            this.statsCotacao = [{
-                    type: 'warning',
-                    icon: 'nc-icon nc-globe',
-                    title: 'Dólar ',
-                    value: this.cotacao.USD.ask,
-                    footerText: moment().format(this.cotacao.USD.create_date),
-                    footerIcon: 'nc-icon nc-calendar-60'
-                },
-                {
-                    type: 'success',
-                    icon: 'nc-icon nc-money-coins',
-                    title: 'Euro ',
-                    value: this.cotacao.EUR.ask,
-                    footerText: this.cotacao.EUR.create_date,
-                    footerIcon: 'nc-icon nc-calendar-60'
-                },
-                {
-                    type: 'danger',
-                    icon: 'nc-icon nc-bold',
-                    title: 'Bitcoin',
-                    value: this.cotacao.BTC.ask,
-                    footerText: this.cotacao.BTC.create_date,
-                    footerIcon: 'nc-icon nc-bell-55'
-                }
-            ]
-        })
 
     },
 
     methods: {
+        carregaCotacaoDia() {
+
+            axios.get('https://economia.awesomeapi.com.br/all/USD-BRL,USDT-BRL,EUR-BRL,BTC-BRL').then(response => {
+                this.cotacao = response.data
+                this.cotacaoUSDNome = this.cotacao.USD.name
+                this.cotacaoUSDValor = this.cotacao.USD.ask
+                this.cotacaoUSDTNome = this.cotacao.USDT.name
+                this.cotacaoUSDTValor = this.cotacao.USDT.ask
+                this.cotacaoBITNome = this.cotacao.BTC.name
+                this.cotacaoBITValor = this.cotacao.BTC.ask
+                this.cotacaoEURNome = this.cotacao.EUR.name
+                this.cotacaoEURValor = this.cotacao.EUR.ask
+            })
+        },
 
         // Monta grafico VALOR vs. STATUS
-        carregaGraficoStatusXValor(label,valor) {
-
+        carregaGraficoStatusXValor(label, valor) {
             this.activityChart = {
-                data: {
-                    labels: label,
-                    datasets: [{
-                        label: "Acumulado ",
-                        borderColor: '#4682B4',
-                        fill: true,
-                        backgroundColor: '#4682B4',
-                        hoverBorderColor: '#fcc468',
-                        borderWidth: 2,
-                        data: valor
-                    }]
+                    data: {
+                        labels: label,
+                        datasets: [{
+                            label: "Acumulado ",
+                            borderColor: '#4682B4',
+                            fill: true,
+                            backgroundColor: '#4682B4',
+                            hoverBorderColor: '#fcc468',
+                            borderWidth: 2,
+                            data: valor
+                        }]
+                    }
                 }
-            }
         },
         formarGraficoPie(label, valor) {
             this.activityChartOffice = {
@@ -298,7 +338,6 @@ export default {
             }
             return '0,00'
         },
-
         formatarMoedaNumber(valor) {
 
             if (valor) {
@@ -315,5 +354,10 @@ export default {
 <style>
 .fonte-valor {
     font-size: 70%
+}
+
+.img-tamanho {
+    width: 40px;
+    height: 40px;
 }
 </style>
