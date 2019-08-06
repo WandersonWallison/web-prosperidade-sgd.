@@ -14,7 +14,7 @@
             <!-- ------------------------- -->
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
+                    <!--<p-button type="primary" @click="handleRegister()">Cadastro</p-button>-->
                 </div>
             </div>
             <!-- ***************************************************  -->
@@ -41,11 +41,11 @@
                                 <i class="fa fa-edit"></i>
                             </p-button>
                           </el-tooltip>
-                          <el-tooltip class="item" effect="dark" content="Excluir" placement="top">
+                          <!--<el-tooltip class="item" effect="dark" content="Excluir" placement="top">
                             <p-button type="danger" size="sm" icon  @click="open(props.$index, props.row)">
                                 <i class="fa fa-trash-o"></i>
                             </p-button>
-                          </el-tooltip>
+                          </el-tooltip>-->
                         </template>
                     </el-table-column>
                 </el-table>

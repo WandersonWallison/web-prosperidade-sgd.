@@ -20,7 +20,7 @@
                                     </fg-input>
                                     <br>
                                     <p-button native-type="submit" slot="footer" type="warning" round block class="mb-3">Entrar</p-button>
-                                    <a href="#" @click="newPassword()">Esqueci a senha</a>
+                                    <!--<a href="#" @click="newPassword()">Esqueci a senha</a>-->
                             </card>
                         </form>
                     </div>

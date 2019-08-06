@@ -175,7 +175,7 @@ export default {
                 {
                     prop: 'id',
                     label: 'Código',
-                    minWidth: 50
+                    minWidth: 55
                 },
                 {
                     prop: 'id_cliente.nome',
@@ -195,7 +195,7 @@ export default {
                 {
                     prop: 'id_tipo_movimentacao.descricao',
                     label: 'Movimentação',
-                    minWidth: 90
+                    minWidth: 100
                 }
             ],
             tableData: []
