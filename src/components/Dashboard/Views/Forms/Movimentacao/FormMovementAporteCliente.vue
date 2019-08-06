@@ -48,7 +48,7 @@
                 </el-card>
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
-                        <span>Potencial do Cliente</span>
+                        <span>Volume Global</span>
                     </div>
                     <div>
                         <div class="new-label">
@@ -83,22 +83,22 @@
                         <span>Aporte</span>
                     </div>
                     <div v-if="!this.model.tipo_movimentacao">
-                        <label>Saldo para Aporte</label>
+                        <label>Aporte Permitido</label>
                         <fg-input type="text" name="saldo_movimento" disabled v-model=this.valorAporte>
                         </fg-input>
                     </div>
                     <div v-if="!this.model.tipo_movimentacao">
-                        <label>Status</label>
+                        <label>Tipo Movimentação</label>
                         <fg-input type="text" name="status" disabled placeholder="Aporte Cliente">
                         </fg-input>
                     </div>
                     <div v-if="this.model.tipo_movimentacao">
-                        <label>Saldo Retirada</label>
+                        <label>Retirada Permitida</label>
                         <fg-input type="text" name="saldo_movimento" disabled v-model=this.valorRetirada>
                         </fg-input>
                     </div>
                     <div v-if="this.model.tipo_movimentacao">
-                        <label>Status</label>
+                        <label>Tipo Movimentação</label>
                         <fg-input type="text" name="status" disabled placeholder="Retirada Aporte Cliente">
                         </fg-input>
                     </div>

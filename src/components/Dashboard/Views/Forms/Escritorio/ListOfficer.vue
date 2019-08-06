@@ -151,12 +151,12 @@ export default {
                     prop: 'email',
                     label: 'E-mail',
                     minWidth: 150
-                },
-                {
-                    prop: 'iss',
-                    label: 'ISS (%)',
-                    minWidth: 100
-                }
+                }//,
+                //{
+                //    prop: 'iss',
+                //    label: 'ISS (%)',
+                //    minWidth: 100
+               // }
             ],
             tableData: []
         }

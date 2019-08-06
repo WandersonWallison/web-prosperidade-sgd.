@@ -126,12 +126,12 @@ export default {
                     prop: 'email',
                     label: 'Email',
                     minWidth: 130
-                },
-                {
-                    prop: 'id_comissionamento_faixa.descricao',
-                    label: 'Faixa de Comissionamento',
-                    minWidth: 130
-                }
+                }//,
+                //{
+                //    prop: 'id_comissionamento_faixa.descricao',
+                //    label: 'Faixa de Comissionamento',
+                //    minWidth: 130
+                //}
             ],
             tableData: []
         }
