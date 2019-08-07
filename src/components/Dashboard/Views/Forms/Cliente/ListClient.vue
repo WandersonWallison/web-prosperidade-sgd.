@@ -76,15 +76,15 @@
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">Cancelar</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">Adicionar</el-button>
-              </span>
+                    <el-button @click="dialogFormVisible = false">Cancelar</el-button>
+                    <el-button type="primary" @click="dialogFormVisible = false">Adicionar</el-button>
+                </span>
             </el-dialog>
             <md-dialog class="dialog" title="Detalhamento" :md-active.sync="dialogFormVisibleDetail">
                 <cliente-details :cliente="cliente" />
                 <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisibleDetail = false">Cancelar</el-button>
-              </span>
+                    <el-button @click="dialogFormVisibleDetail = false">Cancelar</el-button>
+                </span>
             </md-dialog>
         </div>
     </div>
@@ -178,7 +178,7 @@ export default {
             searchQuery: '',
             newRow: '',
             cliente: null,
-            propsToSearch: ['id','nome','id_xp', 'nome_assessor','nome_escritorio'],
+            propsToSearch: ['id', 'nome', 'id_xp', 'nome_assessor', 'nome_escritorio'],
             tableColumns: [{
                     prop: 'id',
                     label: 'Código',
@@ -214,37 +214,51 @@ export default {
         }
     },
     created() {
-        const  authUser = window.localStorage.getItem('usuario')
-        const userLogado = JSON.parse(authUser)        
-        this.id_user = userLogado.id
-        if(userLogado.id_grupo === 1){
-            axios.get(process.env.VUE_APP_ROOT_API + '/vw_cliente_sintetico').then(response => {
-            this.tableData = response.data
-             })
-        }else{
-            axios.get(process.env.VUE_APP_ROOT_API + '/vw_cliente_sintetico?user_id='+userLogado.id).then(response => {
+        const authUser = window.localStorage.getItem('usuario')
+        const userLogado = JSON.parse(authUser)
+        console.log(userLogado)
+        var valida = userLogado.id_grupo
+        var query = ''
+        switch (valida) {
+            // adm
+            case 1:
+                query = '/vw_cliente_sintetico'
+                break
+            // operador    
+            case 2:
+                query = '/vw_cliente_sintetico?operador_id='+ userLogado.id
+                break
+            // assessor
+            case 3:
+                query = '/vw_cliente_sintetico?assessor_id='+ userLogado.id
+                break
+            // escritorio    
+            case 4:
+                query = '/vw_cliente_sintetico?escritorio_id='+ userLogado.id_escritorio
+                break
+        }
+        axios.get(process.env.VUE_APP_ROOT_API + query).then(response => {
             this.tableData = response.data
         })
-    }
-        
+
     },
     methods: {
         // ------------ Confirmação de Deletar
         open(index, row) {
             if (this.validaRota('/forms/clienteDelete')) {
-            this.$confirm('Deseja realmente excluir esse registro?', 'Atenção', {
-                confirmButtonText: 'Sim',
-                cancelButtonText: 'Não',
-                type: 'warning'
-            }).then(() => {
-                this.handleDelete(index, row)
-                // this.$message({type: 'success', message: 'Registro Excluido!!'})
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: 'Operação Cancelada'
-                })
-            });
+                this.$confirm('Deseja realmente excluir esse registro?', 'Atenção', {
+                    confirmButtonText: 'Sim',
+                    cancelButtonText: 'Não',
+                    type: 'warning'
+                }).then(() => {
+                    this.handleDelete(index, row)
+                    // this.$message({type: 'success', message: 'Registro Excluido!!'})
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: 'Operação Cancelada'
+                    })
+                });
             } else {
                 swal('Você não tem permissão!', '', 'info')
             }
@@ -254,8 +268,8 @@ export default {
             this.$router.push('/forms/ClientForm')
         },
         handleEdit(index, row) {
-          window.localStorage.setItem('cliente', row.id)
-          this.$router.push('/forms/ClientFormEdit')
+            window.localStorage.setItem('cliente', row.id)
+            this.$router.push('/forms/ClientFormEdit')
         },
         handleDetails(index, row) {
             this.cliente = row
