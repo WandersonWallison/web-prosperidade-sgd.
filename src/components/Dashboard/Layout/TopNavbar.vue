@@ -12,7 +12,7 @@
 
             </navbar-toggle-button>
         </div>
-        <a class="navbar-brand" >Bem Vindo, <b>{{this.usuario.username}}</b> ({{id_grupo.descricao}}).</a>
+        <a class="navbar-brand" >Bem Vindo, <b>{{this.usuario.username}}</b></a>
     </div>
 
     <template slot="navbar-menu">
