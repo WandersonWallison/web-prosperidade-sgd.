@@ -37,7 +37,7 @@
                     <el-table-column prop="id_grupo.descricao" label="Grupo" :min-width="60" :filters="[{ text: 'ADMINISTRADOR', value: 'ADMINISTRADOR' },
                                { text: 'ASSESSOR', value: 'ASSESSOR' },
                                { text: 'OPERADOR', value: 'OPERADOR' },
-                               { text: 'CENTRAL', value: 'CENTRAL' }]" sortable :filter-method="filterTag" filter-placement="bottom-end">
+                               { text: 'ESCRITORIO', value: 'ESCRITORIO' }]" sortable :filter-method="filterTag" filter-placement="bottom-end">
                     </el-table-column>
                     <el-table-column :min-width="60" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
