@@ -14,7 +14,7 @@
             <!-- ------------------------- -->
             <div class="col-sm-6">
                 <div class="pull-right">
-                   <!-- <p-button type="primary" @click="handleRegister()">Cadastro</p-button>-->
+                    <!-- <p-button type="primary" @click="handleRegister()">Cadastro</p-button>-->
                 </div>
             </div>
             <!-- ***************************************************  -->
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="col-sm-12 mt-2">
-                <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
+                <el-table class="table-striped" empty-text="Carregando..." :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" sortable :label="column.label">
                     </el-table-column>
                     <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
@@ -132,6 +132,7 @@ export default {
                 perPageOptions: [10, 25, 50, 75],
                 total: 0
             },
+            menssage: 'Carregado Informações',
             searchQuery: '',
             propsToSearch: ['nome', 'email', 'telefone'],
             tableColumns: [{
@@ -155,32 +156,36 @@ export default {
         }
     },
     mounted() {
-        const  authUser = window.localStorage.getItem('usuario')
+        const authUser = window.localStorage.getItem('usuario')
         const userLogado = JSON.parse(authUser)
         this.id_empresa = userLogado.id_empresa
         axios
-            .get(process.env.VUE_APP_ROOT_API + '/central?where={"ativo": 1,"id_empresa":'+ this.id_empresa +'}&sort=nome&limit=100000')
+            .get(process.env.VUE_APP_ROOT_API + '/central?where={"ativo": 1,"id_empresa":' + this.id_empresa + '}&sort=nome&limit=100000')
             .then(response => {
                 this.tableData = response.data;
-            });
+
+            })
+            .catch(error => {
+                this.menssage = "Não há informações para ser exibida !!"
+            });;
     },
     methods: {
 
-      open(index, row) {
-          if (this.validaRota('/forms/centralDelete')) {
-            this.$confirm('Deseja realmente excluir esse registro?', 'Atenção', {
-                confirmButtonText: 'Sim',
-                cancelButtonText: 'Não',
-                type: 'warning'
-            }).then(() => {
-                this.handleDelete(index, row)
-                // this.$message({type: 'success', message: 'Registro Excluido!!'})
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: 'Operação Cancelada'
-                })
-            });
+        open(index, row) {
+            if (this.validaRota('/forms/centralDelete')) {
+                this.$confirm('Deseja realmente excluir esse registro?', 'Atenção', {
+                    confirmButtonText: 'Sim',
+                    cancelButtonText: 'Não',
+                    type: 'warning'
+                }).then(() => {
+                    this.handleDelete(index, row)
+                    // this.$message({type: 'success', message: 'Registro Excluido!!'})
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: 'Operação Cancelada'
+                    })
+                });
             } else {
                 swal('Você não tem permissão!', '', 'info')
             }

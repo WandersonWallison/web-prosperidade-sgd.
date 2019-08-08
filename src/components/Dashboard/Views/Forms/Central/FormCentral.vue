@@ -11,7 +11,7 @@
                 <div class="col-lg-6">
                     <label>Empresa</label>
                     <fg-input :error="getError('empresa')">
-                        <el-select no-data-text="Sem Informações" class="select-default" v-model="model.empresa" name="empresa" v-validate="modelValidations.empresa" placeholder="Selecione uma Empresa.">
+                        <el-select no-data-text="Carregando..." class="select-default" v-model="model.empresa" name="empresa" v-validate="modelValidations.empresa" placeholder="Selecione uma Empresa.">
                             <el-option class="select-default" v-for="item in empresa" :key="item.value" :label="item.nome" :value="item.id">
                             </el-option>
                         </el-select>
@@ -20,7 +20,7 @@
                 <div class="col-lg-6">
                     <label>Tipo Central</label>
                     <fg-input :error="getError('tipo_central')">
-                        <el-select no-data-text="Sem Informações" class="select-default" v-model="model.tipo_central" name="tipo_central" v-validate="modelValidations.tipo_central" placeholder="Selecione...">
+                        <el-select no-data-text="Carregando..." class="select-default" v-model="model.tipo_central" name="tipo_central" v-validate="modelValidations.tipo_central" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in tipoCentral" :key="item.value" :label="item.descricao" :value="item.id">
                             </el-option>
                         </el-select>

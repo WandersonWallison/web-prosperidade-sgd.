@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="col-sm-12 mt-2">
-                <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
+                <el-table class="table-striped" empty-text="Carregando..." :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" sortable :label="column.label">
                     </el-table-column>
                     <el-table-column :min-width="50" fixed="right" class-name="td-actions" label="Ações">
@@ -215,7 +215,7 @@ export default {
     },
     created() {
         const  authUser = window.localStorage.getItem('usuario')
-        const userLogado = JSON.parse(authUser)        
+        const userLogado = JSON.parse(authUser)
         this.id_user = userLogado.id
         if(userLogado.id_grupo === 1){
             axios.get(process.env.VUE_APP_ROOT_API + '/vw_cliente_sintetico').then(response => {
@@ -226,7 +226,7 @@ export default {
             this.tableData = response.data
         })
     }
-        
+
     },
     methods: {
         // ------------ Confirmação de Deletar

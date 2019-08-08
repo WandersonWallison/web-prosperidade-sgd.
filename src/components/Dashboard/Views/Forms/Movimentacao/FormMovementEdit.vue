@@ -69,7 +69,7 @@
                     </fg-input>
                     <label>Status Novo</label>
                     <fg-input>
-                        <el-select no-data-text="Sem informações" class="select-default" v-model="model.status" name="status" placeholder="Selecione...">
+                        <el-select no-data-text="Carregando..." class="select-default" v-model="model.status" name="status" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in this.dataSituacao" :key="item.id" :label="item.descricao" :value="item.id">
                             </el-option>
                         </el-select>

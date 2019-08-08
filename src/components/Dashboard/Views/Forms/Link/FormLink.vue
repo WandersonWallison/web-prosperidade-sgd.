@@ -22,7 +22,7 @@
                 <div class="col-lg-6">
                     <label>Tipo</label>
                     <fg-input :error="getError('id_tipo_link')">
-                        <el-select no-data-text="Sem Informações" class="select-default" v-model="model.id_tipo_link" name="id_tipo_link" v-validate="modelValidations.id_tipo_link" placeholder="Selecione...">
+                        <el-select no-data-text="Carregando..." class="select-default" v-model="model.id_tipo_link" name="id_tipo_link" v-validate="modelValidations.id_tipo_link" placeholder="Selecione...">
                             <el-option class="select-default" v-for="item in optionsStade" :key="item.id" :label="item.descricao" :value="item.id">
                             </el-option>
                         </el-select>

@@ -31,17 +31,17 @@
                 </div>
             </div>
             <div class="col-sm-12 mt-2">
-                <el-table empty-text="Sem Informações" class="table-striped" :data="queriedData" border style="width: 100%">
+                <el-table empty-text="Carregando..." class="table-striped" :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" sortable :label="column.label">
                     </el-table-column>
                     <el-table-column :min-width="90" fixed="right" class-name="td-actions" label="Ações">
                         <template slot-scope="props">
-                          <el-tooltip class="item" effect="dark" content="Editar" placement="top">
-                            <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
-                                <i class="fa fa-edit"></i>
-                            </p-button>
-                          </el-tooltip>
-                          <!--<el-tooltip class="item" effect="dark" content="Excluir" placement="top">
+                            <el-tooltip class="item" effect="dark" content="Editar" placement="top">
+                                <p-button type="success" size="sm" icon @click="handleEdit(props.$index, props.row)">
+                                    <i class="fa fa-edit"></i>
+                                </p-button>
+                            </el-tooltip>
+                            <!--<el-tooltip class="item" effect="dark" content="Excluir" placement="top">
                             <p-button type="danger" size="sm" icon  @click="open(props.$index, props.row)">
                                 <i class="fa fa-trash-o"></i>
                             </p-button>
@@ -155,36 +155,47 @@ export default {
         }
     },
     created() {
-        const  authUser = window.localStorage.getItem('usuario')
-        const userLogado = JSON.parse(authUser)        
+        const authUser = window.localStorage.getItem('usuario')
+        const userLogado = JSON.parse(authUser)
         this.id_user = userLogado.id
-        if(userLogado.id_grupo === 1){
-        axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}&sort=nome&limit=100000').then(response => {
-            this.tableData = response.data
-        })    
-        }else{
-        axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1,"id_responsavel":'+ this.id_user +'}&sort=nome&limit=100000').then(response => {
-            this.tableData = response.data
-        })
+        if (userLogado.id_grupo === 1) {
+            axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1}&sort=nome&limit=100000').then(response => {
+                    this.tableData = response.data
+                })
+                .catch(error => {
+                    alert(error.response)
+                    this.message = false
+                    console.log(error.response.data)
+                })
+        } else {
+            axios.get(process.env.VUE_APP_ROOT_API + '/empresa?where={"ativo": 1,"id_responsavel":' + this.id_user + '}&sort=nome&limit=100000').then(response => {
+                this.tableData = response.data
+                this.message = false
+            })
+            .catch(error => {
+                alert(error.response)
+                this.message = false
+                console.log(error.response.data)
+            })
         }
     },
     methods: {
         // ------------ Confirmação de Deletar
         open(index, row) {
             if (this.validaRota('/forms/empresaDelete')) {
-            this.$confirm('Deseja realmente excluir esse registro?', 'Atenção', {
-                confirmButtonText: 'Sim',
-                cancelButtonText: 'Não',
-                type: 'warning'
-            }).then(() => {
-                this.handleDelete(index, row)
-                // this.$message({type: 'success', message: 'Registro Excluido!!'})
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: 'Operação Cancelada'
-                })
-            });
+                this.$confirm('Deseja realmente excluir esse registro?', 'Atenção', {
+                    confirmButtonText: 'Sim',
+                    cancelButtonText: 'Não',
+                    type: 'warning'
+                }).then(() => {
+                    this.handleDelete(index, row)
+                    // this.$message({type: 'success', message: 'Registro Excluido!!'})
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: 'Operação Cancelada'
+                    })
+                });
             } else {
                 swal('Você não tem permissão!', '', 'info')
             }

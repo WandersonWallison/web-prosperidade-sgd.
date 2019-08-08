@@ -24,7 +24,7 @@
                     </fg-input>
                     <br>
                     <fg-input :error="getError('comissionamento')">
-                    <el-select no-data-text="Sem Informações" v-validate="modelValidations.comissionamento" class="select-default" v-model="model.comissionamento" name="Comissionamento" placeholder="Comissionamento">
+                    <el-select no-data-text="Carregando..." v-validate="modelValidations.comissionamento" class="select-default" v-model="model.comissionamento" name="Comissionamento" placeholder="Comissionamento">
                         <el-option class="select-default" v-for="item in optionsComissionamento" :key="item.id" :label="item.descricao" :value="item.id">
                         </el-option>
                     </el-select>
@@ -51,21 +51,21 @@
                 </fg-input>
                 <br>
                 <fg-input :error="getError('tipo')">
-                    <el-select no-data-text="Sem Informações" v-validate="modelValidations.tipo" class="select-default" v-model="model.tipo" name="tipo" placeholder="Tipos de Usuario">
+                    <el-select no-data-text="Carregando..." v-validate="modelValidations.tipo" class="select-default" v-model="model.tipo" name="tipo" placeholder="Tipos de Usuario">
                         <el-option class="select-default" v-for="item in options" :key="item.id" :label="item.descricao" :value="item.id">
                         </el-option>
                     </el-select>
                 </fg-input>
                 <br>
                 <fg-input :error="getError('empresa')" v-if="model.tipo != 3">
-                    <el-select no-data-text="Sem Informações" class="select-default" v-validate="modelValidations.empresa" v-model="model.empresa" name="empresa" placeholder="Empresa">
+                    <el-select no-data-text="Carregando..." class="select-default" v-validate="modelValidations.empresa" v-model="model.empresa" name="empresa" placeholder="Empresa">
                         <el-option class="select-default" v-for="item in optionsEmpresa" :key="item.id" :label="item.nome" :value="item.id">
                         </el-option>
                     </el-select>
                 </fg-input>
                 <br>
                 <fg-input :error="getError('escritorio')" v-if="model.tipo == 3">
-                    <el-select no-data-text="Sem Informações" class="select-default" v-validate="modelValidations.escritorio" v-model="model.escritorio" name="escritorio" placeholder="Escritorio">
+                    <el-select no-data-text="Carregando..." class="select-default" v-validate="modelValidations.escritorio" v-model="model.escritorio" name="escritorio" placeholder="Escritorio">
                         <el-option class="select-default" v-for="item in optionsEscritorio" :key="item.id" :label="item.nome" :value="item.id">
                         </el-option>
                     </el-select>

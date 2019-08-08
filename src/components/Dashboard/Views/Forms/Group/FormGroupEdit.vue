@@ -16,7 +16,7 @@
         <div class="card-body">
             <div class="form-group">
                 <label>Links</label>
-                <el-select multiple no-data-text="Sem Informações" class="select-primary" collapse-tags v-model="groupLinks" placeholder="Multiple Select">
+                <el-select multiple no-data-text="Carregando..." class="select-primary" collapse-tags v-model="groupLinks" placeholder="Multiple Select">
                     <el-option v-for="option in selects.links" class="select-primary" :value="option.id" :label="option.link" :key="option.id">
                     </el-option>
                 </el-select>

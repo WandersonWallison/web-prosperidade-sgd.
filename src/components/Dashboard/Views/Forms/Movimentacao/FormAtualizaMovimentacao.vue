@@ -14,40 +14,51 @@
                     <p-button type="primary" @click="salvar()">Atualizar Movimentações</p-button>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <label>status</label>
+            <div class="col-lg-4">
+                <label>Status</label>
                 <fg-input>
-                    <el-select no-data-text="Sem Informações" class="select-default" v-model="model.status" name="status" placeholder="Selecione um status.">
+                    <el-select no-data-text="Carregando..." class="select-default" v-model="model.status" name="status" @change="filtrarStatus()" placeholder="Selecione um status.">
                         <el-option class="select-default" v-for="item in status_movimentacao" :key="item.id" :label="item.descricao" :value="item.id">
                         </el-option>
                     </el-select>
                 </fg-input>
             </div>
+            <div class="col-lg-4">
+               <label>Data Registro</label>
+                <el-date-picker
+                    v-model="value1"
+                    type="daterange"
+                    format="dd/MM/yyyy"
+                    range-separator="|"
+                    start-placeholder="Data Inicial"
+                    end-placeholder="Data Final">
+                </el-date-picker>
+            </div>
         </div>
-        <div class="col-sm-14 mt-2">
-            <el-table ref="multipleTable" empty-text="Sem Informações" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
-                <el-table-column type="selection" width="55">
+        <div class="col-sm-12 mt-2">
+            <el-table ref="multipleTable" empty-text="Carregando..." :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
+                <el-table-column   type="selection" width="50">
                 </el-table-column>
-                <el-table-column label="CÓDIGO" width="90">
+                <el-table-column  align="center" label="CÓDIGO" width="88">
                     <template slot-scope="scope">{{ scope.row.id }}</template>
                 </el-table-column>
-                <el-table-column label="CLIENTE" width="200">
+                <el-table-column  label="CLIENTE" width="250">
                     <template slot-scope="scope">{{ scope.row.id_cliente.nome }}</template>
                 </el-table-column>
-                <el-table-column label="SITUAÇÃO" width="120">
+                <el-table-column  label="SITUAÇÃO" width="190">
                     <template slot-scope="scope">{{ scope.row.id_situacao_movimento.descricao }}</template>
                 </el-table-column>
-                <el-table-column label="VALOR" width="120">
+                <el-table-column  label="VALOR" width="150">
                     <template slot-scope="scope">{{ scope.row.valor | formatarMoeda }}</template>
                 </el-table-column>
-                <el-table-column label="DATA REGISTRO" width="150">
+                <el-table-column  align="center" label="DATA REGISTRO" width="150">
                     <template slot-scope="scope">{{ scope.row.dthr_registro | maskData }}</template>
                 </el-table-column>
-                <el-table-column label="OBSERVAÇÃO" width="200">
+                <el-table-column  align="left" label="OBSERVAÇÃO" width="200">
                     <template slot-scope="scope">{{ scope.row.observacao }}</template>
                 </el-table-column>
             </el-table>
-            <div class="col-sm-14 pagination-info">
+            <div class="col-sm-12 pagination-info">
                 <p class="category">Mostrando {{from + 1}} de {{to}} de {{total}} Entradas</p>
             </div>
             <div class="col-sm-14">
@@ -152,7 +163,40 @@ export default {
             model: {
                 status: ''
             },
-            qtd: null
+            qtd: null,
+            pickerOptions: {
+            shortcuts: [
+                {
+                    text: 'Last week',
+                    onClick(picker) {
+                        const end = new Date();
+                        const start = new Date();
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                        picker.$emit('pick', [start, end]);
+                    }
+                }, 
+                {
+                    text: 'Last month',
+                    onClick(picker) {
+                        const end = new Date();
+                        const start = new Date();
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                        picker.$emit('pick', [start, end]);
+                    }
+                }, 
+                {
+                    text: 'Last 3 months',
+                    onClick(picker) {
+                        const end = new Date();
+                        const start = new Date();
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                        picker.$emit('pick', [start, end]);
+                    }
+                }
+            ]
+            },
+            value1: '',
+            value2: ''
         }
     },
     filters: {
@@ -168,7 +212,8 @@ export default {
 
         }
     },
-    created() {
+    mounted() {
+        
         axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_movimento?where={"ativo": 1}').then(response => {
             this.status_movimentacao = response.data
         })
@@ -216,6 +261,11 @@ export default {
                 this.tableData = response.data
                 swal('Bom trabalho!', 'A(s) Movimentações foram alterada(s) com sucesso!', 'success')
                 this.$router.push('/forms/MovementList')
+            })
+        },
+        filtrarStatus() {
+            axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?id_situacao_movimento='+this.model.status).then(response => {
+                this.tableData = response.data                
             })
         }
     }

@@ -21,7 +21,7 @@
       </div>
       <div class="card-body row">
         <div class="col-sm-12">
-          <el-table :data="tableData" empty-text="Sem Informações" header-row-class-name="text-primary">
+          <el-table :data="tableData" empty-text="Carregando..." header-row-class-name="text-primary">
             <el-table-column type="index">
 
             </el-table-column>

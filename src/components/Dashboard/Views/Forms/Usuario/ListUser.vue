@@ -31,10 +31,10 @@
                 </div>
             </div>
             <div class="col-sm-12 mt-2">
-                <el-table class="table-striped" empty-text="Sem Informações" :data="queriedData" border style="width: 100%">
+                <el-table class="table-striped" empty-text="Carregando..." :data="queriedData" border style="width: 100%">
                     <el-table-column v-for="column in tableColumns" :key="column.label" :min-width="column.minWidth" :prop="column.prop" sortable :label="column.label">
                     </el-table-column>
-                    <el-table-column prop="id_grupo.descricao" label="Grupo" :min-width="60" :filters="[{ text: 'ADMINISTRADOR', value: 'ADMINISTRADOR' }, 
+                    <el-table-column prop="id_grupo.descricao" label="Grupo" :min-width="60" :filters="[{ text: 'ADMINISTRADOR', value: 'ADMINISTRADOR' },
                                { text: 'ASSESSOR', value: 'ASSESSOR' },
                                { text: 'OPERADOR', value: 'OPERADOR' },
                                { text: 'CENTRAL', value: 'CENTRAL' }]" sortable :filter-method="filterTag" filter-placement="bottom-end">
@@ -255,7 +255,7 @@ export default {
             // alert(`Your want to edit ${row.name}`)
         },
         handleDelete(index, row) {
-            
+
                 let user = {
                     ativo: false
                     /*razao_social: this.model.nome,
