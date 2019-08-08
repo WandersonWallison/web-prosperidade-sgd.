@@ -3,7 +3,7 @@
 
     <div class="col-md-12 card">
         <div class="card-body row">
-            <!-- ***************************************************  -->
+            <!-- *****************  -->
             <div class="col-sm-6">
                 <div class="card-body text-left">
                     <div>
@@ -17,7 +17,7 @@
                     <p-button type="primary" @click="handleRegister()">Cadastro</p-button>
                 </div>
             </div>
-            <!-- ***************************************************  -->
+            <!-- *****************  -->
             <div class="col-sm-6">
                 <el-select class="select-default" v-model="pagination.perPage" placeholder="Per page">
                     <el-option class="select-default" v-for="item in pagination.perPageOptions" :key="item" :label="item" :value="item">
@@ -119,7 +119,7 @@ export default {
         pagedData() {
             return this.tableData.slice(this.from, this.to)
         },
-        /***
+        /*
          * Searches through table data and returns a paginated array.
          * Note that this should not be used for table with a lot of data as it might be slow!
          * Do the search and the pagination on the server and display the data retrieved from server instead.
@@ -216,7 +216,7 @@ export default {
     created() {
         const authUser = window.localStorage.getItem('usuario')
         const userLogado = JSON.parse(authUser)
-        console.log(userLogado)
+        //console.log(userLogado)
         var valida = userLogado.id_grupo
         var query = ''
         switch (valida) {
@@ -224,7 +224,7 @@ export default {
             case 1:
                 query = '/vw_cliente_sintetico'
                 break
-            // operador    
+            // operador
             case 2:
                 query = '/vw_cliente_sintetico?operador_id='+ userLogado.id
                 break
@@ -232,7 +232,7 @@ export default {
             case 3:
                 query = '/vw_cliente_sintetico?assessor_id='+ userLogado.id
                 break
-            // escritorio    
+            // escritorio
             case 4:
                 query = '/vw_cliente_sintetico?escritorio_id='+ userLogado.id_escritorio
                 break
@@ -288,15 +288,43 @@ export default {
             axios.put(process.env.VUE_APP_ROOT_API + '/cliente/' + row.id, empresa)
                 .then(response => {
                     this.results = response.data
-                    axios.get(process.env.VUE_APP_ROOT_API + '/vw_cliente_sintetico?where={"ativo": 1}').then(response => {
-                        this.tableData = response.data
-                        swal('Bom trabalho!', `Cliente ${row.nome} excluído com sucesso!`, 'success')
-                        this.$router.push('/forms/ClientList')
+        swal('Bom trabalho!', `Cliente ${row.nome} excluído com sucesso!`, 'success')
+        this.$router.push('/forms/ClientList')
+
+        const authUser = window.localStorage.getItem('usuario')
+        const userLogado = JSON.parse(authUser)
+        //console.log(userLogado)
+        var valida = userLogado.id_grupo
+        var query = ''
+        switch (valida) {
+            // adm
+            case 1:
+                query = '/vw_cliente_sintetico'
+                break
+            // operador
+            case 2:
+                query = '/vw_cliente_sintetico?operador_id='+ userLogado.id
+                break
+            // assessor
+            case 3:
+                query = '/vw_cliente_sintetico?assessor_id='+ userLogado.id
+                break
+            // escritorio
+            case 4:
+                query = '/vw_cliente_sintetico?escritorio_id='+ userLogado.id_escritorio
+                break
+        }
+        axios.get(process.env.VUE_APP_ROOT_API + query).then(response => {
+            this.tableData = response.data
+
+
+                    //axios.get(process.env.VUE_APP_ROOT_API + '/vw_cliente_sintetico?where={"ativo": 1}').then(response => {
+                    //    this.tableData = response.data
                     })
                 })
                 .catch(error => {
                     alert(error.response)
-                    console.log(error.response.data)
+                    //console.log(error.response.data)
                 })
         }
     }
