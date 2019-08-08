@@ -113,9 +113,9 @@
                     </fg-input>
 
                     <label>Assessor</label>
-                    <fg-input :error="getError('assessor')"  name="assessor">
+                    <fg-input :error="getError('assessor')" v-validate="modelValidations.assessor" name="assessor">
                         <!--<el-select no-data-text="Sem informações" class="select-default"  v-model="model.assessor" name="assessor" placeholder="Selecione...">-->
-                            <el-select no-data-text="Sem informações" class="select-default"  v-validate="modelValidations.assessor"
+                            <el-select no-data-text="Sem informações" class="select-default"  
                             v-model="model.assessor" 
                             name="assessor" 
                             filterable 
