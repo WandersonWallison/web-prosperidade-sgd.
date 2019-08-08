@@ -12,7 +12,7 @@
 
             </navbar-toggle-button>
         </div>
-        <a class="navbar-brand" >Prosperidade Investimentos - Bem Vindo, <b>{{ this.usuario.username}}</b>.</a>
+        <a class="navbar-brand" >Bem Vindo, <b>{{this.usuario.username}}</b> ({{id_grupo.descricao}}).</a>
     </div>
 
     <template slot="navbar-menu">

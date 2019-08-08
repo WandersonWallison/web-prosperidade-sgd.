@@ -172,7 +172,7 @@ export default {
         axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_movimento?where={"ativo": 1}').then(response => {
             this.status_movimentacao = response.data
         })
-        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1}').then(response => {
+        axios.get(process.env.VUE_APP_ROOT_API + '/movimentacao?where={"ativo": 1,"id_tipo_movimentacao":2}').then(response => {
             this.tableData = response.data
             this.qtd = this.tableData.length
         })

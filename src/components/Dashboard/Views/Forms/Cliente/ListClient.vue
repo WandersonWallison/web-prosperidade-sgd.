@@ -216,7 +216,7 @@ export default {
     created() {
         const authUser = window.localStorage.getItem('usuario')
         const userLogado = JSON.parse(authUser)
-        console.log(userLogado)
+        //console.log(userLogado)
         var valida = userLogado.id_grupo
         var query = ''
         switch (valida) {
@@ -288,15 +288,43 @@ export default {
             axios.put(process.env.VUE_APP_ROOT_API + '/cliente/' + row.id, empresa)
                 .then(response => {
                     this.results = response.data
-                    axios.get(process.env.VUE_APP_ROOT_API + '/vw_cliente_sintetico?where={"ativo": 1}').then(response => {
-                        this.tableData = response.data
-                        swal('Bom trabalho!', `Cliente ${row.nome} excluído com sucesso!`, 'success')
-                        this.$router.push('/forms/ClientList')
+        swal('Bom trabalho!', `Cliente ${row.nome} excluído com sucesso!`, 'success')
+        this.$router.push('/forms/ClientList')                
+                                    
+        const authUser = window.localStorage.getItem('usuario')
+        const userLogado = JSON.parse(authUser)
+        //console.log(userLogado)
+        var valida = userLogado.id_grupo
+        var query = ''
+        switch (valida) {
+            // adm
+            case 1:
+                query = '/vw_cliente_sintetico'
+                break
+            // operador    
+            case 2:
+                query = '/vw_cliente_sintetico?operador_id='+ userLogado.id
+                break
+            // assessor
+            case 3:
+                query = '/vw_cliente_sintetico?assessor_id='+ userLogado.id
+                break
+            // escritorio    
+            case 4:
+                query = '/vw_cliente_sintetico?escritorio_id='+ userLogado.id_escritorio
+                break
+        }
+        axios.get(process.env.VUE_APP_ROOT_API + query).then(response => {
+            this.tableData = response.data
+        
+                    
+                    //axios.get(process.env.VUE_APP_ROOT_API + '/vw_cliente_sintetico?where={"ativo": 1}').then(response => {
+                    //    this.tableData = response.data
                     })
                 })
                 .catch(error => {
                     alert(error.response)
-                    console.log(error.response.data)
+                    //console.log(error.response.data)
                 })
         }
     }

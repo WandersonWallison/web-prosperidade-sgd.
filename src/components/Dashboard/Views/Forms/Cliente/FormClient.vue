@@ -407,9 +407,37 @@ export default {
             this.dataOperadores = response.data
         })
 
-        axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}&sort=username&limit=2000').then(response => {
+        const authUser = window.localStorage.getItem('usuario')
+        const userLogado = JSON.parse(authUser)
+        //console.log(userLogado)
+        var valida = userLogado.id_grupo
+        var query = ''
+        switch (valida) {
+            // adm
+            case 1:
+                query = '/user?where={"ativo": 1,"id_grupo":3}&sort=username&limit=2000'
+                break
+            // operador    
+            case 2:
+                query = '/user?where={"ativo": 1,"id_grupo":3}&sort=username&limit=2000'
+                break
+            // assessor
+            case 3:
+                query = '/user?where={"ativo": 1,"id_grupo":3,"id":'+userLogado.id+'}'
+                break
+            // escritorio    
+            case 4:
+                query = '/user?where={"ativo": 1,"id_grupo":3,"id_escritorio":'+ userLogado.id_escritorio+'}&sort=username&limit=2000'
+                break
+        }
+        console.log(query)
+        axios.get(process.env.VUE_APP_ROOT_API + query).then(response => {
             this.dataAssessores = response.data
         })
+        
+        //axios.get(process.env.VUE_APP_ROOT_API + '/user?where={"ativo": 1,"id_grupo":3}&sort=username&limit=2000').then(response => {
+        //    this.dataAssessores = response.data
+        //})
 
         axios.get(process.env.VUE_APP_ROOT_API + '/tipo_situacao_tributaria?where={"ativo": 1}').then(response => {
             this.dataSituacao_tributaria = response.data
