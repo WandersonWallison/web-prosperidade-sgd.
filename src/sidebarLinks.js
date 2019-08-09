@@ -10,10 +10,11 @@ export default [
     children: [{
       name: 'Administrador',
       path: '/forms/homeDashbordCentral'
-    },{
+    },
+    /*{
       name: 'Operador',
       path: '/forms/homeDashbord'
-    }]
+    }*/]
     // path: '/admin/overview'
   },
  {
