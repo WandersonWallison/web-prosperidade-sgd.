@@ -1,18 +1,18 @@
 <template>
 <div>
+    <!--  MRV  -->
     <div class="row">
-        <div class="col-lg-4 col-md-12 col-sm-12" :key="statsCota.id" v-for="statsCota in statsCotacao">
-            <stats-card :type="statsCota.type" :icon="statsCota.icon" :small-title="statsCota.title" :title="statsCota.value">
-                <div class="stats" slot="footer">
-                    <i :class="statsCota.footerIcon"></i>
-                    {{statsCota.footerText}}
-                </div>
-            </stats-card>
+        <div class=" col-lg-12 col-md-12">
+          <el-card>
+            <p class="fonte-quadros">MRV</p>
+            <GChart type="ColumnChart" :data="chartData" :options="chartOptions" />
+          </el-card>
         </div>
     </div>
+    <br>
     <!-- Agregados -->
     <div class="row">
-        <div class="col-lg-4 col-md-10 col-sm-10">
+        <div class=" col-lg-4 col-md-4">
             <stats-card>
                 <div type="success" class="icon-big text-center icon-warning" slot="header">
                     <i class="ti-server"></i>
@@ -39,6 +39,19 @@
                     <i class="ti-reload"></i> Hoje
                 </div>
             </stats-card>
+        </div>
+        <div class=" col-lg-8 col-md-8">
+            <!--  Valor Boleta / Efetivada  -->
+            <el-card>
+                <div>
+                    <p class="fonte-quadros">VALOR DE BOLETAS / EFETIVADAS</p>
+                    <GChart type="ColumnChart" :data="chartData1" :options="chartOptions1" />
+                </div>
+            </el-card>
+        </div>
+    </div>
+    <div class="row">
+        <div class=" col-lg-4 col-md-4">
             <stats-card>
                 <div class="icon-big text-center icon-warning" slot="header">
                     <i class="ti-server"></i>
@@ -65,37 +78,15 @@
                     <i class="ti-reload"></i> Hoje
                 </div>
             </stats-card>
-
         </div>
         <div class=" col-lg-8 col-md-8">
-            <chart-card :chart-data="activityChart.data" :chart-height="150" chart-id="activity-bar-chart" chart-type="Bar">
-                <template slot="header">
-                    <h4 class="card-title">VALOR vs. STATUS</h4>
-                </template>
-                <template slot="footer">
-                </template>
-            </chart-card>
-        </div>
-    </div>
-    <!-- Valor x Escritorio -->
-    <div class="row">
-        <div class="col-md-6">
-            <chart-card :chart-data="activityChartOffice.data" :chart-height="200" chart-id="activity-bar-chart" chart-type="Bar">
-                <template slot="header">
-                    <h4 class="card-title">VALOR vs. ESCRITORIOS</h4>
-                </template>
-                <template slot="footer">
-                </template>
-            </chart-card>
-        </div>
-        <div class="col-md-6">
-            <chart-card :chart-data="activityChartAssessor.data" :chart-height="200" chart-id="activity-bar-chart" chart-type="Bar">
-                <template slot="header">
-                    <h4 class="card-title">VALOR vs. ASSESSOR </h4>
-                </template>
-                <template slot="footer">
-                </template>
-            </chart-card>
+            <!--  Valor Boleta / Efetivada  -->
+            <el-card>
+                <div>
+                    <p class="fonte-quadros">VALOR MEDIO / CLIENTES</p>
+                    <GChart type="ColumnChart" :data="chartData2" :options="chartOptions2" />
+                </div>
+            </el-card>
         </div>
     </div>
 </div>
@@ -112,6 +103,9 @@ import {
 import moment from 'moment'
 import Loading from 'src/components/Dashboard/Layout/LoadingMainPanel.vue'
 import TaskList from './Widgets/TaskList'
+import {
+    GChart
+} from 'vue-google-charts'
 
 const WorldMap = () => ({
     component: import('./../Maps/WorldMap.vue'),
@@ -143,7 +137,8 @@ export default {
         CircleChartCard,
         WorldMap,
         Badge,
-        TaskList
+        TaskList,
+        GChart
     },
     /**
      * Chart data used to render stats, charts. Should be replaced with server data
@@ -163,7 +158,7 @@ export default {
             valorStatus: [],
             valorBoletaEfetivada: '',
             qtdCliente: '',
-            qtdAssessor:'',
+            qtdAssessor: '',
             activityChart: [],
             activityChartAssessor: [],
             activityChartOffice: [],
@@ -173,59 +168,95 @@ export default {
             tipo_situacao: [],
             tipo_situacaoLabel: [],
             tipo_situacaoValor: [],
-            usuario:'',
-            empresa:''
+            usuario: '',
+            empresa: '',
+            chartData: [
+                ["Escritorio", "Junho", "julho", "Agosto"],
+                ["São Paulo", 1000, 2000, 3000],
+                ["Recife", 900, 1500, 2000],
+                ["ABC", 600, 1120, 3000],
+                ["Cuiabá", 1030, 1540, 1850]
+            ],
+            chartOptions: {
+                chart: {
+                    title: "Company Performance",
+                    subtitle: "JANEIRO, FEVEREIRO, and MARÇO: 2014-2017"
+                }
+            },
+            chartData1: [
+                ["Escritorio", "Junho", "julho", "Agosto"],
+                ["São Paulo", 50000, 100000, 250000],
+                ["Recife", 10000, 46000, 130000],
+                ["ABC", 25000, 34000, 40000],
+                ["Cuiabá", 22000, 45000, 63000]
+            ],
+            chartOptions1: {
+                chart: {
+                    title: "Company Performance",
+                    subtitle: "JANEIRO, FEVEREIRO, and MARÇO: 2014-2017"
+                }
+            },
+            chartData2: [
+                ["Escritorio", "Junho", "julho", "Agosto"],
+                ["São Paulo", 8, 12, 18],
+                ["Recife", 6, 8, 10],
+                ["ABC", 3, 12, 20],
+                ["Cuiabá", 5, 13, 18]
+            ],
+            chartOptions2: {
+                chart: {
+                    title: "Company Performance",
+                    subtitle: "JANEIRO, FEVEREIRO, and MARÇO: 2014-2017"
+                }
+            }
         }
     },
     mounted() {
 
         const authUser = JSON.parse(window.localStorage.getItem("usuario"))
-        // console.log('Usuario - ',authUser)
+        // console.log('Usuario - ', authUser)
 
-        this.empresa = '?empresa_id='+ authUser.id_empresa
-        if(authUser.id_grupo !== 1 ){
-          this.usuario = '&user_id='+ authUser.id
+        this.empresa = '?empresa_id=' + authUser.id_empresa
+        if (authUser.id_grupo !== 1) {
+            this.usuario = '&user_id=' + authUser.id
         }
-
         this.retorna_total_movimentacao(this.usuario) // Retorna o Total das Movimentações
         this.grafico_valor_escritorio(this.usuario) // Grafico Valor x Escritorio
         this.grafico_assessor(this.usuario)
         this.limite_movimentacao(this.usuario)
         this.retorna_total(this.usuario)
         this.quantidade_clientes(this.usuario)
-        this.quantidade_assessor(this.usuario,this.empresa)
+        this.quantidade_assessor(this.usuario, this.empresa)
     },
 
     methods: {
-
-      // retorna_assessor_qtd?user_id=44&empresa_id=1
-
-       quantidade_assessor(usuario,empresa) {
-            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_assessor_qtd'+empresa+usuario).then(response => {
+        // retorna_assessor_qtd?user_id=44&empresa_id=1
+        quantidade_assessor(usuario, empresa) {
+            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_assessor_qtd' + empresa + usuario).then(response => {
                 this.qtdAssessor = response.data[0].qtd
             })
         },
         quantidade_clientes(usuario) {
-            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_cliente_qtd'+usuario).then(response => {
+            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_cliente_qtd' + usuario).then(response => {
                 this.qtdCliente = response.data[0].qtd
             })
         },
         retorna_total(usuario) {
-            if(usuario){
-              usuario = usuario.replace('?','&')
+            if (usuario) {
+                usuario = usuario.replace('?', '&')
             }
-            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total?id_situacao_movimentacao=7'+usuario).then(response => {
+            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total?id_situacao_movimentacao=7' + usuario).then(response => {
                 this.valorBoletaEfetivada = this.formatarMoeda(response.data)
             })
         },
         limite_movimentacao(usuario) {
-            axios.get(process.env.VUE_APP_ROOT_API + '/limite_movimentacao'+usuario).then(response => {
+            axios.get(process.env.VUE_APP_ROOT_API + '/limite_movimentacao' + usuario).then(response => {
                 this.valorInvestimento = this.formatarMoeda(response.data)
             })
         },
         grafico_assessor(usuario) {
             // Grafico de valores por Assessores
-            axios.get(process.env.VUE_APP_ROOT_API + '/grafico_assessor'+usuario).then(response => {
+            axios.get(process.env.VUE_APP_ROOT_API + '/grafico_assessor' + usuario).then(response => {
                 this.graficoAssessor = response.data
                 for (let index = 0; index < this.graficoAssessor.length; index++) {
                     this.graficoAssessorLabel.push(this.graficoAssessor[index].assessor)
@@ -249,7 +280,7 @@ export default {
         },
         grafico_valor_escritorio(usuario) {
             // Gráfico de valores por escritorios
-            axios.get(process.env.VUE_APP_ROOT_API + '/grafico_valor_escritorio'+usuario).then(response => {
+            axios.get(process.env.VUE_APP_ROOT_API + '/grafico_valor_escritorio' + usuario).then(response => {
 
                 this.graficoValorEscritorio = response.data
                 for (let index = 0; index < this.graficoValorEscritorio.length; index++) {
@@ -276,7 +307,7 @@ export default {
             /**
              * @description: Retorna todos os somatorios dos status_movimentacao por valor de moviemento
              */
-            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total_movimentacao'+usuario).then(response => {
+            axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total_movimentacao' + usuario).then(response => {
                 this.tipo_situacao = response.data
                 for (let index = 0; index < this.tipo_situacao.length; index++) {
                     this.tipo_situacaoLabel.push(this.tipo_situacao[index].descricao)
@@ -291,7 +322,7 @@ export default {
                             fill: true,
                             backgroundColor: '#4682B4',
                             hoverBorderColor: '#fcc468',
-                            borderWidth: 2,
+                            borderWidth: 1,
                             data: this.tipo_situacaoValor
                         }]
                     }
@@ -320,10 +351,6 @@ export default {
 </script>
 
 <style>
-.fonte-valor {
-    font-size: 70%
-}
-
 .img-tamanho {
     width: 40px;
     height: 40px;

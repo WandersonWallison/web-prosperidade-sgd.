@@ -6,6 +6,7 @@ const Overview = () => import(/* webpackChunkName: "widgets" */ 'src/components/
 // dashbord home
 const homeDashbord = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/homeDashbord.vue')
 const homeDashbordCentral = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/homeDashbordCentral.vue')
+const homeDashbordADM = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/homeDashbordADM.vue')
 const Widgets = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/Widgets.vue')
 // Pages
 import User from 'src/components/Dashboard/Views/Pages/UserProfile.vue'
@@ -437,6 +438,11 @@ let formsMenu = {
       path: 'homeDashbord',
       name: 'homeDashbord',
       component: homeDashbord
+    },
+    {
+      path: 'homeDashbordADM',
+      name: 'homeDashbordADM',
+      component: homeDashbordADM
     },
     {
       path: 'homeDashbordCentral',

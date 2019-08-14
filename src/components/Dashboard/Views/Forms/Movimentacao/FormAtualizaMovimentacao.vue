@@ -283,9 +283,6 @@ export default {
         */
         buscarMovimentacao() {
 
-            console.log('Data 1', this.maskDataFiltro(this.value1[0]))
-            console.log('Data 2', this.maskDataFiltro(this.value1[1]))
-
             let filtro = '?where={"ativo":1,"id_tipo_movimentacao":2}&limit=10000000'
 
             if (this.model.status && this.value1.length != 0) {

@@ -11,10 +11,10 @@ export default [
       name: 'Administrador',
       path: '/forms/homeDashbordCentral'
     },
-    /*{
+    {
       name: 'Operador',
-      path: '/forms/homeDashbord'
-    }*/]
+      path: '/forms/homeDashbordADM'
+    }]
     // path: '/admin/overview'
   },
  {
