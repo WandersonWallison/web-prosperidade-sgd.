@@ -19,7 +19,7 @@
     </div>
 
     <div class="row">
-        <img src="static/img/background/escolhas-prosperidade-img-2.jpg" style="
+        <img src="static/img/background/bolsa_de_valores_como_funciona-2.jpg" style="
     width: 100%;
     height: 100%;
 ">
