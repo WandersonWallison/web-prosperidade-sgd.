@@ -51,12 +51,17 @@
             </el-card>
         </div>
         <div class="col-lg-12 col-md-12">
+          <p class="fonte-quadros">LISTA DE FEEDBACK</p>
             <el-card>
-                <el-table ref="multipleTable" :data="tableDataCliente" style="width: 100%">
-                    <el-table-column align="left" label="NOME" width="400">
-                        <template slot-scope="scope">{{ scope.row }}</template>
+                <el-table ref="multipleTable" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
+                    <el-table-column property="name" label="Nome" width="350">
                     </el-table-column>
-                    <el-table-column label="Feedback" type="selection" width="55"></el-table-column>
+                    <el-table-column property="MRV" label="MRV" show-overflow-tooltip>
+                    </el-table-column>
+                    <el-table-column property="boleta" label="BOLETA" show-overflow-tooltip>
+                    </el-table-column>
+                    <el-table-column type="selection" width="55">
+                    </el-table-column>
                 </el-table>
             </el-card>
         </div>
@@ -142,6 +147,62 @@ export default {
             tipo_situacaoValor: [],
             usuario: "",
             empresa: "",
+            tableData: [{
+
+                name: 'A & B CONSULTORIA EIRELI - EPP',
+                MRV: '123.000,00',
+                boleta: '43.000,00'
+            }, {
+
+                name: 'ALBERTO LUIZ SANT ANA DE OLIVEIRA',
+                MRV: '1.300.000,00',
+                boleta: '800.000,00'
+            }, {
+
+                name: 'ALFREDO BEZERRA DE MENEZES NETO',
+                MRV: '534.000,00',
+                boleta: '500.000,00'
+            }, {
+
+                name: 'ALMIR DIAS DE SOUZA',
+                MRV: '34.000,00',
+                boleta: '23.000,00'
+            }, {
+
+                name: 'ANA CATARINA DELGADO DE SOUZA',
+                MRV: '765.700,00',
+                boleta: '430.450,00'
+            }, {
+
+                name: 'ANDRE LUIS DE OLIVEIRA NOVAES',
+                MRV: '343.000,00',
+                boleta: '130.000,00'
+            }, {
+
+                name: 'ANDREA PESSOA ROCHA SALLES',
+                MRV: '649.650,00',
+                boleta: '134.000,00'
+            }, {
+
+                name: 'ANTONIO MARCELO GONCALVES DE SOUZA',
+                MRV: '432.000,00',
+                boleta: '300.000,00'
+            }, {
+
+                name: 'ARLINDO SALGUEIRO',
+                MRV: '654.760,00',
+                boleta: '543.000,00'
+            }, {
+
+                name: 'BARBARA DE FREITAS CAVALCANTI',
+                MRV: '435.450,50',
+                boleta: '345.000,00'
+            }, {
+
+                name: 'CAMILLA LEICHT CARNEIRO LEAO',
+                MRV: '900.000,00',
+                boleta: '840.000,00'
+            }],
             chartData: [
                 ["Escritorio", "Maio", "Junho", "Julho"],
                 ["MATHEUS", 0, 26035000, 28847000]
@@ -202,13 +263,13 @@ export default {
 
                 this.teste = response.data
                 for (let index = 0; index < this.teste.length; index++) {
-                   this.tableDataCliente.push(this.teste[index].nome)
-                   this.tableDataCliente.push(this.formatarMoeda(this.teste[index].movimentacoes[0].valor))
-                   this.tableDataCliente.push(this.formatarMoeda(this.teste[index].movimentacoes[2].valor))
+
+                    this.tableDataCliente.push(this.teste[index].nome)
+
                 }
 
             })
-        console.log('teste',this.tableDataCliente)
+        console.log('teste', this.tableDataCliente)
         this.empresa = "?empresa_id=" + authUser.id_empresa
         if (authUser.id_grupo !== 1) {
             this.usuario = "&user_id=" + authUser.id
