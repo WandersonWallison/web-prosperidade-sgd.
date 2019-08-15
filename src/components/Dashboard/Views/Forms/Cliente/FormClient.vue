@@ -126,10 +126,10 @@
                             </el-option>
                         </el-select>
                     </fg-input>
-                    <label>Investimento Inicial</label>
+                    <label>Investimento inicial em bolsa</label>
                     <fg-input type="text" v-money="money" name="investimento_inicial" v-validate="modelValidations.investimento_inicial" :error="getError('investimento_inicial')" v-model="model.investimento_inicial">
                     </fg-input>
-                    <label>Potencial de Investimento</label>
+                    <label>Volume global de investimento</label>
                     <fg-input type="text" v-money="money" name="potencial_investimento" v-validate="modelValidations.potencial_investimento" :error="getError('potencial_investimento')" v-model="model.potencial_investimento">
                     </fg-input>
                 </el-card>
