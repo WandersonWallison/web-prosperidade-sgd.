@@ -3,16 +3,16 @@
     <!--  MRV  -->
     <div class="row">
         <div class=" col-lg-12 col-md-12">
-          <el-card>
-            <p class="fonte-quadros">MRV</p>
-            <GChart type="ColumnChart" :data="chartData" :options="chartOptions" />
-          </el-card>
+            <el-card>
+                <p class="fonte-quadros">MRV</p>
+                <GChart type="ColumnChart" :data="chartData" :options="chartOptions" />
+            </el-card>
         </div>
     </div>
     <br>
     <!-- Agregados -->
     <div class="row">
-        <div class=" col-lg-4 col-md-4">
+        <div class=" col-lg-5 col-md-5">
             <stats-card>
                 <div type="success" class="icon-big text-center icon-warning" slot="header">
                     <i class="ti-server"></i>
@@ -40,7 +40,7 @@
                 </div>
             </stats-card>
         </div>
-        <div class=" col-lg-8 col-md-8">
+        <div class=" col-lg-7 col-md-7">
             <!--  Valor Boleta / Efetivada  -->
             <el-card>
                 <div>
@@ -51,7 +51,7 @@
         </div>
     </div>
     <div class="row">
-        <div class=" col-lg-4 col-md-4">
+        <div class=" col-lg-5 col-md-5">
             <stats-card>
                 <div class="icon-big text-center icon-warning" slot="header">
                     <i class="ti-server"></i>
@@ -79,11 +79,20 @@
                 </div>
             </stats-card>
         </div>
-        <div class=" col-lg-8 col-md-8">
+        <div class=" col-lg-7 col-md-7">
             <!--  Valor Boleta / Efetivada  -->
             <el-card>
                 <div>
-                    <p class="fonte-quadros">VALOR MEDIO / CLIENTES</p>
+                    <p class="fonte-quadros">RECEITA MRV</p>
+                    <GChart type="ColumnChart" :data="chartData3" :options="chartOptions3" />
+                </div>
+            </el-card>
+        </div>
+        <div class=" col-lg-12 col-md-12">
+            <!--  Valor Boleta / Efetivada  -->
+            <el-card>
+                <div>
+                    <p class="fonte-quadros">VALOR MÉDIO TICKET / CLIENTE</p>
                     <GChart type="ColumnChart" :data="chartData2" :options="chartOptions2" />
                 </div>
             </el-card>
@@ -170,56 +179,95 @@ export default {
             tipo_situacaoValor: [],
             usuario: '',
             empresa: '',
+            nomeEmpresa: [],
             chartData: [
-                ["Escritorio", "Junho", "julho", "Agosto"],
-                ["São Paulo", 1000, 2000, 3000],
-                ["Recife", 900, 1500, 2000],
-                ["ABC", 600, 1120, 3000],
-                ["Cuiabá", 1030, 1540, 1850]
+                ["Escritorio", "Maio", "Junho", "Julho"],
+                ["Alphaville - SP", 110000000, 160000000, 160000000],
+                ["ABC - SP", 963000000, 1048000000, 1221000000],
+                ["Cuiaba", 286500000, 291500000, 461000000],
+                ["Goiania", 1219400000, 1589400000, 1866400000],
+                ["Manaus", 2051000000, 2196000000, 2939400000],
+                ["São Paulo", 7212100000, 7745800000, 8624400000],
+                ["Recife", 4635100000, 4784900000, 5256600000],
+                ["Vinhedo - SP", 0, 0, 0],
+                ["Brasilia", 0, 0, 0],
+                ["Boa Vista", 0, 0, 0],
             ],
             chartOptions: {
                 chart: {
                     title: "Company Performance",
                     subtitle: "JANEIRO, FEVEREIRO, and MARÇO: 2014-2017"
-                }
+                },
+                colors: ['#ffc709', '#44adc0', '#8C775B']
             },
             chartData1: [
-                ["Escritorio", "Junho", "julho", "Agosto"],
-                ["São Paulo", 50000, 100000, 250000],
-                ["Recife", 10000, 46000, 130000],
-                ["ABC", 25000, 34000, 40000],
-                ["Cuiabá", 22000, 45000, 63000]
+                ["Escritorio", "Maio", "Junho", "Julho"],
+                ["Alphaville - SP", 300000, 200000, 441000],
+                ["ABC - SP", 1649000, 3441218, 6033624],
+                ["Cuiaba", 8800, 1583000, 3430000],
+                ["Goiania", 3744000, 13106100, 15187520],
+                ["Manaus", 5502000, 16479700, 25397793],
+                ["São Paulo", 12684000, 49301200, 57338281],
+                ["Recife", 2510000, 24895000, 30768100],
+                ["Vinhedo - SP", 0, 0, 0],
+                ["Brasilia", 0, 0, 0],
+                ["Boa Vista", 0, 0, 0],
             ],
             chartOptions1: {
                 chart: {
                     title: "Company Performance",
                     subtitle: "JANEIRO, FEVEREIRO, and MARÇO: 2014-2017"
-                }
+                },
+                colors: ['#ffc709', '#44adc0', '#8C775B']
             },
             chartData2: [
-                ["Escritorio", "Junho", "julho", "Agosto"],
-                ["São Paulo", 8, 12, 18],
-                ["Recife", 6, 8, 10],
-                ["ABC", 3, 12, 20],
-                ["Cuiabá", 5, 13, 18]
+                ["Escritorio", "Maio", "Junho", "Julho"],
+                ["Alphaville - SP", 0, 32000000, 32000000],
+                ["ABC - SP", 0, 22297872, 21803571],
+                ["Cuiaba", 0, 17147059, 20954545],
+                ["Goiania", 0, 23034783, 22486747],
+                ["Manaus", 0, 43058824, 48990000],
+                ["São Paulo", 0, 29677395, 29038384],
+                ["Recife", 0, 56292941, 52566000],
+                ["Vinhedo - SP", 0, 0, 0],
+                ["Brasilia", 0, 0, 0],
+                ["Boa Vista", 0, 0, 0],
             ],
             chartOptions2: {
                 chart: {
                     title: "Company Performance",
                     subtitle: "JANEIRO, FEVEREIRO, and MARÇO: 2014-2017"
-                }
+                },
+                colors: ['#ffc709', '#44adc0', '#8C775B']
+            },
+            chartData3: [
+                ["Empresa", "Maio", "Junho", "Julho"],
+                ["Prosperidade Investimentos", 203410.54, 1077470.83, 1256638.04],
+
+            ],
+            chartOptions3: {
+                chart: {
+                    title: "Company Performance",
+                    subtitle: "JANEIRO, FEVEREIRO, and MARÇO: 2014-2017"
+                },
+                colors: ['#ffc709', '#44adc0', '#8C775B']
             }
+
         }
     },
     mounted() {
 
         const authUser = JSON.parse(window.localStorage.getItem("usuario"))
-        // console.log('Usuario - ', authUser)
+        console.log('Usuario - ', authUser)
 
         this.empresa = '?empresa_id=' + authUser.id_empresa
         if (authUser.id_grupo !== 1) {
             this.usuario = '&user_id=' + authUser.id
         }
+        axios.get(process.env.VUE_APP_ROOT_API + '/empresa/'+ authUser.id_empresa).then(response => {
+            this.nomeEmpresa = response.data.nome
+        })
+
         this.retorna_total_movimentacao(this.usuario) // Retorna o Total das Movimentações
         this.grafico_valor_escritorio(this.usuario) // Grafico Valor x Escritorio
         this.grafico_assessor(this.usuario)
@@ -232,30 +280,49 @@ export default {
     methods: {
         // retorna_assessor_qtd?user_id=44&empresa_id=1
         quantidade_assessor(usuario, empresa) {
+
+            this.qtdAssessor = 45
+            /*
             axios.get(process.env.VUE_APP_ROOT_API + '/retorna_assessor_qtd' + empresa + usuario).then(response => {
-                this.qtdAssessor = response.data[0].qtd
+                this.qtdAssessor = 61
             })
+            */
         },
         quantidade_clientes(usuario) {
+
+            this.qtdCliente = 623
+            /*
             axios.get(process.env.VUE_APP_ROOT_API + '/retorna_cliente_qtd' + usuario).then(response => {
                 this.qtdCliente = response.data[0].qtd
             })
+            */
         },
         retorna_total(usuario) {
+
             if (usuario) {
                 usuario = usuario.replace('?', '&')
             }
+
+            this.valorBoletaEfetivada = this.formatarMoeda(138596318)
+            /*
             axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total?id_situacao_movimentacao=7' + usuario).then(response => {
                 this.valorBoletaEfetivada = this.formatarMoeda(response.data)
             })
+            */
         },
         limite_movimentacao(usuario) {
+
+            this.valorInvestimento = this.formatarMoeda(205288000)
+            /*
             axios.get(process.env.VUE_APP_ROOT_API + '/limite_movimentacao' + usuario).then(response => {
-                this.valorInvestimento = this.formatarMoeda(response.data)
+                this.valorInvestimento = this.formatarMoeda(12834000)
             })
+            */
         },
         grafico_assessor(usuario) {
+
             // Grafico de valores por Assessores
+            /*
             axios.get(process.env.VUE_APP_ROOT_API + '/grafico_assessor' + usuario).then(response => {
                 this.graficoAssessor = response.data
                 for (let index = 0; index < this.graficoAssessor.length; index++) {
@@ -277,9 +344,11 @@ export default {
                     }
                 }
             })
+            */
         },
         grafico_valor_escritorio(usuario) {
             // Gráfico de valores por escritorios
+            /*
             axios.get(process.env.VUE_APP_ROOT_API + '/grafico_valor_escritorio' + usuario).then(response => {
 
                 this.graficoValorEscritorio = response.data
@@ -302,11 +371,13 @@ export default {
                     }
                 }
             })
+            */
         },
         retorna_total_movimentacao(usuario) {
             /**
              * @description: Retorna todos os somatorios dos status_movimentacao por valor de moviemento
              */
+            /*
             axios.get(process.env.VUE_APP_ROOT_API + '/retorna_total_movimentacao' + usuario).then(response => {
                 this.tipo_situacao = response.data
                 for (let index = 0; index < this.tipo_situacao.length; index++) {
@@ -328,6 +399,7 @@ export default {
                     }
                 }
             })
+            */
         },
         formatarMoeda(valor) {
             // console.log('valor', valor)

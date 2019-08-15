@@ -9,11 +9,15 @@ export default [
     icon: 'nc-icon nc-chart-pie-36',
     children: [{
       name: 'Administrador',
-      path: '/forms/homeDashbordCentral'
+      path: '/forms/homeDashbordADM'
     },
     {
-      name: 'Operador',
-      path: '/forms/homeDashbordADM'
+      name: 'Escritorio',
+      path: '/forms/homeDashbordEscritorio'
+    },
+    {
+      name: 'Assessor',
+      path: '/forms/homeDashbordAssessor'
     }]
     // path: '/admin/overview'
   },

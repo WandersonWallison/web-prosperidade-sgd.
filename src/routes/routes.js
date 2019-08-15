@@ -7,6 +7,10 @@ const Overview = () => import(/* webpackChunkName: "widgets" */ 'src/components/
 const homeDashbord = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/homeDashbord.vue')
 const homeDashbordCentral = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/homeDashbordCentral.vue')
 const homeDashbordADM = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/homeDashbordADM.vue')
+
+const homeDashbordAssessor = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/homeDashbordAssessor.vue')
+const homeDashbordEscritorio = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/homeDashbordEscritorio.vue')
+
 const Widgets = () => import(/* webpackChunkName: "widgets" */ 'src/components/Dashboard/Views/Dashboard/Widgets.vue')
 // Pages
 import User from 'src/components/Dashboard/Views/Pages/UserProfile.vue'
@@ -438,6 +442,16 @@ let formsMenu = {
       path: 'homeDashbord',
       name: 'homeDashbord',
       component: homeDashbord
+    },
+    {
+      path: 'homeDashbordAssessor',
+      name: 'homeDashbordAssessor',
+      component: homeDashbordAssessor
+    },
+    {
+      path: 'homeDashbordEscritorio',
+      name: 'homeDashbordEscritorio',
+      component: homeDashbordEscritorio
     },
     {
       path: 'homeDashbordADM',
